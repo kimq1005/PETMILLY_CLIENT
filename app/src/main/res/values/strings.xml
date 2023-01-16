@@ -1,3 +1,10 @@
 <resources>
+    
+    <string name="kakao_api_key">f1c2096c10969aa261655e2933769f2a</string>
+    
     <string name="app_name">PET_MILLY_CLIENT</string>
+    <string name="pet_milly_title">펫밀리</string>
+    <string name="title_Description">세상에 모든 강아지 고양이는\n똑같이 사랑받을 자격이 있다.</string>
+    <string name="kakao_login_text">카카오 회원가입/로그인</string>
+    <string name="kakao_login_dialog_text">펫밀리에서 카카오톡을(를)\n열려고 합니다.</string>
 </resources>

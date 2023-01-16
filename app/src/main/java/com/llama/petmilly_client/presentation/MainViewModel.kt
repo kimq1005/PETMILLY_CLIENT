@@ -1,6 +1,9 @@
 package com.llama.petmilly_client.presentation
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.llama.petmilly_client.domain.repository.TestRepo
@@ -28,5 +31,16 @@ class MainViewModel @Inject constructor(private val testRepo: TestRepo) : ViewMo
                 }
             }
         }
+    }
+
+    var isDialogShown by mutableStateOf(false)
+        private set
+
+    fun onBuyClick(){
+        isDialogShown = true
+    }
+
+    fun onDismissDialog(){
+        isDialogShown = false
     }
 }
