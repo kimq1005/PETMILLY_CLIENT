@@ -28,6 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.MainViewModel
+import com.llama.petmilly_client.ui.theme.Button_Clicked
+import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 
 @Composable
 fun LoginScreen(viewModel: MainViewModel = hiltViewModel()) {
@@ -64,7 +66,7 @@ fun LoginScreen(viewModel: MainViewModel = hiltViewModel()) {
                 .height(50.dp)
                 .background(color = Color(0xff262626), shape = RoundedCornerShape(8.dp))
                 .fillMaxWidth()
-                .clickable {   viewModel.onBuyClick()  },
+                .clickable { viewModel.onBuyClick() },
         ) {
             Text(
                 text = stringResource(id = R.string.kakao_login_text),
@@ -130,19 +132,30 @@ fun CustomDialog(
                         onClick = { onDismiss() },
                         modifier = Modifier
                             .weight(1f)
-                            .padding(start = 20.dp , end = 5.dp)
+                            .padding(start = 20.dp, end = 5.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Button_NoneClicked)
+
 
                     ) {
-                        Text(text = "취소")
+                        Text(text = "취소",
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold)
                     }
                     Button(
                         onClick = { onConfirm() },
                         modifier = Modifier
                             .weight(1f)
-                            .padding(start = 5.dp, end = 20.dp)
+                            .padding(start = 5.dp, end = 20.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Button_Clicked)
 
                     ) {
-                        Text(text = "열기")
+                        Text(
+                            text = "열기",
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }
