@@ -21,19 +21,19 @@ class MainApplication : Application() {
         super.onCreate()
 
         KakaoSdk.init(this, getString(R.string.kakao_api_key))
-        if(KakaoSDK.getAdapter() == null){
-            KakaoSDK.init(KaKaoSDKAdapter(getAppContext()))
-        }
+//        if(KakaoSDK.getAdapter() == null){
+//            KakaoSDK.init(KaKaoSDKAdapter(getAppContext()))
+//        }
     }
-    override fun onTerminate() {
-        super.onTerminate()
-        instance = null
-    }
+//    override fun onTerminate() {
+//        super.onTerminate()
+//        instance = null
+//    }
 
-    fun getAppContext() : MainApplication{
-        checkNotNull(instance){
-            "This Application does not inherit com.example.App"
-        }
-        return instance!!
-    }
+//    fun getAppContext() : MainApplication{
+//        checkNotNull(instance){
+//            "This Application does not inherit com.example.App"
+//        }
+//        return instance!!
+//    }
 }
