@@ -1,5 +1,7 @@
 package com.llama.petmilly_client.presentation.loginscreen
 
+import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +17,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,13 +29,21 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.model.ClientError
+import com.kakao.sdk.common.model.ClientErrorCause
+import com.kakao.sdk.user.UserApiClient
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
 fun LoginScreen(viewModel: MainViewModel = hiltViewModel()) {
+
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,7 +93,8 @@ fun LoginScreen(viewModel: MainViewModel = hiltViewModel()) {
             CustomDialog(
                 onDismiss = { viewModel.onDismissDialog() },
                 onConfirm = {
-
+                    kakaoLogin(context)
+                    viewModel.onDismissDialog()
                 }
             )
         }
@@ -122,7 +134,7 @@ fun CustomDialog(
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
-                
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -137,10 +149,12 @@ fun CustomDialog(
 
 
                     ) {
-                        Text(text = "취소",
+                        Text(
+                            text = "취소",
                             color = Color.White,
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold)
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                     Button(
                         onClick = { onConfirm() },
@@ -164,136 +178,37 @@ fun CustomDialog(
 }
 
 
-@OptIn(ExperimentalComposeUiApi::class)
-@Composable
-fun hellyeah(
-    onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
-) {
-    Dialog(
-        onDismissRequest = { onDismiss() },
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false
-        )
-    ) {
-        Card(
-            elevation = 5.dp,
-            shape = RoundedCornerShape(15.dp),
-            modifier = Modifier
-                .fillMaxSize(0.7f)
-                .border(1.dp, color = Color.Black, shape = RoundedCornerShape(15.dp))
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(15.dp),
-                verticalArrangement = Arrangement.spacedBy(25.dp)
-            ) {
-                Text(
-                    text = "Your selected items. Please select a payment method to continue.",
-                    style = MaterialTheme.typography.h6,
-                    textAlign = TextAlign.Center
-                )
-
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "Samsung Galaxy S22")
-                    Text(text = "32.00$")
-                }
-                Divider()
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "Total", fontWeight = FontWeight.Bold)
-                    Text(text = "833.005", fontWeight = FontWeight.Bold)
-                }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Image(painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                        contentDescription = "klarna",
-                        modifier = Modifier
-                            .fillMaxWidth(0.2f)
-                            .clip(RoundedCornerShape(12.dp))
-                            .clickable {
-
-                            }
-                    )
-
-                    Image(painter = painterResource(id = R.drawable.ic_launcher_background),
-                        contentDescription = "paypal",
-                        modifier = Modifier
-                            .fillMaxWidth(0.2f)
-                            .clip(RoundedCornerShape(12.dp))
-                            .clickable {}
-                    )
-                }
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(30.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Button(
-                    onClick = { onDismiss() },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Color.Black,
-                        contentColor = Color.Blue
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    shape = CircleShape
-                ) {
-                    Text(
-                        text = "Cancle",
-                        style = MaterialTheme.typography.h6,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
-
-                }
-
-
-                Button(
-                    onClick = { onConfirm() },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Color.Black,
-                        contentColor = Color.Blue
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    shape = CircleShape
-                ) {
-                    Text(
-                        text = "Confirm",
-                        style = MaterialTheme.typography.h6,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
-
-                }
-
-            }
+fun kakaoLogin(context: Context) {
+    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            Log.d(TAG, "로그인 실패 -> $error ")
+            Toast.makeText(context, "카카오톡 로그인 실패", Toast.LENGTH_SHORT).show()
+        } else if (token != null) {
+            Log.d(TAG, "로그인 성공: ${token.accessToken}")
         }
     }
-}
 
+    if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
+        UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
+            if (error != null) {
 
-@Preview
-@Composable
-fun Preview() {
-    Dialog(onDismissRequest = { /*TODO*/ }) {
+                // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
+                // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
+                Log.d(TAG, "로그인 실패 두번째 -> $error")
+                if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
+                    return@loginWithKakaoTalk
+                }
+                // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
+                UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
 
+            } else if (token != null) {
+                Log.d(TAG, "카카오 로그인 성공! 두번째 : ${token.accessToken} ")
+
+            } else {
+                UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
+                Log.d(TAG, "넌 뭐니? : ")
+            }
+
+        }
     }
 }
