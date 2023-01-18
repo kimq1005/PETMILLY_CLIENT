@@ -29,6 +29,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -37,10 +38,11 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
+import llama.test.jetpack_dagger_plz.utils.Common.HOMESCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
-fun LoginScreen(viewModel: MainViewModel = hiltViewModel()) {
+fun LoginScreen(navController: NavController,viewModel: MainViewModel = hiltViewModel()) {
 
     val context = LocalContext.current
 
@@ -93,8 +95,9 @@ fun LoginScreen(viewModel: MainViewModel = hiltViewModel()) {
             CustomDialog(
                 onDismiss = { viewModel.onDismissDialog() },
                 onConfirm = {
-                    kakaoLogin(context)
+//                    kakaoLogin(context)
                     viewModel.onDismissDialog()
+                    navController.navigate(HOMESCREEN)
                 }
             )
         }

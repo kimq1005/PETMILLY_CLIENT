@@ -15,16 +15,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.presentation.homescreen.HomeScreen
 import com.llama.petmilly_client.presentation.loginscreen.LoginScreen
 import com.llama.petmilly_client.ui.theme.PET_MILLY_CLIENTTheme
 import dagger.hilt.android.AndroidEntryPoint
+import llama.test.jetpack_dagger_plz.utils.Common.HOMESCREEN
+import llama.test.jetpack_dagger_plz.utils.Common.LOGINSCREEN
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LoginScreen()
+            val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = LOGINSCREEN){
+                composable(route = LOGINSCREEN){
+                    LoginScreen(navController)
+                }
+
+                composable(route = HOMESCREEN){
+                    HomeScreen(navController)
+                }
+            }
         }
     }
 }
