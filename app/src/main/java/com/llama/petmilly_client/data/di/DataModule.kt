@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.data.di
 
 import com.llama.petmilly_client.data.network.ApiService
+import com.llama.petmilly_client.data.network.LibraryApiService
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.Provides
@@ -21,6 +22,15 @@ object DataModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
+    }
+
+    @Provides
+    fun LibraryApiSerVice() : LibraryApiService{
+        return Retrofit.Builder()
+            .baseUrl("http://openapi.seoul.go.kr:8088/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(LibraryApiService::class.java)
     }
 
 }

@@ -4,17 +4,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.progressSemantics
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,42 +15,52 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.data.model.LibraryDTO.Row
+import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.compose.*
+import com.naver.maps.map.overlay.Marker
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
+import ted.gun0912.clustering.naver.TedNaverClustering
 
+private val naverMap : NaverMap?=null
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltViewModel()) {
 
     val (search, setsearch) = rememberSaveable {
         mutableStateOf(" ")
     }
-    val viewModel:HomeViewModel = viewModel()
+
+    val context = LocalContext.current
+
     Scaffold(
         bottomBar = {
             BottomNavigation(navController = navController)
         }
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp)){
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+            ) {
 
                 OutlinedTextField(
                     value = search,
-                    onValueChange =setsearch,
+                    onValueChange = setsearch,
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Image(
-                    painter = painterResource(id = R.drawable.baseline_search_24) ,
+                    painter = painterResource(id = R.drawable.baseline_search_24),
                     contentDescription = null,
                     modifier = Modifier
                         .height(40.dp)
@@ -66,7 +69,7 @@ fun HomeScreen(navController: NavController) {
                         .align(Alignment.CenterEnd)
                 )
             }
-            
+
             viewModel.setcategory()
 //
 //            LazyVerticalGrid(
@@ -91,10 +94,10 @@ fun HomeScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
-            ){
+            ) {
                 viewModel.setcategory()
 
-                items(viewModel.categorytest){ categorylist->
+                items(viewModel.categorytest) { categorylist ->
                     Row {
                         CategoryItems(categoryTest = categorylist) {
                             Log.d(TAG, "HomeScreen: ${categorylist.title}")
@@ -107,7 +110,7 @@ fun HomeScreen(navController: NavController) {
 
             }
 
-            NaverMapMan(modifier = Modifier)
+            NaverMapMan(viewModel)
         }
 
     }
@@ -115,7 +118,8 @@ fun HomeScreen(navController: NavController) {
 
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
-fun NaverMapMan(modifier: Modifier){
+fun NaverMapMan(viewModel: HomeViewModel) {
+    viewModel.getlibrary()
     val seoul = LatLng(37.532600, 127.024612)
     val context = LocalContext.current
     val cameraPositionState: CameraPositionState = rememberCameraPositionState {
@@ -123,13 +127,19 @@ fun NaverMapMan(modifier: Modifier){
         position = CameraPosition(seoul, 11.0)
     }
 
-    Box(){
+
+    Box() {
         NaverMap(
             cameraPositionState = cameraPositionState
-        ){
-            Marker(
-                state = MarkerState(position = seoul)
-            )
+        ) {
+            val list = viewModel.row
+            for(i in list){
+                val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
+                Marker(
+                    state = MarkerState(position = postion)
+                )
+            }
+
         }
     }
 
@@ -137,9 +147,4 @@ fun NaverMapMan(modifier: Modifier){
 
 
 
-@Preview
-@Composable
-fun Test(){
-    val navController = rememberNavController()
-    HomeScreen(navController = navController)
-}
+

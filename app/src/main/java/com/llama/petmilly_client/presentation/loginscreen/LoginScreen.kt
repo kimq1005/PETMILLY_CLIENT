@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.loginscreen
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -15,20 +16,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -36,9 +33,9 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.MainViewModel
+import com.llama.petmilly_client.presentation.homescreen.HomeActivity
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
-import llama.test.jetpack_dagger_plz.utils.Common.HOMESCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
@@ -97,7 +94,11 @@ fun LoginScreen(navController: NavController,viewModel: MainViewModel = hiltView
                 onConfirm = {
 //                    kakaoLogin(context)
                     viewModel.onDismissDialog()
-                    navController.navigate(HOMESCREEN)
+                    val intent = Intent(context, HomeActivity::class.java)
+                    context.startActivity(intent)
+//                    navController.navigate(HOMESCREEN){
+//                        popUpTo(LOGINSCREEN)
+//                    }
                 }
             )
         }

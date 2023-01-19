@@ -22,4 +22,6 @@ interface ApiService {
         @Query("apiKey") apiKey :String
     ) :Response<NewsTestDTO>
 
+    
+
 }
