@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
                     }
 
                     else -> {
-                        Log.d(TAG, "getlibrary: ${it.status}-->${it.message}")
+                        Log.d(TAG, "getlibrary: ${it.status}->${it.message}")
                     }
                 }
             }
@@ -89,15 +89,6 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
         }
     }
 
-    fun getrowman(){
-        viewModelScope.launch(Dispatchers.Main) {
-            libraryEntitylist.value?.let {
-                row.addAll(it.SeoulPublicLibraryInfo.row)
-//                Log.d(TAG, "getrowman: ${row[0]}")
-
-            }
-        }
-    }
 }
 
 

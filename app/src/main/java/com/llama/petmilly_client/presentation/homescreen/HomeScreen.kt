@@ -106,7 +106,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                 items(viewModel.categorytest) { categorylist ->
                     Row {
                         CategoryItems(categoryTest = categorylist) {
-                            Log.d(TAG, "HomeScreen: ${categorylist.title}")
+
                         }
 
                     }
