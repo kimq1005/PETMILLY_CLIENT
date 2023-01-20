@@ -15,6 +15,7 @@
  */
 package com.llama.petmilly_client.presentation.homescreen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -36,6 +37,7 @@ import com.naver.maps.map.compose.DisposableMapEffect
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 import ted.gun0912.clustering.clustering.TedClusterItem
 import ted.gun0912.clustering.geometry.TedLatLng
 import ted.gun0912.clustering.naver.TedNaverClustering
@@ -55,13 +57,17 @@ fun MapClusteringScreen(upPress: () -> Unit) {
 private fun NaverMapClustering() {
     val items = remember { mutableStateListOf<MyItem>() }
     LaunchedEffect(Unit) {
-        repeat(100) {
+
+        repeat(50) {
             val position = LatLng(
                 POSITION.latitude + Random.nextFloat(),
                 POSITION.longitude + Random.nextFloat(),
             )
             items.add(MyItem(position, "Marker", "Snippet"))
         }
+
+        Log.d(TAG, "NaverMapClustering: ${items.get(0)}")
+
     }
     NaverMapClustering(items = items)
 }

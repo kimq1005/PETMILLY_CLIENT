@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -40,30 +41,22 @@ fun NavigationGraph(navController: NavHostController) {
     val context = LocalContext.current
     NavHost(navController, startDestination = BottomNavItem.Home.screen_route) {
         composable(BottomNavItem.Home.screen_route) {
+
             HomeScreen(navController)
-            Toast.makeText(context, "Home", Toast.LENGTH_SHORT).show()
-
-            Log.d(TAG, "NavigationGraph: Home")
-
         }
         composable(BottomNavItem.Chatting.screen_route) {
             NetworkScreen()
-            Toast.makeText(context, "MyNetwork", Toast.LENGTH_SHORT).show()
 
 
         }
         composable(BottomNavItem.Heart.screen_route) {
             AddPostScreen()
-            Toast.makeText(context, "AddPost", Toast.LENGTH_SHORT).show()
 
-            Log.d(TAG, "NavigationGraph: AddPost")
 
         }
         composable(BottomNavItem.Person.screen_route) {
             NotificationScreen()
-            Toast.makeText(context, "Notification", Toast.LENGTH_SHORT).show()
 
-            Log.d(TAG, "NavigationGraph: Notification")
 
         }
 

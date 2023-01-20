@@ -9,6 +9,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.presentation.homescreen.HomeScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,9 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+
+            val viewmodel = hiltViewModel<HomeViewModel>()
+            viewmodel.getlibrary()
 
             Scaffold(bottomBar = {
                 BottomNavigation(navController =navController)

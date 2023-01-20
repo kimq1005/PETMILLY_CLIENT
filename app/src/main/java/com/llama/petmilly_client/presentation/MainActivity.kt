@@ -31,9 +31,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-//            LoginScreen(navController = navController)
+            LoginScreen(navController = navController)
 
-            MapClusteringScreen(){}
+//            MapClusteringScreen(){}
 
 //            NavHost(navController = navController, startDestination = LOGINSCREEN) {
 //                composable(route = LOGINSCREEN) {

@@ -1,12 +1,21 @@
 package com.llama.petmilly_client.presentation.homescreen
 
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.llama.petmilly_client.data.model.LibraryDTO.LibraryDTO
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
 import com.llama.petmilly_client.domain.repository.GetLibraryRepo
+import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
@@ -19,8 +28,17 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
 
     val APIKEY = "6b684a65456b696d3333794b66704f"
 
-    val libraryEntitylist :MutableList<LibraryDTO> = arrayListOf()
+    val libraryEntitylist :MutableLiveData<LibraryDTO> = MutableLiveData<LibraryDTO>()
     val row :MutableList<Row> = arrayListOf()
+
+    val items :MutableList<ClusterItem> = arrayListOf()
+
+    private val _yeahman = MutableLiveData<List<Row>>()
+    val yeahman :LiveData<List<Row>> = _yeahman
+
+
+    private val _name = MutableLiveData("")
+    val name: LiveData<String> = _name
 
     fun setcategory() {
 
@@ -45,15 +63,20 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
 
     }
 
+    fun setTest(){
+        _yeahman.value = yeahman.value
+    }
+
     fun getlibrary() {
         viewModelScope.launch {
-            getLibraryRepo.getLibrary(APIKEY, 1, 5).let {
+            getLibraryRepo.getLibrary(APIKEY, 1, 20).let {
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
                         it.data?.let {data->
-
-                            row.addAll(data.SeoulPublicLibraryInfo.row)
-                            Log.d(TAG, "SUCCESS : ${data.SeoulPublicLibraryInfo.list_total_count}")
+                            _yeahman.value = data.SeoulPublicLibraryInfo.row
+                            setTest()
+                            Log.d(TAG, "getlibrary: yeha")
+//                            Log.d(TAG, "getlibrary: ${_yeahman.value}")
                         }
                     }
 
@@ -63,6 +86,16 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
                 }
             }
 
+        }
+    }
+
+    fun getrowman(){
+        viewModelScope.launch(Dispatchers.Main) {
+            libraryEntitylist.value?.let {
+                row.addAll(it.SeoulPublicLibraryInfo.row)
+//                Log.d(TAG, "getrowman: ${row[0]}")
+
+            }
         }
     }
 }
