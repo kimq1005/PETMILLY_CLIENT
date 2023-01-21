@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.homescreen
 
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -25,11 +26,13 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
 import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
+import com.llama.petmilly_client.presentation.shelterscreen.ShelterActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.Marker
+import llama.test.jetpack_dagger_plz.utils.Common.SAFESHELTER_COMPOSABLE
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 import ted.gun0912.clustering.clustering.TedClusterItem
 import ted.gun0912.clustering.geometry.TedLatLng
@@ -125,11 +128,6 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
     }
 }
 
-@Composable
-fun Test(viewModel: HomeViewModel){
-    viewModel.getlibrary()
-
-}
 
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
@@ -196,6 +194,24 @@ private fun MapClustering(items: List<ClusterItem>) {
         DisposableMapEffect(items) { map ->
             if (clusterManager == null) {
                 clusterManager = TedNaverClustering.with<ClusterItem>(context, map)
+                    .markerClickListener { marker->
+
+                        val intent = Intent(context, ShelterActivity::class.java)
+                        context.startActivity(intent)
+                        marker.itemTitle
+                    }
+                    .clusterClickListener { cluster->
+
+                        val totalclusteritems = cluster.items //클러스터링 전체의 아이템
+                        val clusterposition = cluster.position //클러스터링의 포지션
+
+                        val intent = Intent(context, ShelterActivity::class.java).apply {
+                            putExtra(SAFESHELTER_COMPOSABLE, SAFESHELTER_COMPOSABLE)
+                        }
+                        context.startActivity(intent)
+
+
+                    }
                     .make()
             }
             clusterManager?.addItems(items)
