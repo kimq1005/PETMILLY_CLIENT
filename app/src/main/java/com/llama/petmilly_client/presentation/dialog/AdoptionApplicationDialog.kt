@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.dialog
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -32,6 +33,7 @@ import com.llama.petmilly_client.ui.theme.Purple200
 fun AdoptionApplicationDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
+    onModify : () -> Unit
 ) {
     Dialog(
         onDismissRequest = { onDismiss() },
@@ -96,6 +98,9 @@ fun AdoptionApplicationDialog(
                 Text(
                     text = "수정하기", fontSize = 18.sp, modifier = Modifier
                         .align(Alignment.CenterHorizontally)
+                        .clickable {
+                            onModify()
+                        }
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -146,7 +151,5 @@ fun AdoptionApplicationDialog(
 @Preview
 @Composable
 fun Preview(){
-    AdoptionApplicationDialog(onDismiss = { }) {
-        
-    }
+
 }

@@ -156,6 +156,9 @@ fun AnimalInfoDetailScreen(
 //                    navController.navigate(HOMESCREEN){
 //                        popUpTo(LOGINSCREEN)
 //                    }
+                },
+                onModify = {
+
                 }
             )
         }
