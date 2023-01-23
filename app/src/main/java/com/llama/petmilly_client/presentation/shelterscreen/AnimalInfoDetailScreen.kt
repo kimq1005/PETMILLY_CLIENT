@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.certificationscreen.CertificationActivity
 import com.llama.petmilly_client.presentation.dialog.AdoptionApplicationDialog
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
 import com.llama.petmilly_client.presentation.loginscreen.CustomDialog
@@ -31,7 +34,7 @@ fun AnimalInfoDetailScreen(
     navController: NavController,
     viewModel: ShelterViewModel = viewModel(),
 ) {
-
+    val context = LocalContext.current
     viewModel.setanimalinfovalue()
     val scrollState = rememberScrollState()
     Column(
@@ -158,7 +161,10 @@ fun AnimalInfoDetailScreen(
 //                    }
                 },
                 onModify = {
-
+                    Toast.makeText(context,"wow", Toast.LENGTH_SHORT).show()
+                    val intent= Intent(/* packageContext = */ context, /* cls = */
+                        CertificationActivity::class.java)
+                    context.startActivity(intent)
                 }
             )
         }

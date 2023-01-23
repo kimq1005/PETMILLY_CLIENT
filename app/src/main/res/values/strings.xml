@@ -8,4 +8,5 @@
     <string name="kakao_login_text">카카오 회원가입/로그인</string>
     <string name="kakao_login_dialog_text">펫밀리에서 카카오톡을(를)\n열려고 합니다.</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_certification">CertificationActivity</string>
 </resources>
