@@ -9,4 +9,7 @@ object Common {
     const val SAFESHELTER_COMPOSABLE = "SAFESHELTER_COMPOSABLE"
     const val ANIMALINFO_DETAIL = "ANIMALINFO_DETAIL"
 
+    const val LOCATION_AUTHENTICATION_SCREEN="LocationauthenticationScreen"
+    const val PERSONALINFOSCREEN = "PersonalInfoScreen"
+
 }

@@ -1,7 +1,6 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -34,6 +33,7 @@ fun AnimalInfoDetailScreen(
     navController: NavController,
     viewModel: ShelterViewModel = viewModel(),
 ) {
+
     val context = LocalContext.current
     viewModel.setanimalinfovalue()
     val scrollState = rememberScrollState()
@@ -152,18 +152,13 @@ fun AnimalInfoDetailScreen(
 
         if (viewModel.isDialogShown) {
             AdoptionApplicationDialog(
-                onDismiss = { viewModel.onDismissDialog() },
+                onDismiss = { viewModel.onAdoptionDialogDismissDialog() },
                 onConfirm = {
-//                    kakaoLogin(context)
-                    viewModel.onDismissDialog()
-//                    navController.navigate(HOMESCREEN){
-//                        popUpTo(LOGINSCREEN)
-//                    }
+                        //동의 신청서 다이얼로그
+                            viewModel.onAdoptionDialogConfirmClick()
                 },
                 onModify = {
-                    Toast.makeText(context,"wow", Toast.LENGTH_SHORT).show()
-                    val intent= Intent(/* packageContext = */ context, /* cls = */
-                        CertificationActivity::class.java)
+                    val intent = Intent(context, CertificationActivity::class.java)
                     context.startActivity(intent)
                 }
             )

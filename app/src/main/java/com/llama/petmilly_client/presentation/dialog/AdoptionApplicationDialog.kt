@@ -128,7 +128,7 @@ fun AdoptionApplicationDialog(
                         )
                     }
                     Button(
-                        onClick = { onConfirm() },
+                        onClick = { onDismiss() },
                         modifier = Modifier
                             .weight(1f)
                             .padding(start = 5.dp, end = 20.dp),
@@ -139,7 +139,10 @@ fun AdoptionApplicationDialog(
                             text = "동의 및 제출",
                             color = Color.White,
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.clickable {
+                                onConfirm()
+                            }
                         )
                     }
                 }

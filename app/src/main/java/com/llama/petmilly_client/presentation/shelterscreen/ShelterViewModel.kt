@@ -15,6 +15,9 @@ class ShelterViewModel() : ViewModel() {
     var isDialogShown by mutableStateOf(false)
         private set
 
+    var isAdoptionApplicationDialogShown by mutableStateOf(false)
+        private set
+
     val animalname = mutableStateOf<String>("")
     val animalgenter = mutableStateOf<String>("")
     val animalage = mutableStateOf(0)
@@ -47,6 +50,15 @@ class ShelterViewModel() : ViewModel() {
     fun onDismissDialog(){
         isDialogShown = false
     }
+
+    fun onAdoptionDialogConfirmClick(){
+        isAdoptionApplicationDialogShown = true
+    }
+
+    fun onAdoptionDialogDismissDialog(){
+        isAdoptionApplicationDialogShown = false
+    }
+
 
     fun setcategory() {
 

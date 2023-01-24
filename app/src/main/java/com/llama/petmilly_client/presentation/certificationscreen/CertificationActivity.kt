@@ -1,13 +1,9 @@
 package com.llama.petmilly_client.presentation.certificationscreen
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Checkbox
 import androidx.compose.material.OutlinedTextField
@@ -15,10 +11,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -26,17 +20,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.solver.state.Dimension
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
-import com.llama.petmilly_client.ui.theme.Purple700
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.naver.maps.map.compose.*
 import dagger.hilt.android.AndroidEntryPoint
-import org.jetbrains.annotations.TestOnly
+import llama.test.jetpack_dagger_plz.utils.Common.LOCATION_AUTHENTICATION_SCREEN
+import llama.test.jetpack_dagger_plz.utils.Common.PERSONALINFOSCREEN
 
 @OptIn(ExperimentalNaverMapApi::class)
 @AndroidEntryPoint
@@ -46,7 +41,19 @@ class CertificationActivity : ComponentActivity() {
         setContent {
             Surface() {
                 val navController = rememberNavController()
-                LocationauthenticationScreen(navController, this)
+
+                NavHost(
+                    navController = navController,
+                    startDestination = LOCATION_AUTHENTICATION_SCREEN
+                ) {
+                    composable(route = LOCATION_AUTHENTICATION_SCREEN) {
+                        LocationauthenticationScreen(navController, this@CertificationActivity)
+                    }
+                    composable(route = PERSONALINFOSCREEN) {
+                        PersonalInfoScreen(this@CertificationActivity)
+                    }
+                }
+//                LocationauthenticationScreen(navController, this)
             }
 
 
@@ -101,7 +108,7 @@ fun LocationauthenticationScreen(navController: NavController, activity: Activit
             fontSize = 16,
             textcolor = Color.White,
             onclick = {
-
+                navController.navigate(PERSONALINFOSCREEN)
             }
         )
     }
@@ -110,11 +117,12 @@ fun LocationauthenticationScreen(navController: NavController, activity: Activit
 
 
 @Composable
-fun PersonalInfoScreen() {
+fun PersonalInfoScreen(activity: Activity) {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(16.dp)) {
+            .padding(16.dp)
+    ) {
 
         val (value, setvaluse) = rememberSaveable {
             mutableStateOf(" ")
@@ -191,21 +199,21 @@ fun PersonalInfoScreen() {
         )
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            Text(text = "있다",Modifier.align(Alignment.CenterVertically))
+            Text(text = "있다", Modifier.align(Alignment.CenterVertically))
             Checkbox(
-                checked = animalExperiencee ,
-                onCheckedChange= setanimalExperience,
+                checked = animalExperiencee,
+                onCheckedChange = setanimalExperience,
             )
 
             Spacer(modifier = Modifier.width(10.dp))
 
-            Text(text = "없다",Modifier.align(Alignment.CenterVertically))
-            Checkbox(checked = animalExperiencee , onCheckedChange= setanimalExperience )
+            Text(text = "없다", Modifier.align(Alignment.CenterVertically))
+            Checkbox(checked = animalExperiencee, onCheckedChange = setanimalExperience)
 
             Spacer(modifier = Modifier.width(10.dp))
 
-            Text(text = "키운적있다.",Modifier.align(Alignment.CenterVertically))
-            Checkbox(checked = animalExperiencee , onCheckedChange= setanimalExperience )
+            Text(text = "키운적있다.", Modifier.align(Alignment.CenterVertically))
+            Checkbox(checked = animalExperiencee, onCheckedChange = setanimalExperience)
         }
 
 
@@ -218,16 +226,16 @@ fun PersonalInfoScreen() {
         )
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            Text(text = "있다",Modifier.align(Alignment.CenterVertically))
+            Text(text = "있다", Modifier.align(Alignment.CenterVertically))
             Checkbox(
-                checked = animalExperiencee ,
-                onCheckedChange= setanimalExperience,
+                checked = animalExperiencee,
+                onCheckedChange = setanimalExperience,
             )
 
             Spacer(modifier = Modifier.width(10.dp))
 
-            Text(text = "없다",Modifier.align(Alignment.CenterVertically))
-            Checkbox(checked = animalExperiencee , onCheckedChange= setanimalExperience )
+            Text(text = "없다", Modifier.align(Alignment.CenterVertically))
+            Checkbox(checked = animalExperiencee, onCheckedChange = setanimalExperience)
 
         }
 
@@ -249,12 +257,16 @@ fun PersonalInfoScreen() {
             color = Color.Black
         )
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)) {
-            OutlinedTextField(value = value, onValueChange = setvaluse, modifier = Modifier
-                .weight(8f)
-                .fillMaxHeight() )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+        ) {
+            OutlinedTextField(
+                value = value, onValueChange = setvaluse, modifier = Modifier
+                    .weight(8f)
+                    .fillMaxHeight()
+            )
 
             Spacer(modifier = Modifier.width(5.dp))
             ButtonScreen(
@@ -280,36 +292,34 @@ fun PersonalInfoScreen() {
         )
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            Text(text = "있다",Modifier.align(Alignment.CenterVertically))
+            Text(text = "있다", Modifier.align(Alignment.CenterVertically))
             Checkbox(
-                checked = animalExperiencee ,
-                onCheckedChange= setanimalExperience,
+                checked = animalExperiencee,
+                onCheckedChange = setanimalExperience,
             )
 
             Spacer(modifier = Modifier.width(10.dp))
 
-            Text(text = "없다",Modifier.align(Alignment.CenterVertically))
-            Checkbox(checked = animalExperiencee , onCheckedChange= setanimalExperience )
+            Text(text = "없다", Modifier.align(Alignment.CenterVertically))
+            Checkbox(checked = animalExperiencee, onCheckedChange = setanimalExperience)
 
         }
 
 
         Spacer(modifier = Modifier.weight(1f))
 
-        ButtonScreen(title = "수정완료", textcolor = Color.White, fontSize = 16, modifier = Modifier.fillMaxWidth() , backgroundcolor = Button_Clicked ) {
-
+        ButtonScreen(
+            title = "수정완료",
+            textcolor = Color.White,
+            fontSize = 16,
+            modifier = Modifier.fillMaxWidth(),
+            backgroundcolor = Button_Clicked
+        ) {
+            activity.finish()
         }
 
 
-
-
     }
-}
-
-@Preview
-@Composable
-fun Test() {
-    PersonalInfoScreen()
 }
 
 
