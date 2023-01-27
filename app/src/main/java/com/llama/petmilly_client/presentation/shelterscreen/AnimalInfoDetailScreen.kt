@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -25,8 +26,10 @@ import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.certificationscreen.CertificationActivity
 import com.llama.petmilly_client.presentation.dialog.AdoptionApplicationDialog
+import com.llama.petmilly_client.presentation.dialog.AdoptionCompletedDialog
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
 import com.llama.petmilly_client.presentation.loginscreen.CustomDialog
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
 fun AnimalInfoDetailScreen(
@@ -152,10 +155,11 @@ fun AnimalInfoDetailScreen(
 
         if (viewModel.isDialogShown) {
             AdoptionApplicationDialog(
-                onDismiss = { viewModel.onAdoptionDialogDismissDialog() },
+                onDismiss = { viewModel.onDismissDialog() },
                 onConfirm = {
-                        //동의 신청서 다이얼로그
-                            viewModel.onAdoptionDialogConfirmClick()
+                    //동의 신청서 다이얼로그
+                    viewModel.onDismissDialog()
+                    viewModel.onAdoptionDialogConfirmClick()
                 },
                 onModify = {
                     val intent = Intent(context, CertificationActivity::class.java)
@@ -163,14 +167,14 @@ fun AnimalInfoDetailScreen(
                 }
             )
         }
+
+        if (viewModel.isAdoptionApplicationDialogShown) {
+            AdoptionCompletedDialog(
+                onDismiss = { viewModel.onAdoptionDialogDismissDialog() },
+                onConfirm = { Log.d(TAG, "AnimalInfoDetailScreen: wow")})
+
+        }
+
     }
 
-}
-
-
-@Preview
-@Composable
-fun PreviewTEST() {
-    val navController = rememberNavController()
-    AnimalInfoDetailScreen(navController = navController)
 }

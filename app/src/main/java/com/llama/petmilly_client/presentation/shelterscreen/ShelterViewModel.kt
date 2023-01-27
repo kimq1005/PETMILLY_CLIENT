@@ -60,6 +60,7 @@ class ShelterViewModel() : ViewModel() {
     }
 
 
+
     fun setcategory() {
 
         val entity = CategoryTest("전체")

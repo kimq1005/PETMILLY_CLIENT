@@ -32,7 +32,6 @@ import com.llama.petmilly_client.utils.ButtonScreen
 fun AdoptionCompletedDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
-    onModify : () -> Unit
 ) {
     Dialog(
         onDismissRequest = { onDismiss() },
@@ -86,13 +85,5 @@ fun AdoptionCompletedDialog(
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun Previasdew(){
-    AdoptionCompletedDialog(onDismiss = { /*TODO*/ }, onConfirm = { /*TODO*/ }) {
-        
     }
 }
