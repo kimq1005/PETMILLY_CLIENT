@@ -12,4 +12,7 @@ object Common {
     const val LOCATION_AUTHENTICATION_SCREEN="LocationauthenticationScreen"
     const val PERSONALINFOSCREEN = "PersonalInfoScreen"
 
+    const val CHATSCREEN = "chatscreen"
+    const val CHATTINGROOMSCREEN="chattingroomscreen"
+
 }

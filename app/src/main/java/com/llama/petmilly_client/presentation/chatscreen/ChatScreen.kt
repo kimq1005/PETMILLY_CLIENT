@@ -1,35 +1,35 @@
 package com.llama.petmilly_client.presentation.chatscreen
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposableInferredTarget
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.*
 import com.llama.petmilly_client.presentation.chatscreen.items.ChatItem
 import com.llama.petmilly_client.presentation.chatscreen.items.ChatModel
 import com.llama.petmilly_client.ui.theme.Purple700
 import kotlinx.coroutines.launch
+import llama.test.jetpack_dagger_plz.utils.Common.CHATSCREEN
+import llama.test.jetpack_dagger_plz.utils.Common.CHATTINGROOMSCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 
@@ -37,6 +37,7 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 @Composable
 fun ChatScreen() {
     val pagerState = rememberPagerState(1)
+    val navController = rememberNavController()
 
     Column(
 
@@ -61,6 +62,8 @@ fun ChatScreen() {
         }
         Tabs(pagerState)
         TabsContent(pagerState = pagerState)
+
+
 
     }
 }
@@ -108,18 +111,15 @@ fun Tabs(pagerState: PagerState) {
 
 @ExperimentalPagerApi
 @Composable
-fun TabsContent(pagerState: PagerState){
+fun TabsContent(pagerState: PagerState) {
     HorizontalPager(state = pagerState, count = 3) {
-        // on below line we are specifying
-        // the different pages.
+
             page ->
         when (page) {
-            // on below line we are calling tab content screen
-            // and specifying data as Home Screen.
+
             0 -> TabContentScreen(data = "Welcome to Home Screen")
-            // on below line we are calling tab content screen
-            // and specifying data as Shopping Screen.
-            1 -> ChatTabScreen()
+
+            1 -> ChatEntityScreen()
 
             2 -> TabContentScreen(data = "Welcome to Settings Screen")
         }
@@ -127,7 +127,7 @@ fun TabsContent(pagerState: PagerState){
 }
 
 @Composable
-fun TabContentScreen(data:String){
+fun TabContentScreen(data: String) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -145,34 +145,54 @@ fun TabContentScreen(data:String){
 }
 
 @Composable
-fun ChatTabScreen(){
-    Column{
+fun ChatEntityScreen(){
+    val navController = rememberNavController()
 
-        LazyColumn(){
-            val item = listOf(
-                ChatModel("김승현","설명이다","10시30분","1"),
-                ChatModel("김승현","설명이다","10시30분","1"),
-                ChatModel("김승현","설명이다","10시30분","1"),
-                ChatModel("김승현","설명이다","10시30분","1")
-            )
-
-            items(item){chatmodel->
-                Column {
-                    ChatItem(chatModel = chatmodel) {
-                        Log.d(TAG, "ChatTabScreen: ${chatmodel.description}")
-                    }
-
-                    Spacer(modifier = Modifier.height(5.dp))
-                }
-
-            }
-
+    NavHost(navController = navController, startDestination = CHATSCREEN){
+        composable(CHATSCREEN){
+            ChatTabScreen(navController)
         }
+
+        composable("$CHATTINGROOMSCREEN/{hello}"){
+            val wow =it.arguments?.getString("hello")
+            Log.d(TAG, "ChatTabScreen: $wow")
+            ChattingRoomScreen(navController = navController,wow.toString())
+        }
+
     }
 }
 
 @Composable
-fun TabContentScreen3(data:String){
+fun ChatTabScreen(navController:NavController) {
+    Column {
+
+        LazyColumn() {
+            val item = listOf(
+                ChatModel("김승현", "설명이다", "10시30분", "1"),
+                ChatModel("와우맨", "히", "10시30분", "1"),
+                ChatModel("ㄹㄹㅋㄴㅇ", "ㅁㄴㅇ", "10시30분", "1"),
+                ChatModel("ㅁㅇㅁㄴㅇ", "ㅁㄴㅇ", "10시30분", "1")
+            )
+
+            items(item) { chatmodel ->
+
+                ChatItem(chatModel = chatmodel, onclick =
+                {
+                   navController.navigate(CHATTINGROOMSCREEN + "/${chatmodel.name}")
+                })
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+
+            }
+
+        }
+
+    }
+}
+
+@Composable
+fun TabContentScreen3(data: String) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
