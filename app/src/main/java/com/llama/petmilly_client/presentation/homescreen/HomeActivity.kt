@@ -28,7 +28,8 @@ class HomeActivity : ComponentActivity() {
             Scaffold(bottomBar = {
                 BottomNavigation(navController =navController)
             }) {
-             NavigationGraph(navController = navController)   
+             NavigationGraph(navController = navController)
+
             }
 //            HomeScreen(navController)
         }

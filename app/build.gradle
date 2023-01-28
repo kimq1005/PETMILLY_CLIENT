@@ -129,4 +129,7 @@ dependencies {
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.30.7'
 
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02"
+
+    implementation "com.google.accompanist:accompanist-pager:0.23.1"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.23.1"
 }
