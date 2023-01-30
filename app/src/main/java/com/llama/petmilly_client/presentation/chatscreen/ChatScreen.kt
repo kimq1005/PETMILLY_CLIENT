@@ -33,11 +33,28 @@ import llama.test.jetpack_dagger_plz.utils.Common.CHATTINGROOMSCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 
+@Composable
+fun ChatEntityScreen() {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = CHATSCREEN){
+        composable(CHATSCREEN){
+            ChatScreen(navController)
+        }
+
+        composable("CHATTINGROOMSCREEN/{hello}"){
+            val wow =it.arguments?.getString("hello").toString()
+            Log.d(TAG, "ChatTabScreen: $wow")
+            ChattingRoomScreen(navController, wow.toString())
+        }
+    }
+}
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun ChatScreen() {
+fun ChatScreen(navController: NavController) {
     val pagerState = rememberPagerState(1)
-    val navController = rememberNavController()
+//    val navController = rememberNavController()
 
     Column(
 
@@ -60,9 +77,9 @@ fun ChatScreen() {
                 )
             }
         }
-        Tabs(pagerState)
-        TabsContent(pagerState = pagerState)
 
+        Tabs(pagerState)
+        TabsContent(pagerState = pagerState, navController)
 
 
     }
@@ -72,9 +89,9 @@ fun ChatScreen() {
 @Composable
 fun Tabs(pagerState: PagerState) {
     val list = listOf(
-        "Home" to Icons.Default.Home,
-        "Shopping" to Icons.Default.ShoppingCart,
-        "Settings" to Icons.Default.Settings
+        "입양신청서" to Icons.Default.Home,
+        "채팅" to Icons.Default.ShoppingCart,
+        "즐겨찾기" to Icons.Default.Settings
     )
 
     val scope = rememberCoroutineScope()
@@ -111,15 +128,13 @@ fun Tabs(pagerState: PagerState) {
 
 @ExperimentalPagerApi
 @Composable
-fun TabsContent(pagerState: PagerState) {
-    HorizontalPager(state = pagerState, count = 3) {
-
-            page ->
+fun TabsContent(pagerState: PagerState, navController: NavController) {
+    HorizontalPager(state = pagerState, count = 3) { page ->
         when (page) {
 
             0 -> TabContentScreen(data = "Welcome to Home Screen")
 
-            1 -> ChatEntityScreen()
+            1 -> ChatTabScreen(navController)
 
             2 -> TabContentScreen(data = "Welcome to Settings Screen")
         }
@@ -144,27 +159,12 @@ fun TabContentScreen(data: String) {
     }
 }
 
-@Composable
-fun ChatEntityScreen(){
-    val navController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = CHATSCREEN){
-        composable(CHATSCREEN){
-            ChatTabScreen(navController)
-        }
-
-        composable("$CHATTINGROOMSCREEN/{hello}"){
-            val wow =it.arguments?.getString("hello")
-            Log.d(TAG, "ChatTabScreen: $wow")
-            ChattingRoomScreen(navController = navController,wow.toString())
-        }
-
-    }
-}
 
 @Composable
-fun ChatTabScreen(navController:NavController) {
-    Column {
+fun ChatTabScreen(
+    navController: NavController,
+) {
+    Column(modifier = Modifier.padding(16.dp)) {
 
         LazyColumn() {
             val item = listOf(
@@ -175,10 +175,10 @@ fun ChatTabScreen(navController:NavController) {
             )
 
             items(item) { chatmodel ->
-
                 ChatItem(chatModel = chatmodel, onclick =
                 {
-                   navController.navigate(CHATTINGROOMSCREEN + "/${chatmodel.name}")
+                    navController.navigate(CHATTINGROOMSCREEN + "/${chatmodel.name}")
+//                    navController.navigate(CHATTINGROOMSCREEN)
                 })
 
                 Spacer(modifier = Modifier.height(5.dp))
@@ -213,5 +213,4 @@ fun TabContentScreen3(data: String) {
 @Preview
 @Composable
 fun Wow() {
-    ChatScreen()
 }

@@ -21,7 +21,7 @@ import com.llama.petmilly_client.ui.theme.Purple700
 @Composable
 fun ShelterCategoryItems(
     title: String,
-    onclcik:()->Unit,
+    onclcik:()->Unit
 ) {
     Card(modifier = Modifier
         .fillMaxSize()
@@ -33,10 +33,16 @@ fun ShelterCategoryItems(
             modifier = Modifier.fillMaxSize()
         ) {
             Image(
-                modifier = Modifier.width(90.dp).height(90.dp),
+                modifier = Modifier
+                    .width(90.dp)
+                    .height(90.dp),
                 painter = painterResource(id = R.drawable.baseline_person_24),
                 contentDescription = null,
             )
+
+            Row(modifier = Modifier.fillMaxSize()) {
+
+            }
 
 
 

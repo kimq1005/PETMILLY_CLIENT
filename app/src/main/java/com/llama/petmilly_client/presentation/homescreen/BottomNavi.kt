@@ -28,6 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.chatscreen.ChatEntityScreen
 import com.llama.petmilly_client.presentation.chatscreen.ChatScreen
 
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
@@ -47,7 +48,7 @@ fun NavigationGraph(navController: NavHostController) {
         }
         composable(BottomNavItem.Chatting.screen_route) {
 
-            ChatScreen()
+            ChatEntityScreen()
 
 
         }
