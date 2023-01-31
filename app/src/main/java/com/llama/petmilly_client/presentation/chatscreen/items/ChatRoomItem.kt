@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.chatscreen.items
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,15 +15,24 @@ import androidx.compose.ui.unit.dp
  * 2. **/
 @Composable
 fun ChatRoomItem(
-    entityChatModel:EntityChatModel
+    entityChatModel: EntityChatModel,
+    onclick: () -> Unit
 ) {
-    Column(Modifier.fillMaxSize().padding(16.dp)) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
         when (entityChatModel.type) {
             0 -> {
-                SendItem(entityChatModel.plzChatModel.send)
+                SendItem(entityChatModel.plzChatModel.send, onclick = {
+                    onclick()
+                })
             }
             else -> {
-                ReciveItem(recive = entityChatModel.plzChatModel.recive)
+                ReciveItem(recive = entityChatModel.plzChatModel.recive, onclick = {
+                    onclick()
+                })
             }
         }
     }
@@ -31,28 +41,33 @@ fun ChatRoomItem(
 
 
 @Composable
-fun SendItem(send:String) {
+fun SendItem(
+    send: String,
+    onclick: () -> Unit,
+) {
     Column(
         Modifier
             .fillMaxWidth()
-            .height(60.dp)) {
+            .height(60.dp)
+    ) {
         Text(
             text = send,
-            modifier = Modifier.align(Alignment.Start),
-            color = Color.Red
+            modifier = Modifier.align(Alignment.Start).clickable { onclick() },
+            color = Color.Red,
         )
     }
 }
 
 @Composable
-fun ReciveItem(recive: String) {
+fun ReciveItem(recive: String, onclick: () -> Unit) {
     Column(
         Modifier
             .fillMaxWidth()
-            .height(60.dp)) {
+            .height(60.dp)
+    ) {
         Text(
             text = recive,
-            modifier = Modifier.align(Alignment.End),
+            modifier = Modifier.align(Alignment.End).clickable { onclick() },
             color = Color.Blue
         )
     }
@@ -60,12 +75,14 @@ fun ReciveItem(recive: String) {
 
 data class EntityChatModel(
     val type: Int,
-    val plzChatModel:PlzChatModel
+    val plzChatModel: PlzChatModel,
 )
+
 data class PlzChatModel(
-    val send:String="",
-    val recive:String=""
+    val send: String = "",
+    val recive: String = "",
 )
+
 data class SendChatModel(
     val sendchat: String,
     val type: Int = 0,

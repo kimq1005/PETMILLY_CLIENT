@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.chatscreen
 
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -20,6 +21,7 @@ import com.llama.petmilly_client.presentation.chatscreen.items.ChatRoomItem
 import com.llama.petmilly_client.presentation.chatscreen.items.EntityChatModel
 import com.llama.petmilly_client.presentation.chatscreen.items.PlzChatModel
 import com.llama.petmilly_client.presentation.chatscreen.items.SendChatModel
+import com.llama.petmilly_client.presentation.profilescreen.ProfileActivity
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import llama.test.jetpack_dagger_plz.utils.Common.MYToast
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
@@ -30,6 +32,8 @@ fun ChattingRoomScreen(navController: NavController,name:String) {
         TitleBar(title = name , ismenu = true , clickBack = { navController.popBackStack() }) {
 
         }
+        val context = LocalContext.current
+
 
         Spacer(modifier = Modifier.height(10.dp))
         LazyColumn(){
@@ -37,11 +41,14 @@ fun ChattingRoomScreen(navController: NavController,name:String) {
 
             entityChatModel.add(EntityChatModel(0, plzChatModel = PlzChatModel(send = "send다 send")))
             entityChatModel.add(EntityChatModel(0, plzChatModel = PlzChatModel(send = "send다 send")))
-            entityChatModel.add(EntityChatModel(1, plzChatModel = PlzChatModel(recive = "받는다 십색갸 send")))
+            entityChatModel.add(EntityChatModel(1, plzChatModel = PlzChatModel(recive = "받는다 ")))
             entityChatModel.add(EntityChatModel(0, plzChatModel = PlzChatModel("send다 send")))
 
             items(entityChatModel){
-                ChatRoomItem(it)
+                ChatRoomItem(it, onclick = {
+                    val intent = Intent(context, ProfileActivity::class.java)
+                    context.startActivity(intent)
+                })
             }
         }
 
@@ -50,7 +57,6 @@ fun ChattingRoomScreen(navController: NavController,name:String) {
             mutableStateOf(" ")
         }
 
-        val context = LocalContext.current
 
         OutlinedTextField(
             value = value,
