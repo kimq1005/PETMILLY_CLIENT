@@ -66,7 +66,6 @@ class CertificationActivity : ComponentActivity() {
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun LocationauthenticationScreen(navController: NavController, activity: Activity) {
-
     val context = LocalContext.current
     Column(Modifier.fillMaxSize()) {
         TitleBar(
