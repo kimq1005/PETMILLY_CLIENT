@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,6 +32,7 @@ import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategoryItems
 import com.llama.petmilly_client.ui.theme.Purple700
 import llama.test.jetpack_dagger_plz.utils.Common.ANIMALINFO_DETAIL
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
 fun SafeShelterListScreen(navController: NavController, viewModel: ShelterViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
@@ -43,17 +45,17 @@ fun SafeShelterListScreen(navController: NavController, viewModel: ShelterViewMo
                 .padding(16.dp)
         ) {
 
-            TitleBar("임보처 구해요",
-                ismenu = false,
-                clickBack = {
-                   navController.popBackStack()
-                },
-
-                clickMenu = {
-
-                }
-
-            )
+//            TitleBar("임보처 구해요",
+//                ismenu = false,
+//                clickBack = {
+//                   navController.popBackStack()
+//                },
+//
+//                clickMenu = {
+//
+//                }
+//
+//            )
 
             LazyRow(
                 modifier = Modifier

@@ -46,17 +46,17 @@ fun AnimalInfoDetailScreen(
             .verticalScroll(scrollState)
             .fillMaxSize()
     ) {
-        TitleBar(
-            title = "임보처 구해요",
-            ismenu = true,
-
-            clickBack = {
-                navController.popBackStack()
-            },
-            clickMenu = {
-
-            }
-        )
+//        TitleBar(
+//            title = "임보처 구해요",
+//            ismenu = true,
+//
+//            clickBack = {
+//                navController.popBackStack()
+//            },
+//            clickMenu = {
+//
+//            }
+//        )
 
 
         Text(text = "한줄소개 (매력)")
@@ -177,4 +177,12 @@ fun AnimalInfoDetailScreen(
 
     }
 
+}
+
+
+@Preview
+@Composable
+fun Woy(){
+    val navController = rememberNavController()
+    AnimalInfoDetailScreen(navController)
 }

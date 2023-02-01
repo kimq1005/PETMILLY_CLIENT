@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -22,10 +23,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common.ANIMALINFO_DETAIL
 import llama.test.jetpack_dagger_plz.utils.Common.SAFESHELTER_COMPOSABLE
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @AndroidEntryPoint
 class ShelterActivity : ComponentActivity() {
@@ -35,16 +38,40 @@ class ShelterActivity : ComponentActivity() {
             Surface {
                 val navController = rememberNavController()
 
-                val route = intent.getStringExtra(SAFESHELTER_COMPOSABLE).toString()
-                NavHost(navController = navController, startDestination = route) {
-                    composable(route = SAFESHELTER_COMPOSABLE) {
-                        SafeShelterListScreen(navController = navController)
+
+                Column {
+
+                    TitleBar(
+                        title = "임보처 구해요",
+                        ismenu = false,
+                        clickBack = {
+                            val SafeShelterListScreen =
+                                navController.currentBackStackEntry?.destination?.route
+                            if (SafeShelterListScreen == SAFESHELTER_COMPOSABLE) {
+                                finish()
+                            } else {
+                                navController.popBackStack(
+                                    route = SAFESHELTER_COMPOSABLE,
+                                    inclusive = false
+                                )
+
+                            }
+                        }) {
+
                     }
 
-                    composable(ANIMALINFO_DETAIL) {
-                        AnimalInfoDetailScreen(navController = navController)
+                    val route = intent.getStringExtra(SAFESHELTER_COMPOSABLE).toString()
+                    NavHost(navController = navController, startDestination = route) {
+                        composable(route = SAFESHELTER_COMPOSABLE) {
+                            SafeShelterListScreen(navController = navController)
+                        }
+
+                        composable(ANIMALINFO_DETAIL) {
+                            AnimalInfoDetailScreen(navController = navController)
+                        }
                     }
                 }
+
 
             }
         }
