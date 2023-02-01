@@ -21,14 +21,10 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-
-            val viewmodel = hiltViewModel<HomeViewModel>()
-            viewmodel.getlibrary()
-
             Scaffold(bottomBar = {
-                BottomNavigation(navController =navController)
+                BottomNavigation(navController = navController)
             }) {
-             NavigationGraph(navController = navController)
+                NavigationGraph(navController = navController)
 
             }
 //            HomeScreen(navController)
@@ -37,7 +33,7 @@ class HomeActivity : ComponentActivity() {
 }
 
 @Composable
-fun Test(){
+fun Test() {
     Column(modifier = Modifier.fillMaxSize()) {
         Text(text = "HEllo")
     }

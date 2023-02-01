@@ -1,6 +1,5 @@
 package com.llama.petmilly_client.presentation.homescreen
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -30,6 +29,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.chatscreen.ChatEntityScreen
 import com.llama.petmilly_client.presentation.chatscreen.ChatScreen
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
     object Home : BottomNavItem("펫밀리", R.drawable.baseline_home_24,"home")
@@ -40,16 +40,13 @@ sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:Stri
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
-    val context = LocalContext.current
-    NavHost(navController, startDestination = BottomNavItem.Home.screen_route) {
+    NavHost(navController, startDestination = BottomNavItem.Chatting.screen_route) {
         composable(BottomNavItem.Home.screen_route) {
-
-            HomeScreen(navController)
+            HomeScreen()
         }
+
         composable(BottomNavItem.Chatting.screen_route) {
-
             ChatEntityScreen()
-
 
         }
         composable(BottomNavItem.Heart.screen_route) {
@@ -59,8 +56,6 @@ fun NavigationGraph(navController: NavHostController) {
         }
         composable(BottomNavItem.Person.screen_route) {
             NotificationScreen()
-
-
         }
 
     }
@@ -89,6 +84,7 @@ fun NetworkScreen() {
 
 @Composable
 fun AddPostScreen() {
+    Log.d(TAG, "AddPostScreen: AddPostScreen")
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -108,6 +104,7 @@ fun AddPostScreen() {
 
 @Composable
 fun NotificationScreen() {
+    Log.d(TAG, "NotificationScreen: NotificationScreen")
     Column(
         modifier = Modifier
             .fillMaxSize()

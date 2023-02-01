@@ -92,13 +92,9 @@ fun LoginScreen(navController: NavController,viewModel: MainViewModel = hiltView
             CustomDialog(
                 onDismiss = { viewModel.onDismissDialog() },
                 onConfirm = {
-//                    kakaoLogin(context)
                     viewModel.onDismissDialog()
                     val intent = Intent(context, HomeActivity::class.java)
                     context.startActivity(intent)
-//                    navController.navigate(HOMESCREEN){
-//                        popUpTo(LOGINSCREEN)
-//                    }
                 }
             )
         }

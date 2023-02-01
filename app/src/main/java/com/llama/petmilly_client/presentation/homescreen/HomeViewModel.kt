@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.llama.petmilly_client.data.model.LibraryDTO.LibraryDTO
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
 import com.llama.petmilly_client.domain.repository.GetLibraryRepo
+import com.llama.petmilly_client.utils.Event
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,17 +29,30 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
 
     val APIKEY = "6b684a65456b696d3333794b66704f"
 
-    val libraryEntitylist :MutableLiveData<LibraryDTO> = MutableLiveData<LibraryDTO>()
-    val row :MutableList<Row> = arrayListOf()
+    val libraryEntitylist: MutableLiveData<LibraryDTO> = MutableLiveData<LibraryDTO>()
+    val row: MutableList<Row> = arrayListOf()
 
-    val items :MutableList<ClusterItem> = arrayListOf()
+    val items: MutableList<ClusterItem> = arrayListOf()
 
     private val _yeahman = MutableLiveData<List<Row>>()
-    val yeahman :LiveData<List<Row>> = _yeahman
+    val yeahman: LiveData<List<Row>> = _yeahman
+    
+    val wowman:MutableList<Row> = arrayListOf()
+    private val _setEvent = MutableLiveData<Event<Unit>>()
+    val setEvent:LiveData<Event<Unit>> = _setEvent
 
 
     private val _name = MutableLiveData("")
     val name: LiveData<String> = _name
+
+    private val _mytestname = MutableLiveData("")
+    val mytestname : LiveData<String> = _mytestname
+
+    init {
+        setcategory()
+//        getlibrary()
+    }
+
 
     fun setcategory() {
 
@@ -63,20 +77,23 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
 
     }
 
-    fun setTest(){
-        _yeahman.value = yeahman.value
+    fun setTest() {
+        viewModelScope.launch(Dispatchers.Main) { 
+            yeahman.value?.let {
+                wowman.addAll(it)
+                Log.d(TAG, "setTest: $wowman")
+            }
+        }
     }
 
     fun getlibrary() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getLibraryRepo.getLibrary(APIKEY, 1, 20).let {
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
-                        it.data?.let {data->
-                            _yeahman.value = data.SeoulPublicLibraryInfo.row
+                        it.data?.let { data ->
+                            _yeahman.postValue(data.SeoulPublicLibraryInfo.row)
                             setTest()
-                            Log.d(TAG, "getlibrary: yeha")
-//                            Log.d(TAG, "getlibrary: ${_yeahman.value}")
                         }
                     }
 
@@ -84,6 +101,7 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
                         Log.d(TAG, "getlibrary: ${it.status}->${it.message}")
                     }
                 }
+
             }
 
         }

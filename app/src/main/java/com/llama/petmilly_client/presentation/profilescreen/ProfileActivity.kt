@@ -68,6 +68,8 @@ fun ProfileScreen() {
             Text(text = "봉사 0건", fontSize = 16.sp, color = Color.Black)
         }//Row
 
+        Text(text = "신뢰도 수치? or 신고접수건수(1퍼피/ 1켓/ 1사료/ 1간식 / 1펨)", modifier = Modifier.fillMaxWidth())
+
     }
 
 }

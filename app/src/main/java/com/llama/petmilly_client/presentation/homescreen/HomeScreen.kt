@@ -14,10 +14,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -38,137 +41,79 @@ import ted.gun0912.clustering.clustering.TedClusterItem
 import ted.gun0912.clustering.geometry.TedLatLng
 import ted.gun0912.clustering.naver.TedNaverClustering
 import java.util.Random
+import javax.inject.Inject
 
 private val naverMap: NaverMap? = null
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltViewModel()) {
+//fun HomeScreen(viewModel: HomeViewModel = hiltViewModel())
+fun HomeScreen() {
+    val viewModel:HomeViewModel = hiltViewModel()
+    viewModel.getlibrary()
 
     val (search, setsearch) = rememberSaveable {
         mutableStateOf(" ")
     }
 
-    val context = LocalContext.current
-
-    Scaffold(
-        bottomBar = {
-            BottomNavigation(navController = navController)
-        }
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-            ) {
-
-                OutlinedTextField(
-                    value = search,
-                    onValueChange = setsearch,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.baseline_search_24),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .height(40.dp)
-                        .width(40.dp)
-                        .padding(end = 5.dp)
-                        .align(Alignment.CenterEnd)
-                )
-            }
-
-            viewModel.setcategory()
-//
-//            LazyVerticalGrid(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(16.dp),
-//                columns = GridCells.Fixed(4),
-//              ){
-//               items(viewModel.categorytest){ categorylist->
-//                   Row{
-//
-//                       CategoryItems(categoryTest = categorylist ){
-//                           Log.d(TAG, "HomeScreen: ${categorylist.title}")
-//                       }
-//
-//                       Spacer(modifier = Modifier.width(5.dp))
-//                   }
-//
-//               }
-//            }
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
-            ) {
-                viewModel.setcategory()
-
-                items(viewModel.categorytest) { categorylist ->
-                    Row {
-                        CategoryItems(categoryTest = categorylist) {
-
-                        }
-
-                    }
-
-
-                }
-
-            }
-
-//            Test(viewModel)
-            NaverItemsSet(viewModel)
-//            MapClustering(viewModel.items)
-//            NaverMapMan(viewModel)
-        }
-
-    }
-}
-
-
-@OptIn(ExperimentalNaverMapApi::class)
-@Composable
-fun NaverMapMan(viewModel: HomeViewModel) {
-    val seoul = LatLng(37.532600, 127.024612)
-    val context = LocalContext.current
-    val cameraPositionState: CameraPositionState = rememberCameraPositionState {
-        // 카메라 초기 위치를 설정합니다.
-        position = CameraPosition(seoul, 11.0)
-    }
-
-
-    Box() {
-        NaverMap(
-            cameraPositionState = cameraPositionState
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
         ) {
-            val list2 = viewModel.yeahman.observeAsState().value
 
-            if(list2 !=null){
-                for (i in list2) {
-                    val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
-                    Marker(
-                        state = MarkerState(position = postion)
-                    )
+            OutlinedTextField(
+                value = search,
+                onValueChange = setsearch,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.baseline_search_24),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(40.dp)
+                    .width(40.dp)
+                    .padding(end = 5.dp)
+                    .align(Alignment.CenterEnd)
+            )
+        }
+
+
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        ) {
+            viewModel.setcategory()
+
+            items(viewModel.categorytest) { categorylist ->
+                Row {
+                    CategoryItems(categoryTest = categorylist) {
+                    }
                 }
             }
 
-
         }
+
+        NaverItemsSet(viewModel.wowman)
     }
 
 }
 
+private fun setObserve(viewModel: HomeViewModel){
+    Log.d(TAG, "setObserve: ${viewModel.wowman.size}")
+}
+
 @Composable
-private fun NaverItemsSet(viewModel: HomeViewModel) {
-    viewModel.getlibrary()
+private fun NaverItemsSet(list:List<Row>) {
+    Log.d(TAG, "NaverItemsSet: $list")
+//    val list2 = viewModel.wowman
+//    Log.d(TAG, "NaverItemsSet: $list2")
     val items = remember { mutableStateListOf<ClusterItem>() }
     LaunchedEffect(Unit) {
-        val list2 = viewModel.yeahman.value
-        if (list2 != null) {
-            for (i in list2) {
+        if (list != null) {
+            for (i in list) {
                 val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
                 items.add(ClusterItem(postion, "asdasd", "Asdasdsad"))
             }
@@ -194,13 +139,13 @@ private fun MapClustering(items: List<ClusterItem>) {
         DisposableMapEffect(items) { map ->
             if (clusterManager == null) {
                 clusterManager = TedNaverClustering.with<ClusterItem>(context, map)
-                    .markerClickListener { marker->
+                    .markerClickListener { marker ->
 
                         val intent = Intent(context, ShelterActivity::class.java)
                         context.startActivity(intent)
                         marker.itemTitle
                     }
-                    .clusterClickListener { cluster->
+                    .clusterClickListener { cluster ->
 
                         val totalclusteritems = cluster.items //클러스터링 전체의 아이템
                         val clusterposition = cluster.position //클러스터링의 포지션
@@ -236,6 +181,7 @@ data class ClusterItem(
     }
 
 }
+
 
 private val POSITION = LatLng(37.5666102, 126.9783881)
 
