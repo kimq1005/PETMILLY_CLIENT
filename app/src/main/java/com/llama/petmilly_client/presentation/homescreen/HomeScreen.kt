@@ -4,15 +4,20 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
@@ -48,7 +53,8 @@ private val naverMap: NaverMap? = null
 @Composable
 //fun HomeScreen(viewModel: HomeViewModel = hiltViewModel())
 fun HomeScreen() {
-    val viewModel:HomeViewModel = hiltViewModel()
+    val viewModel: HomeViewModel = hiltViewModel()
+    val context = LocalContext.current
     viewModel.getlibrary()
 
     val (search, setsearch) = rememberSaveable {
@@ -61,7 +67,6 @@ fun HomeScreen() {
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp)
         ) {
-
             OutlinedTextField(
                 value = search,
                 onValueChange = setsearch,
@@ -79,19 +84,42 @@ fun HomeScreen() {
             )
         }
 
+        val listState = rememberLazyListState()
+        var selectedBoolean by remember {
+            mutableStateOf(false)
+        }
 
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp)
+                .padding(12.dp),
+
         ) {
             viewModel.setcategory()
 
             items(viewModel.categorytest) { categorylist ->
-                Row {
-                    CategoryItems(categoryTest = categorylist) {
-                    }
+//                Row {
+//                    Text(
+//                        text = categorylist.title,
+//                        modifier = Modifier
+//                            .background(
+//                                if (selectedBoolean) Color.Blue else Color.Red
+//                            )
+//                            .selectable(selected = selectedBoolean,
+//                                onClick = {
+//                                    selectedBoolean = !selectedBoolean
+//                                    Log.d(TAG, "HomeScreen: $selectedBoolean, ${categorylist.title}")
+//                                })
+//                    )
+//
+//                    Spacer(modifier = Modifier.width(10.dp))
+//
+//                }
+
+                CategoryItems(categoryTest = categorylist){
+
                 }
+
             }
 
         }
@@ -101,15 +129,9 @@ fun HomeScreen() {
 
 }
 
-private fun setObserve(viewModel: HomeViewModel){
-    Log.d(TAG, "setObserve: ${viewModel.wowman.size}")
-}
-
 @Composable
-private fun NaverItemsSet(list:List<Row>) {
+private fun NaverItemsSet(list: List<Row>) {
     Log.d(TAG, "NaverItemsSet: $list")
-//    val list2 = viewModel.wowman
-//    Log.d(TAG, "NaverItemsSet: $list2")
     val items = remember { mutableStateListOf<ClusterItem>() }
     LaunchedEffect(Unit) {
         if (list != null) {
@@ -150,10 +172,11 @@ private fun MapClustering(items: List<ClusterItem>) {
                         val totalclusteritems = cluster.items //클러스터링 전체의 아이템
                         val clusterposition = cluster.position //클러스터링의 포지션
 
-                        val intent = Intent(context, ShelterActivity::class.java).apply {
-                            putExtra(SAFESHELTER_COMPOSABLE, SAFESHELTER_COMPOSABLE)
-                        }
-                        context.startActivity(intent)
+                        Log.d(TAG, "MapClustering: $totalclusteritems")
+//                        val intent = Intent(context, ShelterActivity::class.java).apply {
+//                            putExtra(SAFESHELTER_COMPOSABLE, SAFESHELTER_COMPOSABLE)
+//                        }
+//                        context.startActivity(intent)
 
 
                     }
@@ -180,6 +203,12 @@ data class ClusterItem(
         )
     }
 
+}
+
+@Preview
+@Composable
+fun MAPSCREENPREVIEW() {
+    HomeScreen()
 }
 
 
