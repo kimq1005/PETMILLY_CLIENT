@@ -49,7 +49,7 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
     val mytestname : LiveData<String> = _mytestname
 
     init {
-        setcategory()
+//        setcategory()
 //        getlibrary()
     }
 
@@ -80,8 +80,9 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
     fun setTest() {
         viewModelScope.launch(Dispatchers.Main) { 
             yeahman.value?.let {
+                wowman.clear()
                 wowman.addAll(it)
-                Log.d(TAG, "setTest: $wowman")
+                Log.d(TAG, "setTest: ${wowman.size}")
             }
         }
     }

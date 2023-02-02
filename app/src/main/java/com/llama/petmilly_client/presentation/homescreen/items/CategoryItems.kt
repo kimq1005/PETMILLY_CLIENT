@@ -65,7 +65,6 @@ fun CategoryItems(
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )
-        Log.d(TAG, "YeahMANHOW: $checkBoolean ")
 
     }
 

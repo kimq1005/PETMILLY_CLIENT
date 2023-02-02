@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.homescreen
 
 import android.content.Intent
+import android.os.MessageQueue.IdleHandler
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -33,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
 import com.llama.petmilly_client.presentation.MainViewModel
+import com.llama.petmilly_client.presentation.TestMapViewScreen
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterActivity
 import com.naver.maps.geometry.LatLng
@@ -89,6 +91,10 @@ fun HomeScreen() {
             mutableStateOf(false)
         }
 
+        var screenState by remember {
+            mutableStateOf("")
+        }
+
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -116,29 +122,30 @@ fun HomeScreen() {
 //
 //                }
 
-                CategoryItems(categoryTest = categorylist){
-
-                }
+                CategoryItems(categoryTest = categorylist, onClick = {
+                  //여기서 api요청을 하고 마커를 다시 그려줘야함 근데 NaverItesmSet은 Composable 객체여서 불가능함
+                })
 
             }
 
         }
 
-        NaverItemsSet(viewModel.wowman)
+//        NaverItemsSet(viewModel.wowman)
+        TestMapViewScreen(viewModel.wowman)
     }
 
 }
+
+
 
 @Composable
 private fun NaverItemsSet(list: List<Row>) {
     Log.d(TAG, "NaverItemsSet: $list")
     val items = remember { mutableStateListOf<ClusterItem>() }
     LaunchedEffect(Unit) {
-        if (list != null) {
-            for (i in list) {
-                val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
-                items.add(ClusterItem(postion, "asdasd", "Asdasdsad"))
-            }
+        for (i in list) {
+            val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
+            items.add(ClusterItem(postion, "asdasd", "Asdasdsad"))
         }
     }
     MapClustering(items = items)
@@ -154,15 +161,15 @@ private fun MapClustering(items: List<ClusterItem>) {
     }
 
     NaverMap(
-        cameraPositionState = cameraPositionState
+        cameraPositionState = cameraPositionState,
     ) {
         val context = LocalContext.current
         var clusterManager by remember { mutableStateOf<TedNaverClustering<ClusterItem>?>(null) }
         DisposableMapEffect(items) { map ->
             if (clusterManager == null) {
+
                 clusterManager = TedNaverClustering.with<ClusterItem>(context, map)
                     .markerClickListener { marker ->
-
                         val intent = Intent(context, ShelterActivity::class.java)
                         context.startActivity(intent)
                         marker.itemTitle
@@ -189,6 +196,8 @@ private fun MapClustering(items: List<ClusterItem>) {
 
         }
     }
+
+
 }
 
 data class ClusterItem(
