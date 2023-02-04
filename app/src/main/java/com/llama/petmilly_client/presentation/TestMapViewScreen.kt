@@ -157,6 +157,7 @@ fun setcluestring(context:Context, list: List<Row>): TedNaverClustering<ClusterI
         .clusterClickListener {
 
         }
+        .clusterAnimation(false)
         .make()
     return tedNaverClustering
 }
