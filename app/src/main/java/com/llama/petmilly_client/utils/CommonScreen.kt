@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,8 +34,7 @@ fun ButtonScreen(
     Button(
         onClick = { onclick() },
         modifier,
-        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundcolor)
-
+        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundcolor),
     ) {
         Text(
             text = title,
@@ -45,6 +45,31 @@ fun ButtonScreen(
     }
 }
 
+@Composable
+fun ButtonShapeScreen(
+    title:String,
+    textcolor: Color,
+    fontSize: Int,
+    modifier: Modifier,
+    backgroundcolor: Color,
+    shape: Shape,
+    onclick: () -> Unit,
+) {
+    Button(
+        onClick = { onclick() },
+        modifier,
+        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundcolor),
+        shape = shape
+
+    ) {
+        Text(
+            text = title,
+            color = textcolor,
+            fontSize = fontSize.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
 
 @Composable
 fun CommonTitleBar(

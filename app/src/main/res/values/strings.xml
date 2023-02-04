@@ -4,9 +4,11 @@
 
     <string name="app_name">PET_MILLY_CLIENT</string>
     <string name="pet_milly_title">펫밀리</string>
-    <string name="title_Description">세상에 모든 강아지 고양이는\n똑같이 사랑받을 자격이 있다.</string>
-    <string name="kakao_login_text">카카오 회원가입/로그인</string>
+    <string name="title_Description">세상에 모든 강아지 고양이는\n똑같이 사랑받을 자격이 있다.\n맨트다른거 없나</string>
+    <string name="kakao_login_text">카카오 로그인</string>
     <string name="kakao_login_dialog_text">펫밀리에서 카카오톡을(를)\n열려고 합니다.</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_certification">CertificationActivity</string>
+
+    <string name="signup_top_description">아이들의 안전한 입양을 위해 기본정보가 필요합니다.\n입력하신 정보는 입양/임보 신청 시에만 사용됩니다.</string>
 </resources>

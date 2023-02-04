@@ -14,10 +14,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,33 +37,44 @@ import com.kakao.sdk.user.UserApiClient
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
-import com.llama.petmilly_client.ui.theme.Button_Clicked
-import com.llama.petmilly_client.ui.theme.Button_NoneClicked
+import com.llama.petmilly_client.ui.theme.*
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
-fun LoginScreen(navController: NavController,viewModel: MainViewModel = hiltViewModel()) {
+fun LoginScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()) {
 
     val context = LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = MainBackgroundColor)
             .padding(top = 200.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = stringResource(id = R.string.pet_milly_title),
-            fontSize = 32.sp,
+            fontSize = 35.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black
         )
 
+        Image(
+            painter = painterResource(id = R.drawable.mainicon_png),
+            contentDescription = null,
+            modifier = Modifier
+                .height(150.dp)
+                .width(150.dp)
+                .padding(top = 18.dp)
+        )
+
         Text(
-            modifier = Modifier.padding(top = 16.dp),
+            modifier = Modifier
+                .padding(top = 18.dp),
             text = stringResource(id = R.string.title_Description),
-            fontSize = 20.sp,
-            color = Color.Black
+            fontSize = 13.sp,
+            color = Color.Black,
+            textAlign = TextAlign.Center
         )
 
         //
@@ -72,16 +86,16 @@ fun LoginScreen(navController: NavController,viewModel: MainViewModel = hiltView
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
-                .padding(20.dp)
-                .height(50.dp)
-                .background(color = Color(0xff262626), shape = RoundedCornerShape(8.dp))
+                .padding(start = 30.dp, end = 30.dp, bottom = 70.dp)
+                .height(60.dp)
+                .background(color = KaKao_BackgroundColor, shape = RoundedCornerShape(8.dp))
                 .fillMaxWidth()
                 .clickable { viewModel.onBuyClick() },
         ) {
             Text(
                 text = stringResource(id = R.string.kakao_login_text),
                 textAlign = TextAlign.Center,
-                color = Color.White,
+                color = Color.Black,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
             )

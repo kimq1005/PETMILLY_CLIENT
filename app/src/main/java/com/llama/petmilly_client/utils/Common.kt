@@ -18,8 +18,7 @@ object Common {
     const val CHATSCREEN = "chatscreen"
     const val CHATTINGROOMSCREEN="chattingroomscreen"
 
-    fun MYToast(context:Context,text:String){
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-    }
-
+    const val SIGNUPSCREEN_1 = "signupscreen_1"
+    const val SIGNUPSCREEN_2 = "signupscreen_2"
+    const val SIGNUPSCREEN_3 = "signupscreen_3"
 }
