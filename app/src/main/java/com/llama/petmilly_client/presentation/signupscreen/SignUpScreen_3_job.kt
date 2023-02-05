@@ -1,21 +1,15 @@
 package com.llama.petmilly_client.presentation.signupscreen
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
@@ -32,73 +25,49 @@ import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import llama.test.jetpack_dagger_plz.utils.Common
 
-
 @Composable
-fun SignUpScreen_2(navController: NavController) {
-    val viewModel: SignUpViewModel = viewModel()
+fun SignUpScreen_3_job(navController: NavController) {
 
+    val viewModel: SignUpViewModel = viewModel()
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
         TitleBar(title = "", ismenu = false, clickBack = {
             navController.popBackStack()
         }) {
-
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(40.dp), verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.background_blue_circle),
-                contentDescription = null,
-                modifier = Modifier
-                    .width(24.dp)
-                    .height(24.dp)
-
-            )
-
-            Spacer(modifier = Modifier.width(5.dp))
-
-            Text(
-                text = stringResource(R.string.signup_top_description),
-                fontSize = 13.sp,
-                color = Color.Black
-            )
-        }
+        CommonSignDescription()
+//
 
         Text(
-            text = "OOO님의 생일은\n언제인가요?",
+            text = "OOO님\n직업을 알려주세요!",
             fontSize = 30.sp,
             modifier = Modifier.padding(40.dp),
             fontWeight = FontWeight.Bold,
             color = Color.Black
         )
 
+
+        Spacer(modifier = Modifier.height(4.dp))
+
         TextField(
-            value = viewModel.birthday.value,
-            onValueChange = { viewModel.birthday.value = it },
+            value = viewModel.job.value,
+            onValueChange = { viewModel.job.value = it },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(35.dp),
+                .padding(20.dp)
+                .height(55.dp),
+            shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent,
+                backgroundColor = if(viewModel.job.value=="") TextField_BackgroudColor else Color.White,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
                 cursorColor = Color.Black,
-            ),
-            textStyle = TextStyle(fontSize = 30.sp, fontWeight = FontWeight.Bold),
 
-            placeholder = {
-                Text(
-                    text = "1991년 02월 04일",
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+                ),
+            placeholder = { Text(text = "직접 입력해주세요") }
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -111,9 +80,9 @@ fun SignUpScreen_2(navController: NavController) {
                 .fillMaxWidth()
                 .padding(20.dp)
                 .height(55.dp),
-            backgroundcolor = if (viewModel.birthday.value == "") Button_NoneClicked else Button_Clicked
+            backgroundcolor = if (viewModel.job.value == "") Button_NoneClicked else Button_Clicked
         ) {
-            if (viewModel.birthday.value != "") {
+            if (viewModel.job.value != "") {
                 navController.navigate(Common.SIGNUPSCREEN_3)
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
@@ -125,7 +94,7 @@ fun SignUpScreen_2(navController: NavController) {
 
 @Preview
 @Composable
-fun sefsf() {
+fun job(){
     val navController = rememberNavController()
-    SignUpScreen_2(navController = navController)
+    SignUpScreen_3_job(navController)
 }
