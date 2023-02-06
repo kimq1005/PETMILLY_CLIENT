@@ -1,24 +1,31 @@
 package com.llama.petmilly_client.data.di
 
+import com.llama.petmilly_client.data.di.DataModule.BASE_URL
 import com.llama.petmilly_client.data.network.ApiService
 import com.llama.petmilly_client.data.network.LibraryApiService
+import com.llama.petmilly_client.data.network.PetMillYApiService
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
+import llama.test.jetpack_dagger_plz.utils.BaseDataSource
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 @InstallIn(SingletonComponent::class)
 @Module
 object DataModule {
 
-    val BASE_URL = "https://newsapi.org/v2/"
+//    val BASE_URL = "http://localhost:3000/"
+    val BASE_URL = "http://10.0.2.2:3000/"
+    //10.0.2.2:8080
+
 
     @Provides
     fun provideApiService(): ApiService {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl("https://newsapi.org/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
@@ -32,5 +39,16 @@ object DataModule {
             .build()
             .create(LibraryApiService::class.java)
     }
+
+    @Provides
+    fun PetMillYApiService() : PetMillYApiService{
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(PetMillYApiService::class.java)
+    }
+
+
 
 }
