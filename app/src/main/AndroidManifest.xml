@@ -16,6 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PET_MILLY_CLIENT"
         tools:targetApi="31" >
+
+        <activity
+            android:name=".presentation.signupscreen.SignUpActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PET_MILLY_CLIENT" />
         <activity
             android:name=".presentation.certificationscreen.CertificationActivity"
             android:exported="false"

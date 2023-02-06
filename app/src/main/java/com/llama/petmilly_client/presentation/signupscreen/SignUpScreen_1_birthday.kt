@@ -28,10 +28,11 @@ import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_2_GENDER
 
 
 @Composable
-fun SignUpScreen_1(navController: NavController) {
+fun SignUpScreen_1_birthday(navController: NavController) {
     val viewModel: SignUpViewModel = viewModel()
 
     val context = LocalContext.current
@@ -90,7 +91,7 @@ fun SignUpScreen_1(navController: NavController) {
             backgroundcolor = if (viewModel.birthday.value == "") Button_NoneClicked else Button_Clicked
         ) {
             if (viewModel.birthday.value != "") {
-                navController.navigate(Common.SIGNUPSCREEN_3)
+                navController.navigate(SIGNUPSCREEN_2_GENDER)
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }
@@ -123,11 +124,4 @@ fun CommonSignDescription(){
             color = Color.Black
         )
     }
-}
-
-@Preview
-@Composable
-fun sefsf() {
-    val navController = rememberNavController()
-    SignUpScreen_1(navController = navController)
 }

@@ -22,6 +22,7 @@ import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_2_CALLYOUTANIMAL
 
 @Composable
 fun SignUpScreen_4_1_iswithanimal(navController: NavController) {
@@ -90,7 +91,7 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController) {
             backgroundcolor = if (viewModel.livewithanimal.value == "") Button_NoneClicked else Button_Clicked
         ) {
             if (viewModel.livewithanimal.value != "") {
-                navController.navigate(Common.SIGNUPSCREEN_3)
+                navController.navigate(SIGNUPSCREEN_4_2_CALLYOUTANIMAL)
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }

@@ -25,6 +25,7 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_6_ISALLERGY
 
 @Composable
 fun SignUpScreen_5_istemporarycare(navController: NavController) {
@@ -102,6 +103,7 @@ fun SignUpScreen_5_istemporarycare(navController: NavController) {
                 .height(55.dp),
             backgroundcolor = Button_Clicked
         ) {
+            navController.navigate(SIGNUPSCREEN_6_ISALLERGY)
 //            if (viewModel.istemporarycare.value) {
 //                navController.navigate(Common.SIGNUPSCREEN_3)
 //            } else {

@@ -27,10 +27,10 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
-import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_2
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_1_BIRTHDAY
 
 @Composable
-fun SignUpScreen_1(navController: NavController) {
+fun SignUpScreen_name(navController: NavController) {
     val viewModel: SignUpViewModel = viewModel()
 
     val (name, setname) = rememberSaveable {
@@ -169,7 +169,8 @@ fun SignUpScreen_1(navController: NavController) {
             backgroundcolor = if (viewModel.name.value == "" && viewModel.nickname.value == "") Button_NoneClicked else Button_Clicked
         ) {
             if (viewModel.name.value != "" && viewModel.nickname.value != ""){
-                navController.navigate(SIGNUPSCREEN_2)
+                navController.navigate(SIGNUPSCREEN_1_BIRTHDAY)
+
             }else{
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }

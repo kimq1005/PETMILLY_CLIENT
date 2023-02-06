@@ -18,6 +18,7 @@ import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_COMPLETED
 
 @Composable
 fun SignUpScreen_8_callworkingtime(navController: NavController) {
@@ -53,7 +54,7 @@ fun SignUpScreen_8_callworkingtime(navController: NavController) {
                 .height(55.dp),
             backgroundcolor = Button_Clicked
         ) {
-
+            navController.navigate(SIGNUPSCREEN_COMPLETED)
         }
     }
 }

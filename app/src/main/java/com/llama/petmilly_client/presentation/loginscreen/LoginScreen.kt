@@ -37,6 +37,7 @@ import com.kakao.sdk.user.UserApiClient
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
+import com.llama.petmilly_client.presentation.signupscreen.SignUpActivity
 import com.llama.petmilly_client.ui.theme.*
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
@@ -107,9 +108,9 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel = hiltVie
                 onDismiss = { viewModel.onDismissDialog() },
                 onConfirm = {
                     viewModel.onDismissDialog()
-//                    val intent = Intent(context, HomeActivity::class.java)
-//                    context.startActivity(intent)
-                    kakaoLogin(context)
+                    val intent = Intent(context, SignUpActivity::class.java)
+                    context.startActivity(intent)
+//                    kakaoLogin(context)
                 }
             )
         }

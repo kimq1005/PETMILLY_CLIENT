@@ -33,6 +33,7 @@ import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_5_ISTEMPORARYCARE
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -217,7 +218,7 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController) {
             backgroundcolor = if (viewModel.callyouranimalcheck.value) Button_Clicked else Button_NoneClicked
         ) {
             if (viewModel.callyouranimalcheck.value) {
-                navController.navigate(Common.SIGNUPSCREEN_3)
+                navController.navigate(SIGNUPSCREEN_5_ISTEMPORARYCARE)
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }

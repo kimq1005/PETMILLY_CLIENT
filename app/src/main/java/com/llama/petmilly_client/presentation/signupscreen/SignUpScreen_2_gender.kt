@@ -22,6 +22,7 @@ import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_3_JOB
 
 @Composable
 fun SignUpScreen_2_gender(navController: NavController) {
@@ -90,7 +91,7 @@ fun SignUpScreen_2_gender(navController: NavController) {
             backgroundcolor = if (viewModel.gender.value == "") Button_NoneClicked else Button_Clicked
         ) {
             if (viewModel.gender.value != "") {
-                navController.navigate(Common.SIGNUPSCREEN_3)
+                navController.navigate(SIGNUPSCREEN_3_JOB)
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }

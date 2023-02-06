@@ -23,6 +23,7 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_8_CALLWORKINGTIME
 
 @Composable
 fun SignUpScreen_7_callyourhouse(navController: NavController) {
@@ -149,7 +150,7 @@ fun SignUpScreen_7_callyourhouse(navController: NavController) {
             backgroundcolor = if(viewModel.housekind.value!="") Button_Clicked else Button_NoneClicked
         ) {
             if (viewModel.housekind.value!="") {
-                navController.navigate(Common.SIGNUPSCREEN_3)
+                navController.navigate(SIGNUPSCREEN_8_CALLWORKINGTIME)
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }
