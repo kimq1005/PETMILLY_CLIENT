@@ -37,9 +37,8 @@ import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_5_ISTEMPORARYCARE
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SignUpScreen_4_2_CallYourAnimal(navController: NavController) {
+fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: SignUpViewModel) {
 
-    val viewModel: SignUpViewModel = viewModel()
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -231,9 +230,3 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController) {
 
 }
 
-@Preview
-@Composable
-fun Callyouanimal() {
-    val navController = rememberNavController()
-    SignUpScreen_4_2_CallYourAnimal(navController = navController)
-}

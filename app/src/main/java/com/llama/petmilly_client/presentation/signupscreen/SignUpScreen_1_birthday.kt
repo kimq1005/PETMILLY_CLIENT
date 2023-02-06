@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.signupscreen
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -29,11 +31,11 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_2_GENDER
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 
 @Composable
-fun SignUpScreen_1_birthday(navController: NavController) {
-    val viewModel: SignUpViewModel = viewModel()
+fun SignUpScreen_1_birthday(navController: NavController, viewModel: SignUpViewModel) {
 
     val context = LocalContext.current
 
@@ -105,7 +107,7 @@ fun CommonSignDescription(){
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 20.dp , start = 40.dp, end = 40.dp, bottom = 30.dp), verticalAlignment = Alignment.CenterVertically
+            .padding(top = 20.dp, start = 40.dp, end = 40.dp, bottom = 30.dp), verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = painterResource(id = R.drawable.background_blue_circle),

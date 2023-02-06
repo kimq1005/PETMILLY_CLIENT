@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.signupscreen
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -23,10 +25,10 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_3_JOB
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
-fun SignUpScreen_2_gender(navController: NavController) {
-    val viewModel: SignUpViewModel = viewModel()
+fun SignUpScreen_2_gender(navController: NavController, viewModel: SignUpViewModel) {
 
     val context = LocalContext.current
 
@@ -92,6 +94,7 @@ fun SignUpScreen_2_gender(navController: NavController) {
         ) {
             if (viewModel.gender.value != "") {
                 navController.navigate(SIGNUPSCREEN_3_JOB)
+                Log.d(TAG, "SignUpScreen_2_gender: ${viewModel.name}")
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }
@@ -99,11 +102,4 @@ fun SignUpScreen_2_gender(navController: NavController) {
         }
     }
 
-}
-
-@Preview
-@Composable
-fun gender() {
-    val navController = rememberNavController()
-    SignUpScreen_2_gender(navController)
 }

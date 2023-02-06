@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.signupscreen
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,11 +26,12 @@ import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_1_ISWITHANIMAL
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
-fun SignUpScreen_3_job(navController: NavController) {
+fun SignUpScreen_3_job(navController: NavController, viewModel: SignUpViewModel) {
 
-    val viewModel: SignUpViewModel = viewModel()
+//    val viewModel: SignUpViewModel = viewModel()
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -84,18 +86,12 @@ fun SignUpScreen_3_job(navController: NavController) {
             backgroundcolor = if (viewModel.job.value == "") Button_NoneClicked else Button_Clicked
         ) {
             if (viewModel.job.value != "") {
-                navController.navigate(SIGNUPSCREEN_4_1_ISWITHANIMAL)
+//                navController.navigate(SIGNUPSCREEN_4_1_ISWITHANIMAL)
+                Log.d(TAG, "SignUpScreen_3_job: ${viewModel.name.value}")
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }
 
         }
     }
-}
-
-@Preview
-@Composable
-fun job(){
-    val navController = rememberNavController()
-    SignUpScreen_3_job(navController)
 }

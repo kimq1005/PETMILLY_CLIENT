@@ -3,11 +3,13 @@ package com.llama.petmilly_client.presentation.signupscreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.login.SignUpScreen_name
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpScreen_4_1_iswithanimal
+import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_1_BIRTHDAY
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_2_GENDER
@@ -28,50 +30,49 @@ class SignUpActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+            val viewModel :SignUpViewModel = hiltViewModel()
             NavHost(navController = navController, startDestination = SIGNUPSCREEN_NAME ){
                 composable(SIGNUPSCREEN_NAME){
-                    SignUpScreen_name(navController)
+                    SignUpScreen_name(navController,viewModel)
                 }
 
                 composable(SIGNUPSCREEN_1_BIRTHDAY){
-                    SignUpScreen_1_birthday(navController = navController)
+                    SignUpScreen_1_birthday(navController = navController,viewModel)
                 }
 
                 composable(SIGNUPSCREEN_2_GENDER){
-                    SignUpScreen_2_gender(navController = navController)
+                    SignUpScreen_2_gender(navController = navController, viewModel)
                 }
 
                 composable(SIGNUPSCREEN_3_JOB){
-                    SignUpScreen_3_job(navController = navController)
+                    SignUpScreen_3_job(navController = navController, viewModel)
                 }
 
                 composable(SIGNUPSCREEN_4_1_ISWITHANIMAL){
-                    SignUpScreen_4_1_iswithanimal(navController = navController)
+                    SignUpScreen_4_1_iswithanimal(navController = navController,viewModel)
                 }
 
                 composable(SIGNUPSCREEN_4_2_CALLYOUTANIMAL){
-                    SignUpScreen_4_2_CallYourAnimal(navController = navController)
+                    SignUpScreen_4_2_CallYourAnimal(navController = navController,viewModel)
                 }
                 composable(SIGNUPSCREEN_5_ISTEMPORARYCARE){
-                    SignUpScreen_5_istemporarycare(navController = navController)
+                    SignUpScreen_5_istemporarycare(navController = navController,viewModel)
                 }
                 composable(SIGNUPSCREEN_6_ISALLERGY){
-                    SignUpScreen_6_isallergy(navController = navController)
+                    SignUpScreen_6_isallergy(navController = navController,viewModel)
                 }
 
                 composable(SIGNUPSCREEN_7_CALLYOURHOUSE){
-                    SignUpScreen_7_callyourhouse(navController = navController)
+                    SignUpScreen_7_callyourhouse(navController = navController,viewModel)
                 }
 
                 composable(SIGNUPSCREEN_8_CALLWORKINGTIME){
-                    SignUpScreen_8_callworkingtime(navController = navController)
+                    SignUpScreen_8_callworkingtime(navController = navController,viewModel)
                 }
 
                 composable(SIGNUPSCREEN_COMPLETED){
-                    SignUpScreen_completed(navController = navController)
+                    SignUpScreen_completed(navController = navController,viewModel)
                 }
-
-
 
             }
         }

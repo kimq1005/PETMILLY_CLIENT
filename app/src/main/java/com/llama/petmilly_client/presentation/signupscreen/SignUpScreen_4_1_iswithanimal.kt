@@ -25,9 +25,8 @@ import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_2_CALLYOUTANIMAL
 
 @Composable
-fun SignUpScreen_4_1_iswithanimal(navController: NavController) {
+fun SignUpScreen_4_1_iswithanimal(navController: NavController,viewModel: SignUpViewModel) {
 
-    val viewModel: SignUpViewModel = viewModel()
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -97,11 +96,4 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController) {
             }
         }
     }// Column
-}
-
-@Preview
-@Composable
-fun Iswithanimal() {
-    val navController = rememberNavController()
-    SignUpScreen_4_1_iswithanimal(navController = navController)
 }

@@ -24,9 +24,8 @@ import com.llama.petmilly_client.utils.ButtonShapeScreen
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_7_CALLYOURHOUSE
 
 @Composable
-fun SignUpScreen_6_isallergy(navController: NavController) {
+fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpViewModel) {
 
-    val viewModel: SignUpViewModel = viewModel()
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -111,9 +110,3 @@ fun SignUpScreen_6_isallergy(navController: NavController) {
     }// Column
 }
 
-@Preview
-@Composable
-fun isallergy(){
-    val navController = rememberNavController()
-    SignUpScreen_6_isallergy(navController = navController)
-}

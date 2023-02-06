@@ -23,8 +23,7 @@ import com.llama.petmilly_client.utils.ButtonScreen
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
-fun SignUpScreen_completed(navController: NavController){
-    val viewModel: SignUpViewModel = viewModel()
+fun SignUpScreen_completed(navController: NavController, viewModel: SignUpViewModel){
     val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxWidth()) {
@@ -68,11 +67,4 @@ fun SignUpScreen_completed(navController: NavController){
 
     }
 
-}
-
-@Preview
-@Composable
-fun Completed(){
-    val navController = rememberNavController()
-    SignUpScreen_completed(navController = navController)
 }

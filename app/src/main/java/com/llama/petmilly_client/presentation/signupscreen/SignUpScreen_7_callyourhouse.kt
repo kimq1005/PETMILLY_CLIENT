@@ -26,8 +26,7 @@ import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_8_CALLWORKINGTIME
 
 @Composable
-fun SignUpScreen_7_callyourhouse(navController: NavController) {
-    val viewModel: SignUpViewModel = viewModel()
+fun SignUpScreen_7_callyourhouse(navController: NavController, viewModel: SignUpViewModel) {
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -158,9 +157,3 @@ fun SignUpScreen_7_callyourhouse(navController: NavController) {
     }// Column
 }
 
-@Preview
-@Composable
-fun CallyourHouse(){
-    val navController = rememberNavController()
-    SignUpScreen_7_callyourhouse(navController = navController)
-}

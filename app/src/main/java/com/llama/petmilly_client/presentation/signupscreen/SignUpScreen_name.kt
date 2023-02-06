@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.llama.petmilly_client.R
@@ -30,8 +31,8 @@ import com.llama.petmilly_client.utils.ButtonShapeScreen
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_1_BIRTHDAY
 
 @Composable
-fun SignUpScreen_name(navController: NavController) {
-    val viewModel: SignUpViewModel = viewModel()
+fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel = hiltViewModel()) {
+
 
     val (name, setname) = rememberSaveable {
         mutableStateOf("")
@@ -169,7 +170,8 @@ fun SignUpScreen_name(navController: NavController) {
             backgroundcolor = if (viewModel.name.value == "" && viewModel.nickname.value == "") Button_NoneClicked else Button_Clicked
         ) {
             if (viewModel.name.value != "" && viewModel.nickname.value != ""){
-                navController.navigate(SIGNUPSCREEN_1_BIRTHDAY)
+//                navController.navigate(SIGNUPSCREEN_1_BIRTHDAY)
+                viewModel.postkakaotoken()
 
             }else{
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()

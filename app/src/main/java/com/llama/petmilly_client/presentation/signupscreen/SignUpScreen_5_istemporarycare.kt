@@ -28,9 +28,8 @@ import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_6_ISALLERGY
 
 @Composable
-fun SignUpScreen_5_istemporarycare(navController: NavController) {
+fun SignUpScreen_5_istemporarycare(navController: NavController, viewModel: SignUpViewModel) {
 
-    val viewModel: SignUpViewModel = viewModel()
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -113,10 +112,3 @@ fun SignUpScreen_5_istemporarycare(navController: NavController) {
     }// Column
 }
 
-
-@Preview
-@Composable
-fun IstemPor() {
-    val navController = rememberNavController()
-    SignUpScreen_5_istemporarycare(navController = navController)
-}
