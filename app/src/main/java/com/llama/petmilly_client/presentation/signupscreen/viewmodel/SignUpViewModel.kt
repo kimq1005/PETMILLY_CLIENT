@@ -52,7 +52,7 @@ class SignUpViewModel  @Inject constructor(private val petMillyRepo: PetMillyRep
                 when(it.status){
                     RemoteResult.Status.SUCCESS->{
                         it.data.let {data->
-                            Log.d(TAG, "postkakaotoken: $it")
+                            Log.d(TAG, "postkakaotoken: $data")
                         }
                     }
 

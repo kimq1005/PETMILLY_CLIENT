@@ -9,6 +9,8 @@ val Teal200 = Color(0xFF03DAC5)
 val MainBackgroundColor = Color(0xFFFAFCE4)
 val KaKao_BackgroundColor = Color(0xFFFAE100)
 
+
 val TextField_BackgroudColor = Color(0xFFEBEBEB)
 val Button_Clicked = Color(0xFF000000)
 val Button_NoneClicked = Color(0xFFCCC9C9)
+val Search_ButtonColor = Color(0xFF4470E2)

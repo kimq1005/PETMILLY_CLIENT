@@ -40,7 +40,7 @@ sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:Stri
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController, startDestination = BottomNavItem.Chatting.screen_route) {
+    NavHost(navController, startDestination = BottomNavItem.Home.screen_route) {
         composable(BottomNavItem.Home.screen_route) {
             HomeScreen()
         }

@@ -30,7 +30,7 @@
             android:name=".presentation.homescreen.HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.PET_MILLY_CLIENT" />
+            android:theme="@style/Theme.PET_MILLY_CLIENT.TransparentStatusBar" />
         <activity
             android:name=".presentation.shelterscreen.ShelterActivity"
             android:exported="false"

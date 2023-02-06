@@ -86,7 +86,7 @@ fun SignUpScreen_3_job(navController: NavController, viewModel: SignUpViewModel)
             backgroundcolor = if (viewModel.job.value == "") Button_NoneClicked else Button_Clicked
         ) {
             if (viewModel.job.value != "") {
-//                navController.navigate(SIGNUPSCREEN_4_1_ISWITHANIMAL)
+                navController.navigate(SIGNUPSCREEN_4_1_ISWITHANIMAL)
                 Log.d(TAG, "SignUpScreen_3_job: ${viewModel.name.value}")
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()

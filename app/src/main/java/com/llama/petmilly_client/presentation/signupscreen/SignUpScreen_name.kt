@@ -139,7 +139,7 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
                     cursorColor = Color.Black,
 
                     ),
-                placeholder = { Text(text = "2~10자 이내로 입랙해주세요 ") }
+                placeholder = { Text(text = "2~10자 이내로 입력해주세요 ") }
             )
 
             Spacer(modifier = Modifier.width(4.dp))
@@ -170,8 +170,8 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
             backgroundcolor = if (viewModel.name.value == "" && viewModel.nickname.value == "") Button_NoneClicked else Button_Clicked
         ) {
             if (viewModel.name.value != "" && viewModel.nickname.value != ""){
-//                navController.navigate(SIGNUPSCREEN_1_BIRTHDAY)
-                viewModel.postkakaotoken()
+                navController.navigate(SIGNUPSCREEN_1_BIRTHDAY)
+//                viewModel.postkakaotoken()
 
             }else{
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()

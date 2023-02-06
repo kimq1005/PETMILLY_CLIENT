@@ -94,7 +94,6 @@ fun SignUpScreen_2_gender(navController: NavController, viewModel: SignUpViewMod
         ) {
             if (viewModel.gender.value != "") {
                 navController.navigate(SIGNUPSCREEN_3_JOB)
-                Log.d(TAG, "SignUpScreen_2_gender: ${viewModel.name}")
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }

@@ -72,7 +72,7 @@ fun ChatScreen(navController: NavController) {
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
-                    modifier = Modifier.padding(5.dp),
+                    modifier = Modifier.padding(top = 30.dp, bottom = 20.dp),
                     textAlign = TextAlign.Start
                 )
             }

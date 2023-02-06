@@ -1,17 +1,14 @@
 package com.llama.petmilly_client.presentation.homescreen
 
 import android.content.Intent
-import android.os.MessageQueue.IdleHandler
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -22,8 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -37,6 +37,9 @@ import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.presentation.TestMapViewScreen
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterActivity
+import com.llama.petmilly_client.ui.theme.Purple700
+import com.llama.petmilly_client.ui.theme.Search_ButtonColor
+import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.NaverMap
@@ -60,82 +63,82 @@ fun HomeScreen() {
     viewModel.getlibrary()
 
     val (search, setsearch) = rememberSaveable {
-        mutableStateOf(" ")
+        mutableStateOf("")
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-        ) {
-            OutlinedTextField(
-                value = search,
-                onValueChange = setsearch,
-                modifier = Modifier.fillMaxWidth()
-            )
+    Box() {
 
-            Image(
-                painter = painterResource(id = R.drawable.baseline_search_24),
-                contentDescription = null,
+        TestMapViewScreen(viewModel.wowman)
+
+        Column(modifier = Modifier.padding(top = 30.dp)) {
+            Row(
                 modifier = Modifier
-                    .height(40.dp)
-                    .width(40.dp)
-                    .padding(end = 5.dp)
-                    .align(Alignment.CenterEnd)
-            )
-        }
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+            ) {
+                TextField(
+                    value = search,
+                    onValueChange = setsearch,
+                    modifier = Modifier
+                        .weight(8f)
+                        .height(55.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = TextField_BackgroudColor,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedLabelColor = Color.White,
+                        cursorColor = Color.Black,
+                        ),
+                    placeholder ={ Text(text = "성함을 입력해주세요. ") },
+                )
 
-        val listState = rememberLazyListState()
-        var selectedBoolean by remember {
-            mutableStateOf(false)
-        }
+                Spacer(modifier = Modifier.width(5.dp))
 
-        var screenState by remember {
-            mutableStateOf("")
-        }
+                Button(
+                    onClick = { },
+                    modifier = Modifier
+                        .weight(1.5f)
+                        .width(55.dp)
+                        .height(55.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Search_ButtonColor),
+                    shape = RoundedCornerShape(10.dp)
 
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-
-        ) {
-            viewModel.setcategory()
-
-            items(viewModel.categorytest) { categorylist ->
-//                Row {
-//                    Text(
-//                        text = categorylist.title,
-//                        modifier = Modifier
-//                            .background(
-//                                if (selectedBoolean) Color.Blue else Color.Red
-//                            )
-//                            .selectable(selected = selectedBoolean,
-//                                onClick = {
-//                                    selectedBoolean = !selectedBoolean
-//                                    Log.d(TAG, "HomeScreen: $selectedBoolean, ${categorylist.title}")
-//                                })
-//                    )
-//
-//                    Spacer(modifier = Modifier.width(10.dp))
-//
-//                }
-
-                CategoryItems(categoryTest = categorylist, onClick = {
-                  //여기서 api요청을 하고 마커를 다시 그려줘야함 근데 NaverItesmSet은 Composable 객체여서 불가능함
-                })
-
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_search),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(16.dp)
+                            .height(16.dp)
+                    )
+                }
             }
 
+
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+
+                ) {
+                viewModel.setcategory()
+
+                items(viewModel.categorytest) { categorylist ->
+
+                    CategoryItems(categoryTest = categorylist, onClick = {
+                        //여기서 api요청을 하고 마커를 다시 그려줘야함 근데 NaverItesmSet은 Composable 객체여서 불가능함
+                    })
+
+                }
+
+            }
         }
 
-//        NaverItemsSet(viewModel.wowman)
-        TestMapViewScreen(viewModel.wowman)
+
     }
 
 }
-
 
 
 @Composable

@@ -45,31 +45,31 @@ fun TestMapViewScreen(list: List<Row>) {
     val context = LocalContext.current
 
     Column(Modifier.fillMaxSize()) {
-        ButtonScreen(
-            title = "마커삭제",
-            textcolor = Color.Black,
-            fontSize = 15,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            backgroundcolor = Color.White
-        ) {
-
-            tedNaverClustering?.clearItems()
-        }
-
-        ButtonScreen(
-            title = "마커 생성",
-            textcolor = Color.Black,
-            fontSize = 15,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            backgroundcolor = Color.White
-        ) {
-
-            setcluestring(context, list)
-        }
+//        ButtonScreen(
+//            title = "마커삭제",
+//            textcolor = Color.Black,
+//            fontSize = 15,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(10.dp),
+//            backgroundcolor = Color.White
+//        ) {
+//
+//            tedNaverClustering?.clearItems()
+//        }
+//
+//        ButtonScreen(
+//            title = "마커 생성",
+//            textcolor = Color.Black,
+//            fontSize = 15,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(10.dp),
+//            backgroundcolor = Color.White
+//        ) {
+//
+//            setcluestring(context, list)
+//        }
 
 
 
