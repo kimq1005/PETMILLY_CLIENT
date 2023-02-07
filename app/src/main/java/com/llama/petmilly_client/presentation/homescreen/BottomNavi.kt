@@ -3,9 +3,7 @@ package com.llama.petmilly_client.presentation.homescreen
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -19,6 +17,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -32,10 +31,11 @@ import com.llama.petmilly_client.presentation.chatscreen.ChatScreen
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
-    object Home : BottomNavItem("펫밀리", R.drawable.baseline_home_24,"home")
-    object Chatting: BottomNavItem("채팅",R.drawable.baseline_chat_24,"my_network")
-    object Heart: BottomNavItem("관심",R.drawable.baseline_heart_broken_24,"add_post")
-    object Person: BottomNavItem("MY",R.drawable.baseline_person_24,"notification")
+    object Home : BottomNavItem("펫밀리", R.drawable.img_petmilly_home,"home")
+    object Chatting: BottomNavItem("채팅",R.drawable.img_petmilly_chatting,"my_network")
+    object Heart: BottomNavItem("관심",R.drawable.img_petmilly_heart_menu,"add_post")
+    object Notification: BottomNavItem("알림",R.drawable.img_petmilly_notification,"notification")
+    object Person: BottomNavItem("MY",R.drawable.img_petmilly_person,"my")
 }
 
 @Composable
@@ -51,12 +51,16 @@ fun NavigationGraph(navController: NavHostController) {
         }
         composable(BottomNavItem.Heart.screen_route) {
             AddPostScreen()
+        }
 
-
+        composable(BottomNavItem.Notification.screen_route){
+            ChatEntityScreen()
         }
         composable(BottomNavItem.Person.screen_route) {
             NotificationScreen()
         }
+
+
 
     }
 
@@ -128,21 +132,24 @@ fun BottomNavigation(navController: NavController){
         BottomNavItem.Home,
         BottomNavItem.Chatting,
         BottomNavItem.Heart,
+        BottomNavItem.Notification,
         BottomNavItem.Person
     )
 
     androidx.compose.material.BottomNavigation(
-        contentColor =  Color.Black
+        contentColor =  Color.Black,
+        backgroundColor = Color.White,
+        modifier = Modifier.height(60.dp),
     ){
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
+                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title,  modifier = Modifier.height(20.dp).width(20.dp)) },
                 label = { Text(text = item.title,
                     fontSize = 9.sp) },
                 selectedContentColor = Color.Black,
-                unselectedContentColor = Color.Black.copy(0.4f),
+                unselectedContentColor = Color.Black.copy(0.3f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.screen_route,
                 onClick = {

@@ -35,7 +35,6 @@ import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
 import com.llama.petmilly_client.presentation.MainViewModel
-import com.llama.petmilly_client.presentation.NaverMapViewScreen
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterActivity
 import com.llama.petmilly_client.ui.theme.Purple700
