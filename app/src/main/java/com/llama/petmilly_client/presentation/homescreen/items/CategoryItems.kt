@@ -13,7 +13,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,6 +26,7 @@ import com.google.accompanist.flowlayout.MainAxisAlignment
 import com.google.accompanist.flowlayout.SizeMode
 import com.llama.petmilly_client.presentation.homescreen.CategoryTest
 import com.llama.petmilly_client.presentation.homescreen.HomeViewModel
+import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.ui.theme.Purple200
 import com.llama.petmilly_client.ui.theme.Purple700
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
@@ -42,43 +45,30 @@ fun CategoryItems(
     }
 
     FlowRow(
-        modifier = Modifier.padding(4.dp),
+        modifier = Modifier.shadow(elevation = 4.dp, shape = RoundedCornerShape(16.5.dp)),
         mainAxisAlignment = MainAxisAlignment.Center,
         mainAxisSize = SizeMode.Expand,
     ) {
         Text(
             text = categoryTest.title,
             textAlign = TextAlign.Center,
-            fontSize = 12.sp,
-            color = Color.White,
+            fontSize = 13.sp,
+            color = if(checkBoolean)Color.White else Color.Black,
             modifier = Modifier
                 .background(
-                    color = if (checkBoolean) Color.Black else Purple200,
-                    shape = RoundedCornerShape(4.dp)
+                    color = if (checkBoolean) Category_Cliked else Color.White,
+                    shape = RoundedCornerShape(16.5.dp)
                 )
                 .selectable(selected = checkBoolean, onClick = {
                     checkBoolean = !checkBoolean
                     onClick()
                     Log.d(TAG, "CategoryItems: $checkBoolean")
                 })
-                .padding(5.dp),
+                .padding(top = 7.dp, bottom = 7.dp, start = 12.dp, end = 12.dp),
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )
 
     }
 
-}
-
-fun checkBtn(checkBoolean: Boolean) {
-    when (checkBoolean) {
-        true -> {
-            //버튼클릭댐
-
-        }
-
-        else -> {
-            //클릭안댐
-        }
-    }
 }

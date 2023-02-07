@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.llama.petmilly_client.data.model.LibraryDTO.LibraryDTO
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
 import com.llama.petmilly_client.domain.repository.GetLibraryRepo
+import com.llama.petmilly_client.presentation.ClusterItem
 import com.llama.petmilly_client.utils.Event
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +33,7 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
     val libraryEntitylist: MutableLiveData<LibraryDTO> = MutableLiveData<LibraryDTO>()
     val row: MutableList<Row> = arrayListOf()
 
-    val items: MutableList<ClusterItem> = arrayListOf()
+//    val items: MutableList<ClusterItem> = arrayListOf()
 
     private val _yeahman = MutableLiveData<List<Row>>()
     val yeahman: LiveData<List<Row>> = _yeahman
@@ -55,6 +56,8 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
 
 
     fun setcategory() {
+
+        categorytest.clear()
 
         val entity = CategoryTest("전체")
         val puppy = CategoryTest("강아지")

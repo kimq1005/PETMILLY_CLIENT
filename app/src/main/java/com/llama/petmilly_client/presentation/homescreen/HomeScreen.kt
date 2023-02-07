@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -34,7 +35,7 @@ import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
 import com.llama.petmilly_client.presentation.MainViewModel
-import com.llama.petmilly_client.presentation.TestMapViewScreen
+import com.llama.petmilly_client.presentation.NaverMapViewScreen
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterActivity
 import com.llama.petmilly_client.ui.theme.Purple700
@@ -68,7 +69,7 @@ fun HomeScreen() {
 
     Box() {
 
-        TestMapViewScreen(viewModel.wowman)
+        NaverMapViewScreen(viewModel.wowman)
 
         Column(modifier = Modifier.padding(top = 30.dp)) {
             Row(
@@ -89,8 +90,8 @@ fun HomeScreen() {
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedLabelColor = Color.White,
                         cursorColor = Color.Black,
-                        ),
-                    placeholder ={ Text(text = "성함을 입력해주세요. ") },
+                    ),
+                    placeholder = { Text(text = "정보를 검색하세요.") },
                 )
 
                 Spacer(modifier = Modifier.width(5.dp))
@@ -114,105 +115,67 @@ fun HomeScreen() {
                     )
                 }
             }
+            viewModel.setcategory()
 
-
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-
+            if (viewModel.categorytest.size > 5) {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 60.dp, top = 10.dp)
                 ) {
-                viewModel.setcategory()
+                    items(viewModel.categorytest.subList(0, 3)) { item ->
+                        CategoryItems(categoryTest = item) {
 
-                items(viewModel.categorytest) { categorylist ->
+                        }
 
-                    CategoryItems(categoryTest = categorylist, onClick = {
-                        //여기서 api요청을 하고 마커를 다시 그려줘야함 근데 NaverItesmSet은 Composable 객체여서 불가능함
-                    })
+                        Spacer(modifier = Modifier.width(8.dp))
 
+                    }
                 }
 
-            }
-        }
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 10.dp)
+                ) {
+                    items(
+                        viewModel.categorytest.subList(
+                            3,
+                            viewModel.categorytest.lastIndex
+                        )
+                    ) { item ->
+                        CategoryItems(categoryTest = item) {
 
-
-    }
-
-}
-
-
-@Composable
-private fun NaverItemsSet(list: List<Row>) {
-    Log.d(TAG, "NaverItemsSet: $list")
-    val items = remember { mutableStateListOf<ClusterItem>() }
-    LaunchedEffect(Unit) {
-        for (i in list) {
-            val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
-            items.add(ClusterItem(postion, "asdasd", "Asdasdsad"))
-        }
-    }
-    MapClustering(items = items)
-}
-
-@OptIn(ExperimentalNaverMapApi::class)
-@Composable
-private fun MapClustering(items: List<ClusterItem>) {
-    val seoul = LatLng(37.532600, 127.024612)
-
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition(seoul, 10.0)
-    }
-
-    NaverMap(
-        cameraPositionState = cameraPositionState,
-    ) {
-        val context = LocalContext.current
-        var clusterManager by remember { mutableStateOf<TedNaverClustering<ClusterItem>?>(null) }
-        DisposableMapEffect(items) { map ->
-            if (clusterManager == null) {
-
-                clusterManager = TedNaverClustering.with<ClusterItem>(context, map)
-                    .markerClickListener { marker ->
-                        val intent = Intent(context, ShelterActivity::class.java)
-                        context.startActivity(intent)
-                        marker.itemTitle
-                    }
-                    .clusterClickListener { cluster ->
-
-                        val totalclusteritems = cluster.items //클러스터링 전체의 아이템
-                        val clusterposition = cluster.position //클러스터링의 포지션
-
-                        Log.d(TAG, "MapClustering: $totalclusteritems")
-//                        val intent = Intent(context, ShelterActivity::class.java).apply {
-//                            putExtra(SAFESHELTER_COMPOSABLE, SAFESHELTER_COMPOSABLE)
-//                        }
-//                        context.startActivity(intent)
-
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
 
                     }
-                    .make()
+                }
+            } else {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+
+                    ) {
+                    viewModel.setcategory()
+
+                    items(viewModel.categorytest) { categorylist ->
+
+                        CategoryItems(categoryTest = categorylist, onClick = {
+                            //여기서 api요청을 하고 마커를 다시 그려줘야함 근데 NaverItesmSet은 Composable 객체여서 불가능함
+                        })
+
+                    }
+                }
             }
-            clusterManager?.addItems(items)
-            onDispose {
-                clusterManager?.clearItems()
-            }
+
+
+//
 
         }
-    }
 
 
-}
-
-data class ClusterItem(
-    val itemPostion: LatLng,
-    val itemTitle: String,
-    val itemSnippet: String,
-) : TedClusterItem {
-    override fun getTedLatLng(): TedLatLng {
-        return TedLatLng(
-            latitude = itemPostion.latitude,
-            longitude = itemPostion.longitude
-        )
     }
 
 }
@@ -224,5 +187,4 @@ fun MAPSCREENPREVIEW() {
 }
 
 
-private val POSITION = LatLng(37.5666102, 126.9783881)
 
