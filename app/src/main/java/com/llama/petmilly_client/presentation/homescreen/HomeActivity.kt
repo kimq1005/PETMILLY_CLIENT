@@ -38,7 +38,6 @@ class HomeActivity : ComponentActivity() {
 
             }
 
-
         }
 
 

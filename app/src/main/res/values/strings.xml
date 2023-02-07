@@ -1,6 +1,8 @@
 <resources>
 
-    <string name="kakao_api_key">f1c2096c10969aa261655e2933769f2a</string>
+<!--    <string name="kakao_api_key">f1c2096c10969aa261655e2933769f2a</string>-->
+
+    <string name="kakao_api_key">28e95ae82917c57494ce6f9b42022bc8</string>
 
     <string name="app_name">PET_MILLY_CLIENT</string>
     <string name="pet_milly_title">펫밀리</string>

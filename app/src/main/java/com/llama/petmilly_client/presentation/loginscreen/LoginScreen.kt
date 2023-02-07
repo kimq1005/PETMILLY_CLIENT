@@ -105,14 +105,18 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel = hiltVie
 
         if (viewModel.isDialogShown) {
             CustomDialog(
-                onDismiss = { viewModel.onDismissDialog() },
+                onDismiss = {
+                    viewModel.onDismissDialog()
+                    val intent = Intent(context, SignUpActivity::class.java)
+                    context.startActivity(intent)
+                },
                 onConfirm = {
                     viewModel.onDismissDialog()
 //                    val intent = Intent(context, SignUpActivity::class.java)
 //                    context.startActivity(intent)
-                    val intent = Intent(context, HomeActivity::class.java)
-                    context.startActivity(intent)
-//                    kakaoLogin(context)
+//                    val intent = Intent(context, HomeActivity::class.java)
+//                    context.startActivity(intent)
+                    kakaoLogin(context)
                 }
             )
         }
@@ -203,13 +207,13 @@ fun kakaoLogin(context: Context) {
             Toast.makeText(context, "카카오톡 로그인 실패", Toast.LENGTH_SHORT).show()
         } else if (token != null) {
             Log.d(TAG, "로그인 성공: ${token.accessToken}")
+            Toast.makeText(context, "카카오톡 로그인 성공", Toast.LENGTH_SHORT).show()
         }
     }
 
     if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
         UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
             if (error != null) {
-
                 // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
                 // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
                 Log.d(TAG, "로그인 실패 두번째 -> $error")
@@ -221,6 +225,18 @@ fun kakaoLogin(context: Context) {
 
             } else if (token != null) {
                 Log.d(TAG, "카카오 로그인 성공! 두번째 : ${token.accessToken} ")
+                UserApiClient.instance.me { user, error ->
+                    if (error != null) {
+                        Log.d(TAG, "사용자 정보 요청 실패", error)
+                    }
+                    else if (user != null) {
+                        Log.d(TAG, "사용자 정보 요청 성공" +
+                                "\n회원번호: ${user.id}" +
+                                "\n이메일: ${user.kakaoAccount?.email}" +
+                                "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
+                                "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+                    }
+                }
 
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
