@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.homescreen
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,22 +9,38 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
+import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterActivity
+import com.llama.petmilly_client.ui.theme.Search_ButtonColor
+import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.compose.*
@@ -38,40 +55,26 @@ private var navermapyeah: NaverMap? = null
 private var myMarker: Marker? = null
 private var tedNaverClustering: TedNaverClustering<ClusterItem>? = null
 
-
+private lateinit var progressDialog: ProgressDialog
 @Composable
-fun NaverMapViewScreen(list: List<Row>) {
+fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
+
+
     val map = naverMapComposable()
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val (search, setsearch) = rememberSaveable {
+        mutableStateOf("")
+    }
 
-    Column(Modifier.fillMaxSize()) {
-//        ButtonScreen(
-//            title = "마커삭제",
-//            textcolor = Color.Black,
-//            fontSize = 15,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(10.dp),
-//            backgroundcolor = Color.White
-//        ) {
-//
-//            tedNaverClustering?.clearItems()
-//        }
-//
-//        ButtonScreen(
-//            title = "마커 생성",
-//            textcolor = Color.Black,
-//            fontSize = 15,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(10.dp),
-//            backgroundcolor = Color.White
-//        ) {
-//
-//            setcluestring(context, list)
-//        }
+    progressDialog = ProgressDialog(context, R.style.ProgressBarDialog)
+    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+    progressDialog.setCanceledOnTouchOutside(false)
+    progressDialog.setCancelable(false)
 
 
+
+    Box() {
         AndroidView(
             factory = { map },
             update = { mapview ->
@@ -80,54 +83,129 @@ fun NaverMapViewScreen(list: List<Row>) {
                     val seoul = LatLng(37.47153836, 127.096582)
                     val camPos = CameraPosition(
                         seoul,
-                        13.0
+                        10.0
                     )
 
                     navermapyeah?.cameraPosition = camPos
                     navermapyeah?.uiSettings?.isZoomControlEnabled = false
                     navermapyeah?.uiSettings?.isZoomGesturesEnabled = false
 
-                    val items = mutableListOf<ClusterItem>()
-                    for (i in list) {
-                        val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
-                        items.add(ClusterItem(postion, "asd", "asdasd"))
-                    }
-
-                    tedNaverClustering =
-                        TedNaverClustering.with<ClusterItem>(context = context, navermapyeah!!)
-                            .items(items)
-                            .markerClickListener {
-
-                            }
-                            .clusterClickListener {
-                                Log.d(TAG, "NaverMapViewScreen: ${it.position}")
-                                it.position
-                            }
-                            .customCluster {
-                                val clusterDesginText = ClusterDesginText()
-                                if (it.size >= 25) {
-                                    clusterDesginText.cluster25(context, it.size, "월계2동")
-                                } else if (it.size >= 20) {
-                                    clusterDesginText.cluster20(context, it.size, "월계2동")
-                                } else if (it.size >= 15) {
-                                    clusterDesginText.cluster15(context, it.size, "월계2동")
-                                } else if (it.size >= 10) {
-                                    clusterDesginText.cluster10(context, it.size, "월계2동")
-                                } else {
-                                    clusterDesginText.cluster5(context, it.size, "월계2동")
-                                }
-//                                clusterDesginTextView(context, it.size)
-                            }
-                            .minClusterSize(1)
-//                            .clusterBuckets(IntArray(20))
-
-                            .clusterAnimation(animate = true)
-                            .make()
-
+                    setcluestring(context, viewModel.wowman)
                 }
             }
         )
+
+
+        Column(modifier = Modifier.padding(top = 30.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+            ) {
+                TextField(
+                    value = search,
+                    onValueChange = setsearch,
+                    modifier = Modifier
+                        .weight(8f)
+                        .height(55.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = TextField_BackgroudColor,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedLabelColor = Color.White,
+                        cursorColor = Color.Black,
+                    ),
+                    placeholder = { Text(text = "정보를 검색하세요.") },
+                )
+
+                Spacer(modifier = Modifier.width(5.dp))
+
+                Button(
+                    onClick = { },
+                    modifier = Modifier
+                        .weight(1.5f)
+                        .width(55.dp)
+                        .height(55.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Search_ButtonColor),
+                    shape = RoundedCornerShape(10.dp)
+
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_search),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(16.dp)
+                            .height(16.dp)
+                    )
+                }
+            }
+            viewModel.setcategory()
+
+            if (viewModel.categorytest.size > 5) {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 60.dp, top = 10.dp)
+                ) {
+                    items(viewModel.categorytest.subList(0, 3)) { item ->
+                        CategoryItems(categoryTest = item) {
+//                           viewModel.checklibrary()
+                            tedNaverClustering?.clearItems()
+                        }
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                    }
+                }
+
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 10.dp)
+                ) {
+                    items(
+                        viewModel.categorytest.subList(
+                            3,
+                            viewModel.categorytest.lastIndex
+                        )
+                    ) { item ->
+                        CategoryItems(categoryTest = item) {
+                            viewModel.getlibrary()
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                    }
+                }
+            } else {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+
+                    ) {
+                    viewModel.setcategory()
+
+                    items(viewModel.categorytest) { categorylist ->
+
+                        CategoryItems(categoryTest = categorylist, onClick = {
+                            //여기서 api요청을 하고 마커를 다시 그려줘야함 근데 NaverItesmSet은 Composable 객체여서 불가능함
+                        })
+
+                    }
+                }
+            }
+
+
+//
+
+        }
+
     }
+
+    setObserve(viewModel,context, lifecycleOwner)
+
+
 }
 
 @Composable
@@ -169,20 +247,91 @@ fun naverMapComposable(): MapView {
 }
 
 
-fun clusterDesginTextView(context: Context, size: Int): TextView {
-    return TextView(context).apply {
-        this.background =
-            ContextCompat.getDrawable(context, R.drawable.background_clustering_20_oval)
-        this.textSize = 30F
-        this.width = 400
-        this.height = 400
-        this.gravity = Gravity.CENTER
-        setTextColor(ContextCompat.getColor(context, R.color.black))
-        text = size.toString()
-    }
+
+private fun setObserve(viewModel: HomeViewModel,context: Context,lifecycleOwner: LifecycleOwner){
+
+   viewModel.showProgress.observe(lifecycleOwner, Observer {
+       progressDialog.show()
+   })
+
+    viewModel.closeProgress.observe(lifecycleOwner, Observer {
+        progressDialog.dismiss()
+    })
+
+    viewModel.setEvent.observe(lifecycleOwner, Observer {
+        setcluestring(context,viewModel.wowman)
+
+        //맵을 움직여야 클러스터링 결과가 호출이 돼서 해놓은 포지션
+        val seoul = LatLng(37.47153836, 127.096582)
+        val camPos = CameraPosition(
+            seoul,
+            12.0
+        )
+        navermapyeah?.moveCamera(CameraUpdate.toCameraPosition(camPos))
+
+    })
+
+
+
 }
 
 
+fun setcluestring(context: Context, list: List<Row>): TedNaverClustering<ClusterItem>? {
+
+    tedNaverClustering?.clearItems()
+
+
+    val items = mutableListOf<ClusterItem>()
+    for (i in list) {
+        val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
+        items.add(ClusterItem(postion, "asd", "asdasd"))
+    }
+
+    tedNaverClustering = TedNaverClustering.with<ClusterItem>(context = context, navermapyeah!!)
+        .items(items)
+        .markerClickListener {
+
+        }
+        .clusterClickListener {
+            Log.d(TAG, "NaverMapViewScreen: ${it.position}")
+            it.position
+        }
+        .customCluster {
+            val clusterDesginText = ClusterDesginText()
+            if (it.size >= 25) {
+                clusterDesginText.cluster25(context, it.size, "매탄동")
+            } else if (it.size >= 20) {
+                clusterDesginText.cluster20(context, it.size, "원천동")
+            } else if (it.size >= 15) {
+                clusterDesginText.cluster15(context, it.size, "망포동")
+            } else if (it.size >= 10) {
+                clusterDesginText.cluster10(context, it.size, "인게동")
+            } else {
+                clusterDesginText.cluster5(context, it.size, "월계2동")
+            }
+//                                clusterDesginTextView(context, it.size)
+        }
+        .minClusterSize(0)
+//                            .clusterBuckets(IntArray(20))
+        .clusterAnimation(animate = true)
+        .make()
+
+
+    return tedNaverClustering
+}
+
+@Composable
+private fun NaverItemsSet(list: List<Row>) {
+    Log.d(TAG, "NaverItemsSet: $list")
+    val items = remember { mutableStateListOf<ClusterItem>() }
+    LaunchedEffect(Unit) {
+        for (i in list) {
+            val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
+            items.add(ClusterItem(postion, "asdasd", "Asdasdsad"))
+        }
+    }
+    MapClustering(items = items)
+}
 class ClusterDesginText() {
     fun cluster25(context: Context, size: Int, location: String): TextView {
         return TextView(context).apply {
@@ -275,70 +424,6 @@ fun cluster5(context: Context, text1: Int, text2: String): TextView {
 
 
     }
-}
-
-
-
-
-
-//    TextView(context).apply {
-//        setBackgroundColor(
-//            ContextCompat.getColor(
-//                context,
-//                R.color.teal_700
-//            )
-//        )
-//        setTextColor(ContextCompat.getColor(context, R.color.black))
-//        text = "${it.size}개"
-//        if (it.size > 10) setPadding(50, 50, 50, 50) else setPadding(
-//            10,
-//            10,
-//            10,
-//            10
-//        )
-//    }
-
-
-fun setcluestring(context: Context, list: List<Row>): TedNaverClustering<ClusterItem>? {
-    val items = mutableListOf<ClusterItem>()
-    for (i in list) {
-        val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
-        items.add(ClusterItem(postion, "asd", "asdasd"))
-    }
-    tedNaverClustering = TedNaverClustering.with<ClusterItem>(context = context, navermapyeah!!)
-        .items(items)
-        .markerClickListener {
-
-        }
-        .clusterClickListener {
-
-        }
-        .customCluster {
-
-            TextView(context).apply {
-                setBackgroundColor(ContextCompat.getColor(context, R.color.teal_700))
-                setTextColor(ContextCompat.getColor(context, R.color.black))
-                text = "${it.size}개"
-                setPadding(20, 20, 20, 20)
-            }
-        }
-        .clusterAnimation(animate = false)
-        .make()
-    return tedNaverClustering
-}
-
-
-@Composable
-private fun NaverItemsSet(list: List<Row>) {
-    Log.d(TAG, "NaverItemsSet: $list")
-    val items = remember { mutableStateListOf<ClusterItem>() }
-    LaunchedEffect(Unit) {
-        for (i in list) {
-            val postion = LatLng(i.XCNTS.toDouble(), i.YDNTS.toDouble())
-            items.add(ClusterItem(postion, "asdasd", "Asdasdsad"))
-        }
-    }
-    MapClustering(items = items)
 }
 
 @OptIn(ExperimentalNaverMapApi::class)

@@ -21,7 +21,6 @@ class MainApplication : Application() {
         super.onCreate()
 
         var keyHash = Utility.getKeyHash(this)
-        Log.d(TAG, "onCreate: $keyHash")
 
         KakaoSdk.init(this, getString(R.string.kakao_api_key))
 //        Log.d(TAG, "onCreate: $")

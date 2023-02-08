@@ -62,7 +62,6 @@ fun CategoryItems(
                 .selectable(selected = checkBoolean, onClick = {
                     checkBoolean = !checkBoolean
                     onClick()
-                    Log.d(TAG, "CategoryItems: $checkBoolean")
                 })
                 .padding(top = 7.dp, bottom = 7.dp, start = 12.dp, end = 12.dp),
             overflow = TextOverflow.Ellipsis,

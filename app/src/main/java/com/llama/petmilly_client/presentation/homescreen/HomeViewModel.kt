@@ -38,8 +38,15 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
     val yeahman: LiveData<List<Row>> = _yeahman
     
     val wowman:MutableList<Row> = arrayListOf()
+
     private val _setEvent = MutableLiveData<Event<Unit>>()
     val setEvent:LiveData<Event<Unit>> = _setEvent
+
+    private val _showProgress = MutableLiveData<Event<Unit>>()
+    val showProgress: LiveData<Event<Unit>> = _showProgress
+
+    private val _closeProgress = MutableLiveData<Event<Unit>>()
+    val closeProgress: LiveData<Event<Unit>> = _closeProgress
 
 
     private val _name = MutableLiveData("")
@@ -79,15 +86,21 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
 
     }
 
-    fun setTest() {
+    fun checklibrary(){
+        _showProgress.postValue(Event(Unit))
+        getlibrary()
+    }
+
+    fun setlibrary() {
         viewModelScope.launch(Dispatchers.Main) { 
             yeahman.value?.let {
                 wowman.clear()
                 wowman.addAll(it)
-                Log.d(TAG, "setTest: ${wowman.size}")
+                Log.d(TAG, "setlibrary: ${wowman.size}")
             }
         }
     }
+
 
     fun getlibrary() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -96,7 +109,7 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
                     RemoteResult.Status.SUCCESS -> {
                         it.data?.let { data ->
                             _yeahman.postValue(data.SeoulPublicLibraryInfo.row)
-                            setTest()
+                            setlibrary()
                         }
                     }
 
@@ -104,6 +117,8 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
                         Log.d(TAG, "getlibrary: ${it.status}->${it.message}")
                     }
                 }
+                _setEvent.postValue(Event(Unit))
+                _closeProgress.postValue(Event(Unit))
 
             }
 
