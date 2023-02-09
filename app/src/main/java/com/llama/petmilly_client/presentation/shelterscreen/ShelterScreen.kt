@@ -29,6 +29,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
+import com.llama.petmilly_client.presentation.homescreen.items.CategoryShelterItems
 import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategoryItems
 import com.llama.petmilly_client.ui.theme.Purple700
 import llama.test.jetpack_dagger_plz.utils.Common.ANIMALINFO_DETAIL
@@ -65,9 +66,11 @@ fun SafeShelterListScreen(navController: NavController, viewModel: ShelterViewMo
                 viewModel.setcategory()
                 items(viewModel.categorytest) { categorylist ->
                     Row {
-                        CategoryItems(categoryTest = categorylist) {
+                        CategoryShelterItems(categoryTest = categorylist) {
 
                         }
+
+                        Spacer(modifier = Modifier.width(8.dp))
                     }
                 }
 

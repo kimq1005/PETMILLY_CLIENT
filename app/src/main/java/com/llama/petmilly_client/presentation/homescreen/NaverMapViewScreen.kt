@@ -293,8 +293,8 @@ fun setcluestring(context: Context, list: List<Row>): TedNaverClustering<Cluster
 
         }
         .clusterClickListener {
-            Log.d(TAG, "NaverMapViewScreen: ${it.position}")
-            it.position
+            val intent = Intent(context, ShelterActivity::class.java)
+            context.startActivity(intent)
         }
         .customCluster {
             val clusterDesginText = ClusterDesginText()

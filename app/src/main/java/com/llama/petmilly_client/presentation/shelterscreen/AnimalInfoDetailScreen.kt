@@ -2,18 +2,17 @@ package com.llama.petmilly_client.presentation.shelterscreen
 
 import android.content.Intent
 import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,20 +45,7 @@ fun AnimalInfoDetailScreen(
             .verticalScroll(scrollState)
             .fillMaxSize()
     ) {
-//        TitleBar(
-//            title = "임보처 구해요",
-//            ismenu = true,
-//
-//            clickBack = {
-//                navController.popBackStack()
-//            },
-//            clickMenu = {
-//
-//            }
-//        )
 
-
-        Text(text = "한줄소개 (매력)")
 
         Row(modifier = Modifier.fillMaxWidth()) {
             Box() {
@@ -67,8 +53,8 @@ fun AnimalInfoDetailScreen(
                     painter = painterResource(id = R.drawable.baseline_person_24),
                     contentDescription = null,
                     modifier = Modifier
-                        .height(100.dp)
-                        .width(100.dp)
+                        .height(127.dp)
+                        .width(127.dp)
                         .align(Alignment.CenterStart)
                 )
 
@@ -76,13 +62,26 @@ fun AnimalInfoDetailScreen(
                     painter = painterResource(id = R.drawable.baseline_heart_broken_24),
                     contentDescription = null,
                     modifier = Modifier
-                        .height(35.dp)
-                        .width(35.dp)
+                        .height(31.dp)
+                        .width(31.dp)
                         .align(Alignment.TopStart)
+                        .padding(start = 8.dp, top = 8.dp)
                 )
             }
 
+
             Column {
+//
+//                Box {
+//                    Text(
+//                        text = "미소가 이쁜 감자에욤",
+//                            Image(
+//                                painter = painterResource(id = R.drawable.img_name_speech_bubble),
+//                                contentDescription = null
+//                            )
+//                        )
+//                    )
+//                }
                 Text(
                     text = "${viewModel.animalname.value} / ${viewModel.animalgenter.value}",
                     fontSize = 16.sp,
@@ -171,7 +170,7 @@ fun AnimalInfoDetailScreen(
         if (viewModel.isAdoptionApplicationDialogShown) {
             AdoptionCompletedDialog(
                 onDismiss = { viewModel.onAdoptionDialogDismissDialog() },
-                onConfirm = { Log.d(TAG, "AnimalInfoDetailScreen: wow")})
+                onConfirm = { Log.d(TAG, "AnimalInfoDetailScreen: wow") })
 
         }
 
@@ -182,7 +181,19 @@ fun AnimalInfoDetailScreen(
 
 @Preview
 @Composable
-fun Woy(){
-    val navController = rememberNavController()
-    AnimalInfoDetailScreen(navController)
+fun Woy() {
+//    val navController = rememberNavController()
+//    AnimalInfoDetailScreen(navController)
+    ButtonExample()
+}
+
+
+@Composable
+fun ButtonExample() {
+    Box() {
+        Image(painter = painterResource(id = R.drawable.img_name_speech_bubble),
+            contentDescription = null,
+            modifier = Modifier
+                .clickable { })
+    }
 }

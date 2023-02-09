@@ -60,8 +60,8 @@ class ShelterActivity : ComponentActivity() {
 
                     }
 
-                    val route = intent.getStringExtra(SAFESHELTER_COMPOSABLE).toString()
-                    NavHost(navController = navController, startDestination = route) {
+//                    val route = intent.getStringExtra(SAFESHELTER_COMPOSABLE).toString()
+                    NavHost(navController = navController, startDestination = SAFESHELTER_COMPOSABLE) {
                         composable(route = SAFESHELTER_COMPOSABLE) {
                             SafeShelterListScreen(navController = navController)
                         }
