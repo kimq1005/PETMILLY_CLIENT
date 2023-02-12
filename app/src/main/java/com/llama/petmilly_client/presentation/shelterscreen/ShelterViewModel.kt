@@ -30,6 +30,7 @@ class ShelterViewModel() : ViewModel() {
 
     val categorytest: MutableList<CategoryTest> = arrayListOf()
 
+    var testBoolean = mutableStateOf<Boolean>(true)
     init {
         testsetcategory()
     }
@@ -38,7 +39,7 @@ class ShelterViewModel() : ViewModel() {
         animalname.value = "박종경"
         animalgenter.value = "혼종"
         animalage.value = 5
-        animalspecies.value = "호구"
+        animalspecies.value = "바부"
         animalweight.value = 100
 
     }

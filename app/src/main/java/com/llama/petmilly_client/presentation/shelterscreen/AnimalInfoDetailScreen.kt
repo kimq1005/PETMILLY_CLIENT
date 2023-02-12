@@ -1,7 +1,9 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.util.Log
+import android.view.View
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +19,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,13 +51,14 @@ fun AnimalInfoDetailScreen(
     Box {
         Column(
             modifier = Modifier
-                .padding(20.dp)
                 .verticalScroll(scrollState)
                 .fillMaxSize()
         ) {
 
 
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)) {
                 Box() {
 
                     Text(
@@ -86,7 +90,6 @@ fun AnimalInfoDetailScreen(
                 ) {
 
 
-                    //constraintlayout으로 해야할듯
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -121,8 +124,10 @@ fun AnimalInfoDetailScreen(
                             .fillMaxWidth()
                             .padding(top = 20.dp)
                     ) {
+
+//                        viewModel.onDismissDialog()
                         Text(
-                            text = "감자 ",
+                            text = if (viewModel.testBoolean.value) viewModel.animalspecies.value else "${viewModel.animalspecies.value}(완료) ",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.Black
@@ -153,10 +158,11 @@ fun AnimalInfoDetailScreen(
                 }
             }//Row
 
+
             Text(
                 text = "프로필", modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp, start = 10.dp),
+                    .padding(top = 20.dp, start = 30.dp),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
@@ -168,7 +174,7 @@ fun AnimalInfoDetailScreen(
                     .padding(top = 5.dp, bottom = 10.dp), color = Color.Black
             )
 
-            Column() {
+            Column(modifier = Modifier.padding(20.dp)) {
 
                 Row(
                     modifier = Modifier
@@ -283,201 +289,274 @@ fun AnimalInfoDetailScreen(
             }//Column
 
 
-            Text(
-                text = "임보 정보", modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp, start = 10.dp),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp, bottom = 10.dp), color = Color.Black
-            )
-
-            Column() {
-
+            if(!viewModel.testBoolean.value){
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 10.dp, bottom = 10.dp)
-                ) {
+                        .height(90.dp)
+                        .background(color = Color(0xFFECF2FF)),
+
+                    ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(start = 25.dp)
+                    ) {
+
+                        Image(
+                            painter = painterResource(id = R.drawable.img_puppy),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .width(50.dp)
+                                .height(40.dp)
+                                .align(Alignment.CenterStart)
+                        )
+
+                        Image(
+                            painter = painterResource(id = R.drawable.img_puppy_star),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .height(10.dp)
+                                .width(10.dp)
+                                .align(Alignment.TopCenter)
+                                .offset(y = 20.dp)
+
+                        )
+
+
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 10.dp)
+                            .fillMaxHeight(), verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "신청서 접수기간 : 23.01.01 ~ 23.01.07",
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF3050F6),
+                            modifier = Modifier.padding(bottom = 5.dp)
+                        )
+                        Text(
+                            text = "신청서 심사기간 : 23.08.01 ~ 23.01.10",
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black,
+                            modifier = Modifier.padding(bottom = 5.dp)
+
+                        )
+                        Text(
+                            text = "* 입양신청서 심사 후 확정 시 앱 알림 및 채팅을 통해 안내드립니다.",
+                            fontWeight = FontWeight.Bold,
+                            color = Color.LightGray,
+                            fontSize = 11.sp
+                        )
+
+                    }//Column
+                }//Row
+            }
+
+            
+            //임보처 구해요 완료
+            if (viewModel.testBoolean.value) {
+                Column(modifier = Modifier.padding(20.dp)) {
                     Text(
-                        text = "픽업방법 ",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
+                        text = "임보 정보", modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp, start = 10.dp),
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.width(80.dp)
+                        color = Color.Black
                     )
 
-                    Text(
-                        text = "직접픽업 ",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 15.dp)
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 5.dp, bottom = 10.dp), color = Color.Black
                     )
-                }
 
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 10.dp), color = Color.LightGray
-                )
+                    Column() {
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 10.dp, bottom = 10.dp)
+                        ) {
+                            Text(
+                                text = "픽업방법 ",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.width(80.dp)
+                            )
+
+                            Text(
+                                text = "직접픽업 ",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                modifier = Modifier.padding(start = 15.dp)
+                            )
+                        }
+
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 10.dp), color = Color.LightGray
+                        )
 
 
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, bottom = 10.dp)
-                ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 10.dp, bottom = 10.dp)
+                        ) {
+                            Text(
+                                text = "희망지역",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.width(80.dp)
+                            )
+
+                            Text(
+                                text = "서울/ 경기",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                modifier = Modifier.padding(start = 15.dp)
+                            )
+                        }
+
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 10.dp), color = Color.LightGray
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 10.dp, bottom = 10.dp)
+                        ) {
+                            Text(
+                                text = "임보기간",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.width(80.dp)
+                            )
+
+                            Text(
+                                text = "2달",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                modifier = Modifier.padding(start = 15.dp)
+                            )
+                        }
+
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 5.dp), color = Color.LightGray
+                        )
+
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 10.dp, bottom = 10.dp)
+                        ) {
+                            Text(
+                                text = "임보조건",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.width(80.dp)
+                            )
+
+                            Text(
+                                text = "✅ 서울 성북동 연계병원에서 픽업가능한 분(#2월2일 #2월3일)\n" +
+                                        "✅ 서울 성북동의 연계병 2주에 1번 통원 가능능한 분 체크무늬는추가추가해서하도록하고 작성할때 플러스버튼으로 적용용",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                modifier = Modifier.padding(start = 15.dp)
+                            )
+                        }
+
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 5.dp), color = Color.LightGray
+                        )
+
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 10.dp, bottom = 10.dp)
+                        ) {
+                            Text(
+                                text = "이런분을 희망해요",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.width(80.dp)
+                            )
+
+                            Text(
+                                text = "✅  응급 시 연계병원으로 이동 가능한 분",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                modifier = Modifier.padding(start = 15.dp)
+                            )
+                        }
+
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 5.dp), color = Color.LightGray
+                        )
+
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 10.dp, bottom = 10.dp)
+                        ) {
+                            Text(
+                                text = "이런분은 안돼요",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.width(80.dp)
+                            )
+
+                            Text(
+                                text = "❌ 집을 비우는 시간이 너무 기신 분",
+                                color = Color.DarkGray,
+                                fontSize = 13.sp,
+                                modifier = Modifier.padding(start = 15.dp)
+                            )
+                        }
+
+                    }//Column
+
                     Text(
-                        text = "희망지역",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
+                        text = "사진첩", modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 30.dp, start = 10.dp),
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.width(80.dp)
+                        color = Color.Black
                     )
 
-                    Text(
-                        text = "서울/ 경기",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 15.dp)
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 5.dp, bottom = 10.dp), color = Color.Black
                     )
-                }
+                }//Column
+            }
 
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 10.dp), color = Color.LightGray
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, bottom = 10.dp)
-                ) {
-                    Text(
-                        text = "임보기간",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.width(80.dp)
-                    )
-
-                    Text(
-                        text = "2달",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 15.dp)
-                    )
-                }
-
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 5.dp), color = Color.LightGray
-                )
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, bottom = 10.dp)
-                ) {
-                    Text(
-                        text = "임보조건",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.width(80.dp)
-                    )
-
-                    Text(
-                        text = "✅ 서울 성북동 연계병원에서 픽업가능한 분(#2월2일 #2월3일)\n" +
-                                "✅ 서울 성북동의 연계병 2주에 1번 통원 가능능한 분 체크무늬는추가추가해서하도록하고 작성할때 플러스버튼으로 적용용",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 15.dp)
-                    )
-                }
-
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 5.dp), color = Color.LightGray
-                )
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, bottom = 10.dp)
-                ) {
-                    Text(
-                        text = "이런분을 희망해요",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.width(80.dp)
-                    )
-
-                    Text(
-                        text = "✅  응급 시 연계병원으로 이동 가능한 분",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 15.dp)
-                    )
-                }
-
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 5.dp), color = Color.LightGray
-                )
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, bottom = 10.dp)
-                ) {
-                    Text(
-                        text = "이런분은 안돼요",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.width(80.dp)
-                    )
-
-                    Text(
-                        text = "❌ 집을 비우는 시간이 너무 기신 분",
-                        color = Color.DarkGray,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 15.dp)
-                    )
-                }
-
-            }//Column
-
-            Text(
-                text = "사진첩", modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 30.dp, start = 10.dp),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp, bottom = 10.dp), color = Color.Black
-            )
 
         }//Column
 
