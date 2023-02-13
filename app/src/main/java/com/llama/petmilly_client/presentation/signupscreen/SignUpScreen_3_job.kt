@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -63,7 +64,7 @@ fun SignUpScreen_3_job(navController: NavController, viewModel: SignUpViewModel)
                 .height(55.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if(viewModel.job.value=="") TextField_BackgroudColor else Color.White,
+                backgroundColor = if (viewModel.job.value == "") TextField_BackgroudColor else Color.White,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
@@ -75,23 +76,40 @@ fun SignUpScreen_3_job(navController: NavController, viewModel: SignUpViewModel)
 
         Spacer(modifier = Modifier.weight(1f))
 
-        ButtonScreen(
-            title = "다음",
-            textcolor = Color.White,
-            fontSize = 15,
+
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
-                .height(55.dp),
-            backgroundcolor = if (viewModel.job.value == "") Button_NoneClicked else Button_Clicked
+                .height(100.dp)
+                .padding(start = 20.dp, bottom = 20.dp, end = 20.dp)
         ) {
-            if (viewModel.job.value != "") {
-                navController.navigate(SIGNUPSCREEN_4_1_ISWITHANIMAL)
-                Log.d(TAG, "SignUpScreen_3_job: ${viewModel.name.value}")
-            } else {
-                Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
-            }
+            Text(
+                text = "3/8",
+                modifier = Modifier.align(Alignment.TopEnd),
+                fontSize = 13.sp,
+                color = Color.LightGray
+            )
 
+            ButtonScreen(
+                title = "다음",
+                textcolor = Color.White,
+                fontSize = 15,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp)
+                    .align(Alignment.BottomCenter),
+                backgroundcolor = if (viewModel.job.value == "") Button_NoneClicked else Button_Clicked
+            ) {
+                if (viewModel.job.value != "") {
+                    navController.navigate(SIGNUPSCREEN_4_1_ISWITHANIMAL)
+                    Log.d(TAG, "SignUpScreen_3_job: ${viewModel.name.value}")
+                } else {
+                    Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
+                }
+
+            }
         }
+
+
     }
 }

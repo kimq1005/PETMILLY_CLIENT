@@ -2,6 +2,8 @@ package com.llama.petmilly_client.utils
 
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -16,15 +18,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.llama.petmilly_client.R
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 
 
 @Composable
 fun ButtonScreen(
-    title:String,
+    title: String,
     textcolor: Color,
     fontSize: Int,
     modifier: Modifier,
@@ -47,7 +52,7 @@ fun ButtonScreen(
 
 @Composable
 fun ButtonShapeScreen(
-    title:String,
+    title: String,
     textcolor: Color,
     fontSize: Int,
     modifier: Modifier,
@@ -121,3 +126,32 @@ fun CommonTitleBar(
 
     }
 }
+
+@Composable
+fun CustomCheckBox(wowcolor: Color, check: Boolean) {
+    Box() {
+        Canvas(
+            modifier = Modifier
+                .size(size = 50.dp)
+                .align(Alignment.Center)
+        ) {
+            drawCircle(
+                color = if (check) wowcolor else wowcolor
+            )
+        }
+
+        Image(
+            painter = painterResource(id = R.drawable.baseline_check_black_24),
+            contentDescription = null,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }//Box
+
+}
+
+@Preview
+@Composable
+fun Wdsd() {
+//    CustomCheckBox()
+}
+

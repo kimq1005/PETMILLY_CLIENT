@@ -47,6 +47,7 @@ class SignUpViewModel  @Inject constructor(private val petMillyRepo: PetMillyRep
 
     fun postkakaotoken(){
         viewModelScope.launch(Dispatchers.IO) {
+
         val kaKaoResponse = KaKaoResponse("asasd")
             petMillyRepo.postkakaotoken(kaKaoResponse).let {
                 when(it.status){

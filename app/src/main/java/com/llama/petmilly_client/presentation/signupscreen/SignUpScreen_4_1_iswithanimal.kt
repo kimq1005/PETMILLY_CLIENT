@@ -1,13 +1,20 @@
 package com.llama.petmilly_client.presentation.signupscreen.viewmodel
 
+import android.graphics.drawable.shapes.OvalShape
 import android.widget.Toast
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.CommonSignDescription
 import com.llama.petmilly_client.ui.theme.Button_Clicked
@@ -25,7 +33,7 @@ import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_2_CALLYOUTANIMAL
 
 @Composable
-fun SignUpScreen_4_1_iswithanimal(navController: NavController,viewModel: SignUpViewModel) {
+fun SignUpScreen_4_1_iswithanimal(navController: NavController, viewModel: SignUpViewModel) {
 
     val context = LocalContext.current
 
@@ -55,45 +63,68 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController,viewModel: SignUp
         ) {
             Button(
                 onClick = {
-                          viewModel.livewithanimal.value ="같이 살고있어요"
+                    viewModel.livewithanimal.value = "같이 살고있어요"
                 },
-                modifier = Modifier.weight(1f).padding(5.dp)
-            ){
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp)
+            ) {
                 Text(text = "네 같이\n살고 있어요", textAlign = TextAlign.Center)
             }
 
             Button(
                 onClick = { viewModel.livewithanimal.value = "아니요 없어욥" },
-                modifier = Modifier.weight(1f).padding(5.dp)
-            ){
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp)
+            ) {
                 Text(text = "아니요 \n없어요", textAlign = TextAlign.Center)
             }
 
             Button(
                 onClick = { viewModel.livewithanimal.value = "키운적 있어욥" },
-                modifier = Modifier.weight(1f).padding(5.dp)
-            ){
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp)
+            ) {
                 Text(text = "키운적\n있어요", textAlign = TextAlign.Center)
             }
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
-        ButtonScreen(
-            title = "다음",
-            textcolor = Color.White,
-            fontSize = 15,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
-                .height(55.dp),
-            backgroundcolor = if (viewModel.livewithanimal.value == "") Button_NoneClicked else Button_Clicked
+                .height(100.dp)
+                .padding(start = 20.dp, bottom = 20.dp, end = 20.dp)
         ) {
-            if (viewModel.livewithanimal.value != "") {
-                navController.navigate(SIGNUPSCREEN_4_2_CALLYOUTANIMAL)
-            } else {
-                Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
+            Text(
+                text = "4/8",
+                modifier = Modifier.align(Alignment.TopEnd),
+                fontSize = 13.sp,
+                color = Color.LightGray
+            )
+
+            ButtonScreen(
+                title = "다음",
+                textcolor = Color.White,
+                fontSize = 15,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp),
+                backgroundcolor = if (viewModel.livewithanimal.value == "") Button_NoneClicked else Button_Clicked
+            ) {
+                if (viewModel.livewithanimal.value != "") {
+                    navController.navigate(SIGNUPSCREEN_4_2_CALLYOUTANIMAL)
+                } else {
+                    Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
+                }
             }
         }
+
+
     }// Column
 }
+
+

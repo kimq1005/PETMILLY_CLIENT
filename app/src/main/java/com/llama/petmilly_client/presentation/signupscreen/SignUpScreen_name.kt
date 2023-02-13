@@ -42,7 +42,7 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
         mutableStateOf("")
     }
 
-    val context= LocalContext.current
+    val context = LocalContext.current
 
     TitleBar(title = "", ismenu = false, clickBack = { }) {
 
@@ -160,24 +160,28 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
 
         Spacer(modifier = Modifier.weight(1f))
 
+
         ButtonScreen(
             title = "다음",
             textcolor = Color.White,
             fontSize = 15,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(55.dp),
+                .height(55.dp)
+                ,
             backgroundcolor = if (viewModel.name.value == "" && viewModel.nickname.value == "") Button_NoneClicked else Button_Clicked
         ) {
-            if (viewModel.name.value != "" && viewModel.nickname.value != ""){
+            if (viewModel.name.value != "" && viewModel.nickname.value != "") {
                 navController.navigate(SIGNUPSCREEN_1_BIRTHDAY)
 //                viewModel.postkakaotoken()
 
-            }else{
+            } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
             }
 
         }
+
+
     }
 
 }

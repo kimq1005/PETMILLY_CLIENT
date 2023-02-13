@@ -75,39 +75,59 @@ fun SignUpScreen_1_birthday(navController: NavController, viewModel: SignUpViewM
                 Text(
                     text = "1991년 02월 04일",
                     fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Color.LightGray
                 )
             }
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
-        ButtonScreen(
-            title = "다음",
-            textcolor = Color.White,
-            fontSize = 15,
+
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
-                .height(55.dp),
-            backgroundcolor = if (viewModel.birthday.value == "") Button_NoneClicked else Button_Clicked
+                .height(100.dp)
+                .padding(start = 20.dp, bottom = 20.dp, end = 20.dp)
         ) {
-            if (viewModel.birthday.value != "") {
-                navController.navigate(SIGNUPSCREEN_2_GENDER)
-            } else {
-                Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
-            }
+            Text(
+                text = "1/8",
+                modifier = Modifier.align(Alignment.TopEnd),
+                fontSize = 13.sp,
+                color = Color.LightGray
+            )
 
-        }
+            ButtonScreen(
+                title = "다음",
+                textcolor = Color.White,
+                fontSize = 15,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp)
+                    .align(Alignment.BottomCenter),
+                backgroundcolor = if (viewModel.birthday.value == "") Button_NoneClicked else Button_Clicked
+            ) {
+                if (viewModel.birthday.value != "") {
+                    navController.navigate(SIGNUPSCREEN_2_GENDER)
+                } else {
+                    Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
+                }
+
+            }
+        }//Box
+
     }
+
+
 }
 
 @Composable
-fun CommonSignDescription(){
+fun CommonSignDescription() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 20.dp, start = 40.dp, end = 40.dp, bottom = 30.dp), verticalAlignment = Alignment.CenterVertically
+            .padding(top = 20.dp, start = 40.dp, end = 40.dp, bottom = 30.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = painterResource(id = R.drawable.background_blue_circle),
