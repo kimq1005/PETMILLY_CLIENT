@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -28,9 +29,11 @@ import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.CommonSignDescription
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
-import com.llama.petmilly_client.utils.ButtonScreen
+import com.llama.petmilly_client.ui.theme.Category_Cliked
+import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_2_CALLYOUTANIMAL
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_5_ISTEMPORARYCARE
 
 @Composable
 fun SignUpScreen_4_1_iswithanimal(navController: NavController, viewModel: SignUpViewModel) {
@@ -58,38 +61,92 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController, viewModel: SignU
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp),
-            horizontalArrangement = Arrangement.Center
+                .padding(start = 30.dp, end = 30.dp, top = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Button(
-                onClick = {
-                    viewModel.livewithanimal.value = "같이 살고있어요"
-                },
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(5.dp)
-            ) {
-                Text(text = "네 같이\n살고 있어요", textAlign = TextAlign.Center)
+            if (viewModel.livewithanimal.value == "네, 같이 살고 있어요.") {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
             }
 
-            Button(
-                onClick = { viewModel.livewithanimal.value = "아니요 없어욥" },
+            ButtonShapeScreen(
+                title = "네, 같이 살고 있어요",
+                textcolor = if (viewModel.livewithanimal.value == "네, 같이 살고 있어요.") Color.White else Color.Black,
+                fontSize = 15,
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(5.dp)
+                    .padding(start = 5.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.livewithanimal.value == "네, 같이 살고 있어요.") Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
             ) {
-                Text(text = "아니요 \n없어요", textAlign = TextAlign.Center)
+                viewModel.livewithanimal.value = "네, 같이 살고 있어요."
             }
 
-            Button(
-                onClick = { viewModel.livewithanimal.value = "키운적 있어욥" },
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(5.dp)
-            ) {
-                Text(text = "키운적\n있어요", textAlign = TextAlign.Center)
+        }//Row
+
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (viewModel.livewithanimal.value == "아니요, 같이 살고 있지 않아요.") {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
             }
-        }
+
+            ButtonShapeScreen(
+                title = "아니요, 같이 살고 있지 않아요",
+                textcolor = if (viewModel.livewithanimal.value == "아니요, 같이 살고 있지 않아요.") Color.White else Color.Black,
+                fontSize = 15,
+                modifier = Modifier
+                    .padding(start = 5.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.livewithanimal.value == "아니요, 같이 살고 있지 않아요.") Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
+            ) {
+                viewModel.livewithanimal.value = "아니요, 같이 살고 있지 않아요."
+            }
+
+        }//Row
+
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (viewModel.livewithanimal.value == "지금은 아니지만, 키운적은 있어요.") {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
+            }
+
+            ButtonShapeScreen(
+                title = "지금은 아니지만, 키운적은 있어요.",
+                textcolor = if (viewModel.livewithanimal.value == "지금은 아니지만, 키운적은 있어요.") Color.White else Color.Black,
+                fontSize = 15,
+                modifier = Modifier
+                    .padding(start = 5.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.livewithanimal.value == "지금은 아니지만, 키운적은 있어요.") Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
+            ) {
+                viewModel.livewithanimal.value = "지금은 아니지만, 키운적은 있어요."
+            }
+
+        }//Row
+
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -112,11 +169,16 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController, viewModel: SignU
                 fontSize = 15,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(55.dp),
+                    .height(55.dp)
+                    .align(Alignment.BottomCenter),
                 backgroundcolor = if (viewModel.livewithanimal.value == "") Button_NoneClicked else Button_Clicked
             ) {
                 if (viewModel.livewithanimal.value != "") {
-                    navController.navigate(SIGNUPSCREEN_4_2_CALLYOUTANIMAL)
+                    if (viewModel.livewithanimal.value == "네, 같이 살고 있어요." || viewModel.livewithanimal.value == "지금은 아니지만, 키운적은 있어요.") {
+                        navController.navigate(SIGNUPSCREEN_4_2_CALLYOUTANIMAL)
+                    }else{
+                        navController.navigate(SIGNUPSCREEN_5_ISTEMPORARYCARE)
+                    }
                 } else {
                     Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
                 }

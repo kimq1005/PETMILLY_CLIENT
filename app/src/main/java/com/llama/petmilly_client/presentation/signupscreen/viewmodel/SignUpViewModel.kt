@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.signupscreen.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
+import java.util.Collections.list
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,15 +30,18 @@ class SignUpViewModel  @Inject constructor(private val petMillyRepo: PetMillyRep
     val livewithanimal= mutableStateOf("")
 
 
+
     //call your animal
+    val numberofanimal= mutableStateOf(1)
     val callyouranimalcheck= mutableStateOf(false)
-    val animalgender = mutableStateOf<String>("")
-    val isneuteringsurgery = mutableStateOf<Boolean>(false)
+    val animalgender = mutableStateOf<String>("수컷")
+    val isneuteringsurgery = mutableStateOf<Boolean>(true)
     val animalkind = mutableStateOf<String>("")
     val animalage = mutableStateOf("")
 
+
     //istemporarycare
-    val istemporarycare = mutableStateOf(false)
+    val istemporarycare = mutableStateOf(true)
 
     //isallergy
     val isallery = mutableStateOf(0)
@@ -44,7 +49,9 @@ class SignUpViewModel  @Inject constructor(private val petMillyRepo: PetMillyRep
     //housekind
     val housekind = mutableStateOf("")
 
+    val famillylist = mutableStateListOf<String>(
 
+    )
     fun postkakaotoken(){
         viewModelScope.launch(Dispatchers.IO) {
 

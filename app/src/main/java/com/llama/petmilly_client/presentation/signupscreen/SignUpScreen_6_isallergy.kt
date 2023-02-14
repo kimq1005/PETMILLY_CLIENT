@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,8 +21,11 @@ import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
+import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
+import com.llama.petmilly_client.utils.CheckedCheckBox
+import com.llama.petmilly_client.utils.NoneCheckBox
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_7_CALLYOURHOUSE
 
 @Composable
@@ -44,49 +49,95 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
             color = Color.Black
         )
 
-        ButtonShapeScreen(
-            title = "네 알러지 있어요",
-            textcolor = Color.White,
-            fontSize = 18,
+
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 50.dp, end = 50.dp, bottom = 10.dp)
-                .height(55.dp),
-            backgroundcolor = if (viewModel.isallery.value == 0 ) Button_Clicked else Button_NoneClicked,
-            shape = RoundedCornerShape(19.dp)
+                .padding(start = 30.dp, end = 30.dp, top = 50.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            viewModel.isallery.value = 0
-        }
+            if (viewModel.isallery.value == 0) {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
+            }
 
-        ButtonShapeScreen(
-            title = "아니요, 없어요",
-            textcolor = Color.White,
-            fontSize = 18,
+            ButtonShapeScreen(
+                title = "네, 알러지 있어요.",
+                textcolor = if (viewModel.isallery.value == 0) Color.White else Color.Black,
+                fontSize = 15,
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.isallery.value == 0) Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
+            ) {
+                viewModel.isallery.value = 0
+            }
+
+        }//Row
+
+
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 50.dp, end = 50.dp, bottom = 10.dp)
-                .height(55.dp),
-            backgroundcolor = if (viewModel.isallery.value == 1 ) Button_Clicked else Button_NoneClicked,
-            shape = RoundedCornerShape(19.dp)
+                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            viewModel.isallery.value = 1
-        }
+            if (viewModel.isallery.value == 1) {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
+            }
+
+            ButtonShapeScreen(
+                title = "아니요, 없어요.",
+                textcolor = if (viewModel.isallery.value == 1) Color.White else Color.Black,
+                fontSize = 15,
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.isallery.value == 1) Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
+            ) {
+                viewModel.isallery.value = 1
+            }
+
+        }//Row
 
 
-        ButtonShapeScreen(
-            title = "모르겠어요",
-            textcolor = Color.White,
-            fontSize = 18,
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 50.dp, end = 50.dp)
-                .height(55.dp),
-            backgroundcolor = if (viewModel.isallery.value == 2 ) Button_Clicked else Button_NoneClicked,
-            shape = RoundedCornerShape(19.dp)
+                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            viewModel.isallery.value = 2
-        }
+            if (viewModel.isallery.value == 2) {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
+            }
 
+            ButtonShapeScreen(
+                title = "아니요, 없어요.",
+                textcolor = if (viewModel.isallery.value == 2) Color.White else Color.Black,
+                fontSize = 15,
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.isallery.value == 2) Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
+            ) {
+                viewModel.isallery.value = 2
+            }
+
+        }//Row
 
 
         Spacer(modifier = Modifier.weight(1f))
@@ -102,7 +153,7 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
             backgroundcolor = Button_Clicked
         ) {
 //            if (viewModel.istemporarycare.value) {
-                navController.navigate(SIGNUPSCREEN_7_CALLYOURHOUSE)
+            navController.navigate(SIGNUPSCREEN_7_CALLYOURHOUSE)
 //            } else {
 //                Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
 //            }

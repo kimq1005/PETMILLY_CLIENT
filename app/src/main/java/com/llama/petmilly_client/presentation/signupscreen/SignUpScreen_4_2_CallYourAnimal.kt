@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -19,6 +20,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,10 +31,14 @@ import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
+import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
+import com.llama.petmilly_client.utils.CheckedCheckBox
+import com.llama.petmilly_client.utils.NoneCheckBox
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_5_ISTEMPORARYCARE
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -61,148 +67,93 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
         )
 
 
-        TextField(
-            value = viewModel.animalkind.value,
-            onValueChange = { viewModel.animalkind.value = it },
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
-                .height(55.dp)
-                .clickable {
-                    viewModel.checkCallYourAnimal()
-                },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = {
-                viewModel.checkCallYourAnimal()
-                focusManager.moveFocus(FocusDirection.Down)
-            }),
-            shape = RoundedCornerShape(10.dp),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.animalkind.value == "") TextField_BackgroudColor else Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedLabelColor = Color.White,
-                cursorColor = Color.Black,
+                .padding(start = 30.dp, end = 30.dp, top = 50.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (viewModel.numberofanimal.value == 1) {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
+            }
 
-                ),
-            placeholder = { Text(text = "품종을 입력해주세요") }
-        )
+            ButtonShapeScreen(
+                title = "1마리와 함께 살고 있어요.",
+                textcolor = if (viewModel.numberofanimal.value == 1) Color.White else Color.Black,
+                fontSize = 15,
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.numberofanimal.value == 1) Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
+            ) {
+                viewModel.numberofanimal.value = 1
+            }
 
-        TextField(
-            value = viewModel.animalage.value,
-            onValueChange = { viewModel.animalage.value = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, bottom = 25.dp)
-                .height(55.dp)
-                .clickable {
-                    viewModel.checkCallYourAnimal()
-                },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = {
-                viewModel.checkCallYourAnimal()
-                keyboardController?.hide()
-            }),
-            shape = RoundedCornerShape(10.dp),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.animalage.value == "") TextField_BackgroudColor else Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedLabelColor = Color.White,
-                cursorColor = Color.Black,
-
-                ),
-            placeholder = { Text(text = "나이를 입력해주세요") }
-        )
-
-        Text(
-            text = "반려동물 성별을 선택해주세요",
-            fontSize = 15.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, end = 30.dp, bottom = 2.dp)
-        )
+        }//Row
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, bottom = 30.dp),
-            horizontalArrangement = Arrangement.Center
+                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            ButtonShapeScreen(
-                title = "Man",
-                textcolor = Color.Black,
-                fontSize = 18,
-                modifier = Modifier.weight(1f),
-                backgroundcolor = Button_NoneClicked,
-                shape = RoundedCornerShape(19.dp)
-            ) {
-                viewModel.animalgender.value = "man"
-                viewModel.checkCallYourAnimal()
+            if (viewModel.numberofanimal.value == 2) {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
             }
 
-            Spacer(modifier = Modifier.width(10.dp))
-
             ButtonShapeScreen(
-                title = "Woman",
-                textcolor = Color.Black,
-                fontSize = 18,
-                modifier = Modifier.weight(1f),
-                backgroundcolor = Button_NoneClicked,
-                shape = RoundedCornerShape(19.dp)
+                title = "2마리와 함께 살고 있어요.",
+                textcolor = if (viewModel.numberofanimal.value == 2) Color.White else Color.Black,
+                fontSize = 15,
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.numberofanimal.value == 2) Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
             ) {
-                viewModel.animalgender.value = "woman"
-                viewModel.checkCallYourAnimal()
-
+                viewModel.numberofanimal.value = 2
             }
+
         }//Row
 
-
-        Text(
-            text = "중성화 여부를 선택해주세요",
-            fontSize = 15.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, end = 30.dp, bottom = 2.dp)
-        )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp)
-                .clickable {
-                    viewModel.checkCallYourAnimal()
-                },
-            horizontalArrangement = Arrangement.Center
+                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            ButtonShapeScreen(
-                title = "No",
-                textcolor = Color.White,
-                fontSize = 18,
-                modifier = Modifier.weight(1f),
-                backgroundcolor = if (viewModel.isneuteringsurgery.value) Button_NoneClicked else Button_Clicked,
-                shape = RoundedCornerShape(19.dp)
-            ) {
-                viewModel.isneuteringsurgery.value = false
-                viewModel.checkCallYourAnimal()
-
+            if (viewModel.numberofanimal.value == 3) {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
             }
 
-            Spacer(modifier = Modifier.width(10.dp))
-
             ButtonShapeScreen(
-                title = "Yes",
-                textcolor = Color.White,
-                fontSize = 18,
-                modifier = Modifier.weight(1f),
-                backgroundcolor = if (!viewModel.isneuteringsurgery.value) Button_NoneClicked else Button_Clicked,
-                shape = RoundedCornerShape(19.dp)
+                title = "3마리와 함께 살고 있어요.",
+                textcolor = if (viewModel.numberofanimal.value == 3) Color.White else Color.Black,
+                fontSize = 15,
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.numberofanimal.value == 3) Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
             ) {
-                viewModel.isneuteringsurgery.value = true
-                viewModel.checkCallYourAnimal()
-
+                viewModel.numberofanimal.value = 3
             }
         }//Row
+
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -214,16 +165,10 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
                 .fillMaxWidth()
                 .padding(20.dp)
                 .height(55.dp),
-            backgroundcolor = if (viewModel.callyouranimalcheck.value) Button_Clicked else Button_NoneClicked
+            backgroundcolor = Button_Clicked
         ) {
-            if (viewModel.callyouranimalcheck.value) {
-                navController.navigate(SIGNUPSCREEN_5_ISTEMPORARYCARE)
-            } else {
-                Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
-            }
-
+            navController.navigate(SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
         }
-
 
     }// Column
 

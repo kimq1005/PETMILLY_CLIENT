@@ -24,6 +24,11 @@ object Common {
     const val SIGNUPSCREEN_3_JOB = "signupscreen_3"
     const val SIGNUPSCREEN_4_1_ISWITHANIMAL = "signupscreen_4_1"
     const val SIGNUPSCREEN_4_2_CALLYOUTANIMAL= "signupscreen_4_2"
+
+    const val SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First = "signupscreen_4_3_1"
+    const val SIGNUPSCREEN_4_3_CALLYOUTANIMAL_Second = "signupscreen_4_3_2"
+    const val SIGNUPSCREEN_4_3_CALLYOUTANIMAL_Third = "signupscreen_4_3_3"
+
     const val SIGNUPSCREEN_5_ISTEMPORARYCARE = "signupscreen_5"
     const val SIGNUPSCREEN_6_ISALLERGY = "signupscreen_6"
     const val SIGNUPSCREEN_7_CALLYOURHOUSE = "signupscreen_7"

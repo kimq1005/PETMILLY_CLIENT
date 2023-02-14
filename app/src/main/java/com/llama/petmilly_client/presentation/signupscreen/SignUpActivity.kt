@@ -16,6 +16,9 @@ import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_2_GENDER
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_3_JOB
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_1_ISWITHANIMAL
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_2_CALLYOUTANIMAL
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_Second
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_Third
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_5_ISTEMPORARYCARE
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_6_ISALLERGY
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_7_CALLYOURHOUSE
@@ -55,6 +58,19 @@ class SignUpActivity : ComponentActivity() {
                 composable(SIGNUPSCREEN_4_2_CALLYOUTANIMAL){
                     SignUpScreen_4_2_CallYourAnimal(navController = navController,viewModel)
                 }
+
+                composable(SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First){
+                    SignUpScreen_4_3_CallYourAnimal_First(navController = navController,viewModel)
+                }
+
+                composable(SIGNUPSCREEN_4_3_CALLYOUTANIMAL_Second){
+                    SignUpScreen_4_3_CallYourAnimal_Second(navController = navController,viewModel)
+                }
+
+                composable(SIGNUPSCREEN_4_3_CALLYOUTANIMAL_Third){
+                    SignUpScreen_4_3_CallYourAnimal_Third(navController = navController,viewModel)
+                }
+
                 composable(SIGNUPSCREEN_5_ISTEMPORARYCARE){
                     SignUpScreen_5_istemporarycare(navController = navController,viewModel)
                 }
@@ -67,7 +83,7 @@ class SignUpActivity : ComponentActivity() {
                 }
 
                 composable(SIGNUPSCREEN_8_CALLWORKINGTIME){
-                    SignUpScreen_8_callworkingtime(navController = navController,viewModel)
+                    SignUpScreen_8_1_callworkingtime(navController = navController,viewModel)
                 }
 
                 composable(SIGNUPSCREEN_COMPLETED){

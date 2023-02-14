@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -22,8 +23,11 @@ import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
+import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
+import com.llama.petmilly_client.utils.CheckedCheckBox
+import com.llama.petmilly_client.utils.NoneCheckBox
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_6_ISALLERGY
 
@@ -53,42 +57,102 @@ fun SignUpScreen_5_istemporarycare(navController: NavController, viewModel: Sign
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp)
-                .clickable {
-                    viewModel.checkCallYourAnimal()
-                },
-            horizontalArrangement = Arrangement.Center
+                .padding(start = 30.dp, end = 30.dp, top = 50.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            ButtonShapeScreen(
-                title = "No",
-                textcolor = Color.White,
-                fontSize = 18,
-                modifier = Modifier
-                    .weight(1f)
-                    .height(150.dp),
-                backgroundcolor = if (viewModel.istemporarycare.value) Button_NoneClicked else Button_Clicked,
-                shape = RoundedCornerShape(19.dp)
-            ) {
-                viewModel.istemporarycare.value = false
-
+            if (viewModel.istemporarycare.value) {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
             }
 
-            Spacer(modifier = Modifier.width(10.dp))
-
             ButtonShapeScreen(
-                title = "Yes",
-                textcolor = Color.White,
-                fontSize = 18,
+                title = "네, 경험 있어요.",
+                textcolor = if (viewModel.istemporarycare.value) Color.White else Color.Black,
+                fontSize = 15,
                 modifier = Modifier
-                    .weight(1f)
-                    .height(150.dp),
-                backgroundcolor = if (!viewModel.istemporarycare.value) Button_NoneClicked else Button_Clicked,
-                shape = RoundedCornerShape(19.dp)
+                    .padding(start = 10.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (viewModel.istemporarycare.value) Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
             ) {
                 viewModel.istemporarycare.value = true
-
             }
+
         }//Row
+
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (!viewModel.istemporarycare.value) {
+                CheckedCheckBox(clickcolor = Category_Cliked)
+            } else {
+                NoneCheckBox(nonecheckcolor = Color.White)
+            }
+
+            ButtonShapeScreen(
+                title = "아니요, 안해봤어요.",
+                textcolor = if (!viewModel.istemporarycare.value) Color.White else Color.Black,
+                fontSize = 15,
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .height(55.dp)
+                    .fillMaxWidth(),
+                backgroundcolor = if (!viewModel.istemporarycare.value) Category_Cliked else Button_NoneClicked,
+                shape = RoundedCornerShape(19.dp),
+                textAlign = TextAlign.Start
+            ) {
+                viewModel.istemporarycare.value = false
+            }
+
+        }//Row
+
+//
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 20.dp, end = 20.dp)
+//                .clickable {
+//                    viewModel.checkCallYourAnimal()
+//                },
+//            horizontalArrangement = Arrangement.Center
+//        ) {
+//            ButtonShapeScreen(
+//                title = "No",
+//                textcolor = Color.White,
+//                fontSize = 18,
+//                modifier = Modifier
+//                    .weight(1f)
+//                    .height(150.dp),
+//                backgroundcolor = if (viewModel.istemporarycare.value) Button_NoneClicked else Button_Clicked,
+//                shape = RoundedCornerShape(19.dp)
+//            ) {
+//                viewModel.istemporarycare.value = false
+//
+//            }
+//
+//            Spacer(modifier = Modifier.width(10.dp))
+//
+//            ButtonShapeScreen(
+//                title = "Yes",
+//                textcolor = Color.White,
+//                fontSize = 18,
+//                modifier = Modifier
+//                    .weight(1f)
+//                    .height(150.dp),
+//                backgroundcolor = if (!viewModel.istemporarycare.value) Button_NoneClicked else Button_Clicked,
+//                shape = RoundedCornerShape(19.dp)
+//            ) {
+//                viewModel.istemporarycare.value = true
+//
+//            }
+//        }//Row
 
         Spacer(modifier = Modifier.weight(1f))
 
