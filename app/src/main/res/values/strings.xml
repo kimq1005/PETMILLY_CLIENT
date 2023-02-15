@@ -13,4 +13,6 @@
     <string name="title_activity_certification">CertificationActivity</string>
 
     <string name="signup_top_description">아이들의 안전한 입양을 위해 기본정보가 필요합니다.\n입력하신 정보는 입양/임보 신청 시에만 사용됩니다.</string>
+
+    <string name="modifiy"><u>수정하기</u></string>
 </resources>

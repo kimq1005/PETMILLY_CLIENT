@@ -71,7 +71,7 @@ fun AnimalInfoDetailScreen(
                     )
 
                     Image(
-                        painter = painterResource(id = R.drawable.baseline_heart_broken_24),
+                        painter = painterResource(id = R.drawable.img_testcat_2),
                         contentDescription = null,
                         modifier = Modifier
                             .height(31.dp)

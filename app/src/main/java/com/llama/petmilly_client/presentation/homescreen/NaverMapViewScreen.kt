@@ -3,7 +3,12 @@ package com.llama.petmilly_client.presentation.homescreen
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Html
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -83,7 +88,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     val seoul = LatLng(37.47153836, 127.096582)
                     val camPos = CameraPosition(
                         seoul,
-                        10.0
+                        12.0
                     )
 
                     navermapyeah?.cameraPosition = camPos
@@ -116,7 +121,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         focusedLabelColor = Color.White,
                         cursorColor = Color.Black,
                     ),
-                    placeholder = { Text(text = "정보를 검색하세요.") },
+                    placeholder = { Text(text = "정보를 검색해보세요.") },
                 )
 
                 Spacer(modifier = Modifier.width(5.dp))
@@ -146,7 +151,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 60.dp, top = 10.dp)
+                        .padding(start = 16.dp, top = 10.dp)
                 ) {
                     items(viewModel.categorytest.subList(0, 3)) { item ->
                         CategoryItems(categoryTest = item) {
@@ -304,8 +309,8 @@ fun setcluestring(context: Context, list: List<Row>): TedNaverClustering<Cluster
                 clusterDesginText.cluster20(context, it.size, "원천동")
             } else if (it.size >= 15) {
                 clusterDesginText.cluster15(context, it.size, "망포동")
-            } else if (it.size >= 10) {
-                clusterDesginText.cluster10(context, it.size, "인게동")
+            } else if (it.size >= 5) {
+                clusterDesginText.cluster10(context, it.size, "인계동")
             } else {
                 clusterDesginText.cluster5(context, it.size, "월계2동")
             }
@@ -343,7 +348,10 @@ class ClusterDesginText() {
             this.height = 1200
             this.gravity = Gravity.CENTER
             setTextColor(ContextCompat.getColor(context, R.color.black))
-            text = "${location}\n${size}"
+            val spannable = SpannableString("$location\n$size")
+            val boldSpan = StyleSpan(Typeface.BOLD)
+            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text = spannable
         }
     }
 
@@ -356,7 +364,10 @@ class ClusterDesginText() {
             this.height = 1000
             this.gravity = Gravity.CENTER
             setTextColor(ContextCompat.getColor(context, R.color.black))
-            text = "${location}\n${size}"
+            val spannable = SpannableString("$location\n$size")
+            val boldSpan = StyleSpan(Typeface.BOLD)
+            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text = spannable
         }
     }
 
@@ -370,7 +381,10 @@ class ClusterDesginText() {
             this.height = 800
             this.gravity = Gravity.CENTER
             setTextColor(ContextCompat.getColor(context, R.color.black))
-            text = "${location}\n${size}"
+            val spannable = SpannableString("$location\n$size")
+            val boldSpan = StyleSpan(Typeface.BOLD)
+            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text = spannable
         }
     }
 
@@ -384,7 +398,10 @@ class ClusterDesginText() {
             this.height = 700
             this.gravity = Gravity.CENTER
             setTextColor(ContextCompat.getColor(context, R.color.black))
-            text = "${location}\n${size}"
+            val spannable = SpannableString("$location\n$size")
+            val boldSpan = StyleSpan(Typeface.BOLD)
+            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text = spannable
         }
     }
 
@@ -398,7 +415,12 @@ class ClusterDesginText() {
             this.height = 500
             this.gravity = Gravity.CENTER
             setTextColor(ContextCompat.getColor(context, R.color.black))
-            text = "${location}\n${size}"
+//            text = "${location}\n${size}"
+
+            val spannable = SpannableString("$location\n$size")
+            val boldSpan = StyleSpan(Typeface.BOLD)
+            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text = spannable
         }
     }
 }
@@ -411,6 +433,7 @@ fun cluster5(context: Context, text1: Int, text2: String): TextView {
         this.width = 500
         this.height = 500
         this.gravity = Gravity.CENTER
+        this.setTypeface(null, Typeface.BOLD)
         setTextColor(ContextCompat.getColor(context, R.color.black))
 
         val textView1 = TextView(context).apply {

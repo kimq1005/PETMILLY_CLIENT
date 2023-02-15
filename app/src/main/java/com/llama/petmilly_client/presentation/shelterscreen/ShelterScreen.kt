@@ -36,42 +36,45 @@ import llama.test.jetpack_dagger_plz.utils.Common.ANIMALINFO_DETAIL
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
-fun SafeShelterListScreen(navController: NavController, viewModel: ShelterViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+fun SafeShelterListScreen(
+    navController: NavController,
+    viewModel: ShelterViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+) {
     Scaffold {
 
         val context = LocalContext.current
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
         ) {
-
-//            TitleBar("임보처 구해요",
-//                ismenu = false,
-//                clickBack = {
-//                   navController.popBackStack()
-//                },
-//
-//                clickMenu = {
-//
-//                }
-//
-//            )
 
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp)
             ) {
-                viewModel.setcategory()
-                items(viewModel.categorytest) { categorylist ->
-                    Row {
-                        CategoryShelterItems(categoryTest = categorylist) {
 
+                viewModel.setcategory()
+
+                items(viewModel.categorytest) { categorylist ->
+
+                    Row {
+                        if(viewModel.categorytest.indexOf(categorylist)==0){
+                            Spacer(modifier = Modifier.padding(start = 15.dp))
+                           CategoryShelterItems(categoryTest = categorylist) {
+
+                           }
+
+
+                        }else{
+                            CategoryShelterItems(categoryTest = categorylist) {
+
+                            }
                         }
 
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
                     }
+
+
                 }
 
             }
@@ -79,17 +82,17 @@ fun SafeShelterListScreen(navController: NavController, viewModel: ShelterViewMo
             Spacer(modifier = Modifier.height(10.dp))
 
 //
-            LazyColumn(
+            LazyColumn(modifier = Modifier.padding(start = 7.dp, end = 7.dp)
             ) {
                 viewModel.setcategory()
 
                 items(viewModel.sheltercategory.value) { items ->
                     Column {
-                        ShelterCategoryItems(items,
+                        ShelterCategoryItems(title = items,"수컷 / 1kg / 믹스 / 2개월 추정/" + " 1차접종완료 / 중성화O",
                             onclcik = {
                                 navController.navigate(ANIMALINFO_DETAIL)
                             })
-                        Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(6.dp))
                     }
                 }
             }
@@ -100,6 +103,6 @@ fun SafeShelterListScreen(navController: NavController, viewModel: ShelterViewMo
 @Preview
 @Composable
 fun TestPreview() {
-    val navController= rememberNavController()
+    val navController = rememberNavController()
     SafeShelterListScreen(navController)
 }

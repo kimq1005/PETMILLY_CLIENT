@@ -322,4 +322,10 @@ fun PersonalInfoScreen(activity: Activity) {
 }
 
 
+@Preview
+@Composable
+fun FSDF(){
+    val navController = rememberNavController()
+
+}
 

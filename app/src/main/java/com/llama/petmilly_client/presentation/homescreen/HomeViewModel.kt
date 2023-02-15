@@ -65,9 +65,9 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
 
         categorytest.clear()
 
-        val entity = CategoryTest("전체")
         val puppy = CategoryTest("강아지")
         val cat = CategoryTest("고양이")
+        val entity = CategoryTest("petmily ❤️")
         val adoptcomplete = CategoryTest("입양/귀가완료")
         val saveshelter = CategoryTest("임보처구해요")
         val findmybaby = CategoryTest("우리아이 찾아요")
@@ -75,9 +75,9 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
         val adoptionnotice = CategoryTest("입양 공고")
 
 
-        categorytest.add(entity)
         categorytest.add(puppy)
         categorytest.add(cat)
+        categorytest.add(entity)
         categorytest.add(adoptcomplete)
         categorytest.add(saveshelter)
         categorytest.add(findmybaby)

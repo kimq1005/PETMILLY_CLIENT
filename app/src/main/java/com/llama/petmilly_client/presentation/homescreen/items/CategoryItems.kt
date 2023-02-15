@@ -4,22 +4,26 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.flowlayout.FlowRow
@@ -45,10 +49,14 @@ fun CategoryItems(
         mutableStateOf(false)
     }
 
-    FlowRow(
-        modifier = Modifier.shadow(elevation = 4.dp, shape = RoundedCornerShape(16.5.dp)),
-        mainAxisAlignment = MainAxisAlignment.Center,
-        mainAxisSize = SizeMode.Expand,
+    Column(
+        modifier = Modifier
+            .shadow(elevation = 4.dp, shape = RoundedCornerShape(20.dp))
+            .background(
+                color = if (checkBoolean) Category_Cliked else Color.White,
+                shape = RoundedCornerShape(16.5.dp),
+            )
+
     ) {
         Text(
             text = categoryTest.title,
@@ -56,10 +64,12 @@ fun CategoryItems(
             fontSize = 13.sp,
             color = if (checkBoolean) Color.White else Color.Black,
             modifier = Modifier
-                .background(
-                    color = if (checkBoolean) Category_Cliked else Color.White,
-                    shape = RoundedCornerShape(16.5.dp)
-                )
+
+//                .background(
+//                    color = if (checkBoolean) Category_Cliked else Color.White,
+//                    shape = RoundedCornerShape(16.5.dp),
+//
+//                )
                 .selectable(selected = checkBoolean, onClick = {
                     checkBoolean = !checkBoolean
                     onClick()
@@ -68,6 +78,7 @@ fun CategoryItems(
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )
+
 
     }
 

@@ -2,9 +2,12 @@ package llama.test.jetpack_dagger_plz.utils
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.ui.res.fontResource
+import com.llama.petmilly_client.R
 
 object Common {
     const val TAG:String = "로그"
+
 
     const val LOGINSCREEN:String = "loginScreen"
     const val HOMESCREEN:String = "homeScreen"

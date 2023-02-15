@@ -37,8 +37,6 @@ class ShelterActivity : ComponentActivity() {
         setContent {
             Surface {
                 val navController = rememberNavController()
-
-
                 Column {
 
                     TitleBar(
