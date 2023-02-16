@@ -95,7 +95,7 @@ fun AdoptionApplicationDialog(
                         fontFamily = notosans_bold
                     )
 
-                    Spacer(modifier = Modifier.height(18.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     Column(
                         modifier = Modifier

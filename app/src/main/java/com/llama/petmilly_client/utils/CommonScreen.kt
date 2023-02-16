@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -135,10 +136,8 @@ fun CommonTitleBar(
 }
 
 
-
-
 @Composable
-fun CheckedCheckBox(clickcolor: Color){
+fun CheckedCheckBox(clickcolor: Color) {
     Box {
         Canvas(
             modifier = Modifier
@@ -152,15 +151,17 @@ fun CheckedCheckBox(clickcolor: Color){
         }
 
         Image(
-            painter =  painterResource(id = R.drawable.baseline_check_white
+            painter = painterResource(
+                id = R.drawable.baseline_check_white
             ),
             contentDescription = null,
             modifier = Modifier.align(Alignment.Center)
         )
     }//Box
 }
+
 @Composable
-fun NoneCheckBox(nonecheckcolor: Color){
+fun NoneCheckBox(nonecheckcolor: Color) {
     Box {
         Canvas(
             modifier = Modifier
@@ -177,7 +178,8 @@ fun NoneCheckBox(nonecheckcolor: Color){
         }
 
         Image(
-            painter =  painterResource(id = R.drawable.baseline_check_black_24
+            painter = painterResource(
+                id = R.drawable.baseline_check_black_24
             ),
             contentDescription = null,
             modifier = Modifier.align(Alignment.Center)
@@ -213,6 +215,18 @@ fun ButtonScreen_HOUSE(
     }
 }
 
+
+@Composable
+fun Cancle(modifier: Modifier) {
+    Image(
+        painter = painterResource(id = R.drawable.img_cancle),
+        contentDescription = null,
+        modifier = modifier
+            .height(25.dp)
+            .width(25.dp),
+        contentScale = ContentScale.Crop
+    )
+}
 
 
 
