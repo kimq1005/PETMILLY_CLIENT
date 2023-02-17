@@ -108,7 +108,6 @@ fun AddPostScreen() {
 
 @Composable
 fun NotificationScreen() {
-    Log.d(TAG, "NotificationScreen: NotificationScreen")
     Column(
         modifier = Modifier
             .fillMaxSize()

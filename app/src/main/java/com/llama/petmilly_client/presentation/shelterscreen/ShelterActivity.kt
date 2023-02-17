@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -87,7 +88,9 @@ fun TitleBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .background(color = Color.White)
+            .padding(16.dp)
+            ,
     ) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
@@ -103,7 +106,7 @@ fun TitleBar(
 
         Text(
             text = title,
-            fontSize = 24.sp,
+            fontSize = 17.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
             modifier = Modifier.align(Alignment.Center)
