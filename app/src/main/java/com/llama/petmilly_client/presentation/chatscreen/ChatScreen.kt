@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,6 +35,7 @@ import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategor
 import com.llama.petmilly_client.ui.theme.Purple700
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.CHATSCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.CHATTINGROOMSCREEN
@@ -43,6 +45,7 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 @Composable
 fun ChatEntityScreen() {
     val navController = rememberNavController()
+    val viewModel :ChatViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = CHATSCREEN) {
         composable(CHATSCREEN) {
@@ -52,7 +55,7 @@ fun ChatEntityScreen() {
         composable("CHATTINGROOMSCREEN/{hello}") {
             val wow = it.arguments?.getString("hello").toString()
             Log.d(TAG, "ChatTabScreen: $wow")
-            ChattingRoomScreen(navController, wow.toString())
+            ChattingRoomScreen(navController, wow.toString(),viewModel)
         }
     }
 }

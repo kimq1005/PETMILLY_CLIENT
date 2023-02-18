@@ -12,8 +12,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,13 +27,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.chatscreen.items.ChatRoomItem
 import com.llama.petmilly_client.presentation.chatscreen.items.EntityChatModel
 import com.llama.petmilly_client.presentation.chatscreen.items.PlzChatModel
-import com.llama.petmilly_client.presentation.chatscreen.items.SendChatModel
+import com.llama.petmilly_client.presentation.dialog.ChatRoomDialog
 import com.llama.petmilly_client.presentation.profilescreen.ProfileActivity
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.Black_60_Transfer
@@ -44,21 +48,42 @@ import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
-fun ChattingRoomScreen(navController: NavController, name: String) {
+fun ChattingRoomScreen(navController: NavController, name: String, viewModel: ChatViewModel) {
     val context = LocalContext.current
 
     val (value, setvaluse) = rememberSaveable {
         mutableStateOf("")
     }
 
+    var isDialogVisible by remember { mutableStateOf(false) }
+
     Column(
         Modifier
             .fillMaxSize()
             .background(Color(0xFF33FBE1B0))
     ) {
-        TitleBar(title = name, ismenu = true, clickBack = { navController.popBackStack() }) {
+        TitleBar(
+            title = name,
+            ismenu = true,
+            clickBack = { navController.popBackStack() },
+            clickMenu = {
+                viewModel.onChatRoomDialog()
+            }
+        )
 
+        if (viewModel.isChatRoomDialog) {
+            ChatRoomDialog(
+                onCompleted = { /*TODO*/ },
+                onAlarmOff = { /*TODO*/ },
+                onBenUser = { /*TODO*/ },
+                onReport = { /*TODO*/ },
+                onFavoriteChatRoom = { /*TODO*/ },
+                onExitChatRoom = { /*TODO*/ },
+                onDismiss = {
+                    viewModel.DismissChatRoomDialog()
+                })
         }
+
 
         Divider(
             color = Black_Half_Transfer, modifier = Modifier
@@ -124,15 +149,45 @@ fun ChattingRoomScreen(navController: NavController, name: String) {
         Spacer(modifier = Modifier.height(10.dp))
         LazyColumn(modifier = Modifier.padding(start = 25.dp, end = 16.dp)) {
             val entityChatModel = arrayListOf<EntityChatModel>()
-            entityChatModel.add(EntityChatModel(0, plzChatModel = PlzChatModel(recive = "보낸다 ndkggkgk우하하하핳하하하하핳")))
-            entityChatModel.add(EntityChatModel(0, plzChatModel = PlzChatModel(recive = "보낸다 ndkggkgk우하하하핳하하하하핳")))
-            items(entityChatModel) {
-                ChatRoomItem(it, onclick = {
+            entityChatModel.add(
+                EntityChatModel(
+                    0,
+                    plzChatModel = PlzChatModel(recive = "보낸다 ndkggkgk우하하하핳하하하하핳")
+                )
+            )
+            entityChatModel.add(
+                EntityChatModel(
+                    0,
+                    plzChatModel = PlzChatModel(recive = "보낸다 ndkggkgk우하하하핳하하하하핳")
+                )
+            )
+            entityChatModel.add(
+                EntityChatModel(
+                    1,
+                    plzChatModel = PlzChatModel(send = "보내는건 나다 근데 왜 없냐 이건")
+                )
+            )
+
+
+
+
+
+            items(entityChatModel) { item ->
+
+                ChatRoomItem(item, onclick = {
                     val intent = Intent(context, ProfileActivity::class.java)
                     context.startActivity(intent)
                 })
-                
-                Spacer(modifier = Modifier.height(6.dp))
+
+                val paddingValue =
+                    if (item.type == entityChatModel.getOrNull(entityChatModel.indexOf(item) + 1)?.type) {
+                        8.dp
+                    } else {
+                        20.dp
+                    }
+
+                Spacer(modifier = Modifier.height(paddingValue))
+
             }
         }
 
@@ -172,7 +227,8 @@ fun ChattingRoomScreen(navController: NavController, name: String) {
                 placeholder = {
                     Text(
                         text = "내용을 입력해주세요.",
-                    fontSize = 14.sp)
+                        fontSize = 14.sp
+                    )
                 },
             )
 
@@ -194,10 +250,12 @@ fun ChattingRoomScreen(navController: NavController, name: String) {
 
 }
 
+
 @Preview
 @Composable
 fun AFDFHDF() {
     val navController = rememberNavController()
     val name = "ad"
-    ChattingRoomScreen(navController, name)
+    val viewModel:ChatViewModel = hiltViewModel()
+    ChattingRoomScreen(navController, name,viewModel)
 }

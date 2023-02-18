@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.llama.petmilly_client.R
@@ -58,18 +59,65 @@ fun SendItem(
     send: String,
     onclick: () -> Unit,
 ) {
-    Column(
+    Row(
         Modifier
-            .fillMaxWidth()
-            .height(60.dp)
+            .fillMaxWidth(),
     ) {
+        Spacer(modifier = Modifier.weight(1f))
 
+        Column(modifier = Modifier.align(Alignment.Bottom)) {
+            Text(
+                modifier = Modifier.align(Alignment.End),
+                text = "읽음",
+                fontSize = 8.sp,
+                fontFamily = notosans_regular,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                textAlign = TextAlign.End
+            )
+            
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Text(
+                text = "오후 8:44",
+                fontSize = 8.sp,
+                fontFamily = notosans_regular,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                )
+            )
+
+        }
+        
+        Spacer(modifier = Modifier.width(6.dp))
         Text(
-            text = send,
             modifier = Modifier
-                .align(Alignment.Start)
-                .clickable { onclick() },
-            color = Color.Red,
+                .background(
+                    color = Color(0xFFFbE1B0),
+                    shape = RoundedCornerShape(
+                        topStart = 6.dp,
+                        topEnd = 0.dp,
+                        bottomStart = 6.dp,
+                        bottomEnd = 6.dp
+                    )
+                )
+                .padding(10.dp)
+                .clickable { onclick() }
+                .align(Alignment.CenterVertically),
+            text = send,
+            fontSize = 13.sp,
+            color = Color.Black,
+            fontFamily = notosans_regular,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
         )
     }
 }
@@ -78,7 +126,7 @@ fun SendItem(
 fun ReciveItem(recive: String, onclick: () -> Unit) {
     Row(
         Modifier
-            .fillMaxWidth(6f)
+            .fillMaxWidth()
     ) {
 
         Image(
@@ -141,14 +189,4 @@ data class EntityChatModel(
 data class PlzChatModel(
     val send: String = "",
     val recive: String = "",
-)
-
-data class SendChatModel(
-    val sendchat: String,
-    val type: Int = 0,
-)
-
-data class ReciveChatModel(
-    val recivechat: String,
-    val type: Int = 1,
 )
