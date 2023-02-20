@@ -239,7 +239,7 @@ fun Cancle(modifier: Modifier) {
 
 @ExperimentalPagerApi
 @Composable
-fun Tabs(pagerState: PagerState, list:List<String>) {
+fun Tabs(pagerState: PagerState, list: List<String>) {
     val scope = rememberCoroutineScope()
 
     TabRow(
@@ -282,31 +282,23 @@ fun Tabs(pagerState: PagerState, list:List<String>) {
 
 
 @Composable
-fun CommonNotingScreen(text:String){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color(0xFFD9D9D9)),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+fun CommonNotingScreen(text: String, modifier: Modifier) {
 
-    ) {
+    Text(
+        modifier =modifier,
+        text = text,
+        fontSize = 17.sp,
+        fontFamily = notosans_regular,
+        style = TextStyle(
+            platformStyle = PlatformTextStyle(
+                includeFontPadding = false
+            )
+        ),
+        color = Black_30_Transfer,
+        textAlign = TextAlign.Center
+    )
 
-        Text(
-            modifier = Modifier.fillMaxSize(),
-            text = text,
-            fontSize = 20.sp,
-            fontFamily = notosans_regular,
-            style = TextStyle(
-                platformStyle = PlatformTextStyle(
-                    includeFontPadding = false
-                )
-            ),
-            color = Black_30_Transfer,
-            textAlign = TextAlign.Center
-        )
 
-    }
 }
 
 

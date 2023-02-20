@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -18,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.*
+import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.chatscreen.ChatTabScreen
 import com.llama.petmilly_client.presentation.chatscreen.FavoriteChatScreen
 import com.llama.petmilly_client.utils.CommonNotingScreen
@@ -40,7 +42,9 @@ fun FavoriteScreen(navController: NavController) {
 
     val pagerState = rememberPagerState(0)
 
-    Column()
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(bottom = dimensionResource(id = R.dimen.bottomnavi_heigt)))
     {
         Spacer(
             modifier = Modifier
@@ -94,7 +98,9 @@ fun FavroiteTabs(pagerState: PagerState, list: List<String>) {
                 text = {
                     Column(modifier = Modifier.padding(bottom = 5.dp)) {
                         Text(
-                            modifier = Modifier.fillMaxWidth().align(CenterHorizontally),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(CenterHorizontally),
                             text = text.substring(0, 3),
                             fontSize = 12.sp,
                             fontFamily = fontFamily,
@@ -106,7 +112,9 @@ fun FavroiteTabs(pagerState: PagerState, list: List<String>) {
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            modifier = Modifier.fillMaxWidth().align(CenterHorizontally),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(CenterHorizontally),
                             text = text.substring(3),
                             fontSize = 17.sp,
                             fontFamily = fontWeight,
@@ -172,7 +180,8 @@ fun SaveShelterScreen() {
     CommonNotingScreen(
         text = "관심 등록한\n" +
                 "친구들이\n" +
-                "아직 없어요"
+                "아직 없어요",
+        modifier = Modifier
     )
 }
 

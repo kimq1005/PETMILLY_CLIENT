@@ -34,8 +34,10 @@ import com.llama.petmilly_client.presentation.chatscreen.items.ChatItem
 import com.llama.petmilly_client.presentation.chatscreen.items.ChatModel
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategoryItems
+import com.llama.petmilly_client.ui.theme.Background_Noting
 import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Purple700
+import com.llama.petmilly_client.utils.CommonNotingScreen
 import com.llama.petmilly_client.utils.Tabs
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
@@ -79,18 +81,18 @@ fun ChatScreen(navController: NavController) {
                 .background(Color(0xFF99FBE1B0))
         )
         val tabslist = listOf(
-        "메세지",
-        "즐겨찾기"
-    )
+            "메세지",
+            "즐겨찾기"
+        )
 
-        Tabs(pagerState,tabslist)
-        TabsContent(pagerState = pagerState, navController,2)
+        Tabs(pagerState, tabslist)
+        TabsContent(pagerState = pagerState, navController, 2)
     }
 }
 
 @ExperimentalPagerApi
 @Composable
-fun TabsContent(pagerState: PagerState, navController: NavController, count:Int) {
+fun TabsContent(pagerState: PagerState, navController: NavController, count: Int) {
     HorizontalPager(state = pagerState, count = count) { page ->
         when (page) {
 
@@ -103,38 +105,36 @@ fun TabsContent(pagerState: PagerState, navController: NavController, count:Int)
 }
 
 
-
-
 @Composable
-fun FavoriteChatScreen(){
+fun FavoriteChatScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFD9D9D9)),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-
     ) {
 
-        Text(
-            modifier = Modifier.fillMaxSize(),
-            text = "전송된\n" +
-                    "채팅 메시지가\n" +
-                    "아직 없어요",
-            fontSize = 20.sp,
-            fontFamily = notosans_regular,
-            style = TextStyle(
-                platformStyle = PlatformTextStyle(
-                    includeFontPadding = false
+        val ismessage = false
+
+        if (ismessage) {
+
+        } else {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(color = Background_Noting)) {
+//                Text(
+//                    text = "십알",
+//                    modifier = Modifier.align(Alignment.Center),
+//                    textAlign = TextAlign.Center
+//                )
+
+                CommonNotingScreen(
+                    text = "전송된\n체팅 메세지가\n아직 없어요",
+                    modifier = Modifier.align(Alignment.Center)
                 )
-            ),
-            color = Black_30_Transfer,
-            textAlign = TextAlign.Center
-        )
+            }
+        }
 
     }
 }
-
 
 
 @Composable

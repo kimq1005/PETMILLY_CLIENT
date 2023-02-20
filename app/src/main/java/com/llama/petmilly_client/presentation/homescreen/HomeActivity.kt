@@ -29,7 +29,6 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setTransperStatusBar()
         setContent {
-
             val navController = rememberNavController()
             Scaffold(bottomBar = {
                 BottomNavigation(navController = navController)
