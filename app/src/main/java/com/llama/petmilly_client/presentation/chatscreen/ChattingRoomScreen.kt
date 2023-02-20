@@ -40,6 +40,7 @@ import com.llama.petmilly_client.presentation.chatscreen.items.PlzChatModel
 import com.llama.petmilly_client.presentation.dialog.ChatRoomDialog
 import com.llama.petmilly_client.presentation.profilescreen.ProfileActivity
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
+import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Black_60_Transfer
 import com.llama.petmilly_client.ui.theme.Black_Half_Transfer
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
@@ -55,13 +56,20 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
         mutableStateOf("")
     }
 
-    var isDialogVisible by remember { mutableStateOf(false) }
-
+    val firstcheckBoolean = false
     Column(
         Modifier
             .fillMaxSize()
             .background(Color(0xFF33FBE1B0))
     ) {
+        Spacer(
+
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(Color.White)
+        )
+
         TitleBar(
             title = name,
             ismenu = true,
@@ -168,6 +176,13 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
                 )
             )
 
+            entityChatModel.add(
+                EntityChatModel(
+                    2,
+                    plzChatModel = PlzChatModel(send = "김승현")
+                )
+            )
+
 
 
 
@@ -214,6 +229,7 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
                 value = value,
                 onValueChange = setvaluse,
                 modifier = Modifier
+
                     .weight(8f)
                     .height(50.dp),
                 shape = RoundedCornerShape(20.dp),
@@ -256,6 +272,6 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
 fun AFDFHDF() {
     val navController = rememberNavController()
     val name = "ad"
-    val viewModel:ChatViewModel = hiltViewModel()
-    ChattingRoomScreen(navController, name,viewModel)
+    val viewModel: ChatViewModel = hiltViewModel()
+    ChattingRoomScreen(navController, name, viewModel)
 }

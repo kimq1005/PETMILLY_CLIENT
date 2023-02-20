@@ -16,6 +16,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,7 +34,9 @@ import com.llama.petmilly_client.presentation.chatscreen.items.ChatItem
 import com.llama.petmilly_client.presentation.chatscreen.items.ChatModel
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategoryItems
+import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Purple700
+import com.llama.petmilly_client.utils.Tabs
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,7 +49,7 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 @Composable
 fun ChatEntityScreen() {
     val navController = rememberNavController()
-    val viewModel :ChatViewModel = hiltViewModel()
+    val viewModel: ChatViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = CHATSCREEN) {
         composable(CHATSCREEN) {
@@ -55,7 +59,7 @@ fun ChatEntityScreen() {
         composable("CHATTINGROOMSCREEN/{hello}") {
             val wow = it.arguments?.getString("hello").toString()
             Log.d(TAG, "ChatTabScreen: $wow")
-            ChattingRoomScreen(navController, wow.toString(),viewModel)
+            ChattingRoomScreen(navController, wow.toString(), viewModel)
         }
     }
 }
@@ -68,179 +72,153 @@ fun ChatScreen(navController: NavController) {
 
     Column()
     {
-
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
+                .height(60.dp)
                 .background(Color(0xFF99FBE1B0))
         )
-        Tabs(pagerState)
-        TabsContent(pagerState = pagerState, navController)
-
-
-    }
-}
-
-@ExperimentalPagerApi
-@Composable
-fun Tabs(pagerState: PagerState) {
-    val list = listOf(
+        val tabslist = listOf(
         "메세지",
         "즐겨찾기"
     )
 
-//    val list = listOf(
-//        "메세지" to Icons.Default.ShoppingCart,
-//        "즐겨찾기" to Icons.Default.Settings
-//    )
-
-    val scope = rememberCoroutineScope()
-
-    TabRow(
-        selectedTabIndex = pagerState.currentPage,
-        backgroundColor = Color(0xFF99FBE1B0),
-        contentColor = Color.Black,
-        indicator = { tabPostions ->
-            TabRowDefaults.Indicator(
-                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions = tabPostions),
-                height = 5.dp,
-                color = Color(0xFFF8A405)
-            )
-        },
-        divider = { contentColorFor(backgroundColor = Color.Black) }
-    ) {
-        list.forEachIndexed { index, _ ->
-
-            val fontWeight =
-                if (index == pagerState.currentPage) notosans_bold else notosans_regular
-            Tab(
-                text = {
-                    Text(
-                        text = list[index],
-                        fontSize = 17.sp,
-                        fontFamily = fontWeight
-                    )
-                },
-                selected = pagerState.currentPage == index,
-                onClick = {
-                    scope.launch {
-                        pagerState.animateScrollToPage(index)
-                    }
-                },
-                selectedContentColor = Color.Black,
-
-                )
-        }
+        Tabs(pagerState,tabslist)
+        TabsContent(pagerState = pagerState, navController,2)
     }
 }
 
 @ExperimentalPagerApi
 @Composable
-fun TabsContent(pagerState: PagerState, navController: NavController) {
-    HorizontalPager(state = pagerState, count = 2) { page ->
+fun TabsContent(pagerState: PagerState, navController: NavController, count:Int) {
+    HorizontalPager(state = pagerState, count = count) { page ->
         when (page) {
 
             0 -> ChatTabScreen(navController)
 
-            1 -> TabContentScreen(data = "Welcome to Home Screen")
+            1 -> FavoriteChatScreen()
 
         }
     }
 }
 
+
+
+
 @Composable
-fun TabContentScreen(data: String) {
+fun FavoriteChatScreen(){
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color(0xFFD9D9D9)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
+
     ) {
-        Log.d(TAG, "TabContentScreen1")
+
         Text(
-            text = data,
-            style = MaterialTheme.typography.h5,
-            color = Purple700,
-            fontWeight = FontWeight.Bold,
+            modifier = Modifier.fillMaxSize(),
+            text = "전송된\n" +
+                    "채팅 메시지가\n" +
+                    "아직 없어요",
+            fontSize = 20.sp,
+            fontFamily = notosans_regular,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+            color = Black_30_Transfer,
             textAlign = TextAlign.Center
         )
+
     }
 }
+
 
 
 @Composable
 fun ChatTabScreen(
     navController: NavController,
 ) {
-    Column(modifier = Modifier.padding(16.dp)) {
 
-        LazyRow() {
-            val mylist = listOf(
-                "임보처구해요", "이동봉사찾아요", "입양공고"
-            )
-            items(mylist) { item ->
+    val firstcheck = true
+    if (firstcheck) {
+        Column(modifier = Modifier.padding(16.dp)) {
 
-                BorderCategoryItems(title = item) {
+            LazyRow() {
+                val mylist = listOf(
+                    "임보처구해요", "이동봉사찾아요", "입양공고"
+                )
+                items(mylist) { item ->
+
+                    BorderCategoryItems(title = item) {
+
+                    }
+                    Spacer(modifier = Modifier.width(9.dp))
 
                 }
-                Spacer(modifier = Modifier.width(9.dp))
-
             }
-        }
 
-        Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
 //        ShelterCategoryItems()
-        LazyColumn() {
-            val item = listOf(
-                ChatModel(
-                    "[감자]김승현", "안녕하세요 이 친구 건강은\n" +
-                            "어떤가요? 문의문의나문희...", "오루 10시30분", "1"
-                ),
-                ChatModel(
-                    "[금자]와우맨", "문의내용인데용우히히헹\n" +
-                            "우히헤에헤에헤헹엫ㅇ헹...", "10시30분", "1"
-                ),
-            )
+            LazyColumn() {
+                val item = listOf(
+                    ChatModel(
+                        "[감자]김승현", "안녕하세요 이 친구 건강은\n" +
+                                "어떤가요? 문의문의나문희...", "오루 10시30분", "1"
+                    ),
+                    ChatModel(
+                        "[금자]와우맨", "문의내용인데용우히히헹\n" +
+                                "우히헤에헤에헤헹엫ㅇ헹...", "10시30분", "1"
+                    ),
+                )
 
-            items(item) { chatmodel ->
-                ChatItem(chatModel = chatmodel, onclick =
-                {
-                    navController.navigate(CHATTINGROOMSCREEN + "/${chatmodel.name}")
+                items(item) { chatmodel ->
+                    ChatItem(chatModel = chatmodel, onclick =
+                    {
+                        navController.navigate(CHATTINGROOMSCREEN + "/${chatmodel.name}")
 //                    navController.navigate(CHATTINGROOMSCREEN)
-                })
+                    })
 
-                Spacer(modifier = Modifier.height(5.dp))
+                    Spacer(modifier = Modifier.height(5.dp))
 
+
+                }
 
             }
 
         }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color(0xFFD9D9D9)),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
 
+        ) {
+
+            Text(
+                modifier = Modifier.fillMaxSize(),
+                text = "전송된\n" +
+                        "채팅 메시지가\n" +
+                        "아직 없어요",
+                fontSize = 20.sp,
+                fontFamily = notosans_regular,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                color = Black_30_Transfer,
+                textAlign = TextAlign.Center
+            )
+
+        }
     }
-}
-
-@Composable
-fun TabContentScreen3(data: String) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Log.d(TAG, "TabContentScreen3")
-        Text(
-            text = data,
-            style = MaterialTheme.typography.h5,
-            color = Purple700,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
-    }
-}
 
 
-@Preview
-@Composable
-fun Wow() {
-    ChatEntityScreen()
 }
+

@@ -6,7 +6,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,9 +21,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.ui.theme.Black_10_Transfer
+import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Black_60_Transfer
 import com.llama.petmilly_client.utils.notosans_regular
 
@@ -43,8 +50,14 @@ fun ChatRoomItem(
 
 
             }
-            else -> {
+            1 -> {
                 SendItem(entityChatModel.plzChatModel.send, onclick = {
+                    onclick()
+                })
+            }
+
+            2->{
+                AdoptionApplicationItem(name = entityChatModel.plzChatModel.send, onclick = {
                     onclick()
                 })
             }
@@ -78,7 +91,7 @@ fun SendItem(
                 ),
                 textAlign = TextAlign.End
             )
-            
+
             Spacer(modifier = Modifier.height(2.dp))
 
             Text(
@@ -93,7 +106,7 @@ fun SendItem(
             )
 
         }
-        
+
         Spacer(modifier = Modifier.width(6.dp))
         Text(
             modifier = Modifier
@@ -127,6 +140,7 @@ fun ReciveItem(recive: String, onclick: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
+            .width(225.dp)
     ) {
 
         Image(
@@ -181,6 +195,98 @@ fun ReciveItem(recive: String, onclick: () -> Unit) {
     }
 }
 
+@Composable
+fun AdoptionApplicationItem(name: String, onclick: () -> Unit) {
+    Row(
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.img_test_puppy), contentDescription = null,
+            modifier = Modifier
+                .height(28.dp)
+                .width(28.dp)
+                .clip(shape = CircleShape),
+            contentScale = ContentScale.Crop
+        )
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Column(
+            modifier = Modifier
+                .background(
+                    color = Color(0xFFFDED5B),
+                    shape = RoundedCornerShape(
+                        topStart = 0.dp,
+                        topEnd = 6.dp,
+                        bottomStart = 6.dp,
+                        bottomEnd = 6.dp
+                    )
+                )
+
+                .width(225.dp)
+        ) {
+            Text(
+                modifier = Modifier
+
+                    .padding(10.dp)
+                    .clickable { onclick() },
+
+                text = "$name 님의 임보신청서가 \n제출되었습니다.",
+                fontSize = 13.sp,
+                color = Color.Black,
+                fontFamily = notosans_regular,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                )
+            )
+
+            Spacer(modifier = Modifier.height(13.dp))
+            Divider(modifier = Modifier.height(1.dp), color = Black_10_Transfer)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onclick()
+                }) {
+                Text(
+                    text = "확인하기",
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(bottom = 10.dp),
+                    textAlign = TextAlign.Center
+                )
+
+                Icon(
+                    imageVector = Icons.Default.ArrowForward,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .height(15.dp)
+                        .width(15.dp)
+                        .padding(end = 15.dp)
+                        .align(Alignment.CenterEnd)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.width(5.dp))
+
+//        Text(
+//            text = "오후 1:34",
+//            modifier = Modifier.align(Alignment.Bottom),
+//            color = Black_60_Transfer,
+//            fontFamily = notosans_regular,
+//            style = TextStyle(
+//                platformStyle = PlatformTextStyle(
+//                    includeFontPadding = false
+//                )
+//            ),
+//            fontSize = 8.sp
+//        )
+    }
+}
+
 data class EntityChatModel(
     val type: Int,
     val plzChatModel: PlzChatModel,
@@ -190,3 +296,11 @@ data class PlzChatModel(
     val send: String = "",
     val recive: String = "",
 )
+
+@Preview
+@Composable
+fun QQQQQ() {
+    AdoptionApplicationItem("김승현", onclick = {
+
+    })
+}

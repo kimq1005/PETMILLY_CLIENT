@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -21,13 +18,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.chatscreen.ChatTabScreen
+import com.llama.petmilly_client.presentation.chatscreen.FavoriteChatScreen
+import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Category_Cliked
+import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 
@@ -228,5 +236,77 @@ fun Cancle(modifier: Modifier) {
     )
 }
 
+
+@ExperimentalPagerApi
+@Composable
+fun Tabs(pagerState: PagerState, list:List<String>) {
+    val scope = rememberCoroutineScope()
+
+    TabRow(
+        selectedTabIndex = pagerState.currentPage,
+        backgroundColor = Color(0xFF99FBE1B0),
+        contentColor = Color.Black,
+        indicator = { tabPostions ->
+            TabRowDefaults.Indicator(
+                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions = tabPostions),
+                height = 5.dp,
+                color = Color(0xFFF8A405)
+            )
+        },
+        divider = { contentColorFor(backgroundColor = Color.Black) }
+    ) {
+        list.forEachIndexed { index, _ ->
+
+            val fontWeight =
+                if (index == pagerState.currentPage) notosans_bold else notosans_regular
+            Tab(
+                text = {
+                    Text(
+                        text = list[index],
+                        fontSize = 17.sp,
+                        fontFamily = fontWeight
+                    )
+                },
+                selected = pagerState.currentPage == index,
+                onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(index)
+                    }
+                },
+                selectedContentColor = Color.Black,
+
+                )
+        }
+    }
+}
+
+
+@Composable
+fun CommonNotingScreen(text:String){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color(0xFFD9D9D9)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+
+    ) {
+
+        Text(
+            modifier = Modifier.fillMaxSize(),
+            text = text,
+            fontSize = 20.sp,
+            fontFamily = notosans_regular,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+            color = Black_30_Transfer,
+            textAlign = TextAlign.Center
+        )
+
+    }
+}
 
 

@@ -28,6 +28,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.chatscreen.ChatEntityScreen
 import com.llama.petmilly_client.presentation.chatscreen.ChatScreen
+import com.llama.petmilly_client.presentation.favoritescreen.FavoriteScreen
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
@@ -50,7 +51,7 @@ fun NavigationGraph(navController: NavHostController) {
 
         }
         composable(BottomNavItem.Heart.screen_route) {
-            AddPostScreen()
+            FavoriteScreen(navController = navController)
         }
 
         composable(BottomNavItem.Notification.screen_route){
@@ -144,7 +145,9 @@ fun BottomNavigation(navController: NavController){
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title,  modifier = Modifier.height(20.dp).width(20.dp)) },
+                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title,  modifier = Modifier
+                    .height(20.dp)
+                    .width(20.dp)) },
                 label = { Text(text = item.title,
                     fontSize = 9.sp) },
                 selectedContentColor = Color.Black,
