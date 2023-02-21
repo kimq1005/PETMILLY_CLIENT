@@ -4,6 +4,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -32,11 +34,12 @@ import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.utils.CommonNotingScreen
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import java.io.FileDescriptor
 
 
 @Composable
 fun NotificationScreen(navController: NavController) {
-    val isNotification = false
+    val isNotification = true
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,18 +53,17 @@ fun NotificationScreen(navController: NavController) {
         )
         NotificationTitleBar(navController = navController)
 
-        Spacer(modifier = Modifier.weight(1f))
+//        Spacer(modifier = Modifier.weight(1f))
 
         if (isNotification) {
-
+            IsAlarmScreen()
         } else {
 
-            Box(modifier = Modifier.fillMaxSize().background(color = Background_Noting)) {
-//                Text(
-//                    text = "십알",
-//                    modifier = Modifier.align(Alignment.Center),
-//                    textAlign = TextAlign.Center
-//                )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Background_Noting)
+            ) {
 
                 CommonNotingScreen(text = "알림이 없습니다.", modifier = Modifier.align(Alignment.Center))
             }
@@ -70,6 +72,50 @@ fun NotificationScreen(navController: NavController) {
         }
     }
 
+}
+
+@Composable
+fun IsAlarmScreen() {
+    Column(modifier = Modifier.fillMaxHeight().background(color = Color.White)) {
+        LazyColumn() {
+            val notificationTestData = listOf(
+                NotificationTestData(
+                    "제목1입니다",
+                    "설명설명설명설명",
+                    "12시간 전"
+                ),
+
+                NotificationTestData(
+                    "제목2입니다",
+                    "설명설명설명설명",
+                    "13시간 전"
+                ),
+
+
+                NotificationTestData(
+                    "제목3입니다",
+                    "설명설명설명설명",
+                    "14시간 전"
+                ),
+
+
+                NotificationTestData(
+                    "제목4입니다",
+                    "설명설명설명설명",
+                    "15시간 전"
+                ),
+
+
+                )
+            items(notificationTestData) { item ->
+                NotificationItems(
+                    title = item.title,
+                    description = item.description,
+                    time = item.time
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -136,6 +182,12 @@ fun TextTest() {
         Text(text = "hi")
     }
 }
+
+data class NotificationTestData(
+    val title: String,
+    val description: String,
+    val time: String,
+)
 
 @Preview
 @Composable

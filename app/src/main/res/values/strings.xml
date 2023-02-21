@@ -16,4 +16,5 @@
 
     <string name="modifiy"><u>수정하기</u></string>
     <string name="entity_read"><u>전체읽기</u></string>
+    <string name="locationconfirm"><u>제보위치확인하기</u></string>
 </resources>

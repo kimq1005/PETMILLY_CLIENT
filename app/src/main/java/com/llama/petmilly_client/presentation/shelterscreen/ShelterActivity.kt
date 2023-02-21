@@ -54,14 +54,16 @@ class ShelterActivity : ComponentActivity() {
                                     route = SAFESHELTER_COMPOSABLE,
                                     inclusive = false
                                 )
-
                             }
                         }) {
 
                     }
 
 //                    val route = intent.getStringExtra(SAFESHELTER_COMPOSABLE).toString()
-                    NavHost(navController = navController, startDestination = SAFESHELTER_COMPOSABLE) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = SAFESHELTER_COMPOSABLE
+                    ) {
                         composable(route = SAFESHELTER_COMPOSABLE) {
                             SafeShelterListScreen(navController = navController)
                         }
@@ -90,8 +92,7 @@ fun TitleBar(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Color.White)
-            .padding(16.dp)
-            ,
+            .padding(16.dp),
     ) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
