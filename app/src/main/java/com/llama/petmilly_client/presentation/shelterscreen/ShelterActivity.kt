@@ -19,6 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.utils.notosans_bold
 import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common.ANIMALINFO_DETAIL
 import llama.test.jetpack_dagger_plz.utils.Common.SAFESHELTER_COMPOSABLE
@@ -109,9 +112,14 @@ fun TitleBar(
         Text(
             text = title,
             fontSize = 17.sp,
-            fontWeight = FontWeight.Bold,
+            fontFamily = notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             color = Color.Black,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
 
         AnimatedVisibility(visible = ismenu, modifier = Modifier.align(Alignment.CenterEnd)) {

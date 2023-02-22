@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.findanimalscreen
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.llama.petmilly_client.presentation.homescreen.CategoryTest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,6 +11,17 @@ class FindAnimalViewModel @Inject constructor() : ViewModel() {
 
 
     val categorytest: MutableList<CategoryTest> = arrayListOf()
+    val numberofanimal= mutableStateOf(1)
+
+
+    //comment
+    val findlocation = mutableStateOf("")
+    val finddeeplocation = mutableStateOf("")
+
+    val findyear = mutableStateOf("")
+    val findmonth = mutableStateOf("")
+    val findday = mutableStateOf("")
+    val findtime = mutableStateOf("")
 
     fun setcategory() {
 
