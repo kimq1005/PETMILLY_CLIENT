@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.findanimalscreen
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -41,16 +42,19 @@ import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.Black_60_Transfer
+import com.llama.petmilly_client.ui.theme.Button_Clicked
+import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
+import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import llama.test.jetpack_dagger_plz.utils.Common
 
 
 class FindAnimalCommentActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
 
         }
 
@@ -140,6 +144,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
         Text(
             text = "목격 위치 제보 (필수)",
             fontSize = 14.sp,
+            modifier = Modifier.padding(horizontal = 35.dp),
             fontFamily = notosans_bold,
             color = Black_60_Transfer
         )
@@ -148,6 +153,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 25.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
             TextField(
@@ -195,6 +201,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
             onValueChange = setvaluse,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 25.dp)
                 .height(53.dp)
                 .clickable {
 
@@ -221,6 +228,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
             text = "목격 날짜/시간 (필수)",
             fontSize = 14.sp,
             fontFamily = notosans_bold,
+            modifier = Modifier.padding(start = 35.dp),
             style = TextStyle(
                 platformStyle = PlatformTextStyle(
                     includeFontPadding = false
@@ -245,6 +253,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
                     includeFontPadding = false
                 )
             ),
+            modifier = Modifier.padding(start = 20.dp),
 
             placeholder = {
                 Text(
@@ -261,8 +270,68 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
             }
         )
 
+        Spacer(modifier = Modifier.height(50.dp))
 
-    }
+        Text(
+            text = "사진인증 (선책)",
+            fontSize = 14.sp,
+            fontFamily = notosans_bold,
+            modifier = Modifier.padding(start = 35.dp),
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+            color = Black_60_Transfer
+        )
+
+        Spacer(modifier = Modifier.height(7.dp))
+        Image(
+            painter = painterResource(id = R.drawable.img_comment_camera),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(start = 40.dp)
+                .height(47.dp)
+                .width(47.dp)
+
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Text(
+            text = "* 작성자분의 댓글 제보 비공개  요청으로,\n" +
+                    "제보해주신 댓글은 게시물 작성자에게만 공개됩니다.",
+            modifier = Modifier.padding(horizontal = 35.dp),
+            fontFamily = notosans_regular,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+            fontSize = 13.sp,
+            color = Black_60_Transfer
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+
+        ButtonScreen(
+            title = "제보 완료",
+            textcolor = Color.White,
+            fontSize = 15,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(55.dp)
+                .padding(horizontal = 35.dp),
+            backgroundcolor = Button_Clicked
+        ) {
+
+
+        }
+
+        Spacer(modifier = Modifier.height(25.dp))
+    }//Box
+
 }
 
 @Composable

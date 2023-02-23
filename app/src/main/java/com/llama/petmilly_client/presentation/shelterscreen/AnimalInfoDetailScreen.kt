@@ -95,16 +95,6 @@ fun AnimalInfoDetailScreen(
                             .fillMaxWidth()
                             .padding(top = 15.dp)
                     ) {
-//                    Image(
-//                        painter = painterResource(id = R.drawable.img_name_speech_bubble_rectangle),
-//                        contentDescription = null,
-//                        modifier = Modifier
-//                            .height(20.dp)
-//                            .width(20.dp)
-//                            .padding(start = 10.dp)
-//                    )
-//
-
                         Text(
                             text = "\uD83D\uDC49 미소가 이쁜 감자예요",
                             modifier = Modifier
