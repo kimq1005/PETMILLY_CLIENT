@@ -134,6 +134,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
 
     ) {
         CommentTitlebar {
@@ -312,7 +313,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
             color = Black_60_Transfer
         )
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(22.dp))
 
 
         ButtonScreen(

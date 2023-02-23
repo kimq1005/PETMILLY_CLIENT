@@ -14,6 +14,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -39,7 +40,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
+import com.llama.petmilly_client.presentation.findanimalscreen.FindAnimalActivity
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
+import com.llama.petmilly_client.presentation.moveservicscreen.MoveServiceActivity
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterActivity
 import com.llama.petmilly_client.ui.theme.Search_ButtonColor
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
@@ -61,6 +64,7 @@ private var myMarker: Marker? = null
 private var tedNaverClustering: TedNaverClustering<ClusterItem>? = null
 
 private lateinit var progressDialog: ProgressDialog
+
 @Composable
 fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
@@ -95,7 +99,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     navermapyeah?.uiSettings?.isZoomControlEnabled = false
                     navermapyeah?.uiSettings?.isZoomGesturesEnabled = false
 
-                    setcluestring(context, viewModel.wowman)
+                    setcluestring(context, viewModel.wowman, viewModel)
                 }
             }
         )
@@ -177,6 +181,8 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     ) { item ->
                         CategoryItems(categoryTest = item) {
                             viewModel.getlibrary()
+                            viewModel.selelctedcategory.value = item.title
+                            Log.d(TAG, "NaverMapViewScreen: ${item.title}")
                         }
                         Spacer(modifier = Modifier.width(8.dp))
 
@@ -208,7 +214,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
     }
 
-    setObserve(viewModel,context, lifecycleOwner)
+    setObserve(viewModel, context, lifecycleOwner)
 
 
 }
@@ -252,19 +258,18 @@ fun naverMapComposable(): MapView {
 }
 
 
+private fun setObserve(viewModel: HomeViewModel, context: Context, lifecycleOwner: LifecycleOwner) {
 
-private fun setObserve(viewModel: HomeViewModel,context: Context,lifecycleOwner: LifecycleOwner){
-
-   viewModel.showProgress.observe(lifecycleOwner, Observer {
-       progressDialog.show()
-   })
+    viewModel.showProgress.observe(lifecycleOwner, Observer {
+        progressDialog.show()
+    })
 
     viewModel.closeProgress.observe(lifecycleOwner, Observer {
         progressDialog.dismiss()
     })
 
     viewModel.setEvent.observe(lifecycleOwner, Observer {
-        setcluestring(context,viewModel.wowman)
+        setcluestring(context, viewModel.wowman, viewModel)
 
         //맵을 움직여야 클러스터링 결과가 호출이 돼서 해놓은 포지션
         val seoul = LatLng(37.47153836, 127.096582)
@@ -277,11 +282,14 @@ private fun setObserve(viewModel: HomeViewModel,context: Context,lifecycleOwner:
     })
 
 
-
 }
 
 
-fun setcluestring(context: Context, list: List<Row>): TedNaverClustering<ClusterItem>? {
+fun setcluestring(
+    context: Context,
+    list: List<Row>,
+    viewModel: HomeViewModel,
+): TedNaverClustering<ClusterItem>? {
 
     tedNaverClustering?.clearItems()
 
@@ -298,8 +306,38 @@ fun setcluestring(context: Context, list: List<Row>): TedNaverClustering<Cluster
 
         }
         .clusterClickListener {
-            val intent = Intent(context, ShelterActivity::class.java)
-            context.startActivity(intent)
+            val categorytitle = viewModel.selelctedcategory.value
+            when (categorytitle) {
+                "입양/귀가완료" -> {
+
+                }
+
+                "임보처구해요" -> {
+                    val intent = Intent(context, ShelterActivity::class.java)
+                    context.startActivity(intent)
+                }
+
+                "우리아이 찾아요" -> {
+                    val intent = Intent(context, FindAnimalActivity::class.java)
+                    context.startActivity(intent)
+                }
+
+                "이동봉사 찾아요" -> {
+                    val intent = Intent(context, MoveServiceActivity::class.java)
+                    context.startActivity(intent)
+                }
+
+                "입양 공고" -> {
+
+                }
+
+                else ->{
+                    Toast.makeText(context, "카테고리를 선택해주세요",Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
+
         }
         .customCluster {
             val clusterDesginText = ClusterDesginText()
@@ -337,6 +375,7 @@ private fun NaverItemsSet(list: List<Row>) {
     }
     MapClustering(items = items)
 }
+
 class ClusterDesginText() {
     fun cluster25(context: Context, size: Int, location: String): TextView {
         return TextView(context).apply {
@@ -350,7 +389,12 @@ class ClusterDesginText() {
             setTextColor(ContextCompat.getColor(context, R.color.black))
             val spannable = SpannableString("$location\n$size")
             val boldSpan = StyleSpan(Typeface.BOLD)
-            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(
+                boldSpan,
+                location.length + 1,
+                location.length + 1 + size.toString().length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             text = spannable
         }
     }
@@ -366,7 +410,12 @@ class ClusterDesginText() {
             setTextColor(ContextCompat.getColor(context, R.color.black))
             val spannable = SpannableString("$location\n$size")
             val boldSpan = StyleSpan(Typeface.BOLD)
-            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(
+                boldSpan,
+                location.length + 1,
+                location.length + 1 + size.toString().length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             text = spannable
         }
     }
@@ -383,7 +432,12 @@ class ClusterDesginText() {
             setTextColor(ContextCompat.getColor(context, R.color.black))
             val spannable = SpannableString("$location\n$size")
             val boldSpan = StyleSpan(Typeface.BOLD)
-            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(
+                boldSpan,
+                location.length + 1,
+                location.length + 1 + size.toString().length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             text = spannable
         }
     }
@@ -400,7 +454,12 @@ class ClusterDesginText() {
             setTextColor(ContextCompat.getColor(context, R.color.black))
             val spannable = SpannableString("$location\n$size")
             val boldSpan = StyleSpan(Typeface.BOLD)
-            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(
+                boldSpan,
+                location.length + 1,
+                location.length + 1 + size.toString().length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             text = spannable
         }
     }
@@ -419,7 +478,12 @@ class ClusterDesginText() {
 
             val spannable = SpannableString("$location\n$size")
             val boldSpan = StyleSpan(Typeface.BOLD)
-            spannable.setSpan(boldSpan, location.length + 1, location.length + 1 + size.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(
+                boldSpan,
+                location.length + 1,
+                location.length + 1 + size.toString().length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             text = spannable
         }
     }

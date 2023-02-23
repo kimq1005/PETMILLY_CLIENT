@@ -3,6 +3,8 @@ package com.llama.petmilly_client.presentation.findanimalscreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,22 +18,32 @@ class FindAnimalActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+            val viewModel: FindAnimalViewModel = hiltViewModel()
 
-            TitleBar(
-                title = "우리아이 찾아요",
-                ismenu = false,
-                clickBack = { navController.popBackStack() }) {
+            Column {
+
+
+                NavHost(
+                    navController = navController,
+                    startDestination = Common.FINDANIMAL_LIST_SCREEN
+                ) {
+                    composable(route = Common.FINDANIMAL_LIST_SCREEN) {
+                        FindAnimalListScreen(navController = navController, viewModel,this@FindAnimalActivity)
+                    }
+
+                    composable(Common.FINDANIMAL_DETAIL_SCREEN) {
+                        FindAnimalDetailScreen(navController = navController)
+                    }
+
+                    composable(Common.FINDANIMAL_COMMENT_SCREEN) {
+                        FindAnimalCommentScreen(
+                            navController = navController,
+                            viewModel = viewModel
+                        )
+                    }
+                }
             }
 
-            NavHost(navController = navController, startDestination = Common.SAFESHELTER_COMPOSABLE) {
-                composable(route = Common.SAFESHELTER_COMPOSABLE) {
-                    SafeShelterListScreen(navController = navController)
-                }
-
-                composable(Common.ANIMALINFO_DETAIL) {
-                    AnimalInfoDetailScreen(navController = navController)
-                }
-            }
         }
     }
 }

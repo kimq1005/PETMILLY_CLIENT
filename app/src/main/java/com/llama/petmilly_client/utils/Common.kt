@@ -38,5 +38,10 @@ object Common {
     const val SIGNUPSCREEN_8_CALLWORKINGTIME = "signupscreen_8"
     const val SIGNUPSCREEN_COMPLETED = "signupscreen_completed"
 
+    const val FINDANIMAL_LIST_SCREEN= "findanimalscreen"
+    const val FINDANIMAL_DETAIL_SCREEN = "findanimaldetailscreen"
+    const val FINDANIMAL_COMMENT_SCREEN ="findanimalcommentscreen"
+
+
 
 }

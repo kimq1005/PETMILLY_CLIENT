@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import coil.compose.rememberImagePainter
+import com.llama.petmilly_client.ui.theme.Background_FDFCE1
 import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Black_Half_Transfer
 import com.llama.petmilly_client.utils.notosans_bold
@@ -101,6 +102,7 @@ fun FindAnimalItems(
         Text(
             text = "실종일 $missinginfo",
             fontSize = 13.sp,
+            modifier = Modifier.background(color = Background_FDFCE1),
             fontFamily = notosans_bold,
             style = TextStyle(
                 platformStyle = PlatformTextStyle(

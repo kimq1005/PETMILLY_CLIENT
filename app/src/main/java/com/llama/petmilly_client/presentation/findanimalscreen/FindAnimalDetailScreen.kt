@@ -2,6 +2,7 @@ package com.llama.petmilly_client.presentation.findanimalscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -30,9 +31,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
 fun FindAnimalDetailScreen(navController: NavController) {
@@ -44,6 +47,12 @@ fun FindAnimalDetailScreen(navController: NavController) {
 
 
     Column {
+        TitleBar(
+            title = "우리아이 찾아요",
+            ismenu = false,
+            clickBack = { navController.popBackStack() }) {
+        }
+
         LazyRow(modifier = Modifier.padding(horizontal = 10.dp)) {
             val imageTestData = listOf(
                 ImageTestData(com.llama.petmilly_client.R.drawable.img_test_puppy),
@@ -66,7 +75,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                 text = "소중한 제보를 기다립니다.",
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .background(Purple700),
+                    .background(Color(0xFFFFF2DA)),
                 fontSize = 16.sp,
                 fontFamily = notosans_bold,
                 style = TextStyle(
@@ -84,7 +93,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                 text = stringResource(id = com.llama.petmilly_client.R.string.locationconfirm),
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .background(Purple700),
+                   ,
                 fontSize = 13.sp,
                 fontFamily = notosans_regular,
                 style = TextStyle(
@@ -427,16 +436,19 @@ fun FindAnimalDetailScreen(navController: NavController) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .background(color = Color.White)
-                .padding(start = 24.dp, end = 24.dp, bottom = 30.dp)
+                .padding(start = 24.dp, end = 24.dp, bottom = 20.dp)
         ) {
 
             TextField(
                 value = value,
                 onValueChange = setvaluse,
+                enabled = false,
                 modifier = Modifier
                     .weight(8f)
-                    .height(47.dp),
+                    .height(47.dp)
+                    .clickable {
+                               navController.navigate(Common.FINDANIMAL_COMMENT_SCREEN)
+                    },
                 shape = RoundedCornerShape(20.5.dp),
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = TextField_BackgroudColor,

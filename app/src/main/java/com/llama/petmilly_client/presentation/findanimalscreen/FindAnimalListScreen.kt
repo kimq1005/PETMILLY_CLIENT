@@ -1,14 +1,13 @@
 package com.llama.petmilly_client.presentation.findanimalscreen
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,16 +17,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
-import com.llama.petmilly_client.presentation.homescreen.items.CategoryShelterItems
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
-import dagger.hilt.android.lifecycle.HiltViewModel
+import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
-fun FindAnimalListScreen(navController: NavController, viewModel: FindAnimalViewModel) {
+fun FindAnimalListScreen(navController: NavController, viewModel: FindAnimalViewModel,activity: Activity) {
     val scrollState = rememberScrollState()
 
     Box {
@@ -36,6 +33,13 @@ fun FindAnimalListScreen(navController: NavController, viewModel: FindAnimalView
                 .fillMaxSize()
 
         ) {
+
+            TitleBar(
+                title = "우리아이 찾아요",
+                ismenu = false,
+                clickBack = { activity.finish() }) {
+
+            }
 
             LazyRow(
                 modifier = Modifier
@@ -86,18 +90,6 @@ fun FindAnimalListScreen(navController: NavController, viewModel: FindAnimalView
                         "10시간 전"
                     ),
 
-                    MissingAnimalInfoData(
-                        "럭키",
-                        "수컷 / 15kg / 믹스/ 귀 한쪽 접혀 있어욥",
-                        "23.1.10 10시 - 월계동 뱅뱅사거리 라떼병원 부근",
-                        "10시간 전"
-                    ),
-                    MissingAnimalInfoData(
-                        "럭키",
-                        "수컷 / 15kg / 믹스/ 귀 한쪽 접혀 있어욥",
-                        "23.1.10 10시 - 월계동 뱅뱅사거리 라떼병원 부근",
-                        "10시간 전"
-                    )
                 )
 
                 items(missingAnimalInfoData) { item ->
@@ -107,7 +99,7 @@ fun FindAnimalListScreen(navController: NavController, viewModel: FindAnimalView
                         missinginfo = item.missinginfo,
                         time = item.tiems,
                         onclick = {
-
+                            navController.navigate(Common.FINDANIMAL_DETAIL_SCREEN)
                         }
                     )
 
@@ -137,14 +129,6 @@ fun FindAnimalListScreen(navController: NavController, viewModel: FindAnimalView
 
 }
 
-@Preview
-@Composable
-fun FindAnimalPreview() {
-    val navController = rememberNavController()
-    val viewModel: FindAnimalViewModel = hiltViewModel()
-    FindAnimalListScreen(navController = navController, viewModel = viewModel)
-
-}
 
 data class MissingAnimalInfoData(
     val name: String,
