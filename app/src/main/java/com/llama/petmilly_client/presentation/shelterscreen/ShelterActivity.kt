@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
@@ -29,6 +32,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.R
 import com.llama.petmilly_client.utils.notosans_bold
 import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common.ANIMALINFO_DETAIL
@@ -136,6 +140,75 @@ fun TitleBar(
 
                 )
         }
+
+
+    }
+}
+
+@Composable
+fun ShelterDetailTitleBar(
+    title: String,
+    ismenu: Boolean,
+    clickBack: () -> Unit,
+    clickcancle: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color.White)
+            .padding(16.dp),
+    ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = null,
+            modifier = Modifier
+                .width(30.dp)
+                .height(30.dp)
+                .align(Alignment.CenterStart)
+                .clickable {
+                    clickBack()
+                }
+        )
+
+        Text(
+            text = title,
+            fontSize = 17.sp,
+            fontFamily = notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+            color = Color.Black,
+            modifier = Modifier.align(Alignment.Center),
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.img_cancle),
+            contentDescription = null,
+            modifier = Modifier
+                .height(35.dp)
+                .width(35.dp)
+                .align(Alignment.CenterEnd)
+                .padding(top = 16.dp, end = 16.dp)
+                .clickable { clickcancle() },
+            contentScale = ContentScale.Crop
+        )
+
+//        AnimatedVisibility(visible = ismenu, modifier = Modifier.align(Alignment.CenterEnd)) {
+//            Icon(
+//                imageVector = Icons.Default.Menu,
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .width(30.dp)
+//                    .height(30.dp)
+//
+//                    .clickable {
+//                        clickcancle()
+//                    },
+//
+//                )
+//        }
 
 
     }

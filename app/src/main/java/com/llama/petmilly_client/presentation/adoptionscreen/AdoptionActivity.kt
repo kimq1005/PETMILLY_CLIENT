@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.adoptionscreen
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -42,6 +43,7 @@ import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import llama.test.jetpack_dagger_plz.utils.Common
 
 class AdoptionActivity : ComponentActivity() {
 
@@ -49,19 +51,20 @@ class AdoptionActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            val viewModel: MoveServiceViewModel = hiltViewModel()
-            TitleBar(title = "이동봉사 찾아요", ismenu = false, clickBack = { finish() }) {
+            val viewModel: AdoptionViewModel = hiltViewModel()
 
-            }
-
-            NavHost(navController = navController, startDestination = "hi") {
-                composable("hi") {
-                    MoveServiceListScreen(viewModel = viewModel, navController = navController)
+            NavHost(navController = navController, startDestination = Common.ADOPTION_LIST_SCREEN) {
+                composable(Common.ADOPTION_LIST_SCREEN) {
+                    AdoptionListScreen(
+                        viewModel = viewModel,
+                        navController = navController,
+                        activity = this@AdoptionActivity
+                    )
 
                 }
 
-                composable("wow") {
-
+                composable(Common.ADOPTION_Detail_SCREEN) {
+                    AdoptionDetailScreen(navController = navController, viewModel = viewModel)
                 }
 
             }
@@ -71,13 +74,21 @@ class AdoptionActivity : ComponentActivity() {
 }
 
 @Composable
-fun AdoptionListScreen(navController: NavController, viewModel: AdoptionViewModel) {
+fun AdoptionListScreen(
+    navController: NavController,
+    viewModel: AdoptionViewModel,
+    activity: Activity,
+) {
     Box {
         Column(
             modifier = Modifier
                 .fillMaxSize()
 
         ) {
+            TitleBar(title = "입양공고", ismenu = false, clickBack = { activity.finish() }) {
+
+            }
+
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -149,7 +160,7 @@ fun AdoptionListScreen(navController: NavController, viewModel: AdoptionViewMode
                         isvaccination = item.isvaccination,
                         time = item.time
                     ) {
-                        navController.navigate("wow")
+                        navController.navigate(Common.ADOPTION_Detail_SCREEN)
                     }
 
                     Spacer(modifier = Modifier.height(5.dp))
@@ -173,6 +184,14 @@ fun AdoptionDetailScreen(navController: NavController, viewModel: AdoptionViewMo
                 .verticalScroll(scrollState)
                 .fillMaxSize()
         ) {
+
+            TitleBar(
+                title = "입양공고",
+                ismenu = false,
+                clickBack = { navController.popBackStack() }) {
+
+            }
+
 
             Row(
                 modifier = Modifier
@@ -750,11 +769,3 @@ data class AdoptionModel(
     val isvaccination: String,
     val time: String,
 )
-
-@Preview
-@Composable
-fun AdoptionPReview() {
-    val viewModel: AdoptionViewModel = hiltViewModel()
-    val navController = rememberNavController()
-    AdoptionDetailScreen(navController, viewModel)
-}

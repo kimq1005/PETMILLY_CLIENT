@@ -40,6 +40,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
+import com.llama.petmilly_client.presentation.adoptionscreen.AdoptionActivity
 import com.llama.petmilly_client.presentation.findanimalscreen.FindAnimalActivity
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.moveservicscreen.MoveServiceActivity
@@ -180,6 +181,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         )
                     ) { item ->
                         CategoryItems(categoryTest = item) {
+                            viewModel.selelctedcategory.value = ""
                             viewModel.getlibrary()
                             viewModel.selelctedcategory.value = item.title
                             Log.d(TAG, "NaverMapViewScreen: ${item.title}")
@@ -307,10 +309,7 @@ fun setcluestring(
         }
         .clusterClickListener {
             val categorytitle = viewModel.selelctedcategory.value
-            when (categorytitle) {
-                "입양/귀가완료" -> {
-
-                }
+            when(categorytitle) {
 
                 "임보처구해요" -> {
                     val intent = Intent(context, ShelterActivity::class.java)
@@ -328,7 +327,8 @@ fun setcluestring(
                 }
 
                 "입양 공고" -> {
-
+                    val intent = Intent(context, AdoptionActivity::class.java)
+                    context.startActivity(intent)
                 }
 
                 else ->{

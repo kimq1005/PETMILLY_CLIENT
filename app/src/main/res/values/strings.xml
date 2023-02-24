@@ -17,4 +17,5 @@
     <string name="modifiy"><u>수정하기</u></string>
     <string name="entity_read"><u>전체읽기</u></string>
     <string name="locationconfirm"><u>제보위치확인하기</u></string>
+    <string name="sheltersuvtitle">입양/임보 목적으로만 사용해주세요.\n입양/임보 외 게시물은 삭제 및 이용제한 될 수 있습니다.</string>
 </resources>

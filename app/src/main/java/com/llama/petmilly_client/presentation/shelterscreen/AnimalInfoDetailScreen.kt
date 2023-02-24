@@ -61,17 +61,19 @@ fun AnimalInfoDetailScreen(
                 .padding(20.dp)) {
                 Box() {
 
-                    Text(
-                        " ",
+                    Image(
+                        painter = painterResource(id = R.drawable.img_test_puppy),
+                        contentDescription = null,
                         modifier = Modifier
                             .height(130.dp)
                             .width(130.dp)
                             .background(color = Color.Blue)
                             .align(Alignment.CenterStart),
+                        contentScale = ContentScale.Crop
                     )
 
                     Image(
-                        painter = painterResource(id = R.drawable.img_testcat_2),
+                        painter = painterResource(id = R.drawable.baseline_heart_broken_24),
                         contentDescription = null,
                         modifier = Modifier
                             .height(31.dp)

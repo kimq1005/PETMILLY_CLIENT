@@ -42,6 +42,11 @@ object Common {
     const val FINDANIMAL_DETAIL_SCREEN = "findanimaldetailscreen"
     const val FINDANIMAL_COMMENT_SCREEN ="findanimalcommentscreen"
 
+    const val MOVESERVICE_LIST_SCREEN = "moveservicelistscreen"
+    const val MOVESERVICE_Detail_SCREEN = "moveservicedetailscreen"
+
+    const val ADOPTION_LIST_SCREEN = "adptionlistscreen"
+    const val ADOPTION_Detail_SCREEN = "adoptiondetailscreen"
 
 
 }

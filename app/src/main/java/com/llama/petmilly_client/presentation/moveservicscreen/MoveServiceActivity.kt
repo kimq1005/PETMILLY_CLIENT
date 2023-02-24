@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.moveservicscreen
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -55,18 +56,15 @@ class MoveServiceActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             val viewModel: MoveServiceViewModel = hiltViewModel()
-            TitleBar(title = "이동봉사 찾아요", ismenu = false, clickBack = { finish() }) {
 
-            }
-
-            NavHost(navController = navController, startDestination = "hi") {
-                composable("hi") {
-                    MoveServiceListScreen(viewModel = viewModel, navController = navController)
+            NavHost(navController = navController, startDestination = Common.MOVESERVICE_LIST_SCREEN) {
+                composable(Common.MOVESERVICE_LIST_SCREEN) {
+                    MoveServiceListScreen(viewModel = viewModel, navController = navController,this@MoveServiceActivity)
 
                 }
 
-                composable("wow") {
-
+                composable(Common.MOVESERVICE_Detail_SCREEN) {
+                    MoveServiceDetailScreen(viewModel = viewModel, navController = navController )
                 }
 
 
@@ -77,13 +75,18 @@ class MoveServiceActivity : ComponentActivity() {
 }
 
 @Composable
-fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavController) {
+fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavController,activity:Activity) {
     Box {
         Column(
             modifier = Modifier
                 .fillMaxSize()
 
         ) {
+
+            TitleBar(title = "이동봉사 찾아요", ismenu = false, clickBack = { activity.finish() }) {
+
+            }
+
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -155,7 +158,7 @@ fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavCon
                         moveday = item.moveday,
                         time = item.time
                     ) {
-                        navController.navigate("wow")
+                        navController.navigate(Common.MOVESERVICE_Detail_SCREEN)
                     }
 
                     Spacer(modifier = Modifier.height(5.dp))
@@ -171,8 +174,14 @@ fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavCon
 
 @Composable
 fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavController) {
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
+
+            TitleBar(title = "이동봉사 찾아요", ismenu = false, clickBack = { navController.popBackStack() }) {
+
+            }
+
             LazyRow(modifier = Modifier.padding(horizontal = 10.dp)) {
                 val imageTestData = listOf(
                     ImageTestData(R.drawable.img_test_puppy),
@@ -344,8 +353,7 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                 Text(
                     text = "프로필",
                     modifier = Modifier
-                        .padding(top = 20.dp, start = 27.dp)
-                        .background(color = Color(0xFFFFF2DA)),
+                        .padding(top = 20.dp, start = 27.dp),
                     fontSize = 16.sp,
                     fontFamily = notosans_bold,
                     style = TextStyle(

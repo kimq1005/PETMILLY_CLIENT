@@ -149,7 +149,7 @@ fun CheckedCheckBox(clickcolor: Color) {
     Box {
         Canvas(
             modifier = Modifier
-                .size(size = 30.dp)
+                .size(size = 18.dp)
                 .align(Alignment.Center)
 
         ) {
@@ -163,7 +163,8 @@ fun CheckedCheckBox(clickcolor: Color) {
                 id = R.drawable.baseline_check_white
             ),
             contentDescription = null,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center).height(4.dp).width(6.dp),
+            contentScale = ContentScale.Crop
         )
     }//Box
 }
@@ -173,7 +174,7 @@ fun NoneCheckBox(nonecheckcolor: Color) {
     Box {
         Canvas(
             modifier = Modifier
-                .size(size = 30.dp)
+                .size(size = 18.dp)
                 .align(Alignment.Center)
                 .border(
                     border = BorderStroke(1.dp, Color.Black), shape = CircleShape
@@ -190,7 +191,9 @@ fun NoneCheckBox(nonecheckcolor: Color) {
                 id = R.drawable.baseline_check_black_24
             ),
             contentDescription = null,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center).height(4.dp).width(6.dp),
+            contentScale = ContentScale.Crop
+
         )
     }//Box
 }
@@ -217,7 +220,13 @@ fun ButtonScreen_HOUSE(
             text = title,
             color = textcolor,
             fontSize = fontSize.sp,
-            fontWeight = FontWeight.Bold,
+            fontFamily = notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+            ,
             textAlign = textAlign,
         )
     }

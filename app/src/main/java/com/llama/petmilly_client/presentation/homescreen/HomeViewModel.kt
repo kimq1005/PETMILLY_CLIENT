@@ -83,6 +83,7 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
         categorytest.add(findmybaby)
         categorytest.add(movevolunteer)
         categorytest.add(adoptionnotice)
+        categorytest.add(adoptionnotice)
 
     }
 

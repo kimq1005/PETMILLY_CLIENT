@@ -1,0 +1,263 @@
+package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
+import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
+import com.llama.petmilly_client.ui.theme.Black_30_Transfer
+import com.llama.petmilly_client.ui.theme.Category_Cliked
+import com.llama.petmilly_client.ui.theme.Grey_50_CBC4C4
+import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
+import com.llama.petmilly_client.utils.ButtonScreen
+import com.llama.petmilly_client.utils.CheckedCheckBox
+import com.llama.petmilly_client.utils.notosans_bold
+import com.llama.petmilly_client.utils.notosans_regular
+
+@Composable
+fun ShelterDetail_2_profile_Screen(
+    navController: NavController,
+    viewModel: ShelterDetailViewModel,
+) {
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        ShelterDetailTitleBar(title = "임보처구해요", ismenu = false, clickBack = { navController.popBackStack() }) {
+
+        }
+
+        ShelterDetailSuvTitle("주인공의 프로필을\n입력해주세요.")
+
+        Spacer(modifier = Modifier.height(28.dp))
+
+        Text(
+            text = "몸무게",
+            color = Color.Black,
+            fontSize = 13.sp,
+            modifier = Modifier.padding(start = 30.dp),
+            fontFamily = notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+        )
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 26.dp)
+        ) {
+            TextField(
+                value = viewModel.animalkg.value,
+                onValueChange = { viewModel.animalkg.value = it },
+                modifier = Modifier
+                    .height(55.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = if (viewModel.animalkg.value == "") TextField_BackgroudColor else Color.White,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    cursorColor = Color.Black,
+
+                    ),
+                placeholder = { Text(text = "몸무게를 적어주세요") }
+            )
+
+
+            Text(
+                text = " kg",
+                modifier = Modifier.align(Alignment.CenterVertically),
+                fontFamily = notosans_bold,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                fontSize = 18.sp,
+                color = Color.Black
+            )
+
+
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Text(
+            text = "품종",
+            color = Color.Black,
+            fontSize = 13.sp,
+            modifier = Modifier.padding(start = 30.dp),
+            fontFamily = notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+        )
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        TextField(
+            value = viewModel.animaldetailspecies.value,
+            onValueChange = { viewModel.animaldetailspecies.value = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 26.dp)
+                .height(55.dp),
+            shape = RoundedCornerShape(10.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = if (viewModel.animaldetailspecies.value == "") TextField_BackgroudColor else Color.White,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedLabelColor = Color.White,
+                cursorColor = Color.Black,
+
+                ),
+            placeholder = { Text(text = "예)믹스견 / 포메라니안 / 진도") }
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(modifier = Modifier.padding(start = 27.dp)) {
+            CheckedCheckBox(clickcolor = Category_Cliked)
+            Spacer(modifier = Modifier.width(5.dp))
+            Text(
+                text = "모르겠어요", fontSize = 12.sp, fontFamily = notosans_regular, style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                color = Color(0xFF050505)
+            )
+        }//Row
+
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+
+        Text(
+            text = "나이",
+            color = Color.Black,
+            fontSize = 13.sp,
+            modifier = Modifier.padding(start = 30.dp),
+            fontFamily = notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+        )
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 26.dp)
+        ) {
+            TextField(
+                value = viewModel.animalage.value,
+                onValueChange = { viewModel.animalage.value = it },
+                modifier = Modifier
+                    .height(55.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = if (viewModel.animalage.value == "") TextField_BackgroudColor else Color.White,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    cursorColor = Color.Black,
+
+                    ),
+                placeholder = { Text(text = "예) 2개월 = 0.2 / 2살 = 2") }
+            )
+
+
+            Text(
+                text = " 살 추정",
+                modifier = Modifier.align(Alignment.CenterVertically),
+                fontFamily = notosans_bold,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                fontSize = 18.sp,
+                color = Color.Black
+            )
+
+        }//Row
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(modifier = Modifier.padding(start = 27.dp)) {
+            CheckedCheckBox(clickcolor = Category_Cliked)
+            Spacer(modifier = Modifier.width(5.dp))
+            Text(
+                text = "모르겠어요", fontSize = 12.sp, fontFamily = notosans_regular, style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                color = Color(0xFF050505)
+            )
+        }//Row
+
+
+        Spacer(modifier = Modifier.weight(1f))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, bottom = 20.dp)
+        ) {
+
+            val ischeck = viewModel.animalkg.value != "" && viewModel.animalage.value != "" && viewModel.animaldetailspecies.value !=""
+
+            ButtonScreen(
+                title = "다음",
+                textcolor = Color.White,
+                fontSize = 15,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp),
+                backgroundcolor = if (ischeck) Color.Black else Color.LightGray
+
+            ) {
+                if (ischeck) {
+//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                } else {
+
+                }
+            }
+
+            Text(
+                text = "2/8", fontSize = 13.sp,
+                fontFamily = notosans_bold,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                color = if (ischeck) Color.White else Grey_50_CBC4C4,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 18.dp)
+            )
+
+        }
+
+    }
+}
