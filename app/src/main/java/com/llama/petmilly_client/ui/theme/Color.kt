@@ -10,7 +10,7 @@ val MainBackgroundColor = Color(0xFFFAFCE4)
 val KaKao_BackgroundColor = Color(0xFFFAE100)
 
 val Category_Cliked = Color(0xFFB616B9)
-val TextField_BackgroudColor = Color(0xFFEBEBEB)
+val TextField_BackgroudColor = Color(0xFFF8F8F8)
 val Button_Clicked = Color(0xFF000000)
 val Button_NoneClicked = Color(0xFFD9D9D9)
 val Search_ButtonColor = Color(0xFF4470E2)

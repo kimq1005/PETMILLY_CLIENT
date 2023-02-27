@@ -1,19 +1,14 @@
 package com.llama.petmilly_client.presentation.chatscreen
 
 import android.content.Intent
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,14 +18,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
@@ -38,15 +29,14 @@ import com.llama.petmilly_client.presentation.chatscreen.items.ChatRoomItem
 import com.llama.petmilly_client.presentation.chatscreen.items.EntityChatModel
 import com.llama.petmilly_client.presentation.chatscreen.items.PlzChatModel
 import com.llama.petmilly_client.presentation.dialog.ChatRoomDialog
-import com.llama.petmilly_client.presentation.profilescreen.ProfileActivity
+import com.llama.petmilly_client.presentation.myprofilescreen.MyProfileActivity
+import com.llama.petmilly_client.presentation.myprofilescreen.ProfileActivity
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
-import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Black_60_Transfer
 import com.llama.petmilly_client.ui.theme.Black_Half_Transfer
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
-import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
 fun ChattingRoomScreen(navController: NavController, name: String, viewModel: ChatViewModel) {

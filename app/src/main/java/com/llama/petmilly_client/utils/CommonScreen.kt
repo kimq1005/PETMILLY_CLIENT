@@ -20,9 +20,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -52,6 +54,8 @@ fun ButtonScreen(
         onClick = { onclick() },
         modifier,
         colors = ButtonDefaults.buttonColors(backgroundColor = backgroundcolor),
+        shape = RoundedCornerShape(6.dp)
+
     ) {
         Text(
             text = title,
@@ -71,7 +75,9 @@ fun ButtonShapeScreen(
     backgroundcolor: Color,
     textAlign: TextAlign,
     shape: Shape,
+    fontFamily: FontFamily,
     onclick: () -> Unit,
+
 ) {
     Button(
         onClick = { onclick() },
@@ -84,8 +90,13 @@ fun ButtonShapeScreen(
             text = title,
             color = textcolor,
             fontSize = fontSize.sp,
-            fontWeight = FontWeight.Bold,
+            fontFamily = fontFamily,
             textAlign = textAlign,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             modifier = Modifier.fillMaxWidth()
 
         )
@@ -163,7 +174,10 @@ fun CheckedCheckBox(clickcolor: Color) {
                 id = R.drawable.baseline_check_white
             ),
             contentDescription = null,
-            modifier = Modifier.align(Alignment.Center).height(4.dp).width(6.dp),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .height(4.dp)
+                .width(6.dp),
             contentScale = ContentScale.Crop
         )
     }//Box
@@ -191,7 +205,10 @@ fun NoneCheckBox(nonecheckcolor: Color) {
                 id = R.drawable.baseline_check_black_24
             ),
             contentDescription = null,
-            modifier = Modifier.align(Alignment.Center).height(4.dp).width(6.dp),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .height(4.dp)
+                .width(6.dp),
             contentScale = ContentScale.Crop
 
         )
@@ -306,8 +323,17 @@ fun CommonNotingScreen(text: String, modifier: Modifier) {
         color = Black_30_Transfer,
         textAlign = TextAlign.Center
     )
-
-
 }
+
+@Composable
+fun SpacerWidth(dp:Dp){
+    Spacer(modifier = Modifier.width(dp))
+}
+
+@Composable
+fun SpacerHeight(dp:Dp){
+    Spacer(modifier = Modifier.height(dp))
+}
+
 
 

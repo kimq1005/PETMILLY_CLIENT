@@ -54,7 +54,7 @@
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
 
         <activity
-            android:name=".presentation.profilescreen.ProfileActivity"
+            android:name=".presentation.myprofilescreen.ProfileActivity"
             android:exported="false"
             android:label="ProfileActivity"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
