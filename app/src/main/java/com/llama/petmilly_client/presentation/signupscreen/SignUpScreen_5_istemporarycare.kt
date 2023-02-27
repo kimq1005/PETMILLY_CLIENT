@@ -24,10 +24,7 @@ import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewM
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
-import com.llama.petmilly_client.utils.ButtonScreen
-import com.llama.petmilly_client.utils.ButtonShapeScreen
-import com.llama.petmilly_client.utils.CheckedCheckBox
-import com.llama.petmilly_client.utils.NoneCheckBox
+import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_6_ISALLERGY
 
@@ -76,7 +73,8 @@ fun SignUpScreen_5_istemporarycare(navController: NavController, viewModel: Sign
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.istemporarycare.value) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily =if (viewModel.istemporarycare.value) notosans_bold else notosans_regular
             ) {
                 viewModel.istemporarycare.value = true
             }
@@ -106,7 +104,8 @@ fun SignUpScreen_5_istemporarycare(navController: NavController, viewModel: Sign
                     .fillMaxWidth(),
                 backgroundcolor = if (!viewModel.istemporarycare.value) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily =  if (!viewModel.istemporarycare.value)notosans_bold else notosans_regular
             ) {
                 viewModel.istemporarycare.value = false
             }

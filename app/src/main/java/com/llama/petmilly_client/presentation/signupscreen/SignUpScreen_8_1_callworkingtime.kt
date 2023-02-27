@@ -19,10 +19,7 @@ import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewM
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
-import com.llama.petmilly_client.utils.ButtonScreen
-import com.llama.petmilly_client.utils.ButtonShapeScreen
-import com.llama.petmilly_client.utils.CheckedCheckBox
-import com.llama.petmilly_client.utils.NoneCheckBox
+import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_COMPLETED
 
 @Composable
@@ -70,7 +67,8 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.famillylist.contains("부모님")) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily = if (viewModel.famillylist.contains("부모님")) notosans_bold else notosans_regular
             ) {
 
                 if(viewModel.famillylist.contains("부모님")){
@@ -104,7 +102,8 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.famillylist.contains("부모님")) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily =  if (viewModel.famillylist.contains("부모님")) notosans_bold else notosans_regular
             ) {
                 if(viewModel.famillylist.contains("형제자매")){
                     viewModel.famillylist.remove("형제자매")
@@ -137,7 +136,8 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.famillylist.contains("배우자")) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily =  if (viewModel.famillylist.contains("배우자"))  notosans_bold else notosans_regular
             ) {
                 if(viewModel.famillylist.contains("배우자")){
                     viewModel.famillylist.remove("배우자")
@@ -170,7 +170,8 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.famillylist.contains("본인")) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily =  if (viewModel.famillylist.contains("본인")) notosans_bold else notosans_regular
             ) {
                 if(viewModel.famillylist.contains("본인")){
                     viewModel.famillylist.remove("본인")
@@ -203,7 +204,8 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.famillylist.contains("그외")) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily = if (viewModel.famillylist.contains("그외")) notosans_bold else notosans_regular
             ) {
                 if(viewModel.famillylist.contains("그외")){
                     viewModel.famillylist.remove("그외")

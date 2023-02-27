@@ -22,10 +22,7 @@ import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewM
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
-import com.llama.petmilly_client.utils.ButtonScreen
-import com.llama.petmilly_client.utils.ButtonShapeScreen
-import com.llama.petmilly_client.utils.CheckedCheckBox
-import com.llama.petmilly_client.utils.NoneCheckBox
+import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_7_CALLYOURHOUSE
 
 @Composable
@@ -72,7 +69,8 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.isallery.value == 0) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily =if (viewModel.isallery.value == 0) notosans_bold else notosans_regular
             ) {
                 viewModel.isallery.value = 0
             }
@@ -102,7 +100,8 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.isallery.value == 1) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily = if (viewModel.isallery.value == 1)  notosans_bold else notosans_regular
             ) {
                 viewModel.isallery.value = 1
             }
@@ -132,7 +131,8 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.isallery.value == 2) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily = if (viewModel.isallery.value == 2) notosans_bold else notosans_regular
             ) {
                 viewModel.isallery.value = 2
             }

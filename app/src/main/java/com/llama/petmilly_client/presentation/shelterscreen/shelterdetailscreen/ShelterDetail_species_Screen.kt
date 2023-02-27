@@ -17,10 +17,7 @@ import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
-import com.llama.petmilly_client.utils.ButtonScreen
-import com.llama.petmilly_client.utils.ButtonShapeScreen
-import com.llama.petmilly_client.utils.CheckedCheckBox
-import com.llama.petmilly_client.utils.NoneCheckBox
+import com.llama.petmilly_client.utils.*
 
 @Composable
 fun ShelterDetail_species_Screen(
@@ -91,7 +88,8 @@ fun ShelterBtn(species: String, viewModel: ShelterDetailViewModel) {
                 .fillMaxWidth(),
             backgroundcolor = if (viewModel.species.value == species) Category_Cliked else Button_NoneClicked,
             shape = RoundedCornerShape(19.dp),
-            textAlign = TextAlign.Start
+            textAlign = TextAlign.Start,
+            fontFamily =  if(viewModel.pickup.value == species) notosans_bold else notosans_regular
         ) {
             viewModel.species.value = species
         }

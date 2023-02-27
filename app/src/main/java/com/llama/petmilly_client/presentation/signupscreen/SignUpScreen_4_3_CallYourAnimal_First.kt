@@ -32,6 +32,8 @@ import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
+import com.llama.petmilly_client.utils.notosans_bold
+import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -142,7 +144,8 @@ fun SignUpScreen_4_3_CallYourAnimal_First(navController: NavController, viewMode
                 modifier = Modifier.weight(1f).height(55.dp),
                 backgroundcolor = if(viewModel.animalgender.value =="수컷") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontFamily = if(viewModel.animalgender.value=="수컷") notosans_bold else notosans_regular
             ) {
                 viewModel.animalgender.value = "수컷"
                 viewModel.checkCallYourAnimal()
@@ -157,7 +160,8 @@ fun SignUpScreen_4_3_CallYourAnimal_First(navController: NavController, viewMode
                 modifier = Modifier.weight(1f).height(55.dp),
                 backgroundcolor = if(viewModel.animalgender.value =="암컷") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontFamily = if(viewModel.animalgender.value =="암컷") notosans_bold else notosans_regular
             ) {
                 viewModel.animalgender.value = "암컷"
                 viewModel.checkCallYourAnimal()
@@ -190,7 +194,8 @@ fun SignUpScreen_4_3_CallYourAnimal_First(navController: NavController, viewMode
                 modifier = Modifier.weight(1f).height(55.dp),
                 backgroundcolor = if (viewModel.isneuteringsurgery.value) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontFamily = if(viewModel.isneuteringsurgery.value) notosans_bold else notosans_regular
             ) {
                 viewModel.isneuteringsurgery.value = true
                 viewModel.checkCallYourAnimal()
@@ -206,7 +211,8 @@ fun SignUpScreen_4_3_CallYourAnimal_First(navController: NavController, viewMode
                 modifier = Modifier.weight(1f).height(55.dp),
                 backgroundcolor = if (!viewModel.isneuteringsurgery.value) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontFamily = if(viewModel.isneuteringsurgery.value) notosans_bold else notosans_regular
             ) {
                 viewModel.isneuteringsurgery.value = false
                 viewModel.checkCallYourAnimal()

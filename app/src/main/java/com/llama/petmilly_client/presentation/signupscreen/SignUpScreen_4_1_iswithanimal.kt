@@ -80,7 +80,8 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController, viewModel: SignU
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.livewithanimal.value == "네, 같이 살고 있어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily = if(viewModel.livewithanimal.value== "네, 같이 살고 있어요.") notosans_bold else notosans_regular
             ) {
                 viewModel.livewithanimal.value = "네, 같이 살고 있어요."
             }
@@ -110,7 +111,8 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController, viewModel: SignU
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.livewithanimal.value == "아니요, 같이 살고 있지 않아요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily =   if (viewModel.livewithanimal.value == "아니요, 같이 살고 있지 않아요.") notosans_bold else notosans_regular
             ) {
                 viewModel.livewithanimal.value = "아니요, 같이 살고 있지 않아요."
             }
@@ -140,7 +142,8 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController, viewModel: SignU
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.livewithanimal.value == "지금은 아니지만, 키운적은 있어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily =if (viewModel.livewithanimal.value == "지금은 아니지만, 키운적은 있어요.") notosans_bold else notosans_regular
             ) {
                 viewModel.livewithanimal.value = "지금은 아니지만, 키운적은 있어요."
             }

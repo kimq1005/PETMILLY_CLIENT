@@ -33,10 +33,7 @@ import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
-import com.llama.petmilly_client.utils.ButtonScreen
-import com.llama.petmilly_client.utils.ButtonShapeScreen
-import com.llama.petmilly_client.utils.CheckedCheckBox
-import com.llama.petmilly_client.utils.NoneCheckBox
+import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_5_ISTEMPORARYCARE
@@ -89,7 +86,8 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.numberofanimal.value == 1) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily = if (viewModel.numberofanimal.value == 1) notosans_bold else notosans_regular
             ) {
                 viewModel.numberofanimal.value = 1
             }
@@ -118,7 +116,8 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.numberofanimal.value == 2) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily = if (viewModel.numberofanimal.value == 2) notosans_bold else notosans_regular
             ) {
                 viewModel.numberofanimal.value = 2
             }
@@ -148,7 +147,8 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
                     .fillMaxWidth(),
                 backgroundcolor = if (viewModel.numberofanimal.value == 3) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                fontFamily = if (viewModel.numberofanimal.value == 3) notosans_bold else notosans_regular
             ) {
                 viewModel.numberofanimal.value = 3
             }

@@ -29,6 +29,7 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
+import com.llama.petmilly_client.utils.notosans_bold
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_1_BIRTHDAY
 
 @Composable
@@ -154,7 +155,8 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
                     .height(55.dp),
                 backgroundcolor = Button_NoneClicked,
                 shape = RoundedCornerShape(10.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontFamily = notosans_bold
             ) {
 
             }
