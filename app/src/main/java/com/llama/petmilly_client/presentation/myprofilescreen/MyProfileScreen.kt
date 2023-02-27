@@ -532,7 +532,7 @@ fun NickNameChangeScreen(navController: NavController, viewModel: ProfileViewMod
             onValueChange = { newText -> viewModel.changenickname.value = newText },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 40.dp, end = 30.dp)
+                .padding(start = 40.dp, end = 40.dp)
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -595,7 +595,7 @@ fun ClearableTextField(
             }
         },
         colors = textFieldColors,
-        
+
 
         )
 

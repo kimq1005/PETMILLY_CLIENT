@@ -20,4 +20,6 @@
     <string name="sheltersuvtitle">입양/임보 목적으로만 사용해주세요.\n입양/임보 외 게시물은 삭제 및 이용제한 될 수 있습니다.</string>
     <string name="moveservicesuvtitle">이동봉사 목적으로만 사용해주세요.\n그 외 게시물은 삭제 및 이용제한 될 수 있습니다.</string>
     <string name="fasubtitle">실종홍보 목적으로만 사용해주세요.\n그 외 게시물은 삭제 및 이용제한 될 수 있습니다.</string>
+    <string name="secession"><u>탈퇴하기</u></string>
+    <string name="logout"><u>로그아웃</u></string>
 </resources>
