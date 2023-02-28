@@ -21,6 +21,8 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,8 +36,11 @@ import com.llama.petmilly_client.presentation.dialog.AdoptionApplicationDialog
 import com.llama.petmilly_client.presentation.dialog.AdoptionCompletedDialog
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
 import com.llama.petmilly_client.presentation.loginscreen.CustomDialog
-import com.llama.petmilly_client.ui.theme.Name_Speech_Bubble
-import com.llama.petmilly_client.ui.theme.Purple700
+import com.llama.petmilly_client.ui.theme.*
+import com.llama.petmilly_client.utils.SpacerHeight
+import com.llama.petmilly_client.utils.SpacerWidth
+import com.llama.petmilly_client.utils.notosans_bold
+import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
@@ -48,7 +53,7 @@ fun AnimalInfoDetailScreen(
     viewModel.setanimalinfovalue()
     val scrollState = rememberScrollState()
 
-    Box {
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)
@@ -56,9 +61,11 @@ fun AnimalInfoDetailScreen(
         ) {
 
 
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+            ) {
                 Box() {
 
                     Image(
@@ -114,21 +121,33 @@ fun AnimalInfoDetailScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 20.dp)
+                            .padding(top = 15.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
 
-//                        viewModel.onDismissDialog()
                         Text(
                             text = if (viewModel.testBoolean.value) viewModel.animalspecies.value else "${viewModel.animalspecies.value}(완료) ",
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
+                            fontFamily = notosans_bold,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            ),
                             color = Color.Black
                         )
 
+                        SpacerWidth(dp = 5.dp)
                         Text(
                             text = "수컷",
                             fontSize = 13.sp,
-                            color = Color.Gray,
+                            fontFamily = notosans_regular,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            ),
+                            color = Black_60_Transfer,
                             modifier = Modifier.align(Alignment.Bottom)
                         )
                     }
@@ -138,13 +157,26 @@ fun AnimalInfoDetailScreen(
 
                     Text(
                         text = "${viewModel.animalspecies.value} / ${viewModel.animalweight.value}kg/ ${viewModel.animalage.value} 추정",
-                        color = Color.DarkGray,
+                        fontFamily = notosans_regular,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        modifier = Modifier.background(color = Background_FDFCE1),
+                        color = Black_60_Transfer,
                         fontSize = 13.sp
 
                     )
                     Text(
                         text = "현재위치지역 어디어디동",
-                        color = Color.DarkGray,
+                        fontFamily = notosans_regular,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        color = Black_60_Transfer,
                         modifier = Modifier.padding(bottom = 5.dp)
                     )
                 }
@@ -163,11 +195,12 @@ fun AnimalInfoDetailScreen(
             Divider(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 5.dp, bottom = 10.dp), color = Color.Black
+                    .padding(top = 5.dp, start = 20.dp, end = 20.dp), color = Color.Black
             )
 
-            Column(modifier = Modifier.padding(20.dp)) {
+            Column(modifier = Modifier.padding(horizontal = 20.dp)) {
 
+                SpacerHeight(dp = 10.dp)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -273,15 +306,13 @@ fun AnimalInfoDetailScreen(
                     )
                 }
 
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 5.dp), color = Color.LightGray
-                )
             }//Column
 
 
-            if(!viewModel.testBoolean.value){
+            if (viewModel.isjudge.value == 1) {
+
+                SpacerHeight(dp = 16.dp)
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -323,6 +354,8 @@ fun AnimalInfoDetailScreen(
                             .padding(start = 10.dp)
                             .fillMaxHeight(), verticalArrangement = Arrangement.Center
                     ) {
+
+
                         Text(
                             text = "신청서 접수기간 : 23.01.01 ~ 23.01.07",
                             fontWeight = FontWeight.Bold,
@@ -347,10 +380,11 @@ fun AnimalInfoDetailScreen(
                 }//Row
             }
 
-            
-            //임보처 구해요 완료
-            if (viewModel.testBoolean.value) {
-                Column(modifier = Modifier.padding(20.dp)) {
+
+            if (viewModel.isjudge.value != 2) {
+                Column(
+                    modifier = Modifier.padding(20.dp)
+                ) {
                     Text(
                         text = "임보 정보", modifier = Modifier
                             .fillMaxWidth()
@@ -360,14 +394,12 @@ fun AnimalInfoDetailScreen(
                         color = Color.Black
                     )
 
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 5.dp, bottom = 10.dp), color = Color.Black
-                    )
+                    SpacerHeight(dp = 6.dp)
 
-                    Column() {
+                    Divider(color = Color.Black)
 
+                    Column(modifier = Modifier.background(color = Pink_5_Transfer)) {
+                        SpacerHeight(dp = 8.dp)
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -532,40 +564,61 @@ fun AnimalInfoDetailScreen(
 
                     }//Column
 
-                    Text(
-                        text = "사진첩", modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 30.dp, start = 10.dp),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
 
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 5.dp, bottom = 10.dp), color = Color.Black
-                    )
                 }//Column
+
             }
+
+            Text(
+                text = "사진첩", modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 30.dp, start = 10.dp),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 5.dp, bottom = 10.dp, start = 20.dp, end = 20.dp),
+                color = Color.Black
+            )
 
 
         }//Column
 
+        if (viewModel.isjudge.value == 0) {
+            Image(
+                painter = painterResource(id = R.drawable.img_chat_contact),
+                contentDescription = null,
 
-        Image(
-            painter = painterResource(id = R.drawable.img_chat_contact),
-            contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 40.dp, end = 15.dp)
+                    .width(55.dp)
+                    .height(55.dp)
+                    .clickable {
+//                        viewModel.onConfirmClick()
+                    }
+            )
+        } else if (viewModel.isjudge.value == 1) {
+            Image(
+                painter = painterResource(id = R.drawable.img_shelter_icon_aplication),
+                contentDescription = null,
 
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(bottom = 40.dp, end = 15.dp)
-                .width(55.dp)
-                .height(55.dp)
-                .clickable {
-                    viewModel.onConfirmClick()
-                }
-        )
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 40.dp, end = 15.dp)
+                    .width(55.dp)
+                    .height(55.dp)
+                    .clickable {
+                        viewModel.onConfirmClick()
+                    }
+            )
+        }
+
+
 
         if (viewModel.isDialogShown) {
             AdoptionApplicationDialog(

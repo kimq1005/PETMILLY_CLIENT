@@ -31,6 +31,13 @@ class ShelterViewModel() : ViewModel() {
     val categorytest: MutableList<CategoryTest> = arrayListOf()
 
     var testBoolean = mutableStateOf<Boolean>(true)
+
+    var isjudge = mutableStateOf(1)
+    //0 심사x
+    //1 심사 중
+    //2 심사 완료
+
+
     init {
         testsetcategory()
     }

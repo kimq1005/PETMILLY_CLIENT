@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,12 +24,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.homescreen.CategoryTest
+import com.llama.petmilly_client.ui.theme.Background_FDFCE1
+import com.llama.petmilly_client.ui.theme.Black_30_Transfer
+import com.llama.petmilly_client.ui.theme.Black_60_Transfer
 import com.llama.petmilly_client.ui.theme.Purple700
+import com.llama.petmilly_client.utils.SpacerWidth
+import com.llama.petmilly_client.utils.notosans_bold
+import com.llama.petmilly_client.utils.notosans_regular
 
 @Composable
 fun ShelterCategoryItems(
     title: String,
     description: String,
+    vaccination: String,
     onclcik: () -> Unit,
 ) {
     Row(
@@ -50,37 +59,53 @@ fun ShelterCategoryItems(
 
             )
 
+        SpacerWidth(dp = 20.dp)
 
         Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .weight(2f)
+            modifier = Modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.Center
         ) {
 
             Text(
                 text = title,
                 color = Color.Black,
                 fontSize = 15.sp,
-                fontWeight = FontWeight.Bold
+                fontFamily = notosans_bold,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                )
             )
 
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(3.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = description,
-                    fontSize = 12.sp,
-                    color = Color(0xFF99000000),
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 20.dp)
+            Text(
+                text = description,
+                fontSize = 12.sp,
+                color = Black_60_Transfer,
+                modifier = Modifier
+                    .background(color = Background_FDFCE1),
+                fontFamily = notosans_regular,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
                 )
+            )
 
-            }
+            Text(
+                text = vaccination,
+                fontSize = 12.sp,
+                color = Black_60_Transfer,
+                fontFamily = notosans_regular,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                )
+            )
 
 
         }
@@ -92,22 +117,18 @@ fun ShelterCategoryItems(
                     .align(Alignment.End)
                     .padding(end = 8.dp, top = 6.dp),
                 fontSize = 8.sp,
-                color = Color.LightGray
+                fontFamily = notosans_regular,
+                color = Black_30_Transfer,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                )
+
             )
 
             Spacer(modifier = Modifier.weight(1f))
 
-//            Text(
-//                text = "마감 D-3",
-//                modifier = Modifier
-//                    .padding(bottom = 6.dp, end = 8.dp)
-//                    .background(color = Color.Red, shape = RoundedCornerShape(5.dp))
-//                    .padding(3.dp)
-//                    .align(Alignment.End),
-//                color = Color.White,
-//                fontSize = 10.sp,
-//                textAlign = TextAlign.Center
-//            )
         }
 
 
@@ -119,7 +140,7 @@ fun ShelterCategoryItems(
 @Composable
 fun ASDASDA() {
     Column(Modifier.padding(10.dp)) {
-        ShelterCategoryItems("감자에오", "수컷 / 1kg / 믹스 / 2개월 추정/" + " 1차접종완료 / 중성화O", onclcik = {
+        ShelterCategoryItems("감자에오", "수컷 / 1kg / 믹스 / 2개월 추정", "1차 접종완료/중성화O", onclcik = {
 
 
         })

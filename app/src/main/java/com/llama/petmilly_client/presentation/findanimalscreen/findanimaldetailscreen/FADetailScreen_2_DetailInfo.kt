@@ -21,6 +21,7 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.notosans_bold
+import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
 fun FADetailScreen_2_DetailInfo(
@@ -119,7 +120,7 @@ fun FADetailScreen_2_DetailInfo(
                 ),
             placeholder = {
                 Text(
-                    text = "실종당시 착용한 목줄에 대해 설명해주세요."
+                    text = "아이에 대한 특징 및 유의사항에 대해 적어주세요.\n상세하게 기재할수록 도움이 됩니다."
                 )
             }
         )
@@ -182,7 +183,7 @@ fun FADetailScreen_2_DetailInfo(
 
         ) {
             if (ischeck) {
-//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                        navController.navigate(Common.FADETAILSCREEN_3_COMMENT_ISOPEN)
             } else {
 
             }

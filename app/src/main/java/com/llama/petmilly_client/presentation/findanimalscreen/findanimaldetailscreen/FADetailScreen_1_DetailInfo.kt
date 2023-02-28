@@ -33,9 +33,14 @@ import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
-fun FADetailScreen_1_DetailInfo(navController: NavController, viewModel: FADetailViewModel,activity:Activity) {
+fun FADetailScreen_1_DetailInfo(
+    navController: NavController,
+    viewModel: FADetailViewModel,
+    activity: Activity,
+) {
 
     Column(
         Modifier
@@ -46,7 +51,7 @@ fun FADetailScreen_1_DetailInfo(navController: NavController, viewModel: FADetai
         ShelterDetailTitleBar(
             title = "우리아이 찾아요",
             ismenu = false,
-            clickBack = { navController.popBackStack() }
+            clickBack = { activity.finish() }
         ) {
             activity.finish()
         }
@@ -69,7 +74,7 @@ fun FADetailScreen_1_DetailInfo(navController: NavController, viewModel: FADetai
             )
         )
 
-     
+
         TextField(
             value = viewModel.missingday.value,
             onValueChange = { viewModel.missingday.value = it },
@@ -112,10 +117,12 @@ fun FADetailScreen_1_DetailInfo(navController: NavController, viewModel: FADetai
         )
 
         Spacer(modifier = Modifier.height(6.dp))
-        
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 26.dp)) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 26.dp)
+        ) {
 
             TextField(
                 value = viewModel.missinglocation.value,
@@ -160,7 +167,7 @@ fun FADetailScreen_1_DetailInfo(navController: NavController, viewModel: FADetai
 
 
         ButtonScreen(
-            title = "완료",
+            title = "다음",
             textcolor = Color.White,
             fontSize = 15,
             modifier = Modifier
@@ -171,7 +178,7 @@ fun FADetailScreen_1_DetailInfo(navController: NavController, viewModel: FADetai
 
         ) {
             if (ischeck) {
-//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                navController.navigate(Common.FADETAILSCREEN_2_DETAILINFO)
             } else {
 
             }
@@ -230,12 +237,4 @@ fun FADetailSuvTitle(text: String) {
 
     }
 
-}
-
-@Preview
-@Composable
-fun FAPReview(){
-    val navController = rememberNavController()
-    val viewModel:FADetailViewModel = hiltViewModel()
-    FADetailScreen_3_Comment_IsOpen(navController = navController, viewModel = viewModel)
 }

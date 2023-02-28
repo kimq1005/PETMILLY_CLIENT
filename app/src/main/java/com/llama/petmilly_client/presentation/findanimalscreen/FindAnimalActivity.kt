@@ -21,8 +21,6 @@ class FindAnimalActivity : ComponentActivity() {
             val viewModel: FindAnimalViewModel = hiltViewModel()
 
             Column {
-
-
                 NavHost(
                     navController = navController,
                     startDestination = Common.FINDANIMAL_LIST_SCREEN

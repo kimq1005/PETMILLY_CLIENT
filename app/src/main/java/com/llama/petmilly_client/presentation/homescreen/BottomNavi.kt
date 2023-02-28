@@ -30,6 +30,7 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.chatscreen.ChatEntityScreen
 import com.llama.petmilly_client.presentation.chatscreen.ChatScreen
 import com.llama.petmilly_client.presentation.favoritescreen.FavoriteScreen
+import com.llama.petmilly_client.presentation.myprofilescreen.MyProfileScreen
 import com.llama.petmilly_client.presentation.notificationscreen.NotificationScreen
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
@@ -60,52 +61,12 @@ fun NavigationGraph(navController: NavHostController) {
             NotificationScreen(navController = navController)
         }
         composable(BottomNavItem.Person.screen_route) {
-            TestNotificationScreen()
+            MyProfileScreen(navController = navController)
         }
 
 
     }
 
-}
-
-@Composable
-fun NetworkScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.teal_700))
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "My Network Screen",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-    }
-}
-
-
-@Composable
-fun AddPostScreen() {
-    Log.d(TAG, "AddPostScreen: AddPostScreen")
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.teal_700))
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "Add Post Screen",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-    }
 }
 
 @Composable

@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.findanimalscreen.findanimaldetailscreen
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -25,7 +26,7 @@ import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.utils.*
 
 @Composable
-fun FADetailScreen_3_Comment_IsOpen(navController: NavController, viewModel: FADetailViewModel) {
+fun FADetailScreen_3_Comment_IsOpen(navController: NavController, viewModel: FADetailViewModel, activity:Activity) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,10 +37,10 @@ fun FADetailScreen_3_Comment_IsOpen(navController: NavController, viewModel: FAD
             ismenu = false,
             clickBack = { navController.popBackStack() }
         ) {
-//            activity.finish()
+            activity.finish()
         }
 
-        FADetailSuvTitle("실종 당시 정보를\n상세히 입력해주세요.")
+        FADetailSuvTitle("제보(댓글) 공개 여부를\n설정해주세요.")
 
         Spacer(modifier = Modifier.height(36.dp))
 
@@ -115,7 +116,7 @@ fun FADetailScreen_3_Comment_IsOpen(navController: NavController, viewModel: FAD
 
 
         ButtonScreen(
-            title = "다음",
+            title = "완료",
             textcolor = Color.White,
             fontSize = 15,
             modifier = Modifier
@@ -125,6 +126,8 @@ fun FADetailScreen_3_Comment_IsOpen(navController: NavController, viewModel: FAD
             backgroundcolor = Color.Black
 
         ) {
+            //우이아이 찾아요 글쓰기 완료
+            activity.finish()
 
         }
 

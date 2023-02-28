@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.utils.*
+import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
 fun ShelterDetail_species_Screen(
@@ -26,10 +28,10 @@ fun ShelterDetail_species_Screen(
     activity: ShelterDetailActivity,
 ) {
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(color = Color.White)) {
 
-        ShelterDetailTitleBar(title = "임보처구해요", ismenu = false, clickBack = { }) {
-
+        ShelterDetailTitleBar(title = "임보처구해요", ismenu = false, clickBack = { activity.finish() }) {
+            activity.finish()
         }
 
         ShelterDetailSuvTitle("주인공의 정보를\n입력해주세요.")
@@ -55,7 +57,7 @@ fun ShelterDetail_species_Screen(
                 .height(55.dp),
             backgroundcolor = if(viewModel.species.value !="") Button_Clicked else Button_NoneClicked
         ) {
-//            navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+            navController.navigate(Common.SHELTERDETAIL_1_PROFILE_SCREEN)
         }
 
 

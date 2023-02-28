@@ -1,7 +1,9 @@
 package com.llama.petmilly_client.presentation.findanimalscreen
 
 import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,7 +13,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,18 +23,24 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.findanimalscreen.findanimaldetailscreen.FADetailActivity
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
-fun FindAnimalListScreen(navController: NavController, viewModel: FindAnimalViewModel,activity: Activity) {
+fun FindAnimalListScreen(
+    navController: NavController,
+    viewModel: FindAnimalViewModel,
+    activity: Activity,
+) {
     val scrollState = rememberScrollState()
-
+    val context = LocalContext.current
     Box {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = Color.White)
 
         ) {
 
@@ -90,7 +100,7 @@ fun FindAnimalListScreen(navController: NavController, viewModel: FindAnimalView
                         "10시간 전"
                     ),
 
-                )
+                    )
 
                 items(missingAnimalInfoData) { item ->
                     FindAnimalItems(
@@ -120,7 +130,8 @@ fun FindAnimalListScreen(navController: NavController, viewModel: FindAnimalView
                 .width(50.dp)
                 .height(50.dp)
                 .clickable {
-
+                    val intent = Intent(context, FADetailActivity::class.java)
+                    context.startActivity(intent)
                 },
             contentScale = ContentScale.Crop
         )

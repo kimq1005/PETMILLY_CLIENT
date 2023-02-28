@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
@@ -34,12 +36,36 @@ import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import llama.test.jetpack_dagger_plz.utils.Common
 
 class MoveServiceDetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
 
+        setContent {
+            val navController = rememberNavController()
+            val viewModel: MoveServiceDetailViewModel = hiltViewModel()
+
+            NavHost(
+                navController = navController,
+                startDestination = Common.MOVESERVICEDETAILSCREEN_1_INPUT
+            ) {
+                composable(route = Common.MOVESERVICEDETAILSCREEN_1_INPUT) {
+                    MoveServiceDetailScreen_1_Input(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@MoveServiceDetailActivity
+                    )
+                }
+                
+                composable(route = Common.MOVESERVICEDETAILSCREEN_2_INPUT){
+                    MoveServiceDetailScreen_2_Input(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@MoveServiceDetailActivity
+                    )
+                }
+            }
         }
     }
 }
@@ -58,7 +84,7 @@ fun MoveServiceDetailScreen_1_Input(
         ShelterDetailTitleBar(
             title = "이동봉사 찾아요",
             ismenu = false,
-            clickBack = { navController.popBackStack() }) {
+            clickBack = { activity.finish() }) {
             activity.finish()
         }
 
@@ -171,7 +197,7 @@ fun MoveServiceDetailScreen_1_Input(
 
         ) {
             if (ischeck) {
-//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                        navController.navigate(Common.MOVESERVICEDETAILSCREEN_2_INPUT)
             } else {
 
             }
@@ -184,6 +210,7 @@ fun MoveServiceDetailScreen_1_Input(
 fun MoveServiceDetailScreen_2_Input(
     navController: NavController,
     viewModel: MoveServiceDetailViewModel,
+    activity:Activity
 ) {
     Column(
         Modifier
@@ -195,7 +222,7 @@ fun MoveServiceDetailScreen_2_Input(
             title = "이동봉사 찾아요",
             ismenu = false,
             clickBack = { navController.popBackStack() }) {
-
+                activity.finish()
         }
 
         MoveServiceDetailSuvTitle("이동봉사 정보를\n입력해주세요.")
@@ -310,7 +337,9 @@ fun MoveServiceDetailScreen_2_Input(
 
         ) {
             if (ischeck) {
-//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                //이동봉사 찾아요 완료
+                activity.finish()
+                
             } else {
 
             }
@@ -369,13 +398,4 @@ fun MoveServiceDetailSuvTitle(text: String) {
 
     }
 
-}
-
-
-@Preview
-@Composable
-fun MovePreview() {
-    val navController = rememberNavController()
-    val viewModel: MoveServiceDetailViewModel = hiltViewModel()
-    MoveServiceDetailScreen_2_Input(navController = navController, viewModel = viewModel)
 }

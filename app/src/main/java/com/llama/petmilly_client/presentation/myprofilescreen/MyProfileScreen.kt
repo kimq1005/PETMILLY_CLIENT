@@ -33,8 +33,8 @@ import com.llama.petmilly_client.utils.*
 
 
 @Composable
-fun MyProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
-    val navController = rememberNavController()
+fun MyProfileScreen(navController: NavController) {
+
     val context = LocalContext.current
 
     Column(
@@ -42,6 +42,13 @@ fun MyProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
             .fillMaxSize()
             .background(color = Color.White)
     ) {
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .background(color = Color.White)
+        )
+
         TitleBar(title = "", ismenu = true, clickBack = { }) {
 
         }

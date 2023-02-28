@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -22,6 +23,7 @@ import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBa
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.*
+import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
 fun ShelterDetail_1_profile_Screen(
@@ -29,7 +31,7 @@ fun ShelterDetail_1_profile_Screen(
     viewModel: ShelterDetailViewModel,
     activity: ShelterDetailActivity
 ) {
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(color = Color.White)) {
         ShelterDetailTitleBar(title = "임보처구해요", ismenu = false, clickBack = { navController.popBackStack()}) {
             activity.finish()
         }
@@ -176,7 +178,7 @@ fun ShelterDetail_1_profile_Screen(
 
             ) {
                 if (ischeck) {
-//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                        navController.navigate(Common.SHELTERDETAIL_2_PROFILE_SCREEN)
                 } else {
 
                 }
@@ -200,12 +202,4 @@ fun ShelterDetail_1_profile_Screen(
 
 
     }
-}
-
-@Preview
-@Composable
-fun ADIADA(){
-    val navController = rememberNavController()
-    val viewModel:ShelterDetailViewModel = hiltViewModel()
-    ShelterDetail_7_Application_Period_Screen(navController,viewModel)
 }

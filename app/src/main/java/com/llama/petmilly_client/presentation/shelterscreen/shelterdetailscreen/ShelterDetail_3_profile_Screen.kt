@@ -21,6 +21,7 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.ui.theme.Grey_50_CBC4C4
 import com.llama.petmilly_client.utils.*
+import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
 fun ShelterDetail_3_profile_Screen(
@@ -220,7 +221,7 @@ fun ShelterDetail_3_profile_Screen(
 
             ) {
                 if (ischeck) {
-//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                        navController.navigate(Common.SHELTERDETAIL_4_PROFILE_SCREEN)
                 } else {
 
                 }

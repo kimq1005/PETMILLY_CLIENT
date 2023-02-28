@@ -22,6 +22,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,6 +45,7 @@ import com.llama.petmilly_client.presentation.dialog.AdoptionCompletedDialog
 import com.llama.petmilly_client.presentation.findanimalscreen.FindAnimalDetailImage
 import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
+import com.llama.petmilly_client.presentation.moveservicscreen.moveservicedetail.MoveServiceDetailActivity
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.notosans_bold
@@ -76,10 +78,12 @@ class MoveServiceActivity : ComponentActivity() {
 
 @Composable
 fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavController,activity:Activity) {
+    val context = LocalContext.current
     Box {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color.White)
 
         ) {
 
@@ -169,7 +173,23 @@ fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavCon
             }
 
         }//Column
-    }
+
+        Image(
+            painter = painterResource(id = R.drawable.img_write),
+            contentDescription = null,
+
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(bottom = 40.dp, end = 15.dp)
+                .width(50.dp)
+                .height(50.dp)
+                .clickable {
+                    val intent = Intent(context, MoveServiceDetailActivity::class.java)
+                    context.startActivity(intent)
+                },
+            contentScale = ContentScale.Crop
+        )
+    }//Box
 }
 
 @Composable

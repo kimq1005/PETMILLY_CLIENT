@@ -1,5 +1,7 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
+import android.app.Activity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -24,16 +26,18 @@ import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.CheckedCheckBox
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
 fun ShelterDetail_2_profile_Screen(
     navController: NavController,
     viewModel: ShelterDetailViewModel,
+    activity:Activity
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
 
         ShelterDetailTitleBar(title = "임보처구해요", ismenu = false, clickBack = { navController.popBackStack() }) {
-
+            activity.finish()
         }
 
         ShelterDetailSuvTitle("주인공의 프로필을\n입력해주세요.")
@@ -237,7 +241,7 @@ fun ShelterDetail_2_profile_Screen(
 
             ) {
                 if (ischeck) {
-//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                        navController.navigate(Common.SHELTERDETAIL_3_PROFILE_SCREEN)
                 } else {
 
                 }

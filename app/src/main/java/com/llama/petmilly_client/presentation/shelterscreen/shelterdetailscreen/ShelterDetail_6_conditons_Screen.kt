@@ -2,6 +2,7 @@ package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
 import android.app.Activity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -25,11 +26,12 @@ import com.llama.petmilly_client.ui.theme.Grey_50_CBC4C4
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.notosans_bold
+import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
 fun ShelterDetail_6_conditons_Screen(navController: NavController,viewModel: ShelterDetailViewModel, activity:Activity) {
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(Color.White)) {
         ShelterDetailTitleBar(
             title = "임보처구해요",
             ismenu = false,
@@ -168,7 +170,7 @@ fun ShelterDetail_6_conditons_Screen(navController: NavController,viewModel: She
 
             ) {
                 if (ischeck) {
-//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                        navController.navigate(Common.SHELTERDETAIL_7_APPLICATION_SCREEN)
                 } else {
 
                 }

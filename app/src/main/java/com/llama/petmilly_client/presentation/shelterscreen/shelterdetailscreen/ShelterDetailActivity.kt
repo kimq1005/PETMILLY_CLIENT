@@ -19,11 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.SHELTERDETAIL_SPECIES_SCREEN
 
 class ShelterDetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +35,73 @@ class ShelterDetailActivity : ComponentActivity() {
             val navController = rememberNavController()
             val viewModel: ShelterDetailViewModel = hiltViewModel()
 
-            NavHost(navController = navController, startDestination = "") {
+            NavHost(
+                navController = navController,
+                startDestination = Common.SHELTERDETAIL_SPECIES_SCREEN
+            ) {
+                composable(SHELTERDETAIL_SPECIES_SCREEN){
+                    ShelterDetail_species_Screen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@ShelterDetailActivity
+                    )
+                }
 
+                composable(Common.SHELTERDETAIL_1_PROFILE_SCREEN) {
+                    ShelterDetail_1_profile_Screen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@ShelterDetailActivity
+                    )
+                }
+
+                composable(Common.SHELTERDETAIL_2_PROFILE_SCREEN){
+                    ShelterDetail_2_profile_Screen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@ShelterDetailActivity
+                    )
+                }
+
+                composable(Common.SHELTERDETAIL_3_PROFILE_SCREEN){
+                    ShelterDetail_3_profile_Screen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@ShelterDetailActivity
+                    )
+                }
+
+                composable(Common.SHELTERDETAIL_4_PROFILE_SCREEN){
+                    ShelterDetail_4_profile_Screen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@ShelterDetailActivity
+                    )
+                }
+
+                composable(Common.SHELTERDETAIL_5_CONDITION_SCREEN){
+                    ShelterDetail_5_conditons_Screen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@ShelterDetailActivity
+                    )
+                }
+
+                composable(Common.SHELTERDETAIL_6_CONDITION_SCREEN){
+                    ShelterDetail_6_conditons_Screen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@ShelterDetailActivity
+                    )
+                }
+
+                composable(Common.SHELTERDETAIL_7_APPLICATION_SCREEN){
+                    ShelterDetail_7_Application_Period_Screen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@ShelterDetailActivity
+                    )
+                }
             }
 
         }

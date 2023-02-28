@@ -1,7 +1,9 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -31,6 +33,7 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryShelterItems
 import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategoryItems
+import com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen.ShelterDetailActivity
 import com.llama.petmilly_client.ui.theme.Purple700
 import llama.test.jetpack_dagger_plz.utils.Common.ANIMALINFO_DETAIL
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
@@ -43,60 +46,79 @@ fun SafeShelterListScreen(
     Scaffold {
 
         val context = LocalContext.current
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-
-            LazyRow(
+        Box(modifier = Modifier.fillMaxSize()){
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
             ) {
 
-                viewModel.setcategory()
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
 
-                items(viewModel.categorytest) { categorylist ->
+                    viewModel.setcategory()
 
-                    Row {
-                        if(viewModel.categorytest.indexOf(categorylist)==0){
-                            Spacer(modifier = Modifier.padding(start = 15.dp))
-                           CategoryShelterItems(categoryTest = categorylist) {
+                    items(viewModel.categorytest) { categorylist ->
 
-                           }
+                        Row {
+                            if(viewModel.categorytest.indexOf(categorylist)==0){
+                                Spacer(modifier = Modifier.padding(start = 15.dp))
+                                CategoryShelterItems(categoryTest = categorylist) {
+
+                                }
 
 
-                        }else{
-                            CategoryShelterItems(categoryTest = categorylist) {
+                            }else{
+                                CategoryShelterItems(categoryTest = categorylist) {
 
+                                }
                             }
+
+                            Spacer(modifier = Modifier.width(6.dp))
                         }
 
-                        Spacer(modifier = Modifier.width(6.dp))
-                    }
 
+                    }
 
                 }
 
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
 //
-            LazyColumn(modifier = Modifier.padding(start = 7.dp, end = 7.dp)
-            ) {
-                viewModel.setcategory()
+                LazyColumn(modifier = Modifier.padding(start = 7.dp, end = 7.dp)
+                ) {
+                    viewModel.setcategory()
 
-                items(viewModel.sheltercategory.value) { items ->
-                    Column {
-                        ShelterCategoryItems(title = items,"수컷 / 1kg / 믹스 / 2개월 추정/" + " 1차접종완료 / 중성화O",
-                            onclcik = {
-                                navController.navigate(ANIMALINFO_DETAIL)
-                            })
-                        Spacer(modifier = Modifier.height(6.dp))
+                    items(viewModel.sheltercategory.value) { items ->
+                        Column {
+                            ShelterCategoryItems(title = items,"수컷 / 1kg / 믹스 / 2개월 추정/" ,"1차접종완료 / 중성화O",
+                                onclcik = {
+                                    navController.navigate(ANIMALINFO_DETAIL)
+                                })
+                            Spacer(modifier = Modifier.height(6.dp))
+                        }
                     }
                 }
-            }
-        }
+            }//column
+
+            Image(
+                painter = painterResource(id = R.drawable.img_write),
+                contentDescription = null,
+
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 40.dp, end = 15.dp)
+                    .width(55.dp)
+                    .height(55.dp)
+                    .clickable {
+                        val intent = Intent(context, ShelterDetailActivity::class.java)
+                        context.startActivity(intent)
+                    }
+            )
+
+        }//Box
+
     }
 }
 

@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,14 +27,14 @@ import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 
 @Composable
-fun ShelterDetail_7_Application_Period_Screen(navController: NavController, viewModel: ShelterDetailViewModel) {
+fun ShelterDetail_7_Application_Period_Screen(navController: NavController, viewModel: ShelterDetailViewModel,activity:Activity) {
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
         ShelterDetailTitleBar(
             title = "임보처구해요",
             ismenu = false,
             clickBack = { navController.popBackStack() }) {
-
+                activity.finish()
         }
 
         ShelterDetailSuvTitle("신청서 접수기간\n희망 시 입력해주세요.")
@@ -251,7 +252,8 @@ fun ShelterDetail_7_Application_Period_Screen(navController: NavController, view
 
             ) {
                 if (ischeck) {
-//                        navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_First)
+                        activity.finish()
+                    //임보처 구해요 글쓰기 완료
                 } else {
 
                 }

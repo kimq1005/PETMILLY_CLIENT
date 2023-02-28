@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -39,6 +41,9 @@ import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
 import com.llama.petmilly_client.presentation.signupscreen.SignUpActivity
 import com.llama.petmilly_client.ui.theme.*
+import com.llama.petmilly_client.utils.SpacerHeight
+import com.llama.petmilly_client.utils.notosans_bold
+import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
@@ -51,7 +56,7 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel = hiltVie
             .fillMaxSize()
             .background(color = MainBackgroundColor)
             .padding(top = 200.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = stringResource(id = R.string.pet_milly_title),
@@ -60,27 +65,34 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel = hiltVie
             color = Color.Black
         )
 
+        SpacerHeight(dp = 18.dp)
+
         Image(
             painter = painterResource(id = R.drawable.mainicon_png),
             contentDescription = null,
             modifier = Modifier
                 .height(150.dp)
                 .width(150.dp)
-                .padding(top = 18.dp)
         )
 
+        SpacerHeight(dp = 18.dp)
+
         Text(
-            modifier = Modifier
-                .padding(top = 18.dp),
+            modifier = Modifier,
             text = stringResource(id = R.string.title_Description),
             fontSize = 13.sp,
+            fontFamily = notosans_regular,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             color = Color.Black,
             textAlign = TextAlign.Center
         )
 
         //
         Spacer(modifier = Modifier.weight(1f))
-
 
 
         Row(
@@ -98,8 +110,14 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel = hiltVie
                 textAlign = TextAlign.Center,
                 color = Color.Black,
                 fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-            )
+                fontFamily = notosans_bold,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+
+                )
 
         }
 
@@ -227,13 +245,14 @@ fun kakaoLogin(context: Context) {
                 UserApiClient.instance.me { user, error ->
                     if (error != null) {
                         Log.d(TAG, "사용자 정보 요청 실패", error)
-                    }
-                    else if (user != null) {
-                        Log.d(TAG, "사용자 정보 요청 성공" +
-                                "\n회원번호: ${user.id}" +
-                                "\n이메일: ${user.kakaoAccount?.email}" +
-                                "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
-                                "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+                    } else if (user != null) {
+                        Log.d(
+                            TAG, "사용자 정보 요청 성공" +
+                                    "\n회원번호: ${user.id}" +
+                                    "\n이메일: ${user.kakaoAccount?.email}" +
+                                    "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
+                                    "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
+                        )
                     }
                 }
 

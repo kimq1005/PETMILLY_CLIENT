@@ -70,6 +70,7 @@ fun SecessionDialog(
 
                 Spacer(modifier = Modifier.padding(top = 30.dp))
 
+
                 Text(
                     text = "정말 탈퇴하시겠습까?",
                     modifier = Modifier
