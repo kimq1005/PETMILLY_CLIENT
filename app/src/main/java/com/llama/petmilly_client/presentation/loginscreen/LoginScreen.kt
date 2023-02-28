@@ -31,11 +31,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
@@ -129,12 +131,14 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel = hiltVie
                     context.startActivity(intent)
                 },
                 onConfirm = {
-                    viewModel.onDismissDialog()
+//                    viewModel.onDismissDialog()
 //                    val intent = Intent(context, SignUpActivity::class.java)
 //                    context.startActivity(intent)
-                    val intent = Intent(context, HomeActivity::class.java)
-                    context.startActivity(intent)
-//                    kakaoLogin(context)
+//                    val intent = Intent(context, HomeActivity::class.java)
+//                    context.startActivity(intent)
+                    kakaoLogin(context,viewModel)
+
+
                 }
             )
         }
@@ -217,15 +221,23 @@ fun CustomDialog(
     }
 }
 
+fun kakaoLogin(context: Context,viewModel: MainViewModel) {
+//    Log.d(TAG, "kakaoLogin: siba")
+//    viewModel.postkakaotoken()
 
-fun kakaoLogin(context: Context) {
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Log.d(TAG, "로그인 실패 -> $error ")
             Toast.makeText(context, "카카오톡 로그인 실패", Toast.LENGTH_SHORT).show()
         } else if (token != null) {
             Log.d(TAG, "로그인 성공: ${token.accessToken}")
-            Toast.makeText(context, "카카오톡 로그인 성공", Toast.LENGTH_SHORT).show()
+            val accesstoken = token.accessToken
+
+            viewModel.postkakaotoken()
+
+//            val intent = Intent(context, HomeActivity::class.java)
+//            context.startActivity(intent)
+
         }
     }
 
@@ -241,18 +253,19 @@ fun kakaoLogin(context: Context) {
                 UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
 
             } else if (token != null) {
-                Log.d(TAG, "카카오 로그인 성공! 두번째 : ${token.accessToken} ")
+
+                val mainApplication = MainApplication
+                MainApplication.kakaoaccesesstoken = token.accessToken
+//                Log.d(TAG, "카카오 로그인 성공! 두번째 : ${token.accessToken} ")
+                viewModel.postkakaotoken()
+//                val intent = Intent(context, HomeActivity::class.java)
+//                context.startActivity(intent)
+
                 UserApiClient.instance.me { user, error ->
                     if (error != null) {
                         Log.d(TAG, "사용자 정보 요청 실패", error)
                     } else if (user != null) {
-                        Log.d(
-                            TAG, "사용자 정보 요청 성공" +
-                                    "\n회원번호: ${user.id}" +
-                                    "\n이메일: ${user.kakaoAccount?.email}" +
-                                    "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
-                                    "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
-                        )
+
                     }
                 }
 

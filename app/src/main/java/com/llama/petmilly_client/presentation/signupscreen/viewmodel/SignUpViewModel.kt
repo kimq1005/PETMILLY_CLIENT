@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.signupscreen.viewmodel
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -52,25 +53,8 @@ class SignUpViewModel  @Inject constructor(private val petMillyRepo: PetMillyRep
     val famillylist = mutableStateListOf<String>(
 
     )
-    fun postkakaotoken(){
-        viewModelScope.launch(Dispatchers.IO) {
+    @SuppressLint("SuspiciousIndentation")
 
-        val kaKaoResponse = KaKaoResponse("asasd")
-            petMillyRepo.postkakaotoken(kaKaoResponse).let {
-                when(it.status){
-                    RemoteResult.Status.SUCCESS->{
-                        it.data.let {data->
-                            Log.d(TAG, "postkakaotoken: $data")
-                        }
-                    }
-
-                    else->{
-                        Log.d(TAG, "postkakaotoken: ${it.status}->${it.message}")
-                    }
-                }
-            }
-        }
-    }
 
     fun checkCallYourAnimal(){
         callyouranimalcheck.value =  animalkind.value!="" && animalage.value !="" && animalgender.value !=""

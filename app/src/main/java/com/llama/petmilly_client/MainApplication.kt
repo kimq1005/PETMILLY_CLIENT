@@ -13,9 +13,12 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 @HiltAndroidApp
 class MainApplication : Application() {
 
+
     companion object {
-        var instance: MainApplication? = null
+        var kakaoaccesesstoken = ""
+        lateinit var instance: MainApplication
     }
+
 
     override fun onCreate() {
         super.onCreate()
