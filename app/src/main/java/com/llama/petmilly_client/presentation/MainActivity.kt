@@ -47,8 +47,9 @@ class MainActivity : ComponentActivity() {
 //                window.navigationBarColor = Color.Transparent.toArgb()
             }
 
+            val viewModel:MainViewModel = hiltViewModel()
             val navController = rememberNavController()
-            LoginScreen(navController = navController)
+            LoginScreen(navController = navController, viewModel = viewModel)
         }
 
 

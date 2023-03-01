@@ -20,6 +20,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
@@ -31,6 +32,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.kakao.sdk.auth.model.OAuthToken
@@ -41,18 +45,20 @@ import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
+import com.llama.petmilly_client.presentation.homescreen.HomeViewModel
 import com.llama.petmilly_client.presentation.signupscreen.SignUpActivity
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.SpacerHeight
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
-fun LoginScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()) {
+fun LoginScreen(navController: NavController, viewModel: MainViewModel) {
 
     val context = LocalContext.current
-
+    val lifecycleOwner = LocalLifecycleOwner.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -143,6 +149,9 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel = hiltVie
             )
         }
     }
+
+    setObserve(viewModel,context,lifecycleOwner)
+
 }
 
 
@@ -225,15 +234,14 @@ fun kakaoLogin(context: Context,viewModel: MainViewModel) {
 //    Log.d(TAG, "kakaoLogin: siba")
 //    viewModel.postkakaotoken()
 
+
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
             Log.d(TAG, "로그인 실패 -> $error ")
             Toast.makeText(context, "카카오톡 로그인 실패", Toast.LENGTH_SHORT).show()
         } else if (token != null) {
             Log.d(TAG, "로그인 성공: ${token.accessToken}")
-            val accesstoken = token.accessToken
-
-            viewModel.postkakaotoken()
+//            viewModel.postkakaotoken()
 
 //            val intent = Intent(context, HomeActivity::class.java)
 //            context.startActivity(intent)
@@ -253,13 +261,10 @@ fun kakaoLogin(context: Context,viewModel: MainViewModel) {
                 UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
 
             } else if (token != null) {
-
-                val mainApplication = MainApplication
                 MainApplication.kakaoaccesesstoken = token.accessToken
-//                Log.d(TAG, "카카오 로그인 성공! 두번째 : ${token.accessToken} ")
+                Log.d(TAG, "카카오 로그인 성공! 두번째 : ${MainApplication.kakaoaccesesstoken} ")
                 viewModel.postkakaotoken()
-//                val intent = Intent(context, HomeActivity::class.java)
-//                context.startActivity(intent)
+
 
                 UserApiClient.instance.me { user, error ->
                     if (error != null) {
@@ -276,4 +281,11 @@ fun kakaoLogin(context: Context,viewModel: MainViewModel) {
 
         }
     }
+}
+
+private fun setObserve(viewModel: MainViewModel, context: Context, lifecycleOwner: LifecycleOwner) {
+    viewModel.setHomeIntent.observe(lifecycleOwner, Observer {
+        val intent = Intent(context, HomeActivity::class.java)
+        context.startActivity(intent)
+    })
 }

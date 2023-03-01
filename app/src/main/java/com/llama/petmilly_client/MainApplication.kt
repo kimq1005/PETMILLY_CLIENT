@@ -2,6 +2,8 @@ package com.llama.petmilly_client
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.kakao.auth.KakaoAdapter
 import com.kakao.auth.KakaoSDK
 import com.kakao.sdk.common.KakaoSdk
@@ -15,8 +17,13 @@ class MainApplication : Application() {
 
 
     companion object {
-        var kakaoaccesesstoken = ""
         lateinit var instance: MainApplication
+
+        var kakaoaccesesstoken = ""
+
+        var accessToken= ""
+
+        var refreshToken = ""
     }
 
 
