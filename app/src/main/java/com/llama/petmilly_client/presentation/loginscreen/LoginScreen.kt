@@ -140,9 +140,9 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel) {
 //                    viewModel.onDismissDialog()
 //                    val intent = Intent(context, SignUpActivity::class.java)
 //                    context.startActivity(intent)
-//                    val intent = Intent(context, HomeActivity::class.java)
-//                    context.startActivity(intent)
-                    kakaoLogin(context,viewModel)
+                    val intent = Intent(context, HomeActivity::class.java)
+                    context.startActivity(intent)
+//                    kakaoLogin(context,viewModel)
 
 
                 }

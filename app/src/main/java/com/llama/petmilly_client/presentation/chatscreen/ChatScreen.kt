@@ -117,9 +117,11 @@ fun FavoriteChatScreen() {
         if (ismessage) {
 
         } else {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(color = Background_Noting)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Background_Noting)
+            ) {
 //                Text(
 //                    text = "십알",
 //                    modifier = Modifier.align(Alignment.Center),
@@ -144,50 +146,56 @@ fun ChatTabScreen(
 
     val firstcheck = true
     if (firstcheck) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)) {
+            Column() {
+                LazyRow() {
+                    val mylist = listOf(
+                        "임보처구해요", "이동봉사찾아요", "입양공고"
+                    )
+                    items(mylist) { item ->
 
-            LazyRow() {
-                val mylist = listOf(
-                    "임보처구해요", "이동봉사찾아요", "입양공고"
-                )
-                items(mylist) { item ->
+                        BorderCategoryItems(title = item) {
 
-                    BorderCategoryItems(title = item) {
+                        }
+                        Spacer(modifier = Modifier.width(9.dp))
 
                     }
-                    Spacer(modifier = Modifier.width(9.dp))
-
                 }
-            }
 
-            Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
 //        ShelterCategoryItems()
-            LazyColumn() {
-                val item = listOf(
-                    ChatModel(
-                        "[감자]김승현", "안녕하세요 이 친구 건강은\n" +
-                                "어떤가요? 문의문의나문희...", "오루 10시30분", "1"
-                    ),
-                    ChatModel(
-                        "[금자]와우맨", "문의내용인데용우히히헹\n" +
-                                "우히헤에헤에헤헹엫ㅇ헹...", "10시30분", "1"
-                    ),
-                )
+                LazyColumn(
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    val item = listOf(
+                        ChatModel(
+                            "[감자]김승현", "안녕하세요 이 친구 건강은\n" +
+                                    "어떤가요? 문의문의나문희...", "오루 10시30분", "1"
+                        ),
+                        ChatModel(
+                            "[금자]와우맨", "문의내용인데용우히히헹\n" +
+                                    "우히헤에헤에헤헹엫ㅇ헹...", "10시30분", "1"
+                        ),
+                    )
 
-                items(item) { chatmodel ->
-                    ChatItem(chatModel = chatmodel, onclick =
-                    {
-                        navController.navigate(CHATTINGROOMSCREEN + "/${chatmodel.name}")
+                    items(item) { chatmodel ->
+                        ChatItem(chatModel = chatmodel, onclick =
+                        {
+                            navController.navigate(CHATTINGROOMSCREEN + "/${chatmodel.name}")
 //                    navController.navigate(CHATTINGROOMSCREEN)
-                    })
+                        })
 
-                    Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(5.dp))
 
+
+                    }
 
                 }
-
             }
+
 
         }
     } else {
