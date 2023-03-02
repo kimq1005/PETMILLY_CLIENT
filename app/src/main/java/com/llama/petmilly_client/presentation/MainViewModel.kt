@@ -27,47 +27,57 @@ class MainViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo) 
     private val _setHomeIntent = MutableLiveData<Event<Unit>>()
     val setHomeIntent: LiveData<Event<Unit>> = _setHomeIntent
 
+    private val _setsignupIntent = MutableLiveData<Event<Unit>>()
+    val setsignupIntent: LiveData<Event<Unit>> = _setsignupIntent
+
     private val _yeah = mutableStateOf(Event(Unit))
     val yeah: State<Event<Unit>> = _yeah
 
 
     fun postkakaotoken() {
-        if (MainApplication.kakaoaccesesstoken != "") {
-            viewModelScope.launch(Dispatchers.IO) {
-                val kaKaoResponse = KaKaoResponse(MainApplication.kakaoaccesesstoken)
-                petMillyRepo.postkakaotoken(kaKaoResponse).let {
-                    when (it.status) {
-                        RemoteResult.Status.SUCCESS -> {
-                            it.data?.let { data ->
-                                Log.d(TAG, "postkakaotoken: ${data.data.tokenList.accessToken}")
-                                val accessToken = data.data.tokenList.accessToken
-                                val refreshToken = data.data.tokenList.refreshToken
 
-                                MainApplication.accessToken = accessToken ?: ""
-                                MainApplication.refreshToken = refreshToken ?: ""
+        viewModelScope.launch(Dispatchers.IO) {
+            val kaKaoResponse = KaKaoResponse(MainApplication.kakaoaccesesstoken)
+            petMillyRepo.postkakaotoken(kaKaoResponse).let {
+                when (it.status) {
+                    RemoteResult.Status.SUCCESS -> {
+                        it.data?.let { data ->
+                            Log.d(TAG, "postkakaotoken: $data")
+                            Log.d(TAG, "postkakaotoken: ${data.data.tokenList.accessToken}")
+                            Log.d(TAG, "postkakaotoken: ${data.data.isExistAdditionalInfo}")
+                            val accessToken = data.data.tokenList.accessToken
+                            val refreshToken = data.data.tokenList.refreshToken
 
+                            MainApplication.accessToken = accessToken ?: ""
+                            MainApplication.refreshToken = refreshToken ?: ""
+
+                            if (!data.data.isExistAdditionalInfo) {
+                                _setsignupIntent.postValue(Event(Unit))
+                            } else {
                                 if (MainApplication.accessToken != "" && MainApplication.refreshToken != "") {
                                     _setHomeIntent.postValue(Event(Unit))
                                 }
-
                             }
-                        }
-                        RemoteResult.Status.REFRESH -> {
-                            Log.d(TAG, "postkakaotoken Refresh: ${it.status}->${it.message}")
-                        }
 
-                        RemoteResult.Status.ERROR -> {
-                            Log.d(TAG, "postkakaotoken ERROR: ${it.status}->${it.message}")
 
                         }
+                    }
+                    RemoteResult.Status.REFRESH -> {
+                        Log.d(TAG, "postkakaotoken Refresh: ${it.status}->${it.message}")
+                    }
 
-                        else -> {
-                            Log.d(TAG, "postkakaotoken : ${it.status}->${it.message}")
-                        }
+                    RemoteResult.Status.ERROR -> {
+                        Log.d(TAG, "postkakaotoken ERROR: ${it.status}->${it.message}")
+
+                    }
+
+                    else -> {
+                        Log.d(TAG, "postkakaotoken : ${it.status}->${it.message}")
                     }
                 }
             }
         }
+
 
     }
 

@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.login
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -14,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -24,12 +27,14 @@ import androidx.navigation.NavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
+import com.llama.petmilly_client.ui.theme.Black_Half_Transfer
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.ButtonShapeScreen
 import com.llama.petmilly_client.utils.notosans_bold
+import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_1_BIRTHDAY
 
 @Composable
@@ -53,6 +58,7 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .padding(20.dp)
     ) {
 
@@ -66,7 +72,12 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
             Text(
                 text = stringResource(id = R.string.pet_milly_title),
                 fontSize = 35.sp,
-                fontWeight = FontWeight.Bold,
+                fontFamily = notosans_bold,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
                 color = Color.Black
             )
 
@@ -74,8 +85,14 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
 
             Text(
                 text = "petmily",
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                fontFamily = notosans_bold,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                color = Black_Half_Transfer,
                 modifier = Modifier
                     .align(Alignment.Bottom)
                     .padding(bottom = 6.dp)
@@ -171,8 +188,7 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
             fontSize = 15,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(55.dp)
-                ,
+                .height(55.dp),
             backgroundcolor = if (viewModel.name.value == "" && viewModel.nickname.value == "") Button_NoneClicked else Button_Clicked
         ) {
             if (viewModel.name.value != "" && viewModel.nickname.value != "") {

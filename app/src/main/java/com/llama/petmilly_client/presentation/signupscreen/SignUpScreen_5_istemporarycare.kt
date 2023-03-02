@@ -57,7 +57,7 @@ fun SignUpScreen_5_istemporarycare(navController: NavController, viewModel: Sign
                 .padding(start = 30.dp, end = 30.dp, top = 50.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.istemporarycare.value) {
+            if (viewModel.istemporarycare.value=="네, 경험 있어요.") {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -65,18 +65,18 @@ fun SignUpScreen_5_istemporarycare(navController: NavController, viewModel: Sign
 
             ButtonShapeScreen(
                 title = "네, 경험 있어요.",
-                textcolor = if (viewModel.istemporarycare.value) Color.White else Color.Black,
+                textcolor = if (viewModel.istemporarycare.value=="네, 경험 있어요.") Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.istemporarycare.value) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.istemporarycare.value=="네, 경험 있어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =if (viewModel.istemporarycare.value) notosans_bold else notosans_regular
+                fontFamily =if (viewModel.istemporarycare.value=="네, 경험 있어요.") notosans_bold else notosans_regular
             ) {
-                viewModel.istemporarycare.value = true
+                viewModel.istemporarycare.value = "네, 경험 있어요."
             }
 
         }//Row
@@ -88,7 +88,7 @@ fun SignUpScreen_5_istemporarycare(navController: NavController, viewModel: Sign
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (!viewModel.istemporarycare.value) {
+            if (viewModel.istemporarycare.value=="아니요, 안해봤어요.") {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -96,18 +96,18 @@ fun SignUpScreen_5_istemporarycare(navController: NavController, viewModel: Sign
 
             ButtonShapeScreen(
                 title = "아니요, 안해봤어요.",
-                textcolor = if (!viewModel.istemporarycare.value) Color.White else Color.Black,
+                textcolor = if (viewModel.istemporarycare.value=="아니요, 안해봤어요.") Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (!viewModel.istemporarycare.value) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.istemporarycare.value=="아니요, 안해봤어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =  if (!viewModel.istemporarycare.value)notosans_bold else notosans_regular
+                fontFamily =  if (viewModel.istemporarycare.value=="아니요, 안해봤어요.")notosans_bold else notosans_regular
             ) {
-                viewModel.istemporarycare.value = false
+                viewModel.istemporarycare.value ="아니요, 안해봤어요."
             }
 
         }//Row

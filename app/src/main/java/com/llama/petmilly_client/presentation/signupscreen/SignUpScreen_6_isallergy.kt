@@ -53,7 +53,7 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
                 .padding(start = 30.dp, end = 30.dp, top = 50.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.isallery.value == 0) {
+            if (viewModel.isallery.value == "네, 알러지 있어요.") {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -61,18 +61,18 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
 
             ButtonShapeScreen(
                 title = "네, 알러지 있어요.",
-                textcolor = if (viewModel.isallery.value == 0) Color.White else Color.Black,
+                textcolor = if (viewModel.isallery.value == "네, 알러지 있어요.") Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.isallery.value == 0) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.isallery.value == "네, 알러지 있어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =if (viewModel.isallery.value == 0) notosans_bold else notosans_regular
+                fontFamily =if (viewModel.isallery.value == "네, 알러지 있어요.") notosans_bold else notosans_regular
             ) {
-                viewModel.isallery.value = 0
+                viewModel.isallery.value = "네, 알러지 있어요."
             }
 
         }//Row
@@ -84,7 +84,7 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.isallery.value == 1) {
+            if (viewModel.isallery.value == "아니요, 없어요.") {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -92,18 +92,18 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
 
             ButtonShapeScreen(
                 title = "아니요, 없어요.",
-                textcolor = if (viewModel.isallery.value == 1) Color.White else Color.Black,
+                textcolor = if (viewModel.isallery.value =="아니요, 없어요.") Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.isallery.value == 1) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.isallery.value == "아니요, 없어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.isallery.value == 1)  notosans_bold else notosans_regular
+                fontFamily = if (viewModel.isallery.value =="아니요, 없어요.")  notosans_bold else notosans_regular
             ) {
-                viewModel.isallery.value = 1
+                viewModel.isallery.value = "아니요, 없어요."
             }
 
         }//Row
@@ -115,26 +115,26 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.isallery.value == 2) {
+            if (viewModel.isallery.value == "모르겠어요.") {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
             }
 
             ButtonShapeScreen(
-                title = "아니요, 없어요.",
-                textcolor = if (viewModel.isallery.value == 2) Color.White else Color.Black,
+                title = "모르겠어요.",
+                textcolor = if (viewModel.isallery.value == "모르겠어요.") Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.isallery.value == 2) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.isallery.value == "모르겠어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.isallery.value == 2) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.isallery.value == "모르겠어요.") notosans_bold else notosans_regular
             ) {
-                viewModel.isallery.value = 2
+                viewModel.isallery.value = "모르겠어요."
             }
 
         }//Row

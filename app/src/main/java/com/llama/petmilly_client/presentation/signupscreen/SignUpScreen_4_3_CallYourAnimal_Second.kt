@@ -232,7 +232,7 @@ fun SignUpScreen_4_3_CallYourAnimal_Second(navController: NavController, viewMod
             backgroundcolor = Button_Clicked
         ) {
 
-            if(viewModel.numberofanimal.value==2){
+            if(viewModel.numberofanimal.value=="2마리와 함께 살고 있어요."){
                 navController.navigate(Common.SIGNUPSCREEN_4_3_CALLYOUTANIMAL_Third)
             }else{
                 navController.navigate(Common.SIGNUPSCREEN_5_ISTEMPORARYCARE)

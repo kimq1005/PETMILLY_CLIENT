@@ -62,7 +62,9 @@ fun SignUpScreen_completed(navController: NavController, viewModel: SignUpViewMo
                 .align(Alignment.BottomCenter),
             backgroundcolor = Button_Clicked
         ) {
+            viewModel.postadditionalinfo()
             Log.d(TAG, "SignUpScreen_completed: ${viewModel.housekind.value}")
+
         }
 
     }

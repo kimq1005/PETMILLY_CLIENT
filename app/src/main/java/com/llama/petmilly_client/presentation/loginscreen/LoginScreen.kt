@@ -232,7 +232,7 @@ fun CustomDialog(
 
 fun kakaoLogin(context: Context,viewModel: MainViewModel) {
 //    Log.d(TAG, "kakaoLogin: siba")
-//    viewModel.postkakaotoken()
+    viewModel.postkakaotoken()
 
 
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -286,6 +286,11 @@ fun kakaoLogin(context: Context,viewModel: MainViewModel) {
 private fun setObserve(viewModel: MainViewModel, context: Context, lifecycleOwner: LifecycleOwner) {
     viewModel.setHomeIntent.observe(lifecycleOwner, Observer {
         val intent = Intent(context, HomeActivity::class.java)
+        context.startActivity(intent)
+    })
+
+    viewModel.setsignupIntent.observe(lifecycleOwner, Observer {
+        val intent = Intent(context, SignUpActivity::class.java)
         context.startActivity(intent)
     })
 }

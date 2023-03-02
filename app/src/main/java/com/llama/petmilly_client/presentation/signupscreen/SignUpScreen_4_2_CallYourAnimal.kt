@@ -70,7 +70,7 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
                 .padding(start = 30.dp, end = 30.dp, top = 50.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.numberofanimal.value == 1) {
+            if (viewModel.numberofanimal.value == "1마리와 함께 살고 있어요.") {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -78,18 +78,18 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
 
             ButtonShapeScreen(
                 title = "1마리와 함께 살고 있어요.",
-                textcolor = if (viewModel.numberofanimal.value == 1) Color.White else Color.Black,
+                textcolor = if (viewModel.numberofanimal.value == "1마리와 함께 살고 있어요.") Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.numberofanimal.value == 1) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.numberofanimal.value == "1마리와 함께 살고 있어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.numberofanimal.value == 1) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.numberofanimal.value == "1마리와 함께 살고 있어요.") notosans_bold else notosans_regular
             ) {
-                viewModel.numberofanimal.value = 1
+                viewModel.numberofanimal.value = "1마리와 함께 살고 있어요."
             }
 
         }//Row
@@ -100,7 +100,7 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.numberofanimal.value == 2) {
+            if (viewModel.numberofanimal.value == "2마리와 함께 살고 있어요.") {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -108,18 +108,18 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
 
             ButtonShapeScreen(
                 title = "2마리와 함께 살고 있어요.",
-                textcolor = if (viewModel.numberofanimal.value == 2) Color.White else Color.Black,
+                textcolor = if (viewModel.numberofanimal.value == "2마리와 함께 살고 있어요.") Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.numberofanimal.value == 2) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.numberofanimal.value == "2마리와 함께 살고 있어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.numberofanimal.value == 2) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.numberofanimal.value == "2마리와 함께 살고 있어요.") notosans_bold else notosans_regular
             ) {
-                viewModel.numberofanimal.value = 2
+                viewModel.numberofanimal.value = "2마리와 함께 살고 있어요."
             }
 
         }//Row
@@ -131,7 +131,7 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.numberofanimal.value == 3) {
+            if (viewModel.numberofanimal.value == "3마리와 함께 살고 있어요.") {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -139,18 +139,18 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
 
             ButtonShapeScreen(
                 title = "3마리와 함께 살고 있어요.",
-                textcolor = if (viewModel.numberofanimal.value == 3) Color.White else Color.Black,
+                textcolor = if (viewModel.numberofanimal.value == "3마리와 함께 살고 있어요.") Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.numberofanimal.value == 3) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.numberofanimal.value == "3마리와 함께 살고 있어요.") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.numberofanimal.value == 3) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.numberofanimal.value == "3마리와 함께 살고 있어요.") notosans_bold else notosans_regular
             ) {
-                viewModel.numberofanimal.value = 3
+                viewModel.numberofanimal.value = "3마리와 함께 살고 있어요."
             }
         }//Row
 
