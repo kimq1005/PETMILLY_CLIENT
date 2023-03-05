@@ -46,7 +46,7 @@ fun SafeShelterListScreen(
     Scaffold {
 
         val context = LocalContext.current
-        Box(modifier = Modifier.fillMaxSize()){
+        Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -62,14 +62,14 @@ fun SafeShelterListScreen(
                     items(viewModel.categorytest) { categorylist ->
 
                         Row {
-                            if(viewModel.categorytest.indexOf(categorylist)==0){
+                            if (viewModel.categorytest.indexOf(categorylist) == 0) {
                                 Spacer(modifier = Modifier.padding(start = 15.dp))
                                 CategoryShelterItems(categoryTest = categorylist) {
 
                                 }
 
 
-                            }else{
+                            } else {
                                 CategoryShelterItems(categoryTest = categorylist) {
 
                                 }
@@ -86,13 +86,18 @@ fun SafeShelterListScreen(
                 Spacer(modifier = Modifier.height(10.dp))
 
 //
-                LazyColumn(modifier = Modifier.padding(start = 7.dp, end = 7.dp)
+                LazyColumn(
+                    modifier = Modifier.padding(start = 7.dp, end = 7.dp)
                 ) {
                     viewModel.setcategory()
 
                     items(viewModel.sheltercategory.value) { items ->
                         Column {
-                            ShelterCategoryItems(title = items,"수컷 / 1kg / 믹스 / 2개월 추정/" ,"1차접종완료 / 중성화O",
+                            ShelterCategoryItems(title = items,
+                                "수컷 / 1kg / 믹스 / 2개월 추정/",
+                                "1차접종완료 / 중성화O",
+                                true,
+                                false,
                                 onclcik = {
                                     navController.navigate(ANIMALINFO_DETAIL)
                                 })

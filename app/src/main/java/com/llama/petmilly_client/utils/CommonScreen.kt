@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -333,6 +334,18 @@ fun SpacerWidth(dp:Dp){
 @Composable
 fun SpacerHeight(dp:Dp){
     Spacer(modifier = Modifier.height(dp))
+}
+
+@Composable
+fun PicktureItems(image :Int){
+    Image(
+        painter = rememberImagePainter(data = image),
+        contentDescription = null,
+        modifier = Modifier
+            .height(70.dp)
+            .width(70.dp),
+        contentScale = ContentScale.Crop
+    )
 }
 
 

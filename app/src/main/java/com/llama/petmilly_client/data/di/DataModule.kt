@@ -19,7 +19,7 @@ object DataModule {
 
 //    val BASE_URL = "http://localhost:3000/"
 //    val BASE_URL = "http://10.0.0.2:3000/"
-    val BASE_URL = "http://192.168.0.33:3000/"
+    val BASE_URL = "http://172.30.1.98:3000/"
 
 
     //10.0.2.2:8080

@@ -6,6 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme.typography
@@ -18,12 +23,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.GridCells
+
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,16 +43,15 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.certificationscreen.CertificationActivity
 import com.llama.petmilly_client.presentation.dialog.AdoptionApplicationDialog
 import com.llama.petmilly_client.presentation.dialog.AdoptionCompletedDialog
+import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
 import com.llama.petmilly_client.presentation.loginscreen.CustomDialog
 import com.llama.petmilly_client.ui.theme.*
-import com.llama.petmilly_client.utils.SpacerHeight
-import com.llama.petmilly_client.utils.SpacerWidth
-import com.llama.petmilly_client.utils.notosans_bold
-import com.llama.petmilly_client.utils.notosans_regular
+import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
+@ExperimentalFoundationApi
 fun AnimalInfoDetailScreen(
     navController: NavController,
     viewModel: ShelterViewModel = viewModel(),
@@ -572,7 +580,7 @@ fun AnimalInfoDetailScreen(
             Text(
                 text = "사진첩", modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 30.dp, start = 10.dp),
+                    .padding(top = 30.dp, start = 21.dp),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
@@ -581,9 +589,59 @@ fun AnimalInfoDetailScreen(
             Divider(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 5.dp, bottom = 10.dp, start = 20.dp, end = 20.dp),
+                    .padding(top = 5.dp, bottom = 7.dp, start = 20.dp, end = 20.dp),
                 color = Color.Black
             )
+
+            val imageTestData = listOf(
+                ImageTestData(R.drawable.img_test_puppy),
+                ImageTestData(R.drawable.img_test_puppy),
+                ImageTestData(R.drawable.img_test_puppy),
+                ImageTestData(R.drawable.img_test_puppy),
+                ImageTestData(R.drawable.img_test_puppy),
+                ImageTestData(R.drawable.img_test_puppy)
+            )
+
+            LazyVerticalGrid(
+                cells = GridCells.Fixed(3),
+                content = {
+                    items(6) { index ->
+                        Box(
+                            modifier = Modifier
+                                .aspectRatio(1f)
+                                .background(Color.Gray)
+                        ) {
+                            Text(
+                                text = "Item $index",
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                    }
+                }
+            )
+
+
+
+//            LazyColumn(modifier = Modifier
+//                .height(160.dp)
+//                .padding(horizontal = 21.dp)) {
+//                items(imageTestData.chunked(4)) { items ->
+//                    Row(
+//                        Modifier.fillMaxWidth(),
+//                        horizontalArrangement = Arrangement.SpaceAround,
+//
+//                    ) {
+//                        items.forEach { item ->
+//                            PicktureItems(image = item.image)
+////                            SpacerWidth(dp = 11.dp)
+//                        }
+//
+//                    }
+//
+//                    SpacerHeight(dp = 7.dp)
+//
+//                }
+//            }
 
 
         }//Column
@@ -664,3 +722,6 @@ fun ButtonExample() {
                 .clickable { })
     }
 }
+
+
+

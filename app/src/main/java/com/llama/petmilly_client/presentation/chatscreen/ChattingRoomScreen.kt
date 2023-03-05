@@ -49,7 +49,6 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
     val firstcheckBoolean = false
     Column(
         Modifier
-            .fillMaxSize()
             .background(Color(0xFF33FBE1B0))
     ) {
         Spacer(
@@ -202,7 +201,7 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
             Modifier
                 .fillMaxWidth()
                 .background(color = Color.White)
-                .padding(start = 15.dp, end = 15.dp, bottom = 30.dp, top = 10.dp)
+                .padding(start = 15.dp, end = 15.dp, bottom = 60.dp, top = 10.dp)
         ) {
 
             Image(

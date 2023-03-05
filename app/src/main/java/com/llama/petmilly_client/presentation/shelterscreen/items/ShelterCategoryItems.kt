@@ -24,10 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.homescreen.CategoryTest
-import com.llama.petmilly_client.ui.theme.Background_FDFCE1
-import com.llama.petmilly_client.ui.theme.Black_30_Transfer
-import com.llama.petmilly_client.ui.theme.Black_60_Transfer
-import com.llama.petmilly_client.ui.theme.Purple700
+import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.SpacerWidth
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
@@ -37,6 +34,8 @@ fun ShelterCategoryItems(
     title: String,
     description: String,
     vaccination: String,
+    isclicked: Boolean,
+    ispetmily: Boolean,
     onclcik: () -> Unit,
 ) {
     Row(
@@ -47,17 +46,47 @@ fun ShelterCategoryItems(
                 onclcik()
             }
     ) {
-        Image(
-            modifier = Modifier
-                .width(80.dp)
-                .fillMaxHeight()
-                .padding(start = 10.dp, top = 5.dp, bottom = 5.dp),
-            painter = painterResource(id = R.drawable.img_testcat_2),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
 
+//        val ispetmily = true
+
+        Box {
+            if (isclicked) {
+                Image(
+                    modifier = Modifier
+                        .width(80.dp)
+                        .fillMaxHeight()
+                        .padding(start = 15.dp, top = 5.dp, bottom = 5.dp),
+                    painter = painterResource(id = R.drawable.img_testcat_2),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+
+                    )
+            }
+
+
+            Text(
+                text = if (ispetmily) "petmily ❤️" else "심사중",
+                fontSize = 8.sp,
+                fontFamily = if (ispetmily) notosans_regular else notosans_bold,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                color = Color.White,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .offset(y = 15.dp, x = 5.dp)
+                    .background(
+                        if (ispetmily) Color.Black else Category_Cliked,
+                        shape = RoundedCornerShape(5.dp)
+                    )
+                    .padding(horizontal = 5.dp, vertical = 4.dp)
+                    .align(Alignment.TopStart)
 
             )
+        }
+
 
         SpacerWidth(dp = 20.dp)
 
@@ -135,15 +164,3 @@ fun ShelterCategoryItems(
     }
 }
 
-
-@Preview
-@Composable
-fun ASDASDA() {
-    Column(Modifier.padding(10.dp)) {
-        ShelterCategoryItems("감자에오", "수컷 / 1kg / 믹스 / 2개월 추정", "1차 접종완료/중성화O", onclcik = {
-
-
-        })
-    }
-
-}
