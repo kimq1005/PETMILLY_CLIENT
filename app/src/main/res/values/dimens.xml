@@ -4,4 +4,5 @@
     <dimen name="view_margin_16dp">16dp</dimen>
     <dimen name="view_margin_20dp">20dp</dimen>
     <dimen name="bottomnavi_heigt">60dp</dimen>
+    <dimen name="view_margin_90dp">90dp</dimen>
 </resources>
