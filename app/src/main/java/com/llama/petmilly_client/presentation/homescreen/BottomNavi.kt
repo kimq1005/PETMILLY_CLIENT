@@ -101,12 +101,14 @@ fun BottomNavigation(navController: NavController) {
     androidx.compose.material.BottomNavigation(
         contentColor = Color.Black,
         backgroundColor = Color.White,
-        modifier = Modifier.height(dimensionResource(id = R.dimen.bottomnavi_heigt)),
+        modifier = Modifier.height(dimensionResource(id = R.dimen.view_margin_90dp))
+        ,
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
+                modifier = Modifier.padding(bottom = 25.dp),
                 icon = {
                     Icon(
                         painterResource(id = item.icon),
