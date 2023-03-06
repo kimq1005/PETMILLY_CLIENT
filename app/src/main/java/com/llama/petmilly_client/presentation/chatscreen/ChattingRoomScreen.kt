@@ -201,7 +201,7 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
             Modifier
                 .fillMaxWidth()
                 .background(color = Color.White)
-                .padding(start = 15.dp, end = 15.dp, bottom = 60.dp, top = 10.dp)
+                .padding(start = 15.dp, end = 15.dp, bottom = 90.dp, top = 10.dp)
         ) {
 
             Image(
