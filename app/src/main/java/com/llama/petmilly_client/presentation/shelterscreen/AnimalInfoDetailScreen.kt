@@ -30,8 +30,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.GridCells
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -602,46 +600,36 @@ fun AnimalInfoDetailScreen(
                 ImageTestData(R.drawable.img_test_puppy)
             )
 
-            LazyVerticalGrid(
-                cells = GridCells.Fixed(3),
-                content = {
-                    items(6) { index ->
-                        Box(
-                            modifier = Modifier
-                                .aspectRatio(1f)
-                                .background(Color.Gray)
+
+
+
+            LazyColumn(
+                modifier = Modifier
+                    .height(160.dp)
+                    .padding(horizontal = 21.dp)
+            ) {
+                items(imageTestData.chunked(4)) { items ->
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround,
+
                         ) {
-                            Text(
-                                text = "Item $index",
-                                modifier = Modifier.align(Alignment.Center)
+                        items.forEach { item ->
+                            PicktureItems(
+                                image = item.image,
+                                modifier = Modifier
+                                    .height(70.dp)
+                                    .width(70.dp)
                             )
+//                            SpacerWidth(dp = 11.dp)
                         }
+
                     }
+
+                    SpacerHeight(dp = 7.dp)
+
                 }
-            )
-
-
-
-//            LazyColumn(modifier = Modifier
-//                .height(160.dp)
-//                .padding(horizontal = 21.dp)) {
-//                items(imageTestData.chunked(4)) { items ->
-//                    Row(
-//                        Modifier.fillMaxWidth(),
-//                        horizontalArrangement = Arrangement.SpaceAround,
-//
-//                    ) {
-//                        items.forEach { item ->
-//                            PicktureItems(image = item.image)
-////                            SpacerWidth(dp = 11.dp)
-//                        }
-//
-//                    }
-//
-//                    SpacerHeight(dp = 7.dp)
-//
-//                }
-//            }
+            }
 
 
         }//Column
@@ -705,6 +693,7 @@ fun AnimalInfoDetailScreen(
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 fun Woy() {

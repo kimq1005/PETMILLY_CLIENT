@@ -1,12 +1,24 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
+import android.net.Uri
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.llama.petmilly_client.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ShelterDetailViewModel @Inject constructor() : ViewModel() {
+
+    private val _setHomeIntent = MutableLiveData<Event<Unit>>()
+    val setHomeIntent: LiveData<Event<Unit>> = _setHomeIntent
+
+    val myuri = mutableStateOf<Uri?>(null)
+    val imageTestUriData = mutableStateListOf<ImageTestUriData>()
+
     val species = mutableStateOf("")
     val animalname = mutableStateOf("")
     val animalsex = mutableStateOf("")
@@ -26,4 +38,12 @@ class ShelterDetailViewModel @Inject constructor() : ViewModel() {
     val nopeople = mutableStateOf("")
 
     val hopeapplicationperiod = mutableStateOf("")
+
+    fun uploadimage(uri:Uri){
+        imageTestUriData.add(ImageTestUriData(uri))
+    }
+
+    fun deleteimage(uri:Uri){
+        imageTestUriData.remove(ImageTestUriData(uri))
+    }
 }

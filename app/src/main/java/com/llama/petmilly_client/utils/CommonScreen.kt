@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.utils
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
@@ -79,7 +81,7 @@ fun ButtonShapeScreen(
     fontFamily: FontFamily,
     onclick: () -> Unit,
 
-) {
+    ) {
     Button(
         onClick = { onclick() },
         modifier,
@@ -243,8 +245,7 @@ fun ButtonScreen_HOUSE(
                 platformStyle = PlatformTextStyle(
                     includeFontPadding = false
                 )
-            )
-            ,
+            ),
             textAlign = textAlign,
         )
     }
@@ -312,7 +313,7 @@ fun Tabs(pagerState: PagerState, list: List<String>) {
 fun CommonNotingScreen(text: String, modifier: Modifier) {
 
     Text(
-        modifier =modifier,
+        modifier = modifier,
         text = text,
         fontSize = 17.sp,
         fontFamily = notosans_regular,
@@ -327,26 +328,60 @@ fun CommonNotingScreen(text: String, modifier: Modifier) {
 }
 
 @Composable
-fun SpacerWidth(dp:Dp){
+fun SpacerWidth(dp: Dp) {
     Spacer(modifier = Modifier.width(dp))
 }
 
 @Composable
-fun SpacerHeight(dp:Dp){
+fun SpacerHeight(dp: Dp) {
     Spacer(modifier = Modifier.height(dp))
 }
 
 @Composable
-fun PicktureItems(image :Int){
+fun PicktureItems(image: Int, modifier: Modifier) {
     Image(
         painter = rememberImagePainter(data = image),
         contentDescription = null,
-        modifier = Modifier
-            .height(70.dp)
-            .width(70.dp),
+        modifier = modifier,
         contentScale = ContentScale.Crop
     )
 }
+
+@Composable
+fun PicktureUriItems(image: Uri, modifier: Modifier, ondelete: () -> Unit) {
+
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color.LightGray)
+    ) {
+
+
+        Image(
+            painter = rememberImagePainter(data = image),
+            contentDescription = null,
+            modifier = modifier,
+            contentScale = ContentScale.Crop,
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.img_delete_picture),
+            modifier = Modifier
+                .height(20.dp)
+                .width(20.dp)
+                .align(Alignment.TopEnd)
+                .padding(top = 4.dp, end = 4.dp)
+                .clickable {
+                    ondelete()
+                },
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+        )
+
+    }
+
+}
+
 
 
 

@@ -1,15 +1,32 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
+import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -19,20 +36,37 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
+import java.io.IOException
 
+@SuppressLint("Recycle")
 @Composable
 fun ShelterDetail_1_profile_Screen(
     navController: NavController,
     viewModel: ShelterDetailViewModel,
-    activity: ShelterDetailActivity
+    activity: ShelterDetailActivity,
 ) {
-    Column(Modifier.fillMaxSize().background(color = Color.White)) {
-        ShelterDetailTitleBar(title = "임보처구해요", ismenu = false, clickBack = { navController.popBackStack()}) {
+
+    val context = LocalContext.current
+    val bitmapState = remember {
+        mutableStateOf<Bitmap?>(null)
+    }
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+    ) {
+        ShelterDetailTitleBar(
+            title = "임보처구해요",
+            ismenu = false,
+            clickBack = { navController.popBackStack() }) {
             activity.finish()
         }
 
@@ -150,7 +184,7 @@ fun ShelterDetail_1_profile_Screen(
         Spacer(modifier = Modifier.height(35.dp))
 
         Text(
-            text = "사진 첨부",
+            text = "사진첨부",
             color = Color.Black,
             fontSize = 13.sp,
             modifier = Modifier.padding(start = 30.dp),
@@ -162,9 +196,73 @@ fun ShelterDetail_1_profile_Screen(
             )
         )
 
+        SpacerHeight(dp = 8.dp)
+
+        val imageTestUriData = remember { mutableStateListOf<ImageTestUriData>() }
+
+
+        val launcher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent(),
+        ) { uri ->
+            try {
+                val inputStrem = context.contentResolver.openInputStream(uri!!)
+                bitmapState.value = BitmapFactory.decodeStream(inputStrem)
+                viewModel.uploadimage(uri)
+
+            } catch (e: IOException) {
+                Log.d(TAG, " Uri Call Error: $e")
+            }
+        }
+
+        Row(Modifier.fillMaxWidth()) {
+            Image(
+                painter = painterResource(id = R.drawable.img_comment_camera),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 20.dp)
+                    .height(47.dp)
+                    .width(47.dp)
+                    .clickable {
+                        Log.d(TAG, "ShelterDetail_1_profile_Screen: $imageTestUriData")
+                        launcher.launch("image/*")
+                    }
+            )
+
+            SpacerWidth(dp = 10.dp)
+
+            LazyRow() {
+                items(viewModel.imageTestUriData) { items ->
+                    PicktureUriItems(
+                        items.uri,
+                        modifier = Modifier
+                            .width(50.dp)
+                            .height(50.dp),
+                        ondelete = {
+                            viewModel.deleteimage(items.uri)
+                        }
+                    )
+                    SpacerWidth(dp = 10.dp)
+
+                }
+            }
+        }
+
+
+
+
+
+
+
+
         Spacer(modifier = Modifier.weight(1f))
 
-        Box(modifier = Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, bottom = 20.dp)) {
+
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, bottom = 20.dp)
+        ) {
 
             val ischeck = viewModel.animalname.value != "" && viewModel.animalsex.value != ""
             ButtonScreen(
@@ -178,7 +276,7 @@ fun ShelterDetail_1_profile_Screen(
 
             ) {
                 if (ischeck) {
-                        navController.navigate(Common.SHELTERDETAIL_2_PROFILE_SCREEN)
+                    navController.navigate(Common.SHELTERDETAIL_2_PROFILE_SCREEN)
                 } else {
 
                 }
@@ -192,7 +290,7 @@ fun ShelterDetail_1_profile_Screen(
                         includeFontPadding = false
                     )
                 ),
-                color = if(ischeck) Color.White  else Grey_50_CBC4C4,
+                color = if (ischeck) Color.White else Grey_50_CBC4C4,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .padding(end = 18.dp)
@@ -202,4 +300,14 @@ fun ShelterDetail_1_profile_Screen(
 
 
     }
+}
+
+data class ImageTestUriData(
+    val uri: Uri,
+)
+
+@Preview
+@Composable
+fun EKUG(){
+
 }

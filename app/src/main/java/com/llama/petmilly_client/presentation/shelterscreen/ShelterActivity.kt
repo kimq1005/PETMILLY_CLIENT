@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,6 +41,7 @@ import llama.test.jetpack_dagger_plz.utils.Common.SAFESHELTER_COMPOSABLE
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @AndroidEntryPoint
+@OptIn(ExperimentalFoundationApi::class)
 class ShelterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
