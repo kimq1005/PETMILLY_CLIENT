@@ -127,6 +127,7 @@ fun ShelterDetail_1_profile_Screen(
 
         Spacer(modifier = Modifier.height(6.dp))
 
+        val transparentGray = Color.Gray.copy(alpha = 0.2f)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -140,13 +141,28 @@ fun ShelterDetail_1_profile_Screen(
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp)
-                    .height(55.dp),
+                    .height(55.dp)
+                    ,
                 backgroundcolor = if (viewModel.animalsex.value == "수컷") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Center
             ) {
                 viewModel.animalsex.value = "수컷"
             }
+
+//            TextScreen_HOUSE(
+//                title = "수컷",
+//                textcolor = if (viewModel.animalsex.value == "수컷") Color.White else Color.Black,
+//                fontSize = 20,
+//                modifier = Modifier
+//                    .background(color = Button_NoneClicked, shape = RoundedCornerShape(20.dp))
+//                    .weight(1f)
+//                    .height(55.dp)
+//                ,
+//                textAlign = TextAlign.Center,
+//            ) {
+//
+//            }
 
             ButtonScreen_HOUSE(
                 title = "암컷",
@@ -308,6 +324,6 @@ data class ImageTestUriData(
 
 @Preview
 @Composable
-fun EKUG(){
+fun EKUG() {
 
 }

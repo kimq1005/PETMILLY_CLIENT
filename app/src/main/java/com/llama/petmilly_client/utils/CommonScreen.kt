@@ -39,6 +39,7 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.chatscreen.ChatTabScreen
 import com.llama.petmilly_client.presentation.chatscreen.FavoriteChatScreen
 import com.llama.petmilly_client.ui.theme.Black_30_Transfer
+import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
 import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
@@ -86,7 +87,8 @@ fun ButtonShapeScreen(
         onClick = { onclick() },
         modifier,
         colors = ButtonDefaults.buttonColors(backgroundColor = backgroundcolor),
-        shape = shape
+        shape = shape,
+        elevation = null
 
     ) {
         Text(
@@ -229,11 +231,13 @@ fun ButtonScreen_HOUSE(
     shape: Shape,
     onclick: () -> Unit,
 ) {
+
     Button(
         onClick = { onclick() },
-        modifier,
-        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundcolor),
-        shape = shape
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundcolor, contentColor = Color.White),
+        shape = shape,
+        elevation = null
 
     ) {
         Text(
@@ -249,6 +253,42 @@ fun ButtonScreen_HOUSE(
             textAlign = textAlign,
         )
     }
+}
+
+
+@Composable
+fun TextScreen_HOUSE(
+    title: String,
+    textcolor: Color,
+    fontSize: Int,
+    modifier: Modifier,
+    textAlign: TextAlign,
+    onclick: () -> Unit,
+) {
+    Box(
+        modifier = modifier
+
+    ) {
+        Text(
+            text = title,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .clickable {
+                    onclick()
+                },
+            color = textcolor,
+            fontSize = fontSize.sp,
+            fontFamily = notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+            textAlign = textAlign,
+        )
+    }
+
+
 }
 
 
