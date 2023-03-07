@@ -44,6 +44,7 @@ fun AdoptionApplicationDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
     onModify: () -> Unit,
+    ischatroom: Boolean,
 ) {
     Dialog(
         onDismissRequest = { onDismiss() },
@@ -56,142 +57,142 @@ fun AdoptionApplicationDialog(
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .fillMaxWidth(0.85f)
-                .fillMaxHeight(0.80f)
+                .fillMaxHeight(if(!ischatroom) 0.80f else 0.70f)
         ) {
-            
-                Column() {
 
-                    Image(
-                        painter = painterResource(id = R.drawable.img_cancle),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(35.dp)
-                            .width(35.dp)
-                            .align(Alignment.End)
-                            .padding(top = 16.dp, end = 16.dp)
-                            .clickable { onDismiss() },
-                        contentScale = ContentScale.Crop
-                    )
-                    
-                    Spacer(modifier = Modifier.height(5.dp))
-                    
-                    Image(
-                        painter = painterResource(id = R.drawable.img_shelter_application),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(27.dp)
-                            .width(27.dp)
-                            .align(Alignment.CenterHorizontally),
-                        contentScale = ContentScale.Crop
-                    )
+            Column() {
 
+                Image(
+                    painter = painterResource(id = R.drawable.img_cancle),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .height(35.dp)
+                        .width(35.dp)
+                        .align(Alignment.End)
+                        .padding(top = 16.dp, end = 16.dp)
+                        .clickable { onDismiss() },
+                    contentScale = ContentScale.Crop
+                )
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                Image(
+                    painter = painterResource(id = R.drawable.img_shelter_application),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .height(27.dp)
+                        .width(27.dp)
+                        .align(Alignment.CenterHorizontally),
+                    contentScale = ContentScale.Crop
+                )
+
+                Text(
+                    text = "임보/입양 신청서",
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    textAlign = TextAlign.Center,
+                    fontSize = 17.sp,
+                    color = Color.Black,
+                    fontFamily = notosans_bold
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp)
+                        .background(
+                            color = Color(0xFF26b5b3b3),
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                        .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+
+                ) {
+                    AplicationTextRow("성함/성별", "김승현", modifier = Modifier)
+                    AplicationTextRow(
+                        "생년월일",
+                        "961005",
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
+                    AplicationTextRow(
+                        "직업",
+                        "안드로이드 개발자",
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
+                    AplicationTextRow(
+                        "인증지역",
+                        "수원시 영통구 매탄동",
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
+                    AplicationTextRow(
+                        "반려동물유무",
+                        "있음(두마리)",
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
                     Text(
-                        text = "임보/입양 신청서",
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally),
-                        textAlign = TextAlign.Center,
-                        fontSize = 17.sp,
+                        modifier = Modifier.fillMaxWidth(),
+                        text = "(말티즈/9살/암컷/중성화O)",
+                        fontSize = 9.sp,
                         color = Color.Black,
-                        fontFamily = notosans_bold
+                        textAlign = TextAlign.End
+                    )
+                    Divider(
+                        modifier = Modifier
+                            .padding(top = 10.dp, bottom = 10.dp)
+                            .fillMaxWidth(), color = Color.LightGray
                     )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    AplicationTextRow("임시보호 경험", "없음", modifier = Modifier)
+                    AplicationTextRow("알러지 유무", "있음", modifier = Modifier.padding(top = 10.dp))
+                    AplicationTextRow("실내환경", "빌라", modifier = Modifier.padding(top = 10.dp))
 
-                    Column(
+                    Divider(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 20.dp, end = 20.dp)
-                            .background(
-                                color = Color(0xFF26b5b3b3),
-                                shape = RoundedCornerShape(10.dp)
-                            )
-                            .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+                            .padding(top = 10.dp, bottom = 10.dp)
+                            .fillMaxWidth(), color = Color.LightGray
+                    )
 
-                    ) {
-                        AplicationTextRow("성함/성별", "김승현", modifier = Modifier)
-                        AplicationTextRow(
-                            "생년월일",
-                            "961005",
-                            modifier = Modifier.padding(top = 10.dp)
-                        )
-                        AplicationTextRow(
-                            "직업",
-                            "안드로이드 개발자",
-                            modifier = Modifier.padding(top = 10.dp)
-                        )
-                        AplicationTextRow(
-                            "인증지역",
-                            "수원시 영통구 매탄동",
-                            modifier = Modifier.padding(top = 10.dp)
-                        )
-                        AplicationTextRow(
-                            "반려동물유무",
-                            "있음(두마리)",
-                            modifier = Modifier.padding(top = 10.dp)
-                        )
+                    Row {
                         Text(
-                            modifier = Modifier.fillMaxWidth(),
-                            text = "(말티즈/9살/암컷/중성화O)",
-                            fontSize = 9.sp,
+                            text = "가족구성원",
+                            fontSize = 12.sp,
+                            fontFamily = notosans_bold,
                             color = Color.Black,
-                            textAlign = TextAlign.End
-                        )
-                        Divider(
-                            modifier = Modifier
-                                .padding(top = 10.dp, bottom = 10.dp)
-                                .fillMaxWidth(), color = Color.LightGray
-                        )
-
-                        AplicationTextRow("임시보호 경험", "없음", modifier = Modifier)
-                        AplicationTextRow("알러지 유무", "있음", modifier = Modifier.padding(top = 10.dp))
-                        AplicationTextRow("실내환경", "빌라", modifier = Modifier.padding(top = 10.dp))
-
-                        Divider(
-                            modifier = Modifier
-                                .padding(top = 10.dp, bottom = 10.dp)
-                                .fillMaxWidth(), color = Color.LightGray
-                        )
-
-                        Row {
-                            Text(
-                                text = "가족구성원",
-                                fontSize = 12.sp,
-                                fontFamily = notosans_bold,
-                                color = Color.Black,
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
                                 )
                             )
+                        )
 
-                            Text(
-                                text = "(가족구성원)",
-                                fontSize = 12.sp,
-                                fontFamily = notosans_regular,
-                                color = Color.Black,
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
+                        Text(
+                            text = "(가족구성원)",
+                            fontSize = 12.sp,
+                            fontFamily = notosans_regular,
+                            color = Color.Black,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
                                 )
                             )
-
-                        }
-                        AplicationTextRow(
-                            "가족관계",
-                            "배우자,본인",
-                            modifier = Modifier.padding(top = 10.dp)
-                        )
-                        AplicationTextRow(
-                            "실내환경",
-                            "빌라",
-                            modifier = Modifier.padding(top = 10.dp, bottom = 20.dp)
                         )
 
                     }
+                    AplicationTextRow(
+                        "가족관계",
+                        "배우자,본인",
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
+                    AplicationTextRow(
+                        "실내환경",
+                        "빌라",
+                        modifier = Modifier.padding(top = 10.dp, bottom = 20.dp)
+                    )
 
+                }
 
+                if (!ischatroom) {
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Text(
@@ -224,53 +225,12 @@ fun AdoptionApplicationDialog(
                         backgroundcolor = Button_Clicked
                     ) {
                         onConfirm()
-
                     }
 
-
-//                Row(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(bottom = 10.dp)
-//                ) {
-//                    Button(
-//                        onClick = { onDismiss() },
-//                        modifier = Modifier
-//                            .weight(1f)
-//                            .padding(start = 20.dp, end = 5.dp),
-//                        colors = ButtonDefaults.buttonColors(backgroundColor = Button_NoneClicked)
-//
-//
-//                    ) {
-//                        Text(
-//                            text = "취소",
-//                            color = Color.White,
-//                            fontSize = 16.sp,
-//                            fontWeight = FontWeight.Bold
-//                        )
-//                    }
-//                    Button(
-//                        onClick = { onDismiss() },
-//                        modifier = Modifier
-//                            .weight(1f)
-//                            .padding(start = 5.dp, end = 20.dp),
-//                        colors = ButtonDefaults.buttonColors(backgroundColor = Button_Clicked)
-//
-//                    ) {
-//                        Text(
-//                            text = "동의 및 제출",
-//                            color = Color.White,
-//                            fontSize = 16.sp,
-//                            fontWeight = FontWeight.Bold,
-//                            modifier = Modifier.clickable {
-//                                onConfirm()
-//                            }
-//                        )
-//                    }
-//                }
                 }
-            
 
+
+            }
         }
     }
 }
@@ -313,6 +273,6 @@ fun AplicationTextRow(text_first: String, text_second: String, modifier: Modifie
 @Preview
 @Composable
 fun Preview() {
-    AdoptionApplicationDialog(onDismiss = {}, onConfirm = {}, onModify = {})
+    AdoptionApplicationDialog(onDismiss = {}, onConfirm = {}, onModify = {}, true)
 
 }

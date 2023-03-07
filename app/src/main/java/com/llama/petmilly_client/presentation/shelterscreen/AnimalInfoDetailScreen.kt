@@ -677,7 +677,8 @@ fun AnimalInfoDetailScreen(
                 onModify = {
                     val intent = Intent(context, CertificationActivity::class.java)
                     context.startActivity(intent)
-                }
+                },
+                ischatroom = false
             )
         }
 

@@ -20,6 +20,16 @@ class ChatViewModel @Inject constructor() : ViewModel() {
     var isChatRoomDialog by mutableStateOf(false)
         private set
 
+    var isAdoptionApplicationDialog by mutableStateOf(false)
+        private set
+
+    fun onShowAdoptionApplcationDialog(){
+        isAdoptionApplicationDialog = true
+    }
+
+    fun onDismissAdoptionApplicationDialog(){
+        isAdoptionApplicationDialog = false
+    }
     fun onChatRoomDialog(){
         isChatRoomDialog = true
     }

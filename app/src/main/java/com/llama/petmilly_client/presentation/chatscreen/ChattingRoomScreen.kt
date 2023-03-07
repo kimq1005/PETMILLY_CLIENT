@@ -28,6 +28,7 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.chatscreen.items.ChatRoomItem
 import com.llama.petmilly_client.presentation.chatscreen.items.EntityChatModel
 import com.llama.petmilly_client.presentation.chatscreen.items.PlzChatModel
+import com.llama.petmilly_client.presentation.dialog.AdoptionApplicationDialog
 import com.llama.petmilly_client.presentation.dialog.ChatRoomDialog
 import com.llama.petmilly_client.presentation.myprofilescreen.MyProfileActivity
 import com.llama.petmilly_client.presentation.myprofilescreen.ProfileActivity
@@ -178,10 +179,17 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
 
             items(entityChatModel) { item ->
 
-                ChatRoomItem(item, onclick = {
-                    val intent = Intent(context, ProfileActivity::class.java)
-                    context.startActivity(intent)
-                })
+                ChatRoomItem(
+                    item,
+                    onclick = {
+                        val intent = Intent(context, ProfileActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    onconfirm = {
+                        viewModel.onShowAdoptionApplcationDialog()
+                        //임보신청서 dialog
+                    }
+                )
 
                 val paddingValue =
                     if (item.type == entityChatModel.getOrNull(entityChatModel.indexOf(item) + 1)?.type) {
@@ -250,9 +258,22 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
 
         }
 
+    SetDialog(viewModel = viewModel)
 
+    }//Column
+
+}
+
+@Composable
+fun SetDialog(viewModel: ChatViewModel){
+    if(viewModel.isAdoptionApplicationDialog){
+        AdoptionApplicationDialog(
+            onDismiss = { viewModel.onDismissAdoptionApplicationDialog() },
+            onConfirm = {  },
+            onModify = {  },
+            ischatroom = true
+        )
     }
-
 }
 
 

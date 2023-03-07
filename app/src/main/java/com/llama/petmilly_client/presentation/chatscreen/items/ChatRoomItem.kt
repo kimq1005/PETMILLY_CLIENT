@@ -38,6 +38,7 @@ import com.llama.petmilly_client.utils.notosans_regular
 fun ChatRoomItem(
     entityChatModel: EntityChatModel,
     onclick: () -> Unit,
+    onconfirm: () -> Unit,
 ) {
     Column(
         Modifier.fillMaxSize()
@@ -56,9 +57,9 @@ fun ChatRoomItem(
                 })
             }
 
-            2->{
-                AdoptionApplicationItem(name = entityChatModel.plzChatModel.send, onclick = {
-                    onclick()
+            2 -> {
+                AdoptionApplicationItem(name = entityChatModel.plzChatModel.send, onconfirm = {
+                    onconfirm()
                 })
             }
         }
@@ -196,7 +197,7 @@ fun ReciveItem(recive: String, onclick: () -> Unit) {
 }
 
 @Composable
-fun AdoptionApplicationItem(name: String, onclick: () -> Unit) {
+fun AdoptionApplicationItem(name: String, onconfirm: () -> Unit) {
     Row(
     ) {
         Image(
@@ -226,10 +227,7 @@ fun AdoptionApplicationItem(name: String, onclick: () -> Unit) {
         ) {
             Text(
                 modifier = Modifier
-
-                    .padding(10.dp)
-                    .clickable { onclick() },
-
+                    .padding(10.dp),
                 text = "$name 님의 임보신청서가 \n제출되었습니다.",
                 fontSize = 13.sp,
                 color = Color.Black,
@@ -248,7 +246,7 @@ fun AdoptionApplicationItem(name: String, onclick: () -> Unit) {
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    onclick()
+                    onconfirm()
                 }) {
                 Text(
                     text = "확인하기",
@@ -297,10 +295,3 @@ data class PlzChatModel(
     val recive: String = "",
 )
 
-@Preview
-@Composable
-fun QQQQQ() {
-    AdoptionApplicationItem("김승현", onclick = {
-
-    })
-}
