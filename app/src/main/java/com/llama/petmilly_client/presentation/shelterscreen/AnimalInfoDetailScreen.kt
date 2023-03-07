@@ -694,24 +694,6 @@ fun AnimalInfoDetailScreen(
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
-@Preview
-@Composable
-fun Woy() {
-    val navController = rememberNavController()
-    AnimalInfoDetailScreen(navController)
-}
-
-
-@Composable
-fun ButtonExample() {
-    Box() {
-        Image(painter = painterResource(id = R.drawable.img_name_speech_bubble),
-            contentDescription = null,
-            modifier = Modifier
-                .clickable { })
-    }
-}
 
 
 

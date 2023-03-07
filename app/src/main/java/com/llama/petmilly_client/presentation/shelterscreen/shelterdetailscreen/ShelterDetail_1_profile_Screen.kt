@@ -37,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.dialog.SetAlomostCompletedDialog
 import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
@@ -54,6 +55,13 @@ fun ShelterDetail_1_profile_Screen(
     activity: ShelterDetailActivity,
 ) {
 
+    SetAlomostCompletedDialog(
+        viewModel.isAlmostCompletedDialog, onDismiss = {
+            viewModel.onDismissAlmostCompetedDialog()
+        },
+        activity = activity
+    )
+
     val context = LocalContext.current
     val bitmapState = remember {
         mutableStateOf<Bitmap?>(null)
@@ -67,7 +75,7 @@ fun ShelterDetail_1_profile_Screen(
             title = "임보처구해요",
             ismenu = false,
             clickBack = { navController.popBackStack() }) {
-            activity.finish()
+            viewModel.onShownAlmostCompetedDialog()
         }
 
         ShelterDetailSuvTitle("주인공의 프로필을\n입력해주세요.")
@@ -141,8 +149,7 @@ fun ShelterDetail_1_profile_Screen(
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp)
-                    .height(55.dp)
-                    ,
+                    .height(55.dp),
                 backgroundcolor = if (viewModel.animalsex.value == "수컷") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Center

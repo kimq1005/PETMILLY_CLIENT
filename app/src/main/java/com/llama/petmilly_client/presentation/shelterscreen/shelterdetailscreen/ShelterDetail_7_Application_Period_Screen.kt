@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.dialog.SetAlomostCompletedDialog
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Grey_50_CBC4C4
@@ -29,12 +30,20 @@ import com.llama.petmilly_client.utils.notosans_regular
 @Composable
 fun ShelterDetail_7_Application_Period_Screen(navController: NavController, viewModel: ShelterDetailViewModel,activity:Activity) {
 
+    SetAlomostCompletedDialog(
+        viewModel.isAlmostCompletedDialog, onDismiss = {
+            viewModel.onDismissAlmostCompetedDialog()
+        },
+        activity = activity
+    )
+    
     Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
+
         ShelterDetailTitleBar(
             title = "임보처구해요",
             ismenu = false,
             clickBack = { navController.popBackStack() }) {
-                activity.finish()
+               viewModel.onShownAlmostCompetedDialog()
         }
 
         ShelterDetailSuvTitle("신청서 접수기간\n희망 시 입력해주세요.")

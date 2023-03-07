@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.dialog.SetAlomostCompletedDialog
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
@@ -38,13 +39,20 @@ fun ShelterDetail_5_conditons_Screen(
     activity: Activity,
 ) {
 
+    SetAlomostCompletedDialog(
+        viewModel.isAlmostCompletedDialog, onDismiss = {
+            viewModel.onDismissAlmostCompetedDialog()
+        },
+        activity = activity
+    )
+
     Column(Modifier.fillMaxSize().background(color = Color.White)) {
 
         ShelterDetailTitleBar(
             title = "임보처구해요",
             ismenu = false,
             clickBack = { navController.popBackStack() }) {
-            activity.finish()
+           viewModel.onShownAlmostCompetedDialog()
         }
 
         ShelterDetailSuvTitle("주인공의 프로필을\n완성해주세요.")

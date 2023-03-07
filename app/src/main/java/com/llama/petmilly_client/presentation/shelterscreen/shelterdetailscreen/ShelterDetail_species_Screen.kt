@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.presentation.dialog.AlmostCompletedDialog
+import com.llama.petmilly_client.presentation.dialog.SetAlomostCompletedDialog
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.Button_Clicked
@@ -28,10 +31,15 @@ fun ShelterDetail_species_Screen(
     activity: ShelterDetailActivity,
 ) {
 
-    Column(modifier = Modifier.fillMaxSize().background(color = Color.White)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+    ) {
 
         ShelterDetailTitleBar(title = "임보처구해요", ismenu = false, clickBack = { activity.finish() }) {
-            activity.finish()
+//            activity.finish()
+            viewModel.onShownAlmostCompetedDialog()
         }
 
         ShelterDetailSuvTitle("주인공의 정보를\n입력해주세요.")
@@ -55,15 +63,22 @@ fun ShelterDetail_species_Screen(
                 .fillMaxWidth()
                 .padding(20.dp)
                 .height(55.dp),
-            backgroundcolor = if(viewModel.species.value !="") Button_Clicked else Button_NoneClicked
+            backgroundcolor = if (viewModel.species.value != "") Button_Clicked else Button_NoneClicked
         ) {
             navController.navigate(Common.SHELTERDETAIL_1_PROFILE_SCREEN)
         }
 
 
-    }
+        SetAlomostCompletedDialog(
+            viewModel.isAlmostCompletedDialog, onDismiss = {
+                viewModel.onDismissAlmostCompetedDialog()
+            },
+            activity = activity
+        )
+    }//Column
 
 }
+
 
 @Composable
 fun ShelterBtn(species: String, viewModel: ShelterDetailViewModel) {
@@ -91,7 +106,7 @@ fun ShelterBtn(species: String, viewModel: ShelterDetailViewModel) {
             backgroundcolor = if (viewModel.species.value == species) Category_Cliked else Button_NoneClicked,
             shape = RoundedCornerShape(19.dp),
             textAlign = TextAlign.Start,
-            fontFamily =  if(viewModel.pickup.value == species) notosans_bold else notosans_regular
+            fontFamily = if (viewModel.pickup.value == species) notosans_bold else notosans_regular
         ) {
             viewModel.species.value = species
         }

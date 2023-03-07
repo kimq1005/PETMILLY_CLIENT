@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.dialog.SetAlomostCompletedDialog
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Grey_50_CBC4C4
@@ -29,14 +30,29 @@ import com.llama.petmilly_client.utils.notosans_bold
 import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
-fun ShelterDetail_6_conditons_Screen(navController: NavController,viewModel: ShelterDetailViewModel, activity:Activity) {
+fun ShelterDetail_6_conditons_Screen(
+    navController: NavController,
+    viewModel: ShelterDetailViewModel,
+    activity: Activity,
+) {
 
-    Column(Modifier.fillMaxSize().background(Color.White)) {
+    SetAlomostCompletedDialog(
+        viewModel.isAlmostCompletedDialog, onDismiss = {
+            viewModel.onDismissAlmostCompetedDialog()
+        },
+        activity = activity
+    )
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
         ShelterDetailTitleBar(
             title = "임보처구해요",
             ismenu = false,
             clickBack = { navController.popBackStack() }) {
-            activity.finish()
+           viewModel.onShownAlmostCompetedDialog()
         }
 
         ShelterDetailSuvTitle("임보조건을\n입력해주세요.")
@@ -170,7 +186,7 @@ fun ShelterDetail_6_conditons_Screen(navController: NavController,viewModel: She
 
             ) {
                 if (ischeck) {
-                        navController.navigate(Common.SHELTERDETAIL_7_APPLICATION_SCREEN)
+                    navController.navigate(Common.SHELTERDETAIL_7_APPLICATION_SCREEN)
                 } else {
 
                 }

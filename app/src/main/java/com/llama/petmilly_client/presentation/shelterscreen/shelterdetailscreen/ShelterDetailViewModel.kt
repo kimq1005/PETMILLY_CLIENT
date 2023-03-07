@@ -1,8 +1,10 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
 import android.net.Uri
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +20,10 @@ class ShelterDetailViewModel @Inject constructor() : ViewModel() {
 
     val myuri = mutableStateOf<Uri?>(null)
     val imageTestUriData = mutableStateListOf<ImageTestUriData>()
+
+    var isAlmostCompletedDialog by mutableStateOf(false)
+        private set
+
 
     val species = mutableStateOf("")
     val animalname = mutableStateOf("")
@@ -38,6 +44,15 @@ class ShelterDetailViewModel @Inject constructor() : ViewModel() {
     val nopeople = mutableStateOf("")
 
     val hopeapplicationperiod = mutableStateOf("")
+
+
+    fun onShownAlmostCompetedDialog() {
+        isAlmostCompletedDialog = true
+    }
+
+    fun onDismissAlmostCompetedDialog() {
+        isAlmostCompletedDialog = false
+    }
 
     fun uploadimage(uri:Uri){
         imageTestUriData.add(ImageTestUriData(uri))
