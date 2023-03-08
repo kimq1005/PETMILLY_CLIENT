@@ -28,6 +28,9 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
     val nickname = mutableStateOf<String>("")
 
     val birthday = mutableStateOf<String>("")
+    val birthday_year = mutableStateOf("")
+    val birthday_month = mutableStateOf("")
+    val birthday_day = mutableStateOf("")
 
 
     val gender = mutableStateOf<String>("")
@@ -88,7 +91,9 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
 
     @SuppressLint("SuspiciousIndentation")
 
+    fun setbirthday(){
 
+    }
     fun checkCallYourAnimal() {
         callyouranimalcheck.value =
             animalkind.value != "" && animalage.value != "" && animalgender.value != ""

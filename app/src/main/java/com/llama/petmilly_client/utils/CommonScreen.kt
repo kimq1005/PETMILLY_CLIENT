@@ -8,17 +8,20 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
@@ -29,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.times
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -41,6 +45,7 @@ import com.llama.petmilly_client.presentation.chatscreen.FavoriteChatScreen
 import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
+import com.llama.petmilly_client.ui.theme.Grey_100_CBC4C4
 import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
@@ -422,6 +427,66 @@ fun PicktureUriItems(image: Uri, modifier: Modifier, ondelete: () -> Unit) {
 
 }
 
+
+@Composable
+fun FAFF(){
+    var (value, setvalue) = rememberSaveable {
+        mutableStateOf("1234555")
+    }
+
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = Modifier.weight(4f)) {
+            TextField(
+                value =value,
+                onValueChange = {
+                    if (it.length <= 4) {
+                       value = it
+                    }
+                },
+                modifier = Modifier.weight(3f),
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedLabelColor = Color.White,
+                    cursorColor = Color.Black,
+                ),
+                textStyle = TextStyle(
+                    fontSize = 30.sp, fontFamily = notosans_bold,
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+
+                placeholder = {
+                    Text(
+                        text = "1990",
+                        fontSize = 30.sp,
+                        fontFamily = notosans_bold,
+                        color = Grey_100_CBC4C4,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        )
+                    )
+                }
+            )
+
+
+        }
+
+    }
+
+
+
+}
+
+@Preview
+@Composable
+fun AEDFAFDAFFA(){
+    FAFF()
+}
 
 
 

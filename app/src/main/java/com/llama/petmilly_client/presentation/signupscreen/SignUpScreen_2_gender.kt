@@ -39,7 +39,7 @@ fun SignUpScreen_2_gender(navController: NavController, viewModel: SignUpViewMod
 
     val context = LocalContext.current
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(color = Color.White)) {
         TitleBar(title = "", ismenu = false, clickBack = {
             navController.popBackStack()
         }) {

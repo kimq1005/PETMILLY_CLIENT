@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.signupscreen
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,7 +47,7 @@ fun SignUpScreen_4_2_CallYourAnimal(navController: NavController, viewModel: Sig
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(color = Color.White)) {
         TitleBar(title = "", ismenu = false, clickBack = {
             navController.popBackStack()
         }) {

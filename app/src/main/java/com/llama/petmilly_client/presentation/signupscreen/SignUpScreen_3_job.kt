@@ -2,6 +2,7 @@ package com.llama.petmilly_client.presentation.signupscreen
 
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -35,7 +36,7 @@ fun SignUpScreen_3_job(navController: NavController, viewModel: SignUpViewModel)
 //    val viewModel: SignUpViewModel = viewModel()
     val context = LocalContext.current
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
         TitleBar(title = "", ismenu = false, clickBack = {
             navController.popBackStack()
         }) {
@@ -64,7 +65,7 @@ fun SignUpScreen_3_job(navController: NavController, viewModel: SignUpViewModel)
                 .height(55.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.job.value == "") TextField_BackgroudColor else Color.White,
+                backgroundColor =TextField_BackgroudColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,

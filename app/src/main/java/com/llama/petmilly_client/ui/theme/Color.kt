@@ -27,3 +27,4 @@ val Pink_5_Transfer = Color(0xFF0DB616B9)
 val Background_FDFCE1 = Color(0xFFFDFCE1)
 
 val Grey_50_CBC4C4 = Color(0xFF80CBC4C4)
+val Grey_100_CBC4C4 = Color(0xFFCBC4C4)

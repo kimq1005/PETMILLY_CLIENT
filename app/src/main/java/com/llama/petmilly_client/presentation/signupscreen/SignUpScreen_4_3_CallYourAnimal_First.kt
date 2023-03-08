@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.signupscreen
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,7 +40,7 @@ import llama.test.jetpack_dagger_plz.utils.Common
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SignUpScreen_4_3_CallYourAnimal_First(navController: NavController, viewModel: SignUpViewModel) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(color = Color.White)) {
 
         val context = LocalContext.current
         val keyboardController = LocalSoftwareKeyboardController.current

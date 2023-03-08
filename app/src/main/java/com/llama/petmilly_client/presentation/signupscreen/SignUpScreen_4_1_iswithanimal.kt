@@ -2,10 +2,7 @@ package com.llama.petmilly_client.presentation.signupscreen.viewmodel
 
 import android.graphics.drawable.shapes.OvalShape
 import android.widget.Toast
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -40,7 +37,7 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController, viewModel: SignU
 
     val context = LocalContext.current
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(color = Color.White)) {
         TitleBar(title = "", ismenu = false, clickBack = {
             navController.popBackStack()
         }) {
