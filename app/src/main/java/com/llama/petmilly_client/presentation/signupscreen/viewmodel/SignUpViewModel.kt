@@ -36,16 +36,24 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
     val gender = mutableStateOf<String>("")
     val job = mutableStateOf<String>("")
 
+    //companionAnimal
     val livewithanimal = mutableStateOf("")
 
 
-    //call your animal
+    //companionAnimalCount
     val numberofanimal = mutableStateOf("")
+
     val callyouranimalcheck = mutableStateOf(false)
+
     val animalgender = mutableStateOf<String>("수컷")
     val isneuteringsurgery = mutableStateOf<Boolean>(true)
     val animalkind = mutableStateOf<String>("")
     val animalage = mutableStateOf("")
+
+    val breed_animal = mutableStateOf("")
+    val age_animal = mutableStateOf("")
+    val gender_animal = mutableStateOf("")
+    val neutered_animal = mutableStateOf("")
 
     val gender_first = mutableStateOf("")
     val breed_first = mutableStateOf("")
@@ -91,16 +99,21 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
 
     @SuppressLint("SuspiciousIndentation")
 
-    fun setbirthday(){
+    fun setbirthday() {
 
     }
+
     fun checkCallYourAnimal() {
         callyouranimalcheck.value =
-            animalkind.value != "" && animalage.value != "" && animalgender.value != ""
-        Log.d(
-            TAG,
-            "checkCallYourAnimal:${animalkind.value} ${animalage.value} ${animalgender.value} =>  ${callyouranimalcheck.value}"
-        )
+            breed_animal.value != "" && age_animal.value != "" && gender_animal.value != "" && neutered_animal.value != ""
+    }
+
+    fun clearanimalcheck() {
+        breed_animal.value = ""
+        age_animal.value = ""
+        gender_animal.value = ""
+        neutered_animal.value = ""
+        callyouranimalcheck.value = !callyouranimalcheck.value
     }
 
 
