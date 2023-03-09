@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -45,68 +46,41 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
 
     val callyouranimalcheck = mutableStateOf(false)
 
-    val animalgender = mutableStateOf<String>("수컷")
-    val isneuteringsurgery = mutableStateOf<Boolean>(true)
-    val animalkind = mutableStateOf<String>("")
-    val animalage = mutableStateOf("")
-
     val breed_animal = mutableStateOf("")
     val age_animal = mutableStateOf("")
     val gender_animal = mutableStateOf("")
     val neutered_animal = mutableStateOf("")
 
-    val gender_first = mutableStateOf("")
-    val breed_first = mutableStateOf("")
-    val age_first = mutableStateOf(0)
-    val neutered_first = mutableStateOf("")
-
-    val checkwithanimal = mutableStateOf(0)
-
-    val companionAnimalInfo_first = CompanionAnimalInfo(
-        breed_first.value,
-        age_first.value,
-        gender_first.value,
-        neutered_first.value
-    )
-    val companionAnimalInfo_second = CompanionAnimalInfo(
-        breed_first.value,
-        age_first.value,
-        gender_first.value,
-        neutered_first.value
-    )
-    val companionAnimalInfo_third = CompanionAnimalInfo(
-        breed_first.value,
-        age_first.value,
-        gender_first.value,
-        neutered_first.value
-    )
 
     val companionAnimalInfo: MutableList<CompanionAnimalInfo> = arrayListOf()
-    val familyInfo: MutableList<FamilyInfo> = arrayListOf()
 
-    //istemporarycare
+    //temporaryProtection
     val istemporarycare = mutableStateOf("")
 
-    //isallergy
+    //allergy
     val isallery = mutableStateOf("")
 
-    //housekind
+    //typeOfResidence
     val housekind = mutableStateOf("")
 
-    val famillylist = mutableStateListOf<String>(
+    val famillylist = mutableStateListOf<String>()
 
-    )
+    val family_role = mutableStateOf("")
+    val faimilly_flexble = mutableStateOf<Boolean>(false)
 
-    @SuppressLint("SuspiciousIndentation")
+//    val familyInfo: MutableList<FamilyInfo> = arrayListOf()
+//    val familyInfo = mutableStateOf(mutableListOf<FamilyInfo>())
 
-    fun setbirthday() {
+    val familyInfo = mutableStateOf(mutableListOf<FamilyInfo>())
 
+    fun addFamilyInfo(newFamilyInfo: FamilyInfo) {
+        familyInfo.value.add(newFamilyInfo)
     }
 
-    fun checkCallYourAnimal() {
-        callyouranimalcheck.value =
-            breed_animal.value != "" && age_animal.value != "" && gender_animal.value != "" && neutered_animal.value != ""
+    fun deletefamilyInfo(newFamilyInfo:FamilyInfo){
+        familyInfo.value.remove(newFamilyInfo)
     }
+
 
     fun clearanimalcheck() {
         breed_animal.value = ""
@@ -128,7 +102,7 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
                 companionAnimalCount = numberofanimal.value,
                 companionAnimalInfo = companionAnimalInfo,
                 temporaryProtection = istemporarycare.value,
-                familyInfo = familyInfo,
+                familyInfo = familyInfo.value,
                 allergy = isallery.value,
                 typeOfResidence = housekind.value
             )
@@ -149,26 +123,4 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
         }
     }
 
-    fun checkanimalwithlive() {
-        when (checkwithanimal.value) {
-            1 -> {
-                companionAnimalInfo.add(companionAnimalInfo_first)
-            }
-
-            2 -> {
-                companionAnimalInfo.add(companionAnimalInfo_first)
-                companionAnimalInfo.add(companionAnimalInfo_second)
-
-            }
-
-            3 -> {
-                companionAnimalInfo.add(companionAnimalInfo_first)
-                companionAnimalInfo.add(companionAnimalInfo_second)
-                companionAnimalInfo.add(companionAnimalInfo_third)
-
-            }
-        }
-    }
-
 }
-

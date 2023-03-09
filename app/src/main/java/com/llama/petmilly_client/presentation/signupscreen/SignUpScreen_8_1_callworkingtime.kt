@@ -1,8 +1,13 @@
 package com.llama.petmilly_client.presentation.signupscreen
 
+import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,9 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.data.model.additonal.reponse.FamilyInfo
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
@@ -21,13 +30,20 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_COMPLETED
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
 fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: SignUpViewModel) {
 
     val context = LocalContext.current
+    val scrollState = rememberScrollState()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+            .background(color = Color.White)
+    ) {
         TitleBar(title = "", ismenu = false, clickBack = {
             navController.popBackStack()
         }) {
@@ -43,7 +59,7 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
             color = Color.Black
         )
 
-        Text(text = "*  실 거주기준으로 입력해주세요.", fontSize = 13.sp, color = Color.Black,)
+        Text(text = "*  실 거주기준으로 입력해주세요.", fontSize = 13.sp, color = Color.Black)
 
         Row(
             modifier = Modifier
@@ -51,31 +67,47 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                 .padding(start = 30.dp, end = 30.dp, top = 50.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.famillylist.contains("부모님")) {
+            if (viewModel.familyInfo.value.contains(FamilyInfo("부모님", false))) {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
             }
 
+            val familyInfoList = viewModel.familyInfo.value
+            val isFamilyInfoExist = familyInfoList.any { it.role == "부모님" && !it.isFlexible }
+
             ButtonShapeScreen(
                 title = "부모님(아빠/엄마)",
-                textcolor = if (viewModel.famillylist.contains("부모님")) Color.White else Color.Black,
+                textcolor = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "부모님",
+                            false
+                        )
+                    )
+                ) Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("부모님")) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (isFamilyInfoExist) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.famillylist.contains("부모님")) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "부모님",
+                            false
+                        )
+                    )
+                ) notosans_bold else notosans_regular
             ) {
-
-                if(viewModel.famillylist.contains("부모님")){
-                    viewModel.famillylist.remove("부모님")
-                }else{
-                    viewModel.famillylist.add("부모님")
+                if (viewModel.familyInfo.value.contains(FamilyInfo("부모님", false))) {
+                    viewModel.deletefamilyInfo(FamilyInfo("부모님", false))
+                } else {
+                    viewModel.addFamilyInfo(FamilyInfo("부모님", false))
                 }
+
+                Log.d(TAG, "SignUpScreen_8_1_callworkingtime: ${viewModel.familyInfo}")
             }
 
         }//Row
@@ -86,7 +118,7 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.famillylist.contains("부모님")) {
+            if (viewModel.familyInfo.value.contains(FamilyInfo("형제자매", false))) {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -94,22 +126,43 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
 
             ButtonShapeScreen(
                 title = "형제자매(언니/누나/형/동생)",
-                textcolor = if (viewModel.famillylist.contains("부모님")) Color.White else Color.Black,
+                textcolor = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "형제자매",
+                            false
+                        )
+                    )
+                ) Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("부모님")) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "형제자매",
+                            false
+                        )
+                    )
+                ) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =  if (viewModel.famillylist.contains("부모님")) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "형제자매",
+                            false
+                        )
+                    )
+                ) notosans_bold else notosans_regular
             ) {
-                if(viewModel.famillylist.contains("형제자매")){
-                    viewModel.famillylist.remove("형제자매")
-                }else{
-                    viewModel.famillylist.add("형제자매")
+
+                if (viewModel.familyInfo.value.contains(FamilyInfo("형제자매", false))) {
+                    viewModel.deletefamilyInfo(FamilyInfo("형제자매", false))
+                } else {
+                    viewModel.addFamilyInfo(FamilyInfo("형제자매", false))
                 }
+                Log.d(TAG, "SignUpScreen_8_1_callworkingtime: ${viewModel.familyInfo}")
+
             }
 
         }//Row
@@ -120,7 +173,7 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.famillylist.contains("배우자")) {
+            if (viewModel.familyInfo.value.contains(FamilyInfo("배우자", false))) {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -128,22 +181,44 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
 
             ButtonShapeScreen(
                 title = "배우자(남편/부인)",
-                textcolor = if (viewModel.famillylist.contains("배우자")) Color.White else Color.Black,
+                textcolor = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "배우자",
+                            false
+                        )
+                    )
+                ) Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("배우자")) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "배우자",
+                            false
+                        )
+                    )
+                ) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =  if (viewModel.famillylist.contains("배우자"))  notosans_bold else notosans_regular
+                fontFamily = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "배우자",
+                            false
+                        )
+                    )
+                ) notosans_bold else notosans_regular
             ) {
-                if(viewModel.famillylist.contains("배우자")){
-                    viewModel.famillylist.remove("배우자")
-                }else{
-                    viewModel.famillylist.add("배우자")
+
+                if (viewModel.familyInfo.value.contains(FamilyInfo("배우자", false))) {
+                    viewModel.deletefamilyInfo(FamilyInfo("배우자", false))
+                } else {
+                    viewModel.addFamilyInfo(FamilyInfo("배우자", false))
                 }
+
+                Log.d(TAG, "SignUpScreen_8_1_callworkingtime: ${viewModel.familyInfo}")
+
             }
 
         }//Row
@@ -154,7 +229,7 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.famillylist.contains("본인")) {
+            if (viewModel.familyInfo.value.contains(FamilyInfo("본인", false))) {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -162,22 +237,49 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
 
             ButtonShapeScreen(
                 title = "본인",
-                textcolor = if (viewModel.famillylist.contains("본인")) Color.White else Color.Black,
+                textcolor = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "본인",
+                            false
+                        )
+                    )
+                ) Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("본인")) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "본인",
+                            false
+                        )
+                    )
+                ) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =  if (viewModel.famillylist.contains("본인")) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "본인",
+                            false
+                        )
+                    )
+                ) notosans_bold else notosans_regular
             ) {
-                if(viewModel.famillylist.contains("본인")){
-                    viewModel.famillylist.remove("본인")
-                }else{
-                    viewModel.famillylist.add("본인")
+
+                if (viewModel.familyInfo.value.contains(FamilyInfo("본인", false))) {
+                    viewModel.deletefamilyInfo(FamilyInfo("본인", false))
+                } else {
+                    viewModel.addFamilyInfo(FamilyInfo("본인", false))
                 }
+
+                Log.d(TAG, "SignUpScreen_8_1_callworkingtime: ${viewModel.familyInfo}")
+
+//                if(viewModel.famillylist.contains("본인")){
+//                    viewModel.famillylist.remove("본인")
+//                }else{
+//                    viewModel.famillylist.add("본인")
+//                }
             }
 
         }//Row
@@ -188,7 +290,7 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                 .padding(start = 30.dp, end = 30.dp, top = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (viewModel.famillylist.contains("그외")) {
+            if (viewModel.familyInfo.value.contains(FamilyInfo("그외", false))) {
                 CheckedCheckBox(clickcolor = Category_Cliked)
             } else {
                 NoneCheckBox(nonecheckcolor = Color.White)
@@ -196,28 +298,51 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
 
             ButtonShapeScreen(
                 title = "그외",
-                textcolor = if (viewModel.famillylist.contains("그외")) Color.White else Color.Black,
+                textcolor = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "그외",
+                            false
+                        )
+                    )
+                ) Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .height(55.dp)
                     .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("그외")) Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "그외",
+                            false
+                        )
+                    )
+                ) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.famillylist.contains("그외")) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.familyInfo.value.contains(
+                        FamilyInfo(
+                            "그외",
+                            false
+                        )
+                    )
+                ) notosans_bold else notosans_regular
             ) {
-                if(viewModel.famillylist.contains("그외")){
-                    viewModel.famillylist.remove("그외")
-                }else{
-                    viewModel.famillylist.add("그외")
+
+                if (viewModel.familyInfo.value.contains(FamilyInfo("그외", false))) {
+                    viewModel.deletefamilyInfo(FamilyInfo("그외", false))
+                } else {
+                    viewModel.addFamilyInfo(FamilyInfo("그외", false))
                 }
+
+                Log.d(TAG, "SignUpScreen_8_1_callworkingtime: ${viewModel.familyInfo}")
             }
 
         }//Row
 
 
         Spacer(modifier = Modifier.weight(1f))
+
+        val check = viewModel.familyInfo.value.size > 0
 
         ButtonScreen(
             title = "완료",
@@ -227,13 +352,24 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                 .fillMaxWidth()
                 .padding(20.dp)
                 .height(55.dp),
-            backgroundcolor = Button_Clicked
+            backgroundcolor = if (check) Button_Clicked else Button_NoneClicked
         ) {
-            if(viewModel.famillylist.isEmpty()){
+            if (check) {
+                Log.d(TAG, "SignUpScreen_8_1_callworkingtime: ${viewModel.familyInfo.value}")
+//                navController.navigate(SIGNUPSCREEN_COMPLETED)
+            } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
-            }else{
-                navController.navigate(SIGNUPSCREEN_COMPLETED)
+
             }
         }
     }
 }
+
+@Preview
+@Composable
+fun AFAEFAF() {
+    val viewModel: SignUpViewModel = hiltViewModel()
+    val navController = rememberNavController()
+    SignUpScreen_8_1_callworkingtime(navController, viewModel)
+}
+
