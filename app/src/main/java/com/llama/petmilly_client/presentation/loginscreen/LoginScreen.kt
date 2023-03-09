@@ -43,6 +43,7 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.mqtt.MqttActivity
 import com.llama.petmilly_client.presentation.MainViewModel
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
 import com.llama.petmilly_client.presentation.homescreen.HomeViewModel
@@ -135,6 +136,9 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel) {
                     viewModel.onDismissDialog()
                     val intent = Intent(context, SignUpActivity::class.java)
                     context.startActivity(intent)
+
+//                    val intent = Intent(context, MqttActivity::class.java)
+//                    context.startActivity(intent)
                 },
                 onConfirm = {
 //                    viewModel.onDismissDialog()

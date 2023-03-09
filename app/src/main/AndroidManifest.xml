@@ -17,7 +17,10 @@
         android:theme="@style/Theme.PET_MILLY_CLIENT"
         tools:targetApi="31">
 
-
+        <activity
+            android:name=".mqtt.MqttActivity"
+            android:exported="true"
+            android:theme="@style/Theme.PET_MILLY_CLIENT" />
 
         <activity
             android:name=".presentation.findanimalscreen.findanimaldetailscreen.FADetailActivity"
