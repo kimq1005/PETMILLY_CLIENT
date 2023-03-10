@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.mqtt
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.llama.petmilly_client.data.di.DataModule.BASE_URL
 import com.llama.petmilly_client.utils.SpacerHeight
 import com.llama.petmilly_client.utils.notosans_bold
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallback
 import org.eclipse.paho.client.mqttv3.MqttClient
@@ -114,33 +116,40 @@ fun MqttClientScreen() {
 
     }//Column
 
-//    LaunchedEffect(client) {
-//        client.connect()
-//        client.subscribe("my/topic") { _, message ->
-//            messages.add(message.toString())
-//            receiveEventText.value = "$message"
-//            Toast.makeText(context, "$message", Toast.LENGTH_SHORT).show()
-//        }
-//
-//    }
-//
-//    //특정 객체를 청소? 하기 위해서 사용, client가 중복 생성되는 현상을 막기위해서 사용
-//    DisposableEffect(client) {
-//        onDispose {
-//            client.disconnect()
-//        }
-//    }
+    LaunchedEffect(client) {
+        try {
+            client.connect()
+            client.subscribe("my/topic") { _, message ->
+                messages.add(message.toString())
+                receiveEventText.value = "$message"
+                Toast.makeText(context, "$message", Toast.LENGTH_SHORT).show()
+            }
+        }catch (e:Exception){
+            Log.d(TAG, "MqttClientScreen ERROR: $e")
+        }
+
+
+    }
+
+    //특정 객체를 청소? 하기 위해서 사용, client가 중복 생성되는 현상을 막기위해서 사용
+    DisposableEffect(client) {
+        onDispose {
+            client.disconnect()
+        }
+    }
 }
 
 
 fun createMqttClient(): MqttClient {
-    val broker = "tcp://localhost:1883"
+    //192.168.0.102
+    val broker = "tcp://192.168.0.102:1883"
     val clientId = MqttClient.generateClientId()
     val persistence = MemoryPersistence()
     val client = MqttClient(broker, clientId, persistence)
 
     client.setCallback(object : MqttCallback {
         override fun connectionLost(cause: Throwable?) {
+
         }
 
         override fun messageArrived(topic: String?, message: MqttMessage?) {

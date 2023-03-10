@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -43,7 +45,20 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
             color = Color.Black
         )
 
-        Text(text = "*  실 거주기준으로 입력해주세요.", fontSize = 13.sp, color = Color.Black,)
+        Text(
+            text = "*  실 거주기준으로 입력해주세요.",
+            fontSize = 13.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(start = 40.dp),
+            fontFamily = notosans_regular,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+
+
+        )
 
         Row(
             modifier = Modifier
@@ -71,9 +86,9 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
                 fontFamily = if (viewModel.famillylist.contains("부모님")) notosans_bold else notosans_regular
             ) {
 
-                if(viewModel.famillylist.contains("부모님")){
+                if (viewModel.famillylist.contains("부모님")) {
                     viewModel.famillylist.remove("부모님")
-                }else{
+                } else {
                     viewModel.famillylist.add("부모님")
                 }
             }
@@ -103,11 +118,11 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
                 backgroundcolor = if (viewModel.famillylist.contains("부모님")) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =   if (viewModel.famillylist.contains("부모님")) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.famillylist.contains("부모님")) notosans_bold else notosans_regular
             ) {
-                if(viewModel.famillylist.contains("형제자매")){
+                if (viewModel.famillylist.contains("형제자매")) {
                     viewModel.famillylist.remove("형제자매")
-                }else{
+                } else {
                     viewModel.famillylist.add("형제자매")
                 }
             }
@@ -137,11 +152,11 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
                 backgroundcolor = if (viewModel.famillylist.contains("배우자")) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =  if (viewModel.famillylist.contains("배우자")) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.famillylist.contains("배우자")) notosans_bold else notosans_regular
             ) {
-                if(viewModel.famillylist.contains("배우자")){
+                if (viewModel.famillylist.contains("배우자")) {
                     viewModel.famillylist.remove("배우자")
-                }else{
+                } else {
                     viewModel.famillylist.add("배우자")
                 }
             }
@@ -171,11 +186,11 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
                 backgroundcolor = if (viewModel.famillylist.contains("본인")) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =  if (viewModel.famillylist.contains("본인")) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.famillylist.contains("본인")) notosans_bold else notosans_regular
             ) {
-                if(viewModel.famillylist.contains("본인")){
+                if (viewModel.famillylist.contains("본인")) {
                     viewModel.famillylist.remove("본인")
-                }else{
+                } else {
                     viewModel.famillylist.add("본인")
                 }
             }
@@ -205,17 +220,18 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
                 backgroundcolor = if (viewModel.famillylist.contains("그외")) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily =  if (viewModel.famillylist.contains("그외")) notosans_bold else notosans_regular
+                fontFamily = if (viewModel.famillylist.contains("그외")) notosans_bold else notosans_regular
             ) {
-                if(viewModel.famillylist.contains("그외")){
+                if (viewModel.famillylist.contains("그외")) {
                     viewModel.famillylist.remove("그외")
-                }else{
+                } else {
                     viewModel.famillylist.add("그외")
                 }
             }
 
         }//Row
 
+        SpacerHeight(dp = 53.dp)
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -229,9 +245,9 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
                 .height(55.dp),
             backgroundcolor = Button_Clicked
         ) {
-            if(viewModel.famillylist.isEmpty()){
+            if (viewModel.famillylist.isEmpty()) {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
-            }else{
+            } else {
                 navController.navigate(Common.SIGNUPSCREEN_COMPLETED)
             }
         }

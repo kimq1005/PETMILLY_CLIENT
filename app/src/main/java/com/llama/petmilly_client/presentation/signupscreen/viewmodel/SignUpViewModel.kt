@@ -71,6 +71,7 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
 //    val familyInfo: MutableList<FamilyInfo> = arrayListOf()
 //    val familyInfo = mutableStateOf(mutableListOf<FamilyInfo>())
 
+    @SuppressLint("MutableCollectionMutableState")
     val familyInfo = mutableStateOf(mutableListOf<FamilyInfo>())
 
     fun addFamilyInfo(newFamilyInfo: FamilyInfo) {
@@ -81,6 +82,13 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
         familyInfo.value.remove(newFamilyInfo)
     }
 
+
+    fun updateFamilyInfo(familyInfo: FamilyInfo) {
+        val index = this.familyInfo.value.indexOfFirst { it.role == familyInfo.role }
+        if (index >= 0) {
+            this.familyInfo.value[index] = familyInfo
+        }
+    }
 
     fun clearanimalcheck() {
         breed_animal.value = ""
