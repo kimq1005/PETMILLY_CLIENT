@@ -1,10 +1,14 @@
 package com.llama.petmilly_client.presentation.signupscreen
 
+import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.llama.petmilly_client.data.model.additonal.reponse.FamilyInfo
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
@@ -23,14 +28,22 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
 fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: SignUpViewModel) {
 
     val context = LocalContext.current
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    var nopersoncheck by remember {
+        mutableStateOf(false)
+    }
+
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.White)) {
         TitleBar(title = "", ismenu = false, clickBack = {
+            viewModel.familyInfo.value.clear()
             navController.popBackStack()
         }) {
         }
@@ -60,178 +73,13 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
 
         )
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, end = 30.dp, top = 50.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (viewModel.famillylist.contains("부모님")) {
-                CheckedCheckBox(clickcolor = Category_Cliked)
-            } else {
-                NoneCheckBox(nonecheckcolor = Color.White)
+        LazyColumn(){
+            items(viewModel.familyInfo.value){
+               CheckFamilyItem(viewModel = viewModel, familyInfo = it)
             }
 
-            ButtonShapeScreen(
-                title = "부모님(아빠/엄마)",
-                textcolor = if (viewModel.famillylist.contains("부모님")) Color.White else Color.Black,
-                fontSize = 15,
-                modifier = Modifier
-                    .padding(start = 10.dp)
-                    .height(55.dp)
-                    .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("부모님")) Category_Cliked else Button_NoneClicked,
-                shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.famillylist.contains("부모님")) notosans_bold else notosans_regular
-            ) {
+        }
 
-                if (viewModel.famillylist.contains("부모님")) {
-                    viewModel.famillylist.remove("부모님")
-                } else {
-                    viewModel.famillylist.add("부모님")
-                }
-            }
-
-        }//Row
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (viewModel.famillylist.contains("부모님")) {
-                CheckedCheckBox(clickcolor = Category_Cliked)
-            } else {
-                NoneCheckBox(nonecheckcolor = Color.White)
-            }
-
-            ButtonShapeScreen(
-                title = "형제자매(언니/누나/형/동생)",
-                textcolor = if (viewModel.famillylist.contains("부모님")) Color.White else Color.Black,
-                fontSize = 15,
-                modifier = Modifier
-                    .padding(start = 10.dp)
-                    .height(55.dp)
-                    .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("부모님")) Category_Cliked else Button_NoneClicked,
-                shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.famillylist.contains("부모님")) notosans_bold else notosans_regular
-            ) {
-                if (viewModel.famillylist.contains("형제자매")) {
-                    viewModel.famillylist.remove("형제자매")
-                } else {
-                    viewModel.famillylist.add("형제자매")
-                }
-            }
-
-        }//Row
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (viewModel.famillylist.contains("배우자")) {
-                CheckedCheckBox(clickcolor = Category_Cliked)
-            } else {
-                NoneCheckBox(nonecheckcolor = Color.White)
-            }
-
-            ButtonShapeScreen(
-                title = "배우자(남편/부인)",
-                textcolor = if (viewModel.famillylist.contains("배우자")) Color.White else Color.Black,
-                fontSize = 15,
-                modifier = Modifier
-                    .padding(start = 10.dp)
-                    .height(55.dp)
-                    .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("배우자")) Category_Cliked else Button_NoneClicked,
-                shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.famillylist.contains("배우자")) notosans_bold else notosans_regular
-            ) {
-                if (viewModel.famillylist.contains("배우자")) {
-                    viewModel.famillylist.remove("배우자")
-                } else {
-                    viewModel.famillylist.add("배우자")
-                }
-            }
-
-        }//Row
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (viewModel.famillylist.contains("본인")) {
-                CheckedCheckBox(clickcolor = Category_Cliked)
-            } else {
-                NoneCheckBox(nonecheckcolor = Color.White)
-            }
-
-            ButtonShapeScreen(
-                title = "본인",
-                textcolor = if (viewModel.famillylist.contains("본인")) Color.White else Color.Black,
-                fontSize = 15,
-                modifier = Modifier
-                    .padding(start = 10.dp)
-                    .height(55.dp)
-                    .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("본인")) Category_Cliked else Button_NoneClicked,
-                shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.famillylist.contains("본인")) notosans_bold else notosans_regular
-            ) {
-                if (viewModel.famillylist.contains("본인")) {
-                    viewModel.famillylist.remove("본인")
-                } else {
-                    viewModel.famillylist.add("본인")
-                }
-            }
-
-        }//Row
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, end = 30.dp, top = 20.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (viewModel.famillylist.contains("그외")) {
-                CheckedCheckBox(clickcolor = Category_Cliked)
-            } else {
-                NoneCheckBox(nonecheckcolor = Color.White)
-            }
-
-            ButtonShapeScreen(
-                title = "그외",
-                textcolor = if (viewModel.famillylist.contains("그외")) Color.White else Color.Black,
-                fontSize = 15,
-                modifier = Modifier
-                    .padding(start = 10.dp)
-                    .height(55.dp)
-                    .fillMaxWidth(),
-                backgroundcolor = if (viewModel.famillylist.contains("그외")) Category_Cliked else Button_NoneClicked,
-                shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.famillylist.contains("그외")) notosans_bold else notosans_regular
-            ) {
-                if (viewModel.famillylist.contains("그외")) {
-                    viewModel.famillylist.remove("그외")
-                } else {
-                    viewModel.famillylist.add("그외")
-                }
-            }
-
-        }//Row
-
-        SpacerHeight(dp = 53.dp)
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -245,11 +93,56 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
                 .height(55.dp),
             backgroundcolor = Button_Clicked
         ) {
-            if (viewModel.famillylist.isEmpty()) {
-                Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
-            } else {
-                navController.navigate(Common.SIGNUPSCREEN_COMPLETED)
-            }
+//            navController.navigate(Common.SIGNUPSCREEN_COMPLETED)
+            viewModel.postadditionalinfo()
+
+//            Log.d(TAG, "SignUpScreen_8_2_callworkingtime: ${viewModel.additionalResponse}")
         }
     }
+}
+
+
+/**
+ * 1. lazycolumn으로 familyinfo.value 불러와서 띄워줌, 필요한것 **/
+@Composable
+fun CheckFamilyItem(
+    viewModel: SignUpViewModel,
+    familyInfo: FamilyInfo,
+) {
+
+    var mycheck by remember {
+        mutableStateOf(false)
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 30.dp, end = 30.dp, top = 20.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (mycheck) CheckedCheckBox(clickcolor = Category_Cliked) else NoneCheckBox(
+            nonecheckcolor = Color.White
+        )
+
+        ButtonShapeScreen(
+            title = familyInfo.role,
+            textcolor = if (mycheck) Color.White else Color.Black,
+            fontSize = 15,
+            modifier = Modifier
+                .padding(start = 10.dp)
+                .height(55.dp)
+                .fillMaxWidth(),
+            backgroundcolor = if (mycheck) Category_Cliked else Button_NoneClicked,
+            shape = RoundedCornerShape(19.dp),
+            textAlign = TextAlign.Start,
+            fontFamily = if (mycheck) notosans_bold else notosans_regular
+        ) {
+            mycheck = !mycheck
+//            onclick()
+            viewModel.updateFamilyInfo(familyInfo.copy(isFlexible = mycheck))
+//            Log.d(TAG, "CheckFamilyItem: ${viewModel.familyInfo.value}")
+            //클릭을 하면 클릭한 아이템의 familyInfo의 , isFlexble이 true false로 바껴야 돼
+        }
+
+    }//Row
 }

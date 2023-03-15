@@ -134,11 +134,11 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel) {
             CustomDialog(
                 onDismiss = {
                     viewModel.onDismissDialog()
-//                    val intent = Intent(context, SignUpActivity::class.java)
-//                    context.startActivity(intent)
-
-                    val intent = Intent(context, MqttActivity::class.java)
+                    val intent = Intent(context, SignUpActivity::class.java)
                     context.startActivity(intent)
+
+//                    val intent = Intent(context, MqttActivity::class.java)
+//                    context.startActivity(intent)
                 },
                 onConfirm = {
 //                    viewModel.onDismissDialog()

@@ -22,6 +22,7 @@ import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_4_3_CALLYOUTANIMA
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_5_ISTEMPORARYCARE
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_6_ISALLERGY
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_7_CALLYOURHOUSE
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_8_2_CALLWORKINGTIME
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_8_CALLWORKINGTIME
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_COMPLETED
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_NAME
@@ -84,6 +85,13 @@ class SignUpActivity : ComponentActivity() {
 
                 composable(SIGNUPSCREEN_8_CALLWORKINGTIME){
                     SignUpScreen_8_1_callworkingtime(navController = navController,viewModel)
+                }
+
+                composable(SIGNUPSCREEN_8_2_CALLWORKINGTIME){
+                    SignUpScreen_8_2_callworkingtime(
+                        navController = navController,
+                        viewModel = viewModel
+                    )
                 }
 
                 composable(SIGNUPSCREEN_COMPLETED){

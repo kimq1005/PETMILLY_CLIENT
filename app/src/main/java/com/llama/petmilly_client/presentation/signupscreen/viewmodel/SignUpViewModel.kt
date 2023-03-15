@@ -60,19 +60,27 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
     //allergy
     val isallery = mutableStateOf("")
 
+    @SuppressLint("MutableCollectionMutableState")
+    val familyInfo = mutableStateOf(mutableListOf<FamilyInfo>())
+
+
     //typeOfResidence
     val housekind = mutableStateOf("")
 
-    val famillylist = mutableStateListOf<String>()
+    val additionalResponse = AdditionalResponse(
+        name = name.value,
+        nickname = nickname.value,
+        birthday = birthday.value,
+        job = job.value,
+        companionAnimal = livewithanimal.value,
+        companionAnimalCount = numberofanimal.value,
+        companionAnimalInfo = companionAnimalInfo,
+        temporaryProtection = istemporarycare.value,
+        familyInfo = familyInfo.value,
+        allergy = isallery.value,
+        typeOfResidence = housekind.value
+    )
 
-    val family_role = mutableStateOf("")
-    val faimilly_flexble = mutableStateOf<Boolean>(false)
-
-//    val familyInfo: MutableList<FamilyInfo> = arrayListOf()
-//    val familyInfo = mutableStateOf(mutableListOf<FamilyInfo>())
-
-    @SuppressLint("MutableCollectionMutableState")
-    val familyInfo = mutableStateOf(mutableListOf<FamilyInfo>())
 
     fun addFamilyInfo(newFamilyInfo: FamilyInfo) {
         familyInfo.value.add(newFamilyInfo)
@@ -115,19 +123,21 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
                 typeOfResidence = housekind.value
             )
 
+            Log.d(TAG, "postadditionalinfo: $additionalResponse")
 
-            petMillyRepo.postadditonalinfo(MainApplication.accessToken, additionalResponse).let {
-                when (it.status) {
-                    RemoteResult.Status.SUCCESS -> {
-                        Log.d(TAG, "postadditionalinfo: ${it.message}->${it.message}")
 
-                    }
-
-                    else -> {
-                        Log.d(TAG, "postadditionalinfo: ${it.message}->${it.message}")
-                    }
-                }
-            }
+//            petMillyRepo.postadditonalinfo(MainApplication.accessToken, additionalResponse).let {
+//                when (it.status) {
+//                    RemoteResult.Status.SUCCESS -> {
+//                        Log.d(TAG, "postadditionalinfo: ${it.message}->${it.message}")
+//
+//                    }
+//
+//                    else -> {
+//                        Log.d(TAG, "postadditionalinfo: ${it.message}->${it.message}")
+//                    }
+//                }
+//            }
         }
     }
 

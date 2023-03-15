@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +31,7 @@ import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.utils.*
+import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_8_2_CALLWORKINGTIME
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_COMPLETED
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
@@ -81,7 +84,18 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
             color = Color.Black
         )
 
-        Text(text = "*  실 거주기준으로 입력해주세요.", fontSize = 13.sp, color = Color.Black)
+        Text(
+            text = "*  실 거주기준으로 입력해주세요.",
+            fontSize = 13.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(start = 40.dp),
+            fontFamily = notosans_regular,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+        )
 
         Row(
             modifier = Modifier
@@ -142,13 +156,7 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                 backgroundcolor = if (brocheck) Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Start,
-                fontFamily = if (viewModel.familyInfo.value.contains(
-                        FamilyInfo(
-                            "형제자매",
-                            false
-                        )
-                    )
-                ) notosans_bold else notosans_regular
+                fontFamily = if (brocheck) notosans_bold else notosans_regular
             ) {
 
                 if (brocheck) {
@@ -160,7 +168,6 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
                     viewModel.addFamilyInfo(FamilyInfo("형제자매", false))
                 }
 
-                Log.d(TAG, "SignUpScreen_8_1_callworkingtime: ${viewModel.familyInfo}")
 
             }
 
@@ -294,7 +301,7 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
         val check = viewModel.familyInfo.value.size > 0
 
         ButtonScreen(
-            title = "완료",
+            title = "다음",
             textcolor = Color.White,
             fontSize = 15,
             modifier = Modifier
@@ -305,7 +312,7 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
         ) {
             if (check) {
                 Log.d(TAG, "SignUpScreen_8_1_callworkingtime: ${viewModel.familyInfo.value}")
-//                navController.navigate(SIGNUPSCREEN_COMPLETED)
+                navController.navigate(SIGNUPSCREEN_8_2_CALLWORKINGTIME)
             } else {
                 Toast.makeText(context, "아직 체크하지 않은 항목이 있습니다.", Toast.LENGTH_LONG).show()
 
@@ -323,47 +330,9 @@ fun AFAEFAF() {
 }
 
 
-@Composable
-fun CheckFamilyItem(
-    viewModel: SignUpViewModel,
-    familyInfo: FamilyInfo,
-) {
+//
 
-    var mycheck by remember {
-        mutableStateOf(false)
-    }
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 30.dp, end = 30.dp, top = 20.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (mycheck) CheckedCheckBox(clickcolor = Category_Cliked) else NoneCheckBox(
-            nonecheckcolor = Color.White
-        )
-
-        ButtonShapeScreen(
-            title = familyInfo.role,
-            textcolor = if (mycheck) Color.White else Color.Black,
-            fontSize = 15,
-            modifier = Modifier
-                .padding(start = 10.dp)
-                .height(55.dp)
-                .fillMaxWidth(),
-            backgroundcolor = if (mycheck) Category_Cliked else Button_NoneClicked,
-            shape = RoundedCornerShape(19.dp),
-            textAlign = TextAlign.Start,
-            fontFamily = if (mycheck) notosans_bold else notosans_regular
-        ) {
-            mycheck = !mycheck
-
-            viewModel.updateFamilyInfo(familyInfo.copy(isFlexible = mycheck))
-            //클릭을 하면 클릭한 아이템의 familyInfo의 , isFlexble이 true false로 바껴야 돼
-        }
-
-    }//Row
-}
 
 //            if (check) {
 //                check = false

@@ -36,6 +36,7 @@ object Common {
     const val SIGNUPSCREEN_6_ISALLERGY = "signupscreen_6"
     const val SIGNUPSCREEN_7_CALLYOURHOUSE = "signupscreen_7"
     const val SIGNUPSCREEN_8_CALLWORKINGTIME = "signupscreen_8"
+    const val SIGNUPSCREEN_8_2_CALLWORKINGTIME = "signupscreen_8_2"
     const val SIGNUPSCREEN_COMPLETED = "signupscreen_completed"
 
     const val FINDANIMAL_LIST_SCREEN= "findanimalscreen"
