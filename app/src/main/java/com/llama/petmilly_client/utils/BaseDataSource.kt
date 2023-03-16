@@ -18,7 +18,7 @@ abstract class BaseDataSource {
             val response = call()
 
             if (response.isSuccessful) {
-                if (response.code() != 201) {
+                if (response.code() == 201) {
                     val body = response.body()
                     if (body != null) return RemoteResult.success(body)
                 } else {

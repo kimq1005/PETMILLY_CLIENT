@@ -7,9 +7,10 @@ data class AdditionalResponse(
     val job: String,
     val companionAnimal: String,
     val companionAnimalCount: String,
-    val companionAnimalInfo: List<CompanionAnimalInfo>,
+    val gender: String,
+    val companionAnimalInfo: List<CompanionAnimalInfo>?,
     val temporaryProtection: String,
-    val familyInfo: List<FamilyInfo>,
+    val familyInfo: List<FamilyInfo>?,
     val allergy: String,
     val typeOfResidence: String
 ):java.io.Serializable

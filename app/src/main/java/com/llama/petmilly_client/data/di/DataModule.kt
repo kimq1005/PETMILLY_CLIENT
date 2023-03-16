@@ -9,20 +9,29 @@ import dagger.hilt.InstallIn
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import llama.test.jetpack_dagger_plz.utils.BaseDataSource
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import java.util.concurrent.TimeUnit
 
 @InstallIn(SingletonComponent::class)
 @Module
 object DataModule {
 
-    val BASE_URL = "http://localhost:3000/"
-//    val BASE_URL = "http://10.0.0.2:3000/"
+//    val BASE_URL = "http://localhost:3000/"
+    val BASE_URL = "http://192.168.0.26:3000/"
 //    val BASE_URL = "http://172.30.1.98:3000/"
 
 
+
     //10.0.2.2:8080
+
+    val okHttpClient = OkHttpClient.Builder()
+        .connectTimeout(100, TimeUnit.SECONDS)
+        .readTimeout(100, TimeUnit.SECONDS)
+        .writeTimeout(100, TimeUnit.SECONDS)
+        .build()
 
 
     @Provides
@@ -48,6 +57,7 @@ object DataModule {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
             .build()
             .create(PetMillYApiService::class.java)
     }

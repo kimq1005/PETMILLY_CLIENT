@@ -189,35 +189,35 @@ fun SignUpScreen_4_3_CallYourAnimal_Third(
             horizontalArrangement = Arrangement.Center
         ) {
             ButtonShapeScreen(
-                title = "중성화 O",
-                textcolor = if (viewModel.neutered_animal.value == "중성화 O") Color.White else Color.Black,
+                title = "중성화O",
+                textcolor = if (viewModel.neutered_animal.value == "중성화O") Color.White else Color.Black,
                 fontSize = 18,
                 modifier = Modifier
                     .weight(1f)
                     .height(55.dp),
-                backgroundcolor = if (viewModel.neutered_animal.value == "중성화 O") Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.neutered_animal.value == "중성화O") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Center,
-                fontFamily = if (viewModel.neutered_animal.value == "중성화 O") notosans_bold else notosans_regular
+                fontFamily = if (viewModel.neutered_animal.value == "중성화O") notosans_bold else notosans_regular
             ) {
-                viewModel.neutered_animal.value = "중성화 O"
+                viewModel.neutered_animal.value = "중성화O"
             }
 
             Spacer(modifier = Modifier.width(10.dp))
 
             ButtonShapeScreen(
-                title = "중성화 X",
-                textcolor = if (viewModel.neutered_animal.value == "중성화 X") Color.White else Color.Black,
+                title = "중성화X",
+                textcolor = if (viewModel.neutered_animal.value == "중성화X") Color.White else Color.Black,
                 fontSize = 18,
                 modifier = Modifier
                     .weight(1f)
                     .height(55.dp),
-                backgroundcolor = if (viewModel.neutered_animal.value == "중성화 X") Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.neutered_animal.value == "중성화X") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Center,
-                fontFamily = if (viewModel.neutered_animal.value == "중성화 X") notosans_bold else notosans_regular
+                fontFamily = if (viewModel.neutered_animal.value == "중성화X") notosans_bold else notosans_regular
             ) {
-                viewModel.neutered_animal.value = "중성화 X"
+                viewModel.neutered_animal.value = "중성화X"
 
             }
         }//Row

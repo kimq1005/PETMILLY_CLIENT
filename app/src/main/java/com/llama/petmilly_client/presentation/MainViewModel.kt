@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo) 
     val setHomeIntent: LiveData<Event<Unit>> = _setHomeIntent
 
     private val _setsignupIntent = MutableLiveData<Event<Unit>>()
-    val setsignupIntent:LiveData<Event<Unit>> = _setsignupIntent
+    val setsignupIntent: LiveData<Event<Unit>> = _setsignupIntent
 
     private val _yeah = mutableStateOf(Event(Unit))
     val yeah: State<Event<Unit>> = _yeah
@@ -51,14 +51,13 @@ class MainViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo) 
                                 MainApplication.accessToken = accessToken ?: ""
                                 MainApplication.refreshToken = refreshToken ?: ""
 
-                                if(!data.data.isExistAdditionalInfo){
+                                if (!data.data.isExistAdditionalInfo) {
                                     _setsignupIntent.postValue(Event(Unit))
-                                }else{
+                                } else {
                                     if (MainApplication.accessToken != "" && MainApplication.refreshToken != "") {
                                         _setHomeIntent.postValue(Event(Unit))
                                     }
                                 }
-
 
 
                             }
@@ -69,11 +68,12 @@ class MainViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo) 
 
                         RemoteResult.Status.ERROR -> {
                             Log.d(TAG, "postkakaotoken ERROR: ${it.status}->${it.message}")
-
                         }
 
                         else -> {
-                            Log.d(TAG, "postkakaotoken : ${it.status}->${it.message}")
+                            Log.d(TAG, "postkakaotoken: ${it}")
+
+
                         }
                     }
                 }

@@ -71,7 +71,7 @@ fun SignUpScreen_2_gender(navController: NavController, viewModel: SignUpViewMod
                 modifier = Modifier
                     .weight(1f)
                     .clickable {
-                        viewModel.gender.value = "man"
+                        viewModel.gender.value = "남성"
                     }
             ) {
                 Text(
@@ -120,7 +120,7 @@ fun SignUpScreen_2_gender(navController: NavController, viewModel: SignUpViewMod
                 modifier = Modifier
                     .weight(1f)
                     .clickable {
-                        viewModel.gender.value = "wowman"
+                        viewModel.gender.value = "여성"
                     }
             ) {
                 Text(

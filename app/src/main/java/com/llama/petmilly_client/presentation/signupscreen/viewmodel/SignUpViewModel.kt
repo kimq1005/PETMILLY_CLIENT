@@ -68,6 +68,7 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
     val housekind = mutableStateOf("")
 
     val additionalResponse = AdditionalResponse(
+        gender = gender.value,
         name = name.value,
         nickname = nickname.value,
         birthday = birthday.value,
@@ -110,6 +111,7 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
     fun postadditionalinfo() {
         viewModelScope.launch(Dispatchers.IO) {
             val additionalResponse = AdditionalResponse(
+                gender = gender.value,
                 name = name.value,
                 nickname = nickname.value,
                 birthday = birthday.value,
@@ -123,21 +125,22 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
                 typeOfResidence = housekind.value
             )
 
+            Log.d(TAG, "postadditionalinfo: ${MainApplication.accessToken}")
             Log.d(TAG, "postadditionalinfo: $additionalResponse")
+            
 
+            petMillyRepo.postadditonalinfo(MainApplication.accessToken, additionalResponse).let {
+                when (it.status) {
+                    RemoteResult.Status.SUCCESS -> {
+                        Log.d(TAG, "postadditionalinfo SUCCRESS: ${it.status}->${it.message}")
 
-//            petMillyRepo.postadditonalinfo(MainApplication.accessToken, additionalResponse).let {
-//                when (it.status) {
-//                    RemoteResult.Status.SUCCESS -> {
-//                        Log.d(TAG, "postadditionalinfo: ${it.message}->${it.message}")
-//
-//                    }
-//
-//                    else -> {
-//                        Log.d(TAG, "postadditionalinfo: ${it.message}->${it.message}")
-//                    }
-//                }
-//            }
+                    }
+
+                    else -> {
+                        Log.d(TAG, "postadditionalinfo ELSE: $it")
+                    }
+                }
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package com.llama.petmilly_client.data.repository
 import com.llama.petmilly_client.data.model.TokenResponse
 import com.llama.petmilly_client.data.model.accesstoken.AccessTokenDTO
 import com.llama.petmilly_client.data.model.additonal.AdditionalSuccessDTO
+import com.llama.petmilly_client.data.model.additonal.AdditonalTokenFailedDTO
 import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse

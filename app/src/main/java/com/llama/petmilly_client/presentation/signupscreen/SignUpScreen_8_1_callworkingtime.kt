@@ -124,11 +124,11 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
 
                 if (parentscheck) {
                     parentscheck = false
-                    viewModel.deletefamilyInfo(FamilyInfo("부모님", false))
+                    viewModel.deletefamilyInfo(FamilyInfo("부모님(아빠/엄마)", false))
 
                 } else {
                     parentscheck = true
-                    viewModel.addFamilyInfo(FamilyInfo("부모님", false))
+                    viewModel.addFamilyInfo(FamilyInfo("부모님(아빠/엄마)", false))
                 }
 
             }
@@ -161,11 +161,11 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
 
                 if (brocheck) {
                     brocheck = false
-                    viewModel.deletefamilyInfo(FamilyInfo("형제자매", false))
+                    viewModel.deletefamilyInfo(FamilyInfo("형제자매(언니/누나/형/동생)", false))
 
                 } else {
                     brocheck = true
-                    viewModel.addFamilyInfo(FamilyInfo("형제자매", false))
+                    viewModel.addFamilyInfo(FamilyInfo("형제자매(언니/누나/형/동생)", false))
                 }
 
 
@@ -202,11 +202,11 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
 
                 if (spousecheck) {
                     spousecheck = false
-                    viewModel.deletefamilyInfo(FamilyInfo("배우자", false))
+                    viewModel.deletefamilyInfo(FamilyInfo("배우자(남편/부인)", false))
 
                 } else {
                     spousecheck = true
-                    viewModel.addFamilyInfo(FamilyInfo("배우자", false))
+                    viewModel.addFamilyInfo(FamilyInfo("배우자(남편/부인)", false))
                 }
 
 

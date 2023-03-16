@@ -6,4 +6,4 @@ data class AdditionalSuccessDTO(
     val `data`: Data,
     val isAccessTokenExpired: Boolean,
     val isRefreshTokenExpired: Boolean
-)
+):java.io.Serializable

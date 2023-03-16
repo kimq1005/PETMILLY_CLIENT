@@ -75,33 +75,33 @@ fun ShelterDetail_3_profile_Screen(
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             ButtonScreen_HOUSE(
-                title = "중성화 O",
-                textcolor = if (viewModel.isneutered.value == "중성화 O") Color.White else Color.Black,
+                title = "중성화O",
+                textcolor = if (viewModel.isneutered.value == "중성화O") Color.White else Color.Black,
                 fontSize = 20,
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp)
                     .height(70.dp),
-                backgroundcolor = if (viewModel.isneutered.value == "중성화 O") Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.isneutered.value == "중성화O") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Center
             ) {
-                viewModel.isneutered.value = "중성화 O"
+                viewModel.isneutered.value = "중성화O"
             }
 
             ButtonScreen_HOUSE(
-                title = "중성화 X",
-                textcolor = if (viewModel.isneutered.value == "중성화 X") Color.White else Color.Black,
+                title = "중성화X",
+                textcolor = if (viewModel.isneutered.value == "중성화X") Color.White else Color.Black,
                 fontSize = 20,
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp)
                     .height(70.dp),
-                backgroundcolor = if (viewModel.isneutered.value == "중성화 X") Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.isneutered.value == "중성화X") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Center
             ) {
-                viewModel.isneutered.value = "중성화 X"
+                viewModel.isneutered.value = "중성화X"
             }
 
         }
