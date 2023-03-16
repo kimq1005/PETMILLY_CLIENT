@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.llama.petmilly_client.MainApplication
@@ -14,6 +15,7 @@ import com.llama.petmilly_client.data.model.additonal.reponse.CompanionAnimalInf
 import com.llama.petmilly_client.data.model.additonal.reponse.FamilyInfo
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.domain.repository.PetMillyRepo
+import com.llama.petmilly_client.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +26,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo) : ViewModel() {
+
+    private val _setIntent = MutableLiveData<Event<Unit>>()
+    val setIntent:LiveData<Event<Unit>> = _setIntent
+
+
     val name = mutableStateOf<String>("")
 
     val nickname = mutableStateOf<String>("")
@@ -132,7 +139,8 @@ class SignUpViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo
             petMillyRepo.postadditonalinfo(MainApplication.accessToken, additionalResponse).let {
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
-                        Log.d(TAG, "postadditionalinfo SUCCRESS: ${it.status}->${it.message}")
+                        Log.d(TAG, "postadditionalinfo SUCCRESS: ${it}")
+                        _setIntent.postValue(Event(Unit))
 
                     }
 

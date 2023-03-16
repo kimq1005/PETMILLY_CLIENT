@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,11 +26,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
+import com.llama.petmilly_client.utils.notosans_bold
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_3_JOB
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
@@ -51,10 +55,15 @@ fun SignUpScreen_2_gender(navController: NavController, viewModel: SignUpViewMod
 //        Spacer(modifier = Modifier.height(55.dp))
 
         Text(
-            text = "OOO님\n성별을 알려주세요!",
+            text = "${MainApplication.signupname}님\n성별을 알려주세요!",
             fontSize = 30.sp,
             modifier = Modifier.padding(40.dp),
-            fontWeight = FontWeight.Bold,
+            fontFamily =  notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             color = Color.Black
         )
 

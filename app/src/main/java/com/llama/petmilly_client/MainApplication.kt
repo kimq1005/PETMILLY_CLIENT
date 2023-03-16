@@ -24,6 +24,8 @@ class MainApplication : Application() {
         var accessToken= ""
 
         var refreshToken = ""
+
+        var signupname = ""
     }
 
 

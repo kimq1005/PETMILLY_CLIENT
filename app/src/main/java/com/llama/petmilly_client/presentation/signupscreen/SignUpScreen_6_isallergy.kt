@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
@@ -39,10 +42,15 @@ fun SignUpScreen_6_isallergy(navController: NavController, viewModel: SignUpView
         CommonSignDescription()
 
         Text(
-            text = "OOO님,\n동물 관련하여 \n알러지가 있으신가요?",
+            text = "${MainApplication.signupname}님,\n동물 관련하여 \n알러지가 있으신가요?",
             fontSize = 30.sp,
             modifier = Modifier.padding(top = 30.dp, start = 40.dp, end = 40.dp, bottom = 30.dp),
-            fontWeight = FontWeight.Bold,
+            fontFamily =  notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             color = Color.Black
         )
 

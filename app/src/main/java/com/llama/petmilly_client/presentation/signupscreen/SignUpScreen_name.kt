@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
@@ -105,8 +106,13 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
         Text(
             text = "성함 (입양/임보 시)",
             fontSize = 13.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
+            fontFamily =  notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+                    color = Color.Black,
             modifier = Modifier.padding(start = 5.dp)
         )
 
@@ -193,6 +199,7 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
         ) {
             if (viewModel.name.value != "" && viewModel.nickname.value != "") {
                 navController.navigate(SIGNUPSCREEN_1_BIRTHDAY)
+                MainApplication.signupname = viewModel.name.value
 //                viewModel.postkakaotoken()
 
             } else {

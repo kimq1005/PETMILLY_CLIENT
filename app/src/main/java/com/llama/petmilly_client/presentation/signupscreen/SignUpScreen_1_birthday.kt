@@ -39,6 +39,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
@@ -75,10 +76,15 @@ fun SignUpScreen_1_birthday(navController: NavController, viewModel: SignUpViewM
         CommonSignDescription()
 
         Text(
-            text = "OOO님의 생일은\n언제인가요?",
+            text = "${MainApplication.signupname}님의 생일은\n언제인가요?",
             fontSize = 30.sp,
             modifier = Modifier.padding(40.dp),
-            fontWeight = FontWeight.Bold,
+            fontFamily =  notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             color = Color.Black
         )
 

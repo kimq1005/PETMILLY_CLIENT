@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.data.model.additonal.reponse.FamilyInfo
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
@@ -77,10 +78,15 @@ fun SignUpScreen_8_1_callworkingtime(navController: NavController, viewModel: Si
         CommonSignDescription()
 
         Text(
-            text = "OOO님,\n가족구성원에 대해\n알려주세요!",
+            text = "${MainApplication.signupname}님,\n가족구성원에 대해\n알려주세요!",
             fontSize = 30.sp,
             modifier = Modifier.padding(top = 30.dp, start = 40.dp, end = 40.dp, bottom = 30.dp),
-            fontWeight = FontWeight.Bold,
+            fontFamily =  notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             color = Color.Black
         )
 
