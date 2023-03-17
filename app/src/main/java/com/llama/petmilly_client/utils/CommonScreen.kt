@@ -226,6 +226,65 @@ fun NoneCheckBox(nonecheckcolor: Color) {
 }
 
 @Composable
+fun IDontKnowCheckBox(
+    onclick: (String) -> Unit,
+) {
+    var check by remember {
+        mutableStateOf(false)
+    }
+
+    Box(modifier = Modifier.clickable {
+        check = !check
+        if(check){
+            onclick("모르겠어요")
+        }
+
+    }) {
+        Canvas(
+            modifier = if (check) Modifier
+                .size(size = 18.dp)
+                .align(Alignment.Center)
+            else Modifier
+                .size(size = 18.dp)
+                .align(Alignment.Center)
+                .border(
+                    border = BorderStroke(1.dp, Color.Black), shape = CircleShape
+                )
+
+        ) {
+            drawCircle(
+                if (check) Category_Cliked else Color.White
+//                color = clickcolor
+            )
+        }
+
+        if (check) {
+            Image(
+                painter = painterResource(id = R.drawable.baseline_check_white),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .height(4.dp)
+                    .width(6.dp),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Image(
+                painter = painterResource(id = R.drawable.baseline_check_black_24),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .height(4.dp)
+                    .width(6.dp),
+                contentScale = ContentScale.Crop
+            )
+        }
+
+    }//Box
+}
+
+
+@Composable
 fun ButtonScreen_HOUSE(
     title: String,
     textcolor: Color,
@@ -240,7 +299,10 @@ fun ButtonScreen_HOUSE(
     Button(
         onClick = { onclick() },
         modifier = modifier,
-        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundcolor, contentColor = Color.White),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = backgroundcolor,
+            contentColor = Color.White
+        ),
         shape = shape,
         elevation = null
 
@@ -429,7 +491,7 @@ fun PicktureUriItems(image: Uri, modifier: Modifier, ondelete: () -> Unit) {
 
 
 @Composable
-fun FAFF(){
+fun FAFF() {
     var (value, setvalue) = rememberSaveable {
         mutableStateOf("1234555")
     }
@@ -437,10 +499,10 @@ fun FAFF(){
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Row(modifier = Modifier.weight(4f)) {
             TextField(
-                value =value,
+                value = value,
                 onValueChange = {
                     if (it.length <= 4) {
-                       value = it
+                        value = it
                     }
                 },
                 modifier = Modifier.weight(3f),
@@ -479,12 +541,11 @@ fun FAFF(){
     }
 
 
-
 }
 
 @Preview
 @Composable
-fun AEDFAFDAFFA(){
+fun AEDFAFDAFFA() {
     FAFF()
 }
 

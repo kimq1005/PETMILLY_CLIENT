@@ -1,18 +1,21 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -23,11 +26,9 @@ import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.ui.theme.Grey_50_CBC4C4
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
-import com.llama.petmilly_client.utils.ButtonScreen
-import com.llama.petmilly_client.utils.CheckedCheckBox
-import com.llama.petmilly_client.utils.notosans_bold
-import com.llama.petmilly_client.utils.notosans_regular
+import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
 fun ShelterDetail_2_profile_Screen(
@@ -36,6 +37,10 @@ fun ShelterDetail_2_profile_Screen(
     activity:Activity
 ) {
 
+    var idontnowspeciescheck by remember {
+        mutableStateOf(false)
+    }
+
     SetAlomostCompletedDialog(
         viewModel.isAlmostCompletedDialog, onDismiss = {
             viewModel.onDismissAlmostCompetedDialog()
@@ -43,7 +48,9 @@ fun ShelterDetail_2_profile_Screen(
         activity = activity
     )
 
-    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.White)) {
 
         ShelterDetailTitleBar(title = "임보처구해요", ismenu = false, clickBack = { navController.popBackStack() }) {
             viewModel.onShownAlmostCompetedDialog()
@@ -80,12 +87,11 @@ fun ShelterDetail_2_profile_Screen(
                     .height(55.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = if (viewModel.animalkg.value == "") TextField_BackgroudColor else Color.White,
+                    backgroundColor = TextField_BackgroudColor ,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedLabelColor = Color.White,
                     cursorColor = Color.Black,
-
                     ),
                 placeholder = { Text(text = "몸무게를 적어주세요") }
             )
@@ -133,19 +139,29 @@ fun ShelterDetail_2_profile_Screen(
                 .height(55.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.animaldetailspecies.value == "") TextField_BackgroudColor else Color.White,
+                backgroundColor = TextField_BackgroudColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
                 cursorColor = Color.Black,
 
                 ),
+
             placeholder = { Text(text = "예)믹스견 / 포메라니안 / 진도") }
         )
         Spacer(modifier = Modifier.height(10.dp))
 
         Row(modifier = Modifier.padding(start = 27.dp)) {
-            CheckedCheckBox(clickcolor = Category_Cliked)
+//            CheckedCheckBox(clickcolor = Category_Cliked)
+            IDontKnowCheckBox(onclick = {string->
+                if(string =="모르겠어요"){
+                    viewModel.animaldetailspecies.value = string
+                    idontnowspeciescheck
+                }else{
+                    !idontnowspeciescheck
+                }
+                Log.d(TAG, "ShelterDetail_2_profile_Screen: ${viewModel.animaldetailspecies.value}")
+            })
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = "모르겠어요", fontSize = 12.sp, fontFamily = notosans_regular, style = TextStyle(
@@ -188,13 +204,14 @@ fun ShelterDetail_2_profile_Screen(
                     .height(55.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = if (viewModel.animalage.value == "") TextField_BackgroudColor else Color.White,
+                    backgroundColor = TextField_BackgroudColor,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedLabelColor = Color.White,
                     cursorColor = Color.Black,
 
                     ),
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 placeholder = { Text(text = "예) 2개월 = 0.2 / 2살 = 2") }
             )
 
@@ -217,8 +234,15 @@ fun ShelterDetail_2_profile_Screen(
         Spacer(modifier = Modifier.height(10.dp))
 
         Row(modifier = Modifier.padding(start = 27.dp)) {
-            CheckedCheckBox(clickcolor = Category_Cliked)
+
+//            CheckedCheckBox(clickcolor = Category_Cliked)
+            IDontKnowCheckBox(onclick = { string->
+                if(string =="모르겠어요"){
+                    viewModel.isneutered.value = string
+                }
+            })
             Spacer(modifier = Modifier.width(5.dp))
+
             Text(
                 text = "모르겠어요", fontSize = 12.sp, fontFamily = notosans_regular, style = TextStyle(
                     platformStyle = PlatformTextStyle(
@@ -228,6 +252,12 @@ fun ShelterDetail_2_profile_Screen(
                 color = Color(0xFF050505)
             )
         }//Row
+
+        /**
+         * 1. 모르겠어요를 클릭시 isnetered.value가 "모르겠어요가 되어야함.
+         * 2. 다시 TextField를 클릭시 모르겠어요가 해제가 되면서 텍스트필드에 입력한 값이 isnetered.value가 되어야함
+         * 3.
+         * "**/
 
 
         Spacer(modifier = Modifier.weight(1f))

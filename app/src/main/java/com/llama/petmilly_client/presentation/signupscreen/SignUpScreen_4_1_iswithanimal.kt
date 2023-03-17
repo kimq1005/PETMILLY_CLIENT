@@ -182,7 +182,7 @@ fun SignUpScreen_4_1_iswithanimal(navController: NavController, viewModel: SignU
                 backgroundcolor = if (viewModel.livewithanimal.value == "") Button_NoneClicked else Button_Clicked
             ) {
                 if (viewModel.livewithanimal.value != "") {
-                    if (viewModel.livewithanimal.value == "네, 같이 살고 있어요." || viewModel.livewithanimal.value == "지금은 아니지만, 키운적은 있어요.") {
+                    if (viewModel.livewithanimal.value == "네, 같이 살고 있어요.") {
                         navController.navigate(SIGNUPSCREEN_4_2_CALLYOUTANIMAL)
                     }else{
                         navController.navigate(SIGNUPSCREEN_5_ISTEMPORARYCARE)

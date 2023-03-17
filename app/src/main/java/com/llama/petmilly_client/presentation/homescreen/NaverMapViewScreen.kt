@@ -184,7 +184,6 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                             viewModel.selelctedcategory.value = ""
                             viewModel.getlibrary()
                             viewModel.selelctedcategory.value = item.title
-                            Log.d(TAG, "NaverMapViewScreen: ${item.title}")
                         }
                         Spacer(modifier = Modifier.width(8.dp))
 

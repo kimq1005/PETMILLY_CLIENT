@@ -3,15 +3,17 @@ package com.llama.petmilly_client.data.network
 import com.llama.petmilly_client.data.model.TokenResponse
 import com.llama.petmilly_client.data.model.accesstoken.AccessTokenDTO
 import com.llama.petmilly_client.data.model.additonal.AdditionalSuccessDTO
-import com.llama.petmilly_client.data.model.additonal.AdditonalTokenFailedDTO
 import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
+import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
+import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface PetMillYApiService {
 
@@ -35,6 +37,12 @@ interface PetMillYApiService {
     suspend fun postuserrefreshtoken(
         @Body tokenResponse: TokenResponse
     ):Response<RefreshTokenDTO>
+
+    @POST("post/temporary-protection")
+    suspend fun posttemporaryprotection(
+        @Header("x-access-token") token: String,
+        @Body temporaryprotectionResponse: TemporaryprotectionResponse
+    ):Response<TemporaryprotectionDTO>
 
 
 }

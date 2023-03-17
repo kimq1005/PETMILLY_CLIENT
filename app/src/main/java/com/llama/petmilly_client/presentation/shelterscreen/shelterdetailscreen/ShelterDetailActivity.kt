@@ -25,9 +25,10 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SHELTERDETAIL_SPECIES_SCREEN
-
+@AndroidEntryPoint
 class ShelterDetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

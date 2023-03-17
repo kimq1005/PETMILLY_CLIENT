@@ -75,7 +75,7 @@ fun ShelterDetail_4_profile_Screen(
                 .height(80.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.animalhealth.value == "") TextField_BackgroudColor else Color.White,
+                backgroundColor = TextField_BackgroudColor ,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
@@ -116,7 +116,7 @@ fun ShelterDetail_4_profile_Screen(
                 .height(80.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.animalskill.value == "") TextField_BackgroudColor else Color.White,
+                backgroundColor = TextField_BackgroudColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
@@ -153,7 +153,7 @@ fun ShelterDetail_4_profile_Screen(
                 .height(80.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.animalpersonality.value == "") TextField_BackgroudColor else Color.White,
+                backgroundColor = TextField_BackgroudColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,

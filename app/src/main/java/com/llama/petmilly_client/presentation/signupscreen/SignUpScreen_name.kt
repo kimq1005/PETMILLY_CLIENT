@@ -41,15 +41,6 @@ import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_1_BIRTHDAY
 @Composable
 fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel = hiltViewModel()) {
 
-
-    val (name, setname) = rememberSaveable {
-        mutableStateOf("")
-    }
-
-    val (nickname, setnickname) = rememberSaveable {
-        mutableStateOf("")
-    }
-
     val context = LocalContext.current
 
     TitleBar(title = "", ismenu = false, clickBack = { }) {

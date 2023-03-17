@@ -8,6 +8,8 @@ import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
+import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
+import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionResponse
 import com.llama.petmilly_client.data.network.PetMillYApiService
 import com.llama.petmilly_client.domain.repository.PetMillyRepo
 import llama.test.jetpack_dagger_plz.utils.BaseDataSource
@@ -39,5 +41,12 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         getResult {
             petMillYApiService.postuserrefreshtoken(tokenResponse)
         }
+
+    override suspend fun posttemporaryprotection(
+        token: String,
+        temporaryprotectionResponse: TemporaryprotectionResponse,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult {
+        petMillYApiService.posttemporaryprotection(token, temporaryprotectionResponse)
+    }
 
 }

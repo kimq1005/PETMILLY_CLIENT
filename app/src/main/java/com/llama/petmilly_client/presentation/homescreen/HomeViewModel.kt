@@ -109,24 +109,16 @@ class HomeViewModel @Inject constructor(private val getLibraryRepo: GetLibraryRe
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
                         it.data?.let { data ->
-                            Log.d(TAG, "getlibrary1: test")
-
                             _yeahman.postValue(data.SeoulPublicLibraryInfo.row)
                             setlibrary()
+                            Log.d(TAG, "getlibrary SUCCESS")
                         }
                     }
 
                     else -> {
-                        Log.d(TAG, "getlibrary: ${it.status}->${it.message}")
-                        it.data?.let { data ->
-                            Log.d(TAG, "getlibrary1: test")
-
-                            _yeahman.postValue(data.SeoulPublicLibraryInfo.row)
-                            setlibrary()
-                        }
+                        Log.d(TAG, "getlibrary ELES $it")
                     }
                 }
-                Log.d(TAG, "getlibrary2: test")
                 _setEvent.postValue(Event(Unit))
                 _closeProgress.postValue(Event(Unit))
 

@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -37,7 +38,9 @@ fun ShelterDetail_7_Application_Period_Screen(navController: NavController, view
         activity = activity
     )
     
-    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.White)) {
 
         ShelterDetailTitleBar(
             title = "임보처구해요",
@@ -261,8 +264,9 @@ fun ShelterDetail_7_Application_Period_Screen(navController: NavController, view
 
             ) {
                 if (ischeck) {
-                        activity.finish()
-                    //임보처 구해요 글쓰기 완료
+                    viewModel.posttemporaryprotection()
+//                        activity.finish()
+                        //임보처 구해요 글쓰기 완료
                 } else {
 
                 }

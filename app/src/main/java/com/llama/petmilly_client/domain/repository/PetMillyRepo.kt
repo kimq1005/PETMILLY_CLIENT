@@ -8,6 +8,8 @@ import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
+import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
+import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionResponse
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
 import retrofit2.Response
 import retrofit2.http.Body
@@ -31,4 +33,9 @@ interface PetMillyRepo {
     suspend fun postuserrefreshtoken(
         tokenResponse: TokenResponse
     ):RemoteResult<RefreshTokenDTO>
+
+    suspend fun posttemporaryprotection(
+        token: String,
+        temporaryprotectionResponse: TemporaryprotectionResponse
+    ):RemoteResult<TemporaryprotectionDTO>
 }

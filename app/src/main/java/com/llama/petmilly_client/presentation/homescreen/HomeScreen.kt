@@ -58,15 +58,6 @@ private val naverMap: NaverMap? = null
 @Composable
 //fun HomeScreen(viewModel: HomeViewModel = hiltViewModel())
 fun HomeScreen() {
-//    val viewModel: HomeViewModel = hiltViewModel()
-    val context = LocalContext.current
-//    viewModel.getlibrary()
-
-    val (search, setsearch) = rememberSaveable {
-        mutableStateOf("")
-    }
-
-
 
     NaverMapViewScreen()
 

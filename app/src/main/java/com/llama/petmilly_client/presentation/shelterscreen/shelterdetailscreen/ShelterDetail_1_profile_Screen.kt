@@ -107,7 +107,7 @@ fun ShelterDetail_1_profile_Screen(
                 .height(55.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.animalname.value == "") TextField_BackgroudColor else Color.White,
+                backgroundColor = TextField_BackgroudColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
