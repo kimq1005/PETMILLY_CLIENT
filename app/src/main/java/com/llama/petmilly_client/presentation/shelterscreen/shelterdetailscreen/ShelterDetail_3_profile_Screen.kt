@@ -84,7 +84,8 @@ fun ShelterDetail_3_profile_Screen(
                     .height(70.dp),
                 backgroundcolor = if (viewModel.isneutered.value == "중성화O") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = viewModel.isneutered.value != "모르겠어요"
             ) {
                 viewModel.isneutered.value = "중성화O"
             }
@@ -99,7 +100,8 @@ fun ShelterDetail_3_profile_Screen(
                     .height(70.dp),
                 backgroundcolor = if (viewModel.isneutered.value == "중성화X") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                enabled = viewModel.isneutered.value != "모르겠어요",
+                textAlign = TextAlign.Center,
             ) {
                 viewModel.isneutered.value = "중성화X"
             }
@@ -109,7 +111,9 @@ fun ShelterDetail_3_profile_Screen(
         Spacer(modifier = Modifier.height(10.dp))
 
         Row(modifier = Modifier.padding(start = 27.dp)) {
-            CheckedCheckBox(clickcolor = Category_Cliked)
+           IDontKnowCheckBox(onclick = { string->
+               viewModel.isneutered.value = string
+           })
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = "모르겠어요", fontSize = 12.sp, fontFamily = notosans_regular, style = TextStyle(
@@ -154,8 +158,9 @@ fun ShelterDetail_3_profile_Screen(
                     .height(100.dp),
                 backgroundcolor = if (viewModel.isinoculation.value == "미접종") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
-            ) {
+                textAlign = TextAlign.Center,
+                enabled = viewModel.isinoculation.value != "모르겠어요",
+                ) {
                 viewModel.isinoculation.value = "미접종"
             }
 
@@ -169,7 +174,8 @@ fun ShelterDetail_3_profile_Screen(
                     .height(100.dp),
                 backgroundcolor = if (viewModel.isinoculation.value == "1차 완료") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = viewModel.isinoculation.value != "모르겠어요",
             ) {
                 viewModel.isinoculation.value = "1차 완료"
             }
@@ -184,7 +190,8 @@ fun ShelterDetail_3_profile_Screen(
                     .height(100.dp),
                 backgroundcolor = if (viewModel.isinoculation.value == "2차 완료") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = viewModel.isinoculation.value != "모르겠어요",
             ) {
                 viewModel.isinoculation.value = "2차 완료"
             }
@@ -194,7 +201,11 @@ fun ShelterDetail_3_profile_Screen(
         Spacer(modifier = Modifier.height(10.dp))
 
         Row(modifier = Modifier.padding(start = 27.dp)) {
-            CheckedCheckBox(clickcolor = Category_Cliked)
+
+            IDontKnowCheckBox(onclick = { string->
+                viewModel.isinoculation.value = string
+            })
+
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = "모르겠어요", fontSize = 12.sp, fontFamily = notosans_regular, style = TextStyle(

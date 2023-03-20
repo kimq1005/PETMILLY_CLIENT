@@ -204,7 +204,7 @@ fun AlmostCompletedDialog(
 fun SetAlomostCompletedDialog(
     isAlmostCompletedDialog: Boolean,
     onDismiss: () -> Unit,
-    activity: Activity,
+    activity: Activity?,
 ) {
     if (isAlmostCompletedDialog) {
         AlmostCompletedDialog(
@@ -212,7 +212,7 @@ fun SetAlomostCompletedDialog(
                 onDismiss()
             },
             onExit = {
-                activity.finish()
+                activity?.finish()
             }
         )
     }

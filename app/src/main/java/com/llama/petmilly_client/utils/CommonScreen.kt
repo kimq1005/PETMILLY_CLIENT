@@ -237,6 +237,8 @@ fun IDontKnowCheckBox(
         check = !check
         if(check){
             onclick("모르겠어요")
+        }else{
+            onclick("")
         }
 
     }) {
@@ -293,6 +295,7 @@ fun ButtonScreen_HOUSE(
     backgroundcolor: Color,
     textAlign: TextAlign,
     shape: Shape,
+    enabled: Boolean,
     onclick: () -> Unit,
 ) {
 
@@ -304,7 +307,8 @@ fun ButtonScreen_HOUSE(
             contentColor = Color.White
         ),
         shape = shape,
-        elevation = null
+        elevation = null,
+        enabled = enabled
 
     ) {
         Text(

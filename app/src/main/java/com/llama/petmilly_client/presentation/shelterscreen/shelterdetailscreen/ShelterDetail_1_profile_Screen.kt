@@ -152,7 +152,8 @@ fun ShelterDetail_1_profile_Screen(
                     .height(55.dp),
                 backgroundcolor = if (viewModel.animalsex.value == "수컷") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.animalsex.value = "수컷"
             }
@@ -181,7 +182,8 @@ fun ShelterDetail_1_profile_Screen(
                     .height(55.dp),
                 backgroundcolor = if (viewModel.animalsex.value == "암컷") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.animalsex.value = "암컷"
             }
@@ -196,7 +198,8 @@ fun ShelterDetail_1_profile_Screen(
                     .height(55.dp),
                 backgroundcolor = if (viewModel.animalsex.value == "모름") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.animalsex.value = "모름"
             }

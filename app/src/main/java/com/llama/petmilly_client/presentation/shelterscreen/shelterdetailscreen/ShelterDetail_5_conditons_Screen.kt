@@ -1,9 +1,13 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -17,20 +21,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.dialog.SetAlomostCompletedDialog
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
-import com.llama.petmilly_client.ui.theme.Button_NoneClicked
-import com.llama.petmilly_client.ui.theme.Category_Cliked
-import com.llama.petmilly_client.ui.theme.Grey_50_CBC4C4
-import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
-import com.llama.petmilly_client.utils.ButtonScreen
-import com.llama.petmilly_client.utils.ButtonScreen_HOUSE
-import com.llama.petmilly_client.utils.notosans_bold
+import com.llama.petmilly_client.ui.theme.*
+import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 @Composable
 fun ShelterDetail_5_conditons_Screen(
@@ -46,13 +49,17 @@ fun ShelterDetail_5_conditons_Screen(
         activity = activity
     )
 
-    Column(Modifier.fillMaxSize().background(color = Color.White)) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+    ) {
 
         ShelterDetailTitleBar(
             title = "임보처구해요",
             ismenu = false,
             clickBack = { navController.popBackStack() }) {
-           viewModel.onShownAlmostCompetedDialog()
+            viewModel.onShownAlmostCompetedDialog()
         }
 
         ShelterDetailSuvTitle("주인공의 프로필을\n완성해주세요.")
@@ -90,7 +97,8 @@ fun ShelterDetail_5_conditons_Screen(
                     .height(65.dp),
                 backgroundcolor = if (viewModel.pickup.value == "직접픽업") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.pickup.value = "직접픽업"
             }
@@ -105,7 +113,8 @@ fun ShelterDetail_5_conditons_Screen(
                     .height(65.dp),
                 backgroundcolor = if (viewModel.pickup.value == "조율가능") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.pickup.value = "조율가능"
             }
@@ -127,6 +136,7 @@ fun ShelterDetail_5_conditons_Screen(
             )
         )
 
+
         Spacer(modifier = Modifier.height(6.dp))
 
         Row(
@@ -142,7 +152,7 @@ fun ShelterDetail_5_conditons_Screen(
                     .height(55.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = if (viewModel.contions.value == "") TextField_BackgroudColor else Color.White,
+                    backgroundColor = TextField_BackgroudColor,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedLabelColor = Color.White,
@@ -160,10 +170,32 @@ fun ShelterDetail_5_conditons_Screen(
                     .align(Alignment.CenterVertically)
                     .weight(1f)
                     .height(45.dp)
-                    .width(45.dp),
-                contentScale = ContentScale.Crop
+                    .width(45.dp)
+                    .clickable {
+                        if(viewModel.contions.value != ""){
+                            viewModel.addtemporaryProtectionCondition(viewModel.contions.value)
+                            viewModel.contions.value = ""
+                        }
+                    },
+                contentScale = ContentScale.Crop,
             )
         }//Row
+
+        SpacerHeight(dp = 9.dp)
+
+        LazyColumn(
+            modifier = Modifier.padding(horizontal = 28.dp)
+        ) {
+            items(viewModel.temporaryProtectionCondition) { item ->
+                TemporaryProtectionCondition(true, item, ondelete = {
+                    viewModel.deletetemporaryProtectionCondition(item)
+                })
+
+                SpacerHeight(dp = 7.dp)
+
+            }
+
+        }
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -172,7 +204,7 @@ fun ShelterDetail_5_conditons_Screen(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 20.dp)
         ) {
-            val ischeck = viewModel.pickup.value != "" && viewModel.contions.value != ""
+            val ischeck = viewModel.pickup.value != "" && viewModel.temporaryProtectionCondition.size > 0
 
             ButtonScreen(
                 title = "다음",
@@ -185,7 +217,7 @@ fun ShelterDetail_5_conditons_Screen(
 
             ) {
                 if (ischeck) {
-                        navController.navigate(Common.SHELTERDETAIL_6_CONDITION_SCREEN)
+                    navController.navigate(Common.SHELTERDETAIL_6_CONDITION_SCREEN)
                 } else {
 
                 }
@@ -209,5 +241,39 @@ fun ShelterDetail_5_conditons_Screen(
 
     }
 
+}
 
+@Composable
+fun TemporaryProtectionCondition(yesorno: Boolean, text: String, ondelete: () -> Unit) {
+    Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
+        Text(text = if (yesorno) "✅ " else "❌ ")
+
+        Text(
+            text = text,
+            fontFamily = notosans_regular,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+            color = Black_60_Transfer,
+            maxLines = 1,
+        )
+
+        SpacerWidth(dp = 5.dp)
+
+        Image(
+            painter = painterResource(id = R.drawable.img_cancle),
+            contentDescription = null,
+            modifier = Modifier
+                .width(15.dp)
+                .height(15.dp)
+                .clickable {
+                    ondelete()
+                },
+            contentScale = ContentScale.Crop
+
+        )
+
+    }
 }

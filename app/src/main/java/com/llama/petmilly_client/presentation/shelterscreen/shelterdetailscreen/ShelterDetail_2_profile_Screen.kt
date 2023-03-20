@@ -34,12 +34,9 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 fun ShelterDetail_2_profile_Screen(
     navController: NavController,
     viewModel: ShelterDetailViewModel,
-    activity:Activity
+    activity: Activity,
 ) {
 
-    var idontnowspeciescheck by remember {
-        mutableStateOf(false)
-    }
 
     SetAlomostCompletedDialog(
         viewModel.isAlmostCompletedDialog, onDismiss = {
@@ -48,11 +45,16 @@ fun ShelterDetail_2_profile_Screen(
         activity = activity
     )
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.White)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
 
-        ShelterDetailTitleBar(title = "임보처구해요", ismenu = false, clickBack = { navController.popBackStack() }) {
+        ShelterDetailTitleBar(
+            title = "임보처구해요",
+            ismenu = false,
+            clickBack = { navController.popBackStack() }) {
             viewModel.onShownAlmostCompetedDialog()
         }
 
@@ -87,12 +89,13 @@ fun ShelterDetail_2_profile_Screen(
                     .height(55.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = TextField_BackgroudColor ,
+                    backgroundColor = TextField_BackgroudColor,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedLabelColor = Color.White,
                     cursorColor = Color.Black,
-                    ),
+                ),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 placeholder = { Text(text = "몸무게를 적어주세요") }
             )
 
@@ -138,10 +141,12 @@ fun ShelterDetail_2_profile_Screen(
                 .padding(horizontal = 26.dp)
                 .height(55.dp),
             shape = RoundedCornerShape(10.dp),
+            enabled = viewModel.animaldetailspecies.value != "모르겠어요",
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = TextField_BackgroudColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
                 cursorColor = Color.Black,
 
@@ -153,14 +158,8 @@ fun ShelterDetail_2_profile_Screen(
 
         Row(modifier = Modifier.padding(start = 27.dp)) {
 //            CheckedCheckBox(clickcolor = Category_Cliked)
-            IDontKnowCheckBox(onclick = {string->
-                if(string =="모르겠어요"){
-                    viewModel.animaldetailspecies.value = string
-                    idontnowspeciescheck
-                }else{
-                    !idontnowspeciescheck
-                }
-                Log.d(TAG, "ShelterDetail_2_profile_Screen: ${viewModel.animaldetailspecies.value}")
+            IDontKnowCheckBox(onclick = { string ->
+                viewModel.animaldetailspecies.value = string
             })
             Spacer(modifier = Modifier.width(5.dp))
             Text(
@@ -207,10 +206,11 @@ fun ShelterDetail_2_profile_Screen(
                     backgroundColor = TextField_BackgroudColor,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
                     focusedLabelColor = Color.White,
                     cursorColor = Color.Black,
-
                     ),
+                enabled = viewModel.animalage.value != "모르겠어요",
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 placeholder = { Text(text = "예) 2개월 = 0.2 / 2살 = 2") }
             )
@@ -236,10 +236,8 @@ fun ShelterDetail_2_profile_Screen(
         Row(modifier = Modifier.padding(start = 27.dp)) {
 
 //            CheckedCheckBox(clickcolor = Category_Cliked)
-            IDontKnowCheckBox(onclick = { string->
-                if(string =="모르겠어요"){
-                    viewModel.isneutered.value = string
-                }
+            IDontKnowCheckBox(onclick = { string ->
+                viewModel.animalage.value = string
             })
             Spacer(modifier = Modifier.width(5.dp))
 
@@ -253,12 +251,6 @@ fun ShelterDetail_2_profile_Screen(
             )
         }//Row
 
-        /**
-         * 1. 모르겠어요를 클릭시 isnetered.value가 "모르겠어요가 되어야함.
-         * 2. 다시 TextField를 클릭시 모르겠어요가 해제가 되면서 텍스트필드에 입력한 값이 isnetered.value가 되어야함
-         * 3.
-         * "**/
-
 
         Spacer(modifier = Modifier.weight(1f))
         Box(
@@ -267,7 +259,8 @@ fun ShelterDetail_2_profile_Screen(
                 .padding(start = 24.dp, end = 24.dp, bottom = 20.dp)
         ) {
 
-            val ischeck = viewModel.animalkg.value != "" && viewModel.animalage.value != "" && viewModel.animaldetailspecies.value !=""
+            val ischeck =
+                viewModel.animalkg.value != "" && viewModel.animalage.value != "" && viewModel.animaldetailspecies.value != ""
 
             ButtonScreen(
                 title = "다음",
@@ -280,7 +273,7 @@ fun ShelterDetail_2_profile_Screen(
 
             ) {
                 if (ischeck) {
-                        navController.navigate(Common.SHELTERDETAIL_3_PROFILE_SCREEN)
+                    navController.navigate(Common.SHELTERDETAIL_3_PROFILE_SCREEN)
                 } else {
 
                 }

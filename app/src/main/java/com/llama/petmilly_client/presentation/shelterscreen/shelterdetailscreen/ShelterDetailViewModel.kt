@@ -5,11 +5,13 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.data.model.additonal.reponse.CompanionAnimalInfo
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionResponse
@@ -34,8 +36,8 @@ class ShelterDetailViewModel @Inject constructor(
     private val _setHomeIntent = MutableLiveData<Event<Unit>>()
     val setHomeIntent: LiveData<Event<Unit>> = _setHomeIntent
 
-    private val _setanimalDetailspecices= MutableLiveData<Event<Unit>>()
-    val setanimalDetailspecices:LiveData<Event<Unit>> = _setanimalDetailspecices
+    private val _setanimalDetailspecices = MutableLiveData<Event<Unit>>()
+    val setanimalDetailspecices: LiveData<Event<Unit>> = _setanimalDetailspecices
 
     val myuri = mutableStateOf<Uri?>(null)
     val imageTestUriData = mutableStateListOf<ImageTestUriData>()
@@ -60,16 +62,19 @@ class ShelterDetailViewModel @Inject constructor(
 
     val contions = mutableStateOf("")
 
-    val temporaryProtectionCondition: MutableList<String> = arrayListOf()
-    val temporaryProtectionHope: MutableList<String> = arrayListOf()
-    val temporaryProtectionNo: MutableList<String> = arrayListOf()
+
+
+//    var temporaryProtectionCondition: MutableList<String> = arrayListOf()
+    val temporaryProtectionCondition = mutableStateListOf<String>()
+
+    val temporaryProtectionHope = mutableStateListOf<String>()
+    val temporaryProtectionNo = mutableStateListOf<String>()
 
 
     val hopepeople = mutableStateOf("")
     val nopeople = mutableStateOf("")
 
     val hopeapplicationperiod = mutableStateOf("")
-
 
 
     fun onShownAlmostCompetedDialog() {
@@ -88,21 +93,54 @@ class ShelterDetailViewModel @Inject constructor(
         imageTestUriData.remove(ImageTestUriData(uri))
     }
 
+
+    fun addtemporaryProtectionCondition(text: String) {
+        temporaryProtectionCondition.add(text)
+        Log.d(TAG, "addtemporaryProtectionCondition: $temporaryProtectionCondition")
+
+    }
+
+    fun deletetemporaryProtectionCondition(text: String) {
+        temporaryProtectionCondition.remove(text)
+        Log.d(TAG, "addtemporaryProtectionCondition: $temporaryProtectionCondition")
+    }
+
+
+    fun addtemporaryProtectionHope(text: String) {
+        temporaryProtectionHope.add(text)
+    }
+
+    fun deletetemporaryProtectionHope(text: String) {
+        temporaryProtectionHope.remove(text)
+    }
+
+    fun addtemporaryProtectionNo(text: String) {
+        temporaryProtectionNo.add(text)
+    }
+
+    fun deletetemporaryProtectionNo(text: String) {
+        temporaryProtectionNo.remove(text)
+    }
+
+
     fun posttemporaryprotection() {
 
         val species = species.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalname = animalname.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalsex = animalsex.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalkg = animalkg.value.toRequestBody("text/plain".toMediaTypeOrNull())
-        val animaldetailspecies = animaldetailspecies.value.toRequestBody("text/plain".toMediaTypeOrNull())
+        val animaldetailspecies =
+            animaldetailspecies.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalage = animalage.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val isneutered = isneutered.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val isinoculation = isinoculation.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalhealth = animalhealth.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalskill = animalskill.value.toRequestBody("text/plain".toMediaTypeOrNull())
-        val animalpersonality = animalpersonality.value.toRequestBody("text/plain".toMediaTypeOrNull())
+        val animalpersonality =
+            animalpersonality.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val pickup = pickup.value.toRequestBody("text/plain".toMediaTypeOrNull())
-        val hopeapplicationperiod = hopeapplicationperiod.value.toRequestBody("text/plain".toMediaTypeOrNull())
+        val hopeapplicationperiod =
+            hopeapplicationperiod.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val temporaryProtectionCondition = temporaryProtectionCondition.map {
             it.toRequestBody("text/plain".toMediaTypeOrNull())
         }
@@ -140,12 +178,12 @@ class ShelterDetailViewModel @Inject constructor(
                 MainApplication.accessToken,
                 temporaryprotectionResponse
             ).let {
-                when(it.status){
-                    RemoteResult.Status.SUCCESS->{
+                when (it.status) {
+                    RemoteResult.Status.SUCCESS -> {
                         Log.d(TAG, "posttemporaryprotection SUCCESS: $it")
                     }
 
-                    else->{
+                    else -> {
                         Log.d(TAG, "posttemporaryprotection: $it")
                     }
 

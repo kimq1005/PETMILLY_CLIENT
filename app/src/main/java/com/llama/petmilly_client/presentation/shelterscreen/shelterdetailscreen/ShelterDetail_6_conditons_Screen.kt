@@ -3,7 +3,10 @@ package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -26,6 +29,7 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Grey_50_CBC4C4
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
+import com.llama.petmilly_client.utils.SpacerHeight
 import com.llama.petmilly_client.utils.notosans_bold
 import llama.test.jetpack_dagger_plz.utils.Common
 
@@ -52,7 +56,7 @@ fun ShelterDetail_6_conditons_Screen(
             title = "임보처구해요",
             ismenu = false,
             clickBack = { navController.popBackStack() }) {
-           viewModel.onShownAlmostCompetedDialog()
+            viewModel.onShownAlmostCompetedDialog()
         }
 
         ShelterDetailSuvTitle("임보조건을\n입력해주세요.")
@@ -88,7 +92,7 @@ fun ShelterDetail_6_conditons_Screen(
                     .height(55.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = if (viewModel.hopepeople.value == "") TextField_BackgroudColor else Color.White,
+                    backgroundColor = TextField_BackgroudColor,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedLabelColor = Color.White,
@@ -106,10 +110,34 @@ fun ShelterDetail_6_conditons_Screen(
                     .align(Alignment.CenterVertically)
                     .weight(1f)
                     .height(45.dp)
-                    .width(45.dp),
+                    .width(45.dp)
+                    .clickable {
+                        if (viewModel.hopepeople.value != "") {
+                            viewModel.addtemporaryProtectionHope(viewModel.hopepeople.value)
+                            viewModel.hopepeople.value = ""
+                        }
+                    },
                 contentScale = ContentScale.Crop
             )
         }//Row
+
+        SpacerHeight(dp = 9.dp)
+
+        LazyColumn(
+            modifier = Modifier.padding(horizontal = 28.dp)
+        ) {
+            items(viewModel.temporaryProtectionHope) { item ->
+                TemporaryProtectionCondition(true, item, ondelete = {
+                    viewModel.deletetemporaryProtectionHope(item)
+                })
+
+                SpacerHeight(dp = 7.dp)
+
+            }
+
+        }
+
+
 
         Spacer(modifier = Modifier.height(90.dp))
 
@@ -141,7 +169,7 @@ fun ShelterDetail_6_conditons_Screen(
                     .height(55.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = if (viewModel.nopeople.value == "") TextField_BackgroudColor else Color.White,
+                    backgroundColor = TextField_BackgroudColor,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedLabelColor = Color.White,
@@ -159,10 +187,32 @@ fun ShelterDetail_6_conditons_Screen(
                     .align(Alignment.CenterVertically)
                     .weight(1f)
                     .height(45.dp)
-                    .width(45.dp),
+                    .width(45.dp)
+                    .clickable {
+                        if (viewModel.nopeople.value != "") {
+                            viewModel.addtemporaryProtectionNo(viewModel.nopeople.value)
+                            viewModel.nopeople.value = ""
+                        }
+                    },
                 contentScale = ContentScale.Crop
             )
         }//Row
+
+        SpacerHeight(dp = 9.dp)
+
+        LazyColumn(
+            modifier = Modifier.padding(horizontal = 28.dp)
+        ) {
+            items(viewModel.temporaryProtectionNo) { item ->
+                TemporaryProtectionCondition(false, item, ondelete = {
+                    viewModel.deletetemporaryProtectionNo(item)
+                })
+
+                SpacerHeight(dp = 7.dp)
+
+            }
+
+        }
 
 
         ///////////////////////////////////////
@@ -173,7 +223,8 @@ fun ShelterDetail_6_conditons_Screen(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 20.dp)
         ) {
-            val ischeck = viewModel.hopepeople.value != "" && viewModel.nopeople.value != ""
+            val ischeck =
+                viewModel.temporaryProtectionHope.size > 0 && viewModel.temporaryProtectionNo.size > 0
 
             ButtonScreen(
                 title = "다음",

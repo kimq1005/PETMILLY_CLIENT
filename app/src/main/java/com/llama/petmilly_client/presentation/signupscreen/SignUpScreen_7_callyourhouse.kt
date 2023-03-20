@@ -72,7 +72,8 @@ fun SignUpScreen_7_callyourhouse(navController: NavController, viewModel: SignUp
                     .height(55.dp),
                 backgroundcolor = if (viewModel.housekind.value == "아파트") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.housekind.value = "아파트"
             }
@@ -86,7 +87,8 @@ fun SignUpScreen_7_callyourhouse(navController: NavController, viewModel: SignUp
                     .height(55.dp),
                 backgroundcolor = if (viewModel.housekind.value == "단독주택") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.housekind.value = "단독주택"
             }
@@ -100,7 +102,8 @@ fun SignUpScreen_7_callyourhouse(navController: NavController, viewModel: SignUp
                     .height(55.dp),
                 backgroundcolor = if (viewModel.housekind.value == "오피스텔") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.housekind.value = "오피스텔"
             }
@@ -124,7 +127,8 @@ fun SignUpScreen_7_callyourhouse(navController: NavController, viewModel: SignUp
                     .height(55.dp),
                 backgroundcolor = if (viewModel.housekind.value == "다세대/다가구") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.housekind.value = "다세대/다가구"
             }
@@ -138,7 +142,8 @@ fun SignUpScreen_7_callyourhouse(navController: NavController, viewModel: SignUp
                     .height(55.dp),
                 backgroundcolor = if (viewModel.housekind.value == "빌라") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.housekind.value = "빌라"
             }
@@ -152,7 +157,8 @@ fun SignUpScreen_7_callyourhouse(navController: NavController, viewModel: SignUp
                     .height(55.dp),
                 backgroundcolor = if (viewModel.housekind.value == "원룸/투룸") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                enabled = true
             ) {
                 viewModel.housekind.value = "원룸/투룸"
             }
