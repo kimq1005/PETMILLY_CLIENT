@@ -75,35 +75,35 @@ fun ShelterDetail_3_profile_Screen(
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             ButtonScreen_HOUSE(
-                title = "중성화O",
-                textcolor = if (viewModel.isneutered.value == "중성화O") Color.White else Color.Black,
+                title = "중성화 O",
+                textcolor = if (viewModel.isneutered.value == "중성화 O") Color.White else Color.Black,
                 fontSize = 20,
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp)
                     .height(70.dp),
-                backgroundcolor = if (viewModel.isneutered.value == "중성화O") Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.isneutered.value == "중성화 O") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Center,
                 enabled = viewModel.isneutered.value != "모르겠어요"
             ) {
-                viewModel.isneutered.value = "중성화O"
+                viewModel.isneutered.value = "중성화 O"
             }
 
             ButtonScreen_HOUSE(
-                title = "중성화X",
-                textcolor = if (viewModel.isneutered.value == "중성화X") Color.White else Color.Black,
+                title = "중성화 X",
+                textcolor = if (viewModel.isneutered.value == "중성화 X") Color.White else Color.Black,
                 fontSize = 20,
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp)
                     .height(70.dp),
-                backgroundcolor = if (viewModel.isneutered.value == "중성화X") Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.isneutered.value == "중성화 X") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 enabled = viewModel.isneutered.value != "모르겠어요",
                 textAlign = TextAlign.Center,
             ) {
-                viewModel.isneutered.value = "중성화X"
+                viewModel.isneutered.value = "중성화 X"
             }
 
         }
@@ -165,35 +165,35 @@ fun ShelterDetail_3_profile_Screen(
             }
 
             ButtonScreen_HOUSE(
-                title = "1차 완료",
-                textcolor = if (viewModel.isinoculation.value == "1차 완료") Color.White else Color.Black,
+                title = "1차완료",
+                textcolor = if (viewModel.isinoculation.value == "1차완료") Color.White else Color.Black,
                 fontSize = 20,
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp)
                     .height(100.dp),
-                backgroundcolor = if (viewModel.isinoculation.value == "1차 완료") Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.isinoculation.value == "1차완료") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Center,
                 enabled = viewModel.isinoculation.value != "모르겠어요",
             ) {
-                viewModel.isinoculation.value = "1차 완료"
+                viewModel.isinoculation.value = "1차완료"
             }
 
             ButtonScreen_HOUSE(
                 title = "2차 완료",
-                textcolor = if (viewModel.isinoculation.value == "2차 완료") Color.White else Color.Black,
+                textcolor = if (viewModel.isinoculation.value == "2차완료") Color.White else Color.Black,
                 fontSize = 20,
                 modifier = Modifier
                     .weight(1f)
                     .padding(5.dp)
                     .height(100.dp),
-                backgroundcolor = if (viewModel.isinoculation.value == "2차 완료") Category_Cliked else Button_NoneClicked,
+                backgroundcolor = if (viewModel.isinoculation.value == "2차완료") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(19.dp),
                 textAlign = TextAlign.Center,
                 enabled = viewModel.isinoculation.value != "모르겠어요",
             ) {
-                viewModel.isinoculation.value = "2차 완료"
+                viewModel.isinoculation.value = "2차완료"
             }
 
         }

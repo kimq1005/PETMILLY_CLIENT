@@ -24,3 +24,5 @@ data class TemporaryprotectionResponse(
     @Part("temporaryProtectionHope") val temporaryProtectionHope: List<RequestBody>,
     @Part("temporaryProtectionNo") val temporaryProtectionNo: List<RequestBody>
 ):java.io.Serializable
+
+

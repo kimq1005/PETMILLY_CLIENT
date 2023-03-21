@@ -11,10 +11,13 @@ import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionResponse
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface PetMillyRepo {
     suspend fun postkakaotoken(
@@ -34,8 +37,29 @@ interface PetMillyRepo {
         tokenResponse: TokenResponse
     ):RemoteResult<RefreshTokenDTO>
 
+//    suspend fun posttemporaryprotection(
+//        token: String,
+//        temporaryprotectionResponse: TemporaryprotectionResponse
+//    ):RemoteResult<TemporaryprotectionDTO>
+
     suspend fun posttemporaryprotection(
         token: String,
-        temporaryprotectionResponse: TemporaryprotectionResponse
+        files: List<MultipartBody.Part>?,
+        animalTypes : RequestBody,
+        name: RequestBody,
+        gender : RequestBody,
+        weight : RequestBody,
+        breed : RequestBody,
+        age : RequestBody,
+        neutered : RequestBody,
+        inoculation : RequestBody,
+        health : RequestBody,
+        skill : RequestBody,
+        character : RequestBody,
+        pickUp : RequestBody,
+        receptionPeriod : RequestBody?,
+        temporaryProtectionCondition: List<RequestBody>?,
+        temporaryProtectionHope: List<RequestBody>?,
+        temporaryProtectionNo: List<RequestBody>?
     ):RemoteResult<TemporaryprotectionDTO>
 }

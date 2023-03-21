@@ -14,6 +14,8 @@ import com.llama.petmilly_client.data.network.PetMillYApiService
 import com.llama.petmilly_client.domain.repository.PetMillyRepo
 import llama.test.jetpack_dagger_plz.utils.BaseDataSource
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -44,9 +46,51 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
 
     override suspend fun posttemporaryprotection(
         token: String,
-        temporaryprotectionResponse: TemporaryprotectionResponse,
+        files: List<MultipartBody.Part>?,
+        animalTypes: RequestBody,
+        name: RequestBody,
+        gender: RequestBody,
+        weight: RequestBody,
+        breed: RequestBody,
+        age: RequestBody,
+        neutered: RequestBody,
+        inoculation: RequestBody,
+        health: RequestBody,
+        skill: RequestBody,
+        character: RequestBody,
+        pickUp: RequestBody,
+        receptionPeriod: RequestBody?,
+        temporaryProtectionCondition: List<RequestBody>?,
+        temporaryProtectionHope: List<RequestBody>?,
+        temporaryProtectionNo: List<RequestBody>?,
     ): RemoteResult<TemporaryprotectionDTO> = getResult {
-        petMillYApiService.posttemporaryprotection(token, temporaryprotectionResponse)
+        petMillYApiService.posttemporaryprotection(
+            token,
+            files,
+            animalTypes,
+            name,
+            gender,
+            weight,
+            breed,
+            age,
+            neutered,
+            inoculation,
+            health,
+            skill,
+            character,
+            pickUp,
+            receptionPeriod,
+            temporaryProtectionCondition,
+            temporaryProtectionHope,
+            temporaryProtectionNo
+        )
     }
+
+//    override suspend fun posttemporaryprotection(
+//        token: String,
+//        temporaryprotectionResponse: TemporaryprotectionResponse,
+//    ): RemoteResult<TemporaryprotectionDTO> = getResult {
+//        petMillYApiService.posttemporaryprotection(token, temporaryprotectionResponse)
+//    }
 
 }

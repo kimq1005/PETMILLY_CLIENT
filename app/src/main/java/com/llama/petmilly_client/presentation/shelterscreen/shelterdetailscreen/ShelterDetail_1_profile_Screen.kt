@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -45,6 +46,10 @@ import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import java.io.IOException
 
 @SuppressLint("Recycle")
@@ -231,9 +236,13 @@ fun ShelterDetail_1_profile_Screen(
             contract = ActivityResultContracts.GetContent(),
         ) { uri ->
             try {
-                val inputStrem = context.contentResolver.openInputStream(uri!!)
-                bitmapState.value = BitmapFactory.decodeStream(inputStrem)
+                val inputStream = context.contentResolver.openInputStream(uri!!)
+                val requestBody = RequestBody.create("image/*".toMediaTypeOrNull(), inputStream!!.readBytes())
+                val multipleBody=  MultipartBody.Part.createFormData("files", "image", requestBody)
+
+                bitmapState.value = BitmapFactory.decodeStream(inputStream)
                 viewModel.uploadimage(uri)
+                viewModel.updateFiles(multipleBody)
 
             } catch (e: IOException) {
                 Log.d(TAG, " Uri Call Error: $e")
@@ -264,7 +273,12 @@ fun ShelterDetail_1_profile_Screen(
                             .width(50.dp)
                             .height(50.dp),
                         ondelete = {
+                            val inputStream = context.contentResolver.openInputStream(items.uri!!)
+                            val requestBody = RequestBody.create("image/*".toMediaTypeOrNull(), inputStream!!.readBytes())
+                            val multipleBody=  MultipartBody.Part.createFormData("files", "image", requestBody)
+
                             viewModel.deleteimage(items.uri)
+                            viewModel.deleteFiles(multipleBody)
                         }
                     )
                     SpacerWidth(dp = 10.dp)
@@ -327,6 +341,8 @@ fun ShelterDetail_1_profile_Screen(
 
     }
 }
+
+
 
 data class ImageTestUriData(
     val uri: Uri,
