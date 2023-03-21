@@ -7,17 +7,12 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llama.petmilly_client.MainApplication
-import com.llama.petmilly_client.data.model.additonal.reponse.CompanionAnimalInfo
-import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionResponse
-import com.llama.petmilly_client.data.network.PetMillYApiService
 import com.llama.petmilly_client.domain.repository.PetMillyRepo
 import com.llama.petmilly_client.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,13 +20,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -42,11 +34,11 @@ class ShelterDetailViewModel @Inject constructor(
     private val petMillyRepo: PetMillyRepo,
 ) : ViewModel() {
 
-    private val _setHomeIntent = MutableLiveData<Event<Unit>>()
-    val setHomeIntent: LiveData<Event<Unit>> = _setHomeIntent
+    private val _setcompleted = MutableLiveData<Event<Unit>>()
+    val setcompleted: LiveData<Event<Unit>> = _setcompleted
 
-    private val _setanimalDetailspecices = MutableLiveData<Event<Unit>>()
-    val setanimalDetailspecices: LiveData<Event<Unit>> = _setanimalDetailspecices
+    private val _setnotcompleted = MutableLiveData<String>()
+    val setnotcompleted: LiveData<String> = _setnotcompleted
 
     val myuri = mutableStateOf<Uri?>(null)
     val imageTestUriData = mutableStateListOf<ImageTestUriData>()
@@ -121,30 +113,34 @@ class ShelterDetailViewModel @Inject constructor(
     fun addtemporaryProtectionCondition(text: String) {
         temporaryProtectionCondition.add(text)
         temporaryProtectionConditionList.add(text)
-        Log.d(TAG, "addtemporaryProtectionCondition: ${temporaryProtectionCondition}")
+        Log.d(TAG, "addtemporaryProtectionCondition: $temporaryProtectionConditionList")
 
     }
 
     fun deletetemporaryProtectionCondition(text: String) {
         temporaryProtectionCondition.remove(text)
         temporaryProtectionConditionList.remove(text)
-        Log.d(TAG, "addtemporaryProtectionCondition: $temporaryProtectionCondition")
     }
 
 
     fun addtemporaryProtectionHope(text: String) {
         temporaryProtectionHope.add(text)
         temporaryProtectionHopeList.add(text)
+
+        Log.d(TAG, "addtemporaryProtectionHope: $temporaryProtectionHopeList")
     }
 
     fun deletetemporaryProtectionHope(text: String) {
         temporaryProtectionHope.remove(text)
         temporaryProtectionHopeList.remove(text)
+
+
     }
 
     fun addtemporaryProtectionNo(text: String) {
         temporaryProtectionNo.add(text)
         temporaryProtectionNoList.add(text)
+        Log.d(TAG, "addtemporaryProtectionNo: $temporaryProtectionNoList")
     }
 
     fun deletetemporaryProtectionNo(text: String) {
@@ -155,18 +151,16 @@ class ShelterDetailViewModel @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     fun posttemporaryprotection() {
 
-        val foratter = DateTimeFormatter.ofPattern("yy-MM-dd HH.mm.ss")
+
 //        val dateString = hopeapplicationperiod.value
-        val dateString = "${apyear.value} ${aptime.value}"
-        val date = LocalDateTime.parse(dateString, foratter)
-        val hopeapplicationperiod =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), date.toString())
+
 
         val species = species.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalname = animalname.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalsex = animalsex.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalkg = animalkg.value.toRequestBody("text/plain".toMediaTypeOrNull())
-        val animaldetailspecies = animaldetailspecies.value.toRequestBody("text/plain".toMediaTypeOrNull())
+        val animaldetailspecies =
+            animaldetailspecies.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalage = animalage.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val isneutered = isneutered.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val isinoculation = isinoculation.value.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -182,7 +176,7 @@ class ShelterDetailViewModel @Inject constructor(
         val temporaryProtectionHope: List<RequestBody> = temporaryProtectionHopeList.map {
             RequestBody.create("text/plain".toMediaTypeOrNull(), it)
         }
-        val temporaryProtectionNo: kotlin.collections.List<RequestBody> =
+        val temporaryProtectionNo: List<RequestBody> =
             temporaryProtectionNoList.map {
                 RequestBody.create("text/plain".toMediaTypeOrNull(), it)
             }
@@ -203,17 +197,25 @@ class ShelterDetailViewModel @Inject constructor(
                 animalskill,
                 animalpersonality,
                 pickup,
-                hopeapplicationperiod,
-                temporaryProtectionCondition,
-                temporaryProtectionHope,
-                temporaryProtectionNo
+                receptionPeriod = if (apyear.value != "" && aptime.value != "") {
+                    val foratter = DateTimeFormatter.ofPattern("yy-MM-dd HH.mm.ss")
+                    val dateString = "${apyear.value} ${aptime.value}"
+                    val date = LocalDateTime.parse(dateString, foratter)
+                    val hopeapplicationperiod = RequestBody.create("text/plain".toMediaTypeOrNull(), date.toString())
+                    hopeapplicationperiod
+                } else null,
+                temporaryProtectionCondition ?: null,
+                temporaryProtectionHope ?: null,
+                temporaryProtectionNo ?: null
             ).let {
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
                         Log.d(TAG, "posttemporaryprotection SUCCESS: $it")
+                        _setcompleted.postValue(Event(Unit))
                     }
                     else -> {
                         Log.d(TAG, "posttemporaryprotection ERROR: $it")
+                        _setnotcompleted.postValue(it.message)
                     }
 
                 }
@@ -221,44 +223,4 @@ class ShelterDetailViewModel @Inject constructor(
         }
     }
 
-//        viewModelScope.launch(Dispatchers.IO) {
-//
-//            petMillyRepo.posttemporaryprotection(
-//                MainApplication.accessToken,
-//                temporaryprotectionResponse
-//            ).let {
-//                when (it.status) {
-//                    RemoteResult.Status.SUCCESS -> {
-//                        Log.d(TAG, "posttemporaryprotection SUCCESS: $it")
-//                    }
-//
-//                    else -> {
-//                        Log.d(TAG, "posttemporaryprotection: $it")
-//                    }
-//
-//                }
-//            }
-//        }
-//    }
-
-    fun changeformdata() {
-
-//        val species = mutableStateOf("")
-//        val animalname = mutableStateOf("")
-//        val animalsex = mutableStateOf("")
-//        val animalkg = mutableStateOf("")
-//        val animaldetailspecies = mutableStateOf("")
-//        val animalage = mutableStateOf("")
-//        val isneutered = mutableStateOf("")
-//        val isinoculation = mutableStateOf("")
-//        val animalhealth = mutableStateOf("")
-//        val animalskill = mutableStateOf("")
-//        val animalpersonality = mutableStateOf("")
-//
-//        val pickup = mutableStateOf("")
-//        val contions = mutableStateOf("")
-//
-//        val hopepeople = mutableStateOf("")
-//        val nopeople = mutableStateOf("")
-    }
 }

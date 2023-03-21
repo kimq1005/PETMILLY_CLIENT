@@ -176,7 +176,7 @@ fun ShelterDetail_6_conditons_Screen(
                     cursorColor = Color.Black,
 
                     ),
-                placeholder = { Text(text = "예) 2주에1회 병원 통원 가능하신 분") }
+                placeholder = { Text(text = "예) 집을 비우는 시간이 너무 기신 분") }
             )
 
 
@@ -233,14 +233,10 @@ fun ShelterDetail_6_conditons_Screen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
-                backgroundcolor = if (ischeck) Color.Black else Button_NoneClicked
+                backgroundcolor = Color.Black
 
             ) {
-                if (ischeck) {
-                    navController.navigate(Common.SHELTERDETAIL_7_APPLICATION_SCREEN)
-                } else {
-
-                }
+                navController.navigate(Common.SHELTERDETAIL_7_APPLICATION_SCREEN)
             }
 
             Text(
@@ -251,7 +247,7 @@ fun ShelterDetail_6_conditons_Screen(
                         includeFontPadding = false
                     )
                 ),
-                color = if (ischeck) Color.White else Grey_50_CBC4C4,
+                color = Color.White,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .padding(end = 18.dp)

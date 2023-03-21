@@ -184,14 +184,10 @@ fun ShelterDetail_4_profile_Screen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
-                backgroundcolor = if (ischeck) Color.Black else Button_NoneClicked
+                backgroundcolor = Color.Black
 
             ) {
-                if (ischeck) {
-                        navController.navigate(Common.SHELTERDETAIL_5_CONDITION_SCREEN)
-                } else {
-
-                }
+                navController.navigate(Common.SHELTERDETAIL_5_CONDITION_SCREEN)
             }
 
             Text(
@@ -202,7 +198,7 @@ fun ShelterDetail_4_profile_Screen(
                         includeFontPadding = false
                     )
                 ),
-                color = if (ischeck) Color.White else Grey_50_CBC4C4,
+                color = Color.White,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .padding(end = 18.dp)

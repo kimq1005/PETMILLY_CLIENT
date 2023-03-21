@@ -204,7 +204,7 @@ fun ShelterDetail_5_conditons_Screen(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 20.dp)
         ) {
-            val ischeck = viewModel.pickup.value != "" && viewModel.temporaryProtectionCondition.size > 0
+            val ischeck = viewModel.pickup.value != ""
 
             ButtonScreen(
                 title = "다음",
@@ -218,8 +218,6 @@ fun ShelterDetail_5_conditons_Screen(
             ) {
                 if (ischeck) {
                     navController.navigate(Common.SHELTERDETAIL_6_CONDITION_SCREEN)
-                } else {
-
                 }
             }
 
@@ -231,7 +229,7 @@ fun ShelterDetail_5_conditons_Screen(
                         includeFontPadding = false
                     )
                 ),
-                color = if (ischeck) Color.White else Grey_50_CBC4C4,
+                color = Color.White,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .padding(end = 18.dp)
