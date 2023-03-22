@@ -6,6 +6,7 @@ import com.llama.petmilly_client.data.model.additonal.AdditionalSuccessDTO
 import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
+import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionResponse
@@ -66,6 +67,14 @@ interface PetMillYApiService {
         @Part("temporaryProtectionHope")  temporaryProtectionHope: List<RequestBody>?,
         @Part("temporaryProtectionNo")  temporaryProtectionNo: List<RequestBody>?
     ):Response<TemporaryprotectionDTO>
+
+    @POST("/user/town-auth")
+    suspend fun posttownauth(
+        @Header("x-access-token") token: String,
+        @Body locationauthenticationResponse: LocationauthenticationResponse
+    ):Response<TemporaryprotectionDTO>
+    //TemporaryprotectionDTO 응답값이 똑같아서 사용
+
 
 
 

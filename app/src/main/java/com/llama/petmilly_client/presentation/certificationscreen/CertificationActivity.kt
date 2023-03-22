@@ -5,11 +5,14 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -31,12 +34,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.MapsInitializer
+import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.homescreen.naverMapComposable
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.Button_Clicked
@@ -48,11 +53,13 @@ import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.LOCATION_AUTHENTICATION_SCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.PERSONALINFOSCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
+import java.util.*
 
 private var mynavermap: NaverMap? = null
 
@@ -63,15 +70,16 @@ class CertificationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface() {
+            Surface {
                 val navController = rememberNavController()
+                val viewModel:CertificationViewModel = hiltViewModel()
 
                 NavHost(
                     navController = navController,
                     startDestination = LOCATION_AUTHENTICATION_SCREEN
                 ) {
                     composable(route = LOCATION_AUTHENTICATION_SCREEN) {
-                        LocationauthenticationScreen(navController)
+                        LocationauthenticationScreen(navController,viewModel)
                     }
                 }
             }
@@ -85,7 +93,7 @@ class CertificationActivity : ComponentActivity() {
 @ExperimentalNaverMapApi
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
-fun LocationauthenticationScreen(navController: NavController) {
+fun LocationauthenticationScreen(navController: NavController, viewModel: CertificationViewModel) {
     val context = LocalContext.current
     Column(Modifier.fillMaxSize()) {
         TitleBar(
@@ -99,21 +107,7 @@ fun LocationauthenticationScreen(navController: NavController) {
                 .weight(15f)
                 .padding(top = 10.dp)
         ) {
-//            NaverMap(
-//                locationSource = rememberFusedLocationSource(),
-//                properties = MapProperties(
-//                    locationTrackingMode = LocationTrackingMode.Follow
-//                ),
-//                uiSettings = MapUiSettings(
-//                    isLocationButtonEnabled = true,
-//                ),
-//            ) {
-//                Marker(
-//                    onClick = { it ->
-//                        true
-//                    })
-//            }
-            CertificationNaverMap2()
+            CertificationNaverMap(viewModel)
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -127,9 +121,8 @@ fun LocationauthenticationScreen(navController: NavController) {
                 .height(55.dp)
                 .padding(horizontal = 50.dp),
             backgroundcolor = Color.Black
-
         ) {
-
+            viewModel.posttownauth()
         }
 
         SpacerHeight(dp = 100.dp)
@@ -143,34 +136,12 @@ fun LocationauthenticationScreen(navController: NavController) {
 @Composable
 fun FSDF() {
     val navController = rememberNavController()
-    LocationauthenticationScreen(navController)
+
 }
 
 
-@SuppressLint("MissingPermission")
 @Composable
-fun CertificationNaverMap() {
-    val map = naverMapComposable()
-    val context = LocalContext.current
-    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-    Box {
-        Log.d(TAG, "CertificationNaverMap: fdsfdsf")
-        AndroidView(
-            factory = { map },
-            update = { mapview ->
-                mapview.getMapAsync { navermap ->
-                    mynavermap  = navermap
-
-
-                }
-            }
-
-        )
-    }
-}
-
-@Composable
-fun CertificationNaverMap2() {
+fun CertificationNaverMap(viewModel: CertificationViewModel) {
     val map = naverMapComposable()
     val context = LocalContext.current
     val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
@@ -183,7 +154,7 @@ fun CertificationNaverMap2() {
                     val marker = Marker()
 
 
-                    // 위치 정보 권한 요청
+                    // 위치 정보 권한 요청 시작 할때로 바꾸기
                     val permissionRequestCode = 123
                     if (ActivityCompat.checkSelfPermission(
                             context,
@@ -196,21 +167,34 @@ fun CertificationNaverMap2() {
                             permissionRequestCode
                         )
                     } else {
-                        // 위치 정보 권한이 허용되었을 때 처리
                         fusedLocationProviderClient.lastLocation
                             .addOnSuccessListener { location ->
                                 // 위치 정보를 성공적으로 받아왔을 때 처리
-                                Log.d(TAG, "CertificationNaverMap2: ${location.latitude}")
-                                val mypostion = LatLng(location.latitude, location.longitude)
-                                marker.position =mypostion
+
+                                val mypostion =
+                                    LatLng(location.latitude, location.longitude) ?: LatLng(
+                                        37.715,
+                                        126.734
+                                    )
+
+
+                                getAddress(context, location.latitude , location.longitude, viewModel)
+                                marker.apply {
+                                    position = mypostion
+                                    icon = OverlayImage.fromResource(R.drawable.ic_navermarker)
+                                    width = 150
+                                    height = 180
+
+
+                                }
                                 marker.map = navermap
                                 val cameraUpdate = CameraUpdate.scrollTo(mypostion)
                                 navermap.moveCamera(cameraUpdate)
                             }
                             .addOnFailureListener { exception ->
-                                // 위치 정보를 받아오는 데 실패한 경우 처리
-                                Log.d(TAG, "CertificationNaverMap2: ERROR")
-                                // ...
+
+                                Log.d(TAG, "CertificationNaverMap2: $exception")
+
                             }
                     }
                 }
@@ -220,7 +204,25 @@ fun CertificationNaverMap2() {
 }
 
 
-// 위치권한 관련 요청
+private fun getAddress(context: Context, latitude: Double, longitude: Double,viewModel: CertificationViewModel) :String {
+    val geoCoder = Geocoder(context, Locale.KOREA)
+    var address = ArrayList<Address>()
+    var addressResult = "주소를 가져 올 수 없습니다."
+    try {
+        address = geoCoder.getFromLocation(latitude, longitude,1) as  ArrayList<Address>
+        if(address.size>0){
+            val currentLocationAddress = address[0].getAddressLine(0).toString()
+            addressResult = currentLocationAddress
+            viewModel.townadress.value = addressResult
+        }
+    }catch (e:java.lang.Exception){
+        Log.d(TAG, "getAddress ERROR: $e")
+        Toast.makeText(context, "주소를 불러올 수 없습니다. $e", Toast.LENGTH_SHORT).show()
+    }
+
+    return addressResult
+}
+
 
 
 

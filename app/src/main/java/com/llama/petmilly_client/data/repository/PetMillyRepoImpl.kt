@@ -6,6 +6,7 @@ import com.llama.petmilly_client.data.model.additonal.AdditionalSuccessDTO
 import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
+import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
 import com.llama.petmilly_client.data.network.PetMillYApiService
@@ -81,6 +82,13 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
             temporaryProtectionHope,
             temporaryProtectionNo
         )
+    }
+
+    override suspend fun posttownauth(
+        token: String,
+        locationauthenticationResponse: LocationauthenticationResponse,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+        petMillYApiService.posttownauth(token, locationauthenticationResponse)
     }
 
 //    override suspend fun posttemporaryprotection(

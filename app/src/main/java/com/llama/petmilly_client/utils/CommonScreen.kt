@@ -70,7 +70,13 @@ fun ButtonScreen(
             text = title,
             color = textcolor,
             fontSize = fontSize.sp,
-            fontWeight = FontWeight.Bold
+            fontFamily = notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+
         )
     }
 }
