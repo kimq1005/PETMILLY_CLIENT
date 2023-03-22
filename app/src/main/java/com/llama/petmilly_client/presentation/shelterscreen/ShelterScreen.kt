@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.certificationscreen.CertificationActivity
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryShelterItems
 import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategoryItems
@@ -117,7 +118,9 @@ fun SafeShelterListScreen(
                     .width(55.dp)
                     .height(55.dp)
                     .clickable {
-                        val intent = Intent(context, ShelterDetailActivity::class.java)
+//                        val intent = Intent(context, ShelterDetailActivity::class.java)
+//                        context.startActivity(intent)
+                        val intent = Intent(context, CertificationActivity::class.java)
                         context.startActivity(intent)
                     }
             )

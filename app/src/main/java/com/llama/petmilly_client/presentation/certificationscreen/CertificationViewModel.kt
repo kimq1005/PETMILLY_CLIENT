@@ -24,8 +24,9 @@ import javax.inject.Inject
 class CertificationViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo) :
     ViewModel() {
 
-    private val _setIntent = MutableLiveData<Event<Unit>>()
-    val setIntent: LiveData<Event<Unit>> = _setIntent
+
+    private val _setshelterIntent = MutableLiveData<Event<Unit>>()
+    val setshelterIntent: LiveData<Event<Unit>> = _setshelterIntent
 
     val townadress = mutableStateOf("")
 
@@ -37,7 +38,7 @@ class CertificationViewModel @Inject constructor(private val petMillyRepo: PetMi
                     when(it.status){
                         RemoteResult.Status.SUCCESS->{
                             Log.d(TAG, "posttownauth SUCCESS: $it ")
-                            _setIntent.postValue(Event(Unit))
+                            _setshelterIntent.postValue(Event(Unit))
                         }
 
                         else-> {

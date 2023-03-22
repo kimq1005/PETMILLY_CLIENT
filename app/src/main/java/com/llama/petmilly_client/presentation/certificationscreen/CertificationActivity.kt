@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -42,8 +45,12 @@ import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.MapsInitializer
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.MainViewModel
+import com.llama.petmilly_client.presentation.homescreen.HomeActivity
 import com.llama.petmilly_client.presentation.homescreen.naverMapComposable
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
+import com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen.ShelterDetailActivity
+import com.llama.petmilly_client.presentation.signupscreen.SignUpActivity
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.utils.ButtonScreen
@@ -72,14 +79,18 @@ class CertificationActivity : ComponentActivity() {
         setContent {
             Surface {
                 val navController = rememberNavController()
-                val viewModel:CertificationViewModel = hiltViewModel()
+                val viewModel: CertificationViewModel = hiltViewModel()
 
                 NavHost(
                     navController = navController,
                     startDestination = LOCATION_AUTHENTICATION_SCREEN
                 ) {
                     composable(route = LOCATION_AUTHENTICATION_SCREEN) {
-                        LocationauthenticationScreen(navController,viewModel)
+                        LocationauthenticationScreen(
+                            navController,
+                            viewModel,
+                            this@CertificationActivity
+                        )
                     }
                 }
             }
@@ -93,8 +104,13 @@ class CertificationActivity : ComponentActivity() {
 @ExperimentalNaverMapApi
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
-fun LocationauthenticationScreen(navController: NavController, viewModel: CertificationViewModel) {
+fun LocationauthenticationScreen(
+    navController: NavController,
+    viewModel: CertificationViewModel,
+    activity: Activity,
+) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     Column(Modifier.fillMaxSize()) {
         TitleBar(
             title = "동네 인증",
@@ -128,15 +144,7 @@ fun LocationauthenticationScreen(navController: NavController, viewModel: Certif
         SpacerHeight(dp = 100.dp)
     }
 
-}
-
-
-@OptIn(ExperimentalNaverMapApi::class)
-@Preview
-@Composable
-fun FSDF() {
-    val navController = rememberNavController()
-
+    setObserve(viewModel, context, lifecycleOwner, activity)
 }
 
 
@@ -178,7 +186,12 @@ fun CertificationNaverMap(viewModel: CertificationViewModel) {
                                     )
 
 
-                                getAddress(context, location.latitude , location.longitude, viewModel)
+                                getAddress(
+                                    context,
+                                    location.latitude,
+                                    location.longitude,
+                                    viewModel
+                                )
                                 marker.apply {
                                     position = mypostion
                                     icon = OverlayImage.fromResource(R.drawable.ic_navermarker)
@@ -204,18 +217,24 @@ fun CertificationNaverMap(viewModel: CertificationViewModel) {
 }
 
 
-private fun getAddress(context: Context, latitude: Double, longitude: Double,viewModel: CertificationViewModel) :String {
+private fun getAddress(
+    context: Context,
+    latitude: Double,
+    longitude: Double,
+    viewModel: CertificationViewModel,
+): String {
     val geoCoder = Geocoder(context, Locale.KOREA)
     var address = ArrayList<Address>()
     var addressResult = "주소를 가져 올 수 없습니다."
     try {
-        address = geoCoder.getFromLocation(latitude, longitude,1) as  ArrayList<Address>
-        if(address.size>0){
+        address = geoCoder.getFromLocation(latitude, longitude, 1) as ArrayList<Address>
+        if (address.size > 0) {
             val currentLocationAddress = address[0].getAddressLine(0).toString()
             addressResult = currentLocationAddress
             viewModel.townadress.value = addressResult
+            Log.d(TAG, "getAddress: $addressResult")
         }
-    }catch (e:java.lang.Exception){
+    } catch (e: java.lang.Exception) {
         Log.d(TAG, "getAddress ERROR: $e")
         Toast.makeText(context, "주소를 불러올 수 없습니다. $e", Toast.LENGTH_SHORT).show()
     }
@@ -223,6 +242,20 @@ private fun getAddress(context: Context, latitude: Double, longitude: Double,vie
     return addressResult
 }
 
+
+private fun setObserve(
+    viewModel: CertificationViewModel,
+    context: Context,
+    lifecycleOwner: LifecycleOwner,
+    activity: Activity,
+) {
+
+    viewModel.setshelterIntent.observe(lifecycleOwner, androidx.lifecycle.Observer {
+        val intent = Intent(context, ShelterDetailActivity::class.java)
+        context.startActivity(intent)
+        activity.finish()
+    })
+}
 
 
 
