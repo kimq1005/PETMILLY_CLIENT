@@ -51,7 +51,6 @@ fun SafeShelterListScreen(
 
         LaunchedEffect(context) {
             viewModel.getpost()
-            viewModel.hi()
         }
 
 
@@ -100,11 +99,21 @@ fun SafeShelterListScreen(
                 ) {
                     viewModel.setcategory()
 
+
                     items(viewModel.postDataList) { items ->
+
+                        val convertage: String = if (items.age > 1) {
+                            "${items.age.toInt()}살 추정"
+                        } else {
+                            val age = items.age * 10
+                            "$age 개월 추정"
+                        }
+
                         Column {
                             ShelterCategoryItems(
                                 title = items.name,
-                                description = "${items.gender} / ${items.weight} / ${items.breed} / ${items.age}",
+                                image = if (items.thumbnail != null) items.thumbnail.photoUrl else null,
+                                description = "${items.gender} / ${items.weight} / ${items.breed} / $convertage",
                                 vaccination = "${items.inoculation} /${items.neutered}",
                                 isclicked = true,
                                 isComplete = items.isComplete,

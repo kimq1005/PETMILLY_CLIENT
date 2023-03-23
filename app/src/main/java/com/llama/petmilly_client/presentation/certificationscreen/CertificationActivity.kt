@@ -115,7 +115,9 @@ fun LocationauthenticationScreen(
         TitleBar(
             title = "동네 인증",
             ismenu = false,
-            clickBack = { },
+            clickBack = {
+                        activity.finish()
+            },
             clickMenu = {})
 //
         Box(
@@ -138,13 +140,18 @@ fun LocationauthenticationScreen(
                 .padding(horizontal = 50.dp),
             backgroundcolor = Color.Black
         ) {
-            viewModel.posttownauth()
+//            viewModel.posttownauth()
+            val intent = Intent(context, ShelterDetailActivity::class.java)
+            context.startActivity(intent)
+            activity.finish()
         }
 
         SpacerHeight(dp = 100.dp)
     }
 
-    setObserve(viewModel, context, lifecycleOwner, activity)
+    LaunchedEffect(context){
+        setObserve(viewModel, context, lifecycleOwner, activity)
+    }
 }
 
 

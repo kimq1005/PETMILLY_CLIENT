@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.homescreen.CategoryTest
 import com.llama.petmilly_client.ui.theme.*
@@ -31,12 +32,13 @@ import com.llama.petmilly_client.utils.notosans_regular
 
 @Composable
 fun ShelterCategoryItems(
+    image: String?,
     title: String,
     description: String,
     vaccination: String,
     isclicked: Boolean,
     isComplete: Boolean,
-    isReceipt:Boolean,
+    isReceipt: Boolean,
     onclcik: () -> Unit,
 ) {
     Row(
@@ -51,22 +53,25 @@ fun ShelterCategoryItems(
 //        val ispetmily = true
 
         Box {
-            if (isclicked) {
-                Image(
-                    modifier = Modifier
-                        .width(80.dp)
-                        .fillMaxHeight()
-                        .padding(start = 15.dp, top = 5.dp, bottom = 5.dp),
-                    painter = painterResource(id = R.drawable.img_testcat_2),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
 
-                    )
-            }
+            Image(
+                modifier = Modifier
+                    .width(80.dp)
+                    .fillMaxHeight()
+                    .padding(start = 15.dp, top = 5.dp, bottom = 5.dp),
+                painter = if (image != null) {
+                    rememberImagePainter(data = image)
+                } else painterResource(id = R.drawable.img_testcat_2),
+//                painter =painterResource(id = R.drawable.img_testcat_2),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
 
-            if(isReceipt){
+                )
+
+
+            if (isReceipt) {
                 Text(
-                    text =  "심사중",
+                    text = "심사중",
                     fontSize = 8.sp,
                     fontFamily = if (isComplete) notosans_regular else notosans_bold,
                     style = TextStyle(
@@ -85,11 +90,11 @@ fun ShelterCategoryItems(
                         .padding(horizontal = 5.dp, vertical = 4.dp)
                         .align(Alignment.TopStart)
                 )
-            }else if(isComplete){
+            } else if (isComplete) {
                 Text(
-                    text =  "petmily ❤️",
+                    text = "petmily ❤️",
                     fontSize = 8.sp,
-                    fontFamily =  notosans_regular,
+                    fontFamily = notosans_regular,
                     style = TextStyle(
                         platformStyle = PlatformTextStyle(
                             includeFontPadding = false
@@ -119,8 +124,8 @@ fun ShelterCategoryItems(
         ) {
 
             Text(
-                text = if(!isComplete)title else "(완료) $title",
-                color = if(!isComplete)Color.Black else Black_30_Transfer,
+                text = if (!isComplete) title else "(완료) $title",
+                color = if (!isComplete) Color.Black else Black_30_Transfer,
                 fontSize = 15.sp,
                 fontFamily = notosans_bold,
                 style = TextStyle(
@@ -136,7 +141,7 @@ fun ShelterCategoryItems(
             Text(
                 text = description,
                 fontSize = 12.sp,
-                color = if(!isComplete) Black_60_Transfer else Black_20_Transfer,
+                color = if (!isComplete) Black_60_Transfer else Black_20_Transfer,
                 modifier = Modifier
                     .background(color = Background_FDFCE1),
                 fontFamily = notosans_regular,
@@ -150,7 +155,7 @@ fun ShelterCategoryItems(
             Text(
                 text = vaccination,
                 fontSize = 12.sp,
-                color = if(!isComplete) Black_60_Transfer else Black_20_Transfer,
+                color = if (!isComplete) Black_60_Transfer else Black_20_Transfer,
                 fontFamily = notosans_regular,
                 style = TextStyle(
                     platformStyle = PlatformTextStyle(

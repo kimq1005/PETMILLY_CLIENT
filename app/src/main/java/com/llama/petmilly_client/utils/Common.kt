@@ -57,7 +57,8 @@ object Common {
     const val SHELTERDETAIL_4_PROFILE_SCREEN ="ShelterDetail_4_profile_Screen"
     const val SHELTERDETAIL_5_CONDITION_SCREEN ="ShelterDetail_5_condition_Screen"
     const val SHELTERDETAIL_6_CONDITION_SCREEN ="ShelterDetail_6_condition_Screen"
-    const val SHELTERDETAIL_7_APPLICATION_SCREEN ="ShelterDetail_7_application_Screen"
+    const val SHELTERDETAIL_7_CHARMAPPEAL_SCREEN ="SHELTERDETAIL_7_CHARMAPPEAL_SCREEN"
+    const val SHELTERDETAIL_8_APPLICATION_SCREEN ="ShelterDetail_7_application_Screen"
 
     const val MOVESERVICEDETAILSCREEN_1_INPUT="MoveServiceDetailScreen_1_Input"
     const val MOVESERVICEDETAILSCREEN_2_INPUT="MoveServiceDetailScreen_2_Input"

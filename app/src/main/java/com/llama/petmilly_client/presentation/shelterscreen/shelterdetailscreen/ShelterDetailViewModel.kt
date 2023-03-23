@@ -24,7 +24,9 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.internal.format
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
@@ -48,7 +50,7 @@ class ShelterDetailViewModel @Inject constructor(
 
 
     val files = mutableStateListOf<MultipartBody.Part>()
-
+    val charmAppeal = mutableStateOf("")
     val species = mutableStateOf("")
     val animalname = mutableStateOf("")
     val animalsex = mutableStateOf("")
@@ -79,10 +81,10 @@ class ShelterDetailViewModel @Inject constructor(
     val hopepeople = mutableStateOf("")
     val nopeople = mutableStateOf("")
 
-    val apyear = mutableStateOf("")
+    val apstartyear = mutableStateOf("")
 
 
-    val aptime = mutableStateOf("")
+    val apendyear = mutableStateOf("")
 
 
     fun updateFiles(newFiles: MultipartBody.Part) {
@@ -154,7 +156,7 @@ class ShelterDetailViewModel @Inject constructor(
 
 //        val dateString = hopeapplicationperiod.value
 
-
+        val charmAppeal = charmAppeal.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val species = species.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalname = animalname.value.toRequestBody("text/plain".toMediaTypeOrNull())
         val animalsex = animalsex.value.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -180,11 +182,13 @@ class ShelterDetailViewModel @Inject constructor(
             temporaryProtectionNoList.map {
                 RequestBody.create("text/plain".toMediaTypeOrNull(), it)
             }
+        val now = LocalTime.now()
 
         viewModelScope.launch(Dispatchers.IO) {
             petMillyRepo.posttemporaryprotection(
                 MainApplication.accessToken,
                 files ?: null,
+                charmAppeal,
                 species,
                 animalname,
                 animalsex,
@@ -197,10 +201,17 @@ class ShelterDetailViewModel @Inject constructor(
                 animalskill,
                 animalpersonality,
                 pickup,
-                receptionPeriod = if (apyear.value != "" && aptime.value != "") {
-                    val foratter = DateTimeFormatter.ofPattern("yy-MM-dd HH.mm.ss")
-                    val dateString = "${apyear.value} ${aptime.value}"
-                    val date = LocalDateTime.parse(dateString, foratter)
+                startReceptionPeriod = if (apstartyear.value != "") {
+                    val formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss")
+                    val dateString = "${apstartyear.value} 10:00:00"
+                    val date = LocalDateTime.parse(dateString, formatter)
+                    val hopeapplicationperiod = RequestBody.create("text/plain".toMediaTypeOrNull(), date.toString())
+                    hopeapplicationperiod
+                } else null,
+                endReceptionPeriod = if (apendyear.value != "") {
+                    val formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss")
+                    val dateString = "${apendyear.value} 10:00:00"
+                    val date = LocalDateTime.parse(dateString, formatter)
                     val hopeapplicationperiod = RequestBody.create("text/plain".toMediaTypeOrNull(), date.toString())
                     hopeapplicationperiod
                 } else null,

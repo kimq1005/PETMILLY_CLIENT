@@ -26,10 +26,6 @@ class ShelterViewModel @Inject constructor(
     private val petMillyRepo: PetMillyRepo,
 ) : ViewModel() {
 
-    fun hi(){
-        Log.d(TAG, "hi: hi")
-    }
-
     var isDialogShown by mutableStateOf(false)
         private set
 
@@ -54,7 +50,7 @@ class ShelterViewModel @Inject constructor(
     val cat = mutableStateOf(true)
     val dog = mutableStateOf(true)
     val isComplete = mutableStateOf(false)
-    val weight = mutableStateOf(null)
+    val weight = mutableStateOf("")
     val type = mutableStateOf("temporaryProtection")
 
     val postDto: MutableLiveData<PostDTO> = MutableLiveData<PostDTO>()
@@ -141,18 +137,20 @@ class ShelterViewModel @Inject constructor(
                 MainApplication.accessToken,
                 1,
                 5,
-                true,
-                true,
-                true,
-                null,
+                cat.value,
+                dog.value,
+                isComplete.value,
+                if(weight.value!="") weight.value else null,
                 "temporaryProtection"
             ).let {
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
-                        Log.d(TAG, "getpost SUCCESS: $it")
-                        it.data?.let {
-                            postDto.postValue(it)
+                        it.data?.let {data->
+                            postDto.postValue(data)
+                            Log.d(TAG, "getpost:$it ")
                         }
+
+                        setPostData()
 //
                     }
 
@@ -171,6 +169,7 @@ class ShelterViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             postDto.value?.let {
                 postDataList.addAll(it.data.list)
+                Log.d(TAG, "setPostData: ${postDataList.size}")
             }
         }
     }

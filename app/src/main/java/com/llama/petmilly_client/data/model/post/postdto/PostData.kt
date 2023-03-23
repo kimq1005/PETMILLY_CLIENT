@@ -11,6 +11,6 @@ data class PostData (
     val isReceipt: Boolean,
     val name: String,
     val neutered: String,
-    val thumbnail: Thumbnail,
+    val thumbnail: Thumbnail?,
     val weight: Int
 )

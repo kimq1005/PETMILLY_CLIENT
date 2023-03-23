@@ -1,9 +1,11 @@
 package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 
 import android.icu.text.CaseMap.Title
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -30,6 +32,7 @@ import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.SHELTERDETAIL_SPECIES_SCREEN
 @AndroidEntryPoint
 class ShelterDetailActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -96,8 +99,17 @@ class ShelterDetailActivity : ComponentActivity() {
                     )
                 }
 
-                composable(Common.SHELTERDETAIL_7_APPLICATION_SCREEN){
-                    ShelterDetail_7_Application_Period_Screen(
+                composable(Common.SHELTERDETAIL_7_CHARMAPPEAL_SCREEN){
+                    ShelterDetail_CharmAppeal_7_Screen(
+                        navController = navController,
+                        viewModel = viewModel,
+                        activity = this@ShelterDetailActivity
+                    )
+                }
+
+
+                composable(Common.SHELTERDETAIL_8_APPLICATION_SCREEN){
+                    ShelterDetail_8_Application_Period_Screen(
                         navController = navController,
                         viewModel = viewModel,
                         activity = this@ShelterDetailActivity
