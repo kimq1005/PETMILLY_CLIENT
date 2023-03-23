@@ -236,7 +236,7 @@ fun ShelterDetail_6_conditons_Screen(
                 backgroundcolor = Color.Black
 
             ) {
-                navController.navigate(Common.SHELTERDETAIL_7_APPLICATION_SCREEN)
+                navController.navigate(Common.SHELTERDETAIL_7_CHARMAPPEAL_SCREEN)
             }
 
             Text(

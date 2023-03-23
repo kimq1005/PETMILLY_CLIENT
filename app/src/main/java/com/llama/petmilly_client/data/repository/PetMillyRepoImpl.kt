@@ -59,7 +59,8 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         skill: RequestBody?,
         character: RequestBody?,
         pickUp: RequestBody,
-        receptionPeriod: RequestBody?,
+        startReceptionPeriod: RequestBody?,
+        endReceptionPeriod: RequestBody?,
         temporaryProtectionCondition: List<RequestBody>?,
         temporaryProtectionHope: List<RequestBody>?,
         temporaryProtectionNo: List<RequestBody>?
@@ -81,7 +82,8 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
             skill,
             character,
             pickUp,
-            receptionPeriod,
+            startReceptionPeriod,
+            endReceptionPeriod,
             temporaryProtectionCondition,
             temporaryProtectionHope,
             temporaryProtectionNo

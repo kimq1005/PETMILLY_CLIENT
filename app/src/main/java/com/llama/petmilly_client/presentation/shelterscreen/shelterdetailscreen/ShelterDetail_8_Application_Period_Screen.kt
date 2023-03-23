@@ -3,15 +3,11 @@ package com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen
 import android.app.Activity
 import android.content.Context
 import android.os.Build
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -19,22 +15,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleOwner
@@ -43,21 +30,16 @@ import androidx.navigation.NavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.dialog.SetAlomostCompletedDialog
 import com.llama.petmilly_client.presentation.shelterscreen.ShelterDetailTitleBar
-import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
-import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.Grey_100_CBC4C4
 import com.llama.petmilly_client.ui.theme.Grey_50_CBC4C4
 import com.llama.petmilly_client.utils.ButtonScreen
-import com.llama.petmilly_client.utils.SpacerWidth
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
-import llama.test.jetpack_dagger_plz.utils.Common
-import org.w3c.dom.Text
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ShelterDetail_7_Application_Period_Screen(
+fun ShelterDetail_8_Application_Period_Screen(
     navController: NavController,
     viewModel: ShelterDetailViewModel,
     activity: Activity,
@@ -112,10 +94,10 @@ fun ShelterDetail_7_Application_Period_Screen(
         ) {
 
             TextField(
-                value = viewModel.apyear.value,
+                value = viewModel.apstartyear.value,
                 modifier = Modifier.weight(5f),
                 onValueChange = {
-                    viewModel.apyear.value = it
+                    viewModel.apstartyear.value = it
                 },
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.Transparent,
@@ -150,10 +132,10 @@ fun ShelterDetail_7_Application_Period_Screen(
 
 
             TextField(
-                value = viewModel.aptime.value,
+                value = viewModel.apendyear.value,
                 modifier = Modifier.weight(5f),
                 onValueChange = {
-                    viewModel.aptime.value = it
+                    viewModel.apendyear.value = it
                 },
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.Transparent,
@@ -172,7 +154,7 @@ fun ShelterDetail_7_Application_Period_Screen(
 
                 placeholder = {
                     Text(
-                        text = "10.00.00",
+                        text = "23-06-10",
                         fontSize = 30.sp,
                         fontFamily = notosans_bold,
                         color = Grey_100_CBC4C4,
@@ -345,7 +327,6 @@ fun ShelterDetail_7_Application_Period_Screen(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 20.dp)
         ) {
-            val ischeck = viewModel.apyear.value != "" && viewModel.aptime.value != ""
             ButtonScreen(
                 title = "완료",
                 textcolor = Color.White,
@@ -356,22 +337,9 @@ fun ShelterDetail_7_Application_Period_Screen(
                 backgroundcolor = Color.Black
             ) {
                 viewModel.posttemporaryprotection()
-//                activity.finish()
+                activity.finish()
             }
 
-            Text(
-                text = "", fontSize = 13.sp,
-                fontFamily = notosans_bold,
-                style = TextStyle(
-                    platformStyle = PlatformTextStyle(
-                        includeFontPadding = false
-                    )
-                ),
-                color = if (ischeck) Color.White else Grey_50_CBC4C4,
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(end = 18.dp)
-            )
 
         }
     }

@@ -240,8 +240,6 @@ fun ShelterDetail_3_profile_Screen(
             ) {
                 if (ischeck) {
                         navController.navigate(Common.SHELTERDETAIL_4_PROFILE_SCREEN)
-                } else {
-
                 }
             }
 
