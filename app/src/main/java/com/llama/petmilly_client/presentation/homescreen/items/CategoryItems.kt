@@ -84,25 +84,26 @@ fun CategoryItems(
 
 @Composable
 fun CategoryShelterItems(
-    categoryTest: CategoryTest,
+    ShelterListCategory: ShelterListCategory,
     onClick: () -> Unit,
 ) {
 
-    val itemSelection = remember {
-        mutableStateOf(-1)
-    }
     var checkBoolean by remember {
         mutableStateOf(false)
     }
 
     FlowRow(
         modifier = Modifier
-            .border(0.5.dp, color = Color.Black, shape = RoundedCornerShape(16.5.dp)),
+            .border(
+                0.5.dp,
+                color = if (!checkBoolean) Color.Black else Color.Transparent,
+                shape = RoundedCornerShape(16.5.dp)
+            ),
         mainAxisAlignment = MainAxisAlignment.Center,
         mainAxisSize = SizeMode.Expand,
     ) {
         Text(
-            text = categoryTest.title,
+            text = ShelterListCategory.title,
             textAlign = TextAlign.Center,
             fontSize = 13.sp,
             color = if (checkBoolean) Color.White else Color.Black,
@@ -171,3 +172,7 @@ fun BorderCategoryItems(
     }
 
 }
+
+data class ShelterListCategory(
+    var title: String,
+)

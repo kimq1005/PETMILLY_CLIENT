@@ -7,15 +7,14 @@ import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
+import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface PetMillyRepo {
     suspend fun postkakaotoken(
@@ -43,6 +42,7 @@ interface PetMillyRepo {
     suspend fun posttemporaryprotection(
         token: String,
         files: List<MultipartBody.Part>?,
+        charmAppeal :RequestBody,
         animalTypes: RequestBody,
         name: RequestBody,
         gender: RequestBody,
@@ -65,4 +65,15 @@ interface PetMillyRepo {
         token: String,
         locationauthenticationResponse: LocationauthenticationResponse,
     ): RemoteResult<TemporaryprotectionDTO>
+
+    suspend fun getpost(
+        token: String,
+        page: Int?,
+        limit: Int?,
+        cat: Boolean?,
+        dog: Boolean?,
+        isComplete: Boolean?,
+        weight: String?,
+        type: String,
+    ): RemoteResult<PostDTO>
 }

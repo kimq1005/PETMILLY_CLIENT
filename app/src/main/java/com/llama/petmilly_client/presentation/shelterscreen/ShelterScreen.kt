@@ -17,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,11 +43,18 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 @Composable
 fun SafeShelterListScreen(
     navController: NavController,
-    viewModel: ShelterViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: ShelterViewModel,
 ) {
     Scaffold {
 
         val context = LocalContext.current
+
+        LaunchedEffect(context) {
+            viewModel.getpost()
+            viewModel.hi()
+        }
+
+
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
@@ -60,18 +68,18 @@ fun SafeShelterListScreen(
 
                     viewModel.setcategory()
 
-                    items(viewModel.categorytest) { categorylist ->
+                    items(viewModel.shelterListCategory) { categorylist ->
 
                         Row {
-                            if (viewModel.categorytest.indexOf(categorylist) == 0) {
+                            if (viewModel.shelterListCategory.indexOf(categorylist) == 0) {
                                 Spacer(modifier = Modifier.padding(start = 15.dp))
-                                CategoryShelterItems(categoryTest = categorylist) {
+                                CategoryShelterItems(categorylist) {
 
                                 }
 
 
                             } else {
-                                CategoryShelterItems(categoryTest = categorylist) {
+                                CategoryShelterItems(ShelterListCategory = categorylist) {
 
                                 }
                             }
@@ -92,13 +100,15 @@ fun SafeShelterListScreen(
                 ) {
                     viewModel.setcategory()
 
-                    items(viewModel.sheltercategory.value) { items ->
+                    items(viewModel.postDataList) { items ->
                         Column {
-                            ShelterCategoryItems(title = items,
-                                "수컷 / 1kg / 믹스 / 2개월 추정/",
-                                "1차접종완료 / 중성화O",
-                                true,
-                                false,
+                            ShelterCategoryItems(
+                                title = items.name,
+                                description = "${items.gender} / ${items.weight} / ${items.breed} / ${items.age}",
+                                vaccination = "${items.inoculation} /${items.neutered}",
+                                isclicked = true,
+                                isComplete = items.isComplete,
+                                isReceipt = items.isReceipt,
                                 onclcik = {
                                     navController.navigate(ANIMALINFO_DETAIL)
                                 })
@@ -107,6 +117,7 @@ fun SafeShelterListScreen(
                     }
                 }
             }//column
+
 
             Image(
                 painter = painterResource(id = R.drawable.img_write),
@@ -128,11 +139,4 @@ fun SafeShelterListScreen(
         }//Box
 
     }
-}
-
-@Preview
-@Composable
-fun TestPreview() {
-    val navController = rememberNavController()
-    SafeShelterListScreen(navController)
 }

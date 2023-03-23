@@ -13,14 +13,14 @@ abstract class BaseDataSource {
     private val gson = Gson()
 
     protected suspend fun <T> getResult(call: suspend () -> Response<T>): RemoteResult<T> {
-
         try {
             val response = call()
-
             if (response.isSuccessful) {
                 if (response.code() == 201 || response.code() == 200) {
                     val body = response.body()
+
                     if (body != null) return RemoteResult.success(body)
+
                 } else {
                     return RemoteResult.check(response.body().toString())
                 }

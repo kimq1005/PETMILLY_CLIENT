@@ -28,6 +28,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -48,6 +49,7 @@ class ShelterActivity : ComponentActivity() {
         setContent {
             Surface {
                 val navController = rememberNavController()
+                val viewModel: ShelterViewModel = hiltViewModel()
                 Column {
 
                     TitleBar(
@@ -68,13 +70,12 @@ class ShelterActivity : ComponentActivity() {
 
                     }
 
-//                    val route = intent.getStringExtra(SAFESHELTER_COMPOSABLE).toString()
                     NavHost(
                         navController = navController,
                         startDestination = SAFESHELTER_COMPOSABLE
                     ) {
                         composable(route = SAFESHELTER_COMPOSABLE) {
-                            SafeShelterListScreen(navController = navController)
+                            SafeShelterListScreen(navController = navController, viewModel)
                         }
 
                         composable(ANIMALINFO_DETAIL) {

@@ -7,6 +7,7 @@ import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
+import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
 import com.llama.petmilly_client.data.network.PetMillYApiService
@@ -45,6 +46,7 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
     override suspend fun posttemporaryprotection(
         token: String,
         files: List<MultipartBody.Part>?,
+        charmAppeal :RequestBody,
         animalTypes: RequestBody,
         name: RequestBody,
         gender: RequestBody,
@@ -57,14 +59,16 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         skill: RequestBody?,
         character: RequestBody?,
         pickUp: RequestBody,
-        receptionPeriod: RequestBody??,
+        receptionPeriod: RequestBody?,
         temporaryProtectionCondition: List<RequestBody>?,
         temporaryProtectionHope: List<RequestBody>?,
-        temporaryProtectionNo: List<RequestBody>?,
+        temporaryProtectionNo: List<RequestBody>?
+
     ): RemoteResult<TemporaryprotectionDTO> = getResult {
         petMillYApiService.posttemporaryprotection(
             token,
             files,
+            charmAppeal,
             animalTypes,
             name,
             gender,
@@ -87,8 +91,21 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
     override suspend fun posttownauth(
         token: String,
         locationauthenticationResponse: LocationauthenticationResponse,
-    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+    ): RemoteResult<TemporaryprotectionDTO> = getResult {
         petMillYApiService.posttownauth(token, locationauthenticationResponse)
+    }
+
+    override suspend fun getpost(
+        token: String,
+        page: Int?,
+        limit: Int?,
+        cat: Boolean?,
+        dog: Boolean?,
+        isComplete: Boolean?,
+        weight: String?,
+        type: String,
+    ): RemoteResult<PostDTO> = getResult {
+        petMillYApiService.getpost(token, page, limit, cat, dog, isComplete, weight, type)
     }
 
 //    override suspend fun posttemporaryprotection(

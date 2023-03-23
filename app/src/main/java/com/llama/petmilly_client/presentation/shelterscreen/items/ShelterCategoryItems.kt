@@ -35,7 +35,8 @@ fun ShelterCategoryItems(
     description: String,
     vaccination: String,
     isclicked: Boolean,
-    ispetmily: Boolean,
+    isComplete: Boolean,
+    isReceipt:Boolean,
     onclcik: () -> Unit,
 ) {
     Row(
@@ -63,28 +64,50 @@ fun ShelterCategoryItems(
                     )
             }
 
+            if(isReceipt){
+                Text(
+                    text =  "심사중",
+                    fontSize = 8.sp,
+                    fontFamily = if (isComplete) notosans_regular else notosans_bold,
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    ),
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .offset(y = 15.dp, x = 5.dp)
+                        .background(
+                            if (isComplete) Color.Black else Category_Cliked,
+                            shape = RoundedCornerShape(5.dp)
+                        )
+                        .padding(horizontal = 5.dp, vertical = 4.dp)
+                        .align(Alignment.TopStart)
+                )
+            }else if(isComplete){
+                Text(
+                    text =  "petmily ❤️",
+                    fontSize = 8.sp,
+                    fontFamily =  notosans_regular,
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    ),
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .offset(y = 15.dp, x = 5.dp)
+                        .background(
+                            if (isComplete) Color.Black else Category_Cliked,
+                            shape = RoundedCornerShape(5.dp)
+                        )
+                        .padding(horizontal = 5.dp, vertical = 4.dp)
+                        .align(Alignment.TopStart)
+                )
+            }
 
-            Text(
-                text = if (ispetmily) "petmily ❤️" else "심사중",
-                fontSize = 8.sp,
-                fontFamily = if (ispetmily) notosans_regular else notosans_bold,
-                style = TextStyle(
-                    platformStyle = PlatformTextStyle(
-                        includeFontPadding = false
-                    )
-                ),
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .offset(y = 15.dp, x = 5.dp)
-                    .background(
-                        if (ispetmily) Color.Black else Category_Cliked,
-                        shape = RoundedCornerShape(5.dp)
-                    )
-                    .padding(horizontal = 5.dp, vertical = 4.dp)
-                    .align(Alignment.TopStart)
-
-            )
         }
 
 
@@ -96,8 +119,8 @@ fun ShelterCategoryItems(
         ) {
 
             Text(
-                text = title,
-                color = Color.Black,
+                text = if(!isComplete)title else "(완료) $title",
+                color = if(!isComplete)Color.Black else Black_30_Transfer,
                 fontSize = 15.sp,
                 fontFamily = notosans_bold,
                 style = TextStyle(
@@ -113,7 +136,7 @@ fun ShelterCategoryItems(
             Text(
                 text = description,
                 fontSize = 12.sp,
-                color = Black_60_Transfer,
+                color = if(!isComplete) Black_60_Transfer else Black_20_Transfer,
                 modifier = Modifier
                     .background(color = Background_FDFCE1),
                 fontFamily = notosans_regular,
@@ -127,7 +150,7 @@ fun ShelterCategoryItems(
             Text(
                 text = vaccination,
                 fontSize = 12.sp,
-                color = Black_60_Transfer,
+                color = if(!isComplete) Black_60_Transfer else Black_20_Transfer,
                 fontFamily = notosans_regular,
                 style = TextStyle(
                     platformStyle = PlatformTextStyle(

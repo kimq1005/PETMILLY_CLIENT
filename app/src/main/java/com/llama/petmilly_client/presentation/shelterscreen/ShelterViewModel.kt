@@ -6,11 +6,29 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.llama.petmilly_client.MainApplication
+import com.llama.petmilly_client.data.model.post.postdto.PostDTO
+import com.llama.petmilly_client.data.model.post.postdto.PostData
+import com.llama.petmilly_client.domain.repository.PetMillyRepo
 import com.llama.petmilly_client.presentation.homescreen.CategoryTest
+import com.llama.petmilly_client.presentation.homescreen.items.ShelterListCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
+import llama.test.jetpack_dagger_plz.utils.RemoteResult
+import javax.inject.Inject
 
-class ShelterViewModel() : ViewModel() {
+@HiltViewModel
+class ShelterViewModel @Inject constructor(
+    private val petMillyRepo: PetMillyRepo,
+) : ViewModel() {
+
+    fun hi(){
+        Log.d(TAG, "hi: hi")
+    }
 
     var isDialogShown by mutableStateOf(false)
         private set
@@ -29,17 +47,23 @@ class ShelterViewModel() : ViewModel() {
 
 
     val categorytest: MutableList<CategoryTest> = arrayListOf()
-
+    val shelterListCategory: MutableList<ShelterListCategory> = arrayListOf()
     var testBoolean = mutableStateOf<Boolean>(true)
-
     var isjudge = mutableStateOf(1)
-    //0 심사x
-    //1 심사 중
-    //2 심사 완료
+
+    val cat = mutableStateOf(true)
+    val dog = mutableStateOf(true)
+    val isComplete = mutableStateOf(false)
+    val weight = mutableStateOf(null)
+    val type = mutableStateOf("temporaryProtection")
+
+    val postDto: MutableLiveData<PostDTO> = MutableLiveData<PostDTO>()
+    val postDataList = mutableStateListOf<PostData>()
 
 
     init {
         testsetcategory()
+        setsheltercategory()
     }
 
     fun setanimalinfovalue() {
@@ -51,22 +75,21 @@ class ShelterViewModel() : ViewModel() {
 
     }
 
-    fun onConfirmClick(){
+    fun onConfirmClick() {
         isDialogShown = true
     }
 
-    fun onDismissDialog(){
+    fun onDismissDialog() {
         isDialogShown = false
     }
 
-    fun onAdoptionDialogConfirmClick(){
+    fun onAdoptionDialogConfirmClick() {
         isAdoptionApplicationDialogShown = true
     }
 
-    fun onAdoptionDialogDismissDialog(){
+    fun onAdoptionDialogDismissDialog() {
         isAdoptionApplicationDialogShown = false
     }
-
 
 
     fun setcategory() {
@@ -89,11 +112,68 @@ class ShelterViewModel() : ViewModel() {
         categorytest.add(findmybaby)
         categorytest.add(movevolunteer)
         categorytest.add(adoptionnotice)
+    }
 
+    fun setsheltercategory() {
+
+        val puppy = ShelterListCategory("강아지")
+        val cat = ShelterListCategory("고양이")
+        val petmily = ShelterListCategory("petmily ❤️")
+        val small = ShelterListCategory("~7kg")
+        val middle = ShelterListCategory("7~15kg")
+        val big = ShelterListCategory("15kg~")
+
+        shelterListCategory.add(puppy)
+        shelterListCategory.add(cat)
+        shelterListCategory.add(petmily)
+        shelterListCategory.add(small)
+        shelterListCategory.add(middle)
+        shelterListCategory.add(big)
     }
 
     fun testsetcategory() {
         _sheltercategory.value = listOf("전체", "강아지", "고양이", "입양/귀가완료", "~7kg", "7~15kg", "15kg~")
+    }
+
+    fun getpost() {
+        viewModelScope.launch(Dispatchers.IO) {
+            petMillyRepo.getpost(
+                MainApplication.accessToken,
+                1,
+                5,
+                true,
+                true,
+                true,
+                null,
+                "temporaryProtection"
+            ).let {
+                when (it.status) {
+                    RemoteResult.Status.SUCCESS -> {
+                        Log.d(TAG, "getpost SUCCESS: $it")
+                        it.data?.let {
+                            postDto.postValue(it)
+                        }
+//
+                    }
+
+                    else -> {
+                        Log.d(TAG, "getpost ERROR: $it")
+                    }
+
+                }
+
+            }
+        }
 
     }
+
+    private fun setPostData() {
+        viewModelScope.launch(Dispatchers.Main) {
+            postDto.value?.let {
+                postDataList.addAll(it.data.list)
+            }
+        }
+    }
+
+
 }
