@@ -10,6 +10,7 @@ import com.llama.petmilly_client.data.model.locationauthenticationResponse.Locat
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
+import com.llama.petmilly_client.data.model.temporary.detail.TemporarydetailDTO
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -77,4 +78,11 @@ interface PetMillyRepo {
         weight: String?,
         type: String,
     ): RemoteResult<PostDTO>
+
+
+    suspend fun gettemporarydetail(
+       token: String,
+       id:Int
+    ):RemoteResult<TemporarydetailDTO>
+
 }

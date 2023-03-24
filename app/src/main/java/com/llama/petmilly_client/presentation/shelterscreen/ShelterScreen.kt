@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -37,6 +38,7 @@ import com.llama.petmilly_client.presentation.homescreen.items.CategoryShelterIt
 import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen.ShelterDetailActivity
 import com.llama.petmilly_client.ui.theme.Purple700
+import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.ANIMALINFO_DETAIL
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
@@ -109,6 +111,7 @@ fun SafeShelterListScreen(
                             "$age 개월 추정"
                         }
 
+                        viewModel.id.value = items.id
                         Column {
                             ShelterCategoryItems(
                                 title = items.name,
@@ -119,7 +122,7 @@ fun SafeShelterListScreen(
                                 isComplete = items.isComplete,
                                 isReceipt = items.isReceipt,
                                 onclcik = {
-                                    navController.navigate(ANIMALINFO_DETAIL)
+                                    navController.navigate(ANIMALINFO_DETAIL+"/${items.id}")
                                 })
                             Spacer(modifier = Modifier.height(6.dp))
                         }

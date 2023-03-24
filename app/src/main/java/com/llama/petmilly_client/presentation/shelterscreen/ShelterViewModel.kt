@@ -11,6 +11,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.post.postdto.PostData
+import com.llama.petmilly_client.data.model.temporary.detail.*
 import com.llama.petmilly_client.domain.repository.PetMillyRepo
 import com.llama.petmilly_client.presentation.homescreen.CategoryTest
 import com.llama.petmilly_client.presentation.homescreen.items.ShelterListCategory
@@ -32,14 +33,12 @@ class ShelterViewModel @Inject constructor(
     var isAdoptionApplicationDialogShown by mutableStateOf(false)
         private set
 
-    val animalname = mutableStateOf<String>("")
-    val animalgenter = mutableStateOf<String>("")
+
     val animalage = mutableStateOf(0)
     val animalspecies = mutableStateOf<String>("")
     val animalweight = mutableStateOf<Int>(0)
 
-    private val _sheltercategory = mutableStateOf(emptyList<String>())
-    val sheltercategory: State<List<String>> = _sheltercategory
+
 
 
     val categorytest: MutableList<CategoryTest> = arrayListOf()
@@ -56,20 +55,42 @@ class ShelterViewModel @Inject constructor(
     val postDto: MutableLiveData<PostDTO> = MutableLiveData<PostDTO>()
     val postDataList = mutableStateListOf<PostData>()
 
+    //임보처 구해요 상세조회
+    val id = mutableStateOf(0)
+    val temporarydetailDTO : MutableLiveData<TemporarydetailDTO> = MutableLiveData<TemporarydetailDTO>()
+    val temporarydetailList = mutableStateListOf<Data>()
+
+    val charmAppeal_detail = mutableStateOf("")
+    val name_detail = mutableStateOf("")
+    val gender_detail =  mutableStateOf("")
+    val weight_detail =  mutableStateOf("")
+    val breed_detail =  mutableStateOf("")
+    val age_detail = mutableStateOf("")
+    val neutered_detail = mutableStateOf("")
+    val inoculation_detail = mutableStateOf("")
+    val health_detail = mutableStateOf("")
+    val skill_detail = mutableStateOf("")
+    val character_detail = mutableStateOf("")
+    val pickUp_detail = mutableStateOf("")
+    val receptionPeriod_detail = mutableStateOf("")
+    val isReceipt_detail = mutableStateOf(false)
+    val isCompleted_detail = mutableStateOf(false)
+    val shortName_detail = mutableStateOf("")
+    val thumbnail_detail = mutableStateOf("")
+
+    val ProtectionCondition = mutableStateListOf<ProtectionCondition>()
+    val ProtectionHope = mutableStateListOf<ProtectionHope>()
+    val ProtectionNo = mutableStateListOf<ProtectionNo>()
+
+
+
+
 
     init {
-        testsetcategory()
         setsheltercategory()
     }
 
-    fun setanimalinfovalue() {
-        animalname.value = "박종경"
-        animalgenter.value = "혼종"
-        animalage.value = 5
-        animalspecies.value = "바부"
-        animalweight.value = 100
 
-    }
 
     fun onConfirmClick() {
         isDialogShown = true
@@ -127,9 +148,7 @@ class ShelterViewModel @Inject constructor(
         shelterListCategory.add(big)
     }
 
-    fun testsetcategory() {
-        _sheltercategory.value = listOf("전체", "강아지", "고양이", "입양/귀가완료", "~7kg", "7~15kg", "15kg~")
-    }
+
 
     fun getpost() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -140,12 +159,12 @@ class ShelterViewModel @Inject constructor(
                 cat.value,
                 dog.value,
                 isComplete.value,
-                if(weight.value!="") weight.value else null,
+                if (weight.value != "") weight.value else null,
                 "temporaryProtection"
             ).let {
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
-                        it.data?.let {data->
+                        it.data?.let { data ->
                             postDto.postValue(data)
                             Log.d(TAG, "getpost:$it ")
                         }
@@ -167,9 +186,58 @@ class ShelterViewModel @Inject constructor(
 
     private fun setPostData() {
         viewModelScope.launch(Dispatchers.Main) {
+            postDataList.clear()
             postDto.value?.let {
                 postDataList.addAll(it.data.list)
                 Log.d(TAG, "setPostData: ${postDataList.size}")
+            }
+        }
+    }
+
+    fun gettemporarydetail() {
+        viewModelScope.launch(Dispatchers.IO) {
+            petMillyRepo.gettemporarydetail(MainApplication.accessToken,id.value).let {
+                when (it.status) {
+                    RemoteResult.Status.SUCCESS -> {
+                        it.data?.let { item->
+                            val data = item.data
+                            temporarydetailDTO.postValue(item)
+                            charmAppeal_detail.value = data.charmAppeal
+                            name_detail.value = data.name
+                            gender_detail.value = data.gender
+                            weight_detail.value = data.weight.toString()
+                            breed_detail.value = data.breed.toString()
+                            age_detail.value = if(data.age>1) "${data.age.toInt()}살 추정" else "${data.age * 10}개월 추정"
+                            neutered_detail.value = data.neutered
+                            inoculation_detail.value = data.inoculation
+                            health_detail.value = data.health
+                            skill_detail.value = data.skill
+                            character_detail.value = data.character
+                            pickUp_detail.value = data.pickUp
+                            receptionPeriod_detail.value= data.receptionPeriod
+                            isReceipt_detail.value = data.isReceipt
+                            isCompleted_detail.value = data.isComplete
+                            shortName_detail.value = data.addressInfo.shortName
+                            thumbnail_detail.value = data.thumbnail?.photoUrl ?: ""
+
+                            Log.d(TAG, "gettemporarydetail: $data")
+                        }
+                        setProtectionCondition()
+                    }
+                    else -> {
+                        Log.d(TAG, "gettemporarydetail ERROR: $it ")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setProtectionCondition(){
+        viewModelScope.launch(Dispatchers.Main) {
+            temporarydetailDTO.value?.let {
+                ProtectionCondition.addAll(it.data.ProtectionCondition)
+                ProtectionHope.addAll(it.data.ProtectionHope)
+                ProtectionNo.addAll(it.data.ProtectionNo)
             }
         }
     }

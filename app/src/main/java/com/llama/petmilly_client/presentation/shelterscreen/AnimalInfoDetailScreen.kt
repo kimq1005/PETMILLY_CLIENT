@@ -1,49 +1,33 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.util.Log
-import android.view.View
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberImagePainter
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.certificationscreen.CertificationActivity
 import com.llama.petmilly_client.presentation.dialog.AdoptionApplicationDialog
 import com.llama.petmilly_client.presentation.dialog.AdoptionCompletedDialog
 import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
-import com.llama.petmilly_client.presentation.homescreen.HomeActivity
-import com.llama.petmilly_client.presentation.loginscreen.CustomDialog
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
@@ -52,14 +36,20 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 @ExperimentalFoundationApi
 fun AnimalInfoDetailScreen(
     navController: NavController,
-    viewModel: ShelterViewModel = viewModel(),
+    viewModel: ShelterViewModel,
+    id: String,
 ) {
 
     val context = LocalContext.current
-    viewModel.setanimalinfovalue()
     val scrollState = rememberScrollState()
 
     Box(modifier = Modifier.fillMaxSize()) {
+
+        LaunchedEffect(context) {
+            viewModel.id.value = id.toInt()
+            viewModel.gettemporarydetail()
+        }
+
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)
@@ -75,7 +65,7 @@ fun AnimalInfoDetailScreen(
                 Box() {
 
                     Image(
-                        painter = painterResource(id = R.drawable.img_test_puppy),
+                        painter = if(viewModel.thumbnail_detail.value != "")  rememberImagePainter(data = viewModel.thumbnail_detail.value) else  painterResource(id = R.drawable.mainicon_png),
                         contentDescription = null,
                         modifier = Modifier
                             .height(130.dp)
@@ -111,7 +101,7 @@ fun AnimalInfoDetailScreen(
                             .padding(top = 15.dp)
                     ) {
                         Text(
-                            text = "\uD83D\uDC49 미소가 이쁜 감자예요",
+                            text = "\uD83D\uDC49 ${viewModel.charmAppeal_detail.value}",
                             modifier = Modifier
                                 .background(
                                     color = Name_Speech_Bubble,
@@ -119,7 +109,6 @@ fun AnimalInfoDetailScreen(
                                 )
                                 .padding(vertical = 5.dp, horizontal = 8.dp),
                             fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold,
                             color = Color.Black,
                         )
                     }
@@ -132,7 +121,7 @@ fun AnimalInfoDetailScreen(
                     ) {
 
                         Text(
-                            text = if (viewModel.testBoolean.value) viewModel.animalspecies.value else "${viewModel.animalspecies.value}(완료) ",
+                            text = if (viewModel.isCompleted_detail.value) viewModel.name_detail.value else "${viewModel.name_detail.value}(완료) ",
                             fontSize = 16.sp,
                             fontFamily = notosans_bold,
                             style = TextStyle(
@@ -145,7 +134,7 @@ fun AnimalInfoDetailScreen(
 
                         SpacerWidth(dp = 5.dp)
                         Text(
-                            text = "수컷",
+                            text = viewModel.gender_detail.value,
                             fontSize = 13.sp,
                             fontFamily = notosans_regular,
                             style = TextStyle(
@@ -162,7 +151,7 @@ fun AnimalInfoDetailScreen(
                     Spacer(modifier = Modifier.height(5.dp))
 
                     Text(
-                        text = "${viewModel.animalspecies.value} / ${viewModel.animalweight.value}kg/ ${viewModel.animalage.value} 추정",
+                        text = "${viewModel.breed_detail.value} / ${viewModel.weight_detail.value}kg/ ${viewModel.age_detail.value}",
                         fontFamily = notosans_regular,
                         style = TextStyle(
                             platformStyle = PlatformTextStyle(
@@ -174,17 +163,35 @@ fun AnimalInfoDetailScreen(
                         fontSize = 13.sp
 
                     )
-                    Text(
-                        text = "현재위치지역 어디어디동",
-                        fontFamily = notosans_regular,
-                        style = TextStyle(
-                            platformStyle = PlatformTextStyle(
-                                includeFontPadding = false
-                            )
-                        ),
-                        color = Black_60_Transfer,
-                        modifier = Modifier.padding(bottom = 5.dp)
-                    )
+
+                    Row() {
+                        Text(
+                            text = "현재위치지역",
+                            fontFamily = notosans_regular,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            ),
+                            fontSize = 13.sp,
+                            color = Black_60_Transfer,
+                            modifier = Modifier.padding(bottom = 5.dp)
+                        )
+                        Text(
+                            text = " ${viewModel.shortName_detail.value}",
+                            fontFamily = notosans_bold,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            ),
+                            fontSize = 13.sp,
+                            color = Black_60_Transfer,
+                            modifier = Modifier.padding(bottom = 5.dp)
+                        )
+
+                    }
+
                 }
             }//Row
 
@@ -194,7 +201,12 @@ fun AnimalInfoDetailScreen(
                     .fillMaxWidth()
                     .padding(top = 20.dp, start = 30.dp),
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
+                fontFamily = notosans_bold,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
                 color = Color.Black
             )
 
@@ -214,17 +226,28 @@ fun AnimalInfoDetailScreen(
                 ) {
                     Text(
                         text = "중성화/접종 ",
-                        color = Color.DarkGray,
+                        color = Black_60_Transfer,
                         fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontFamily = notosans_bold,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
                         modifier = Modifier.width(80.dp)
                     )
 
                     Text(
-                        text = "중성화O/1차 접종 완료 ",
-                        color = Color.DarkGray,
+                        text = "${viewModel.neutered_detail.value} / ${viewModel.inoculation_detail.value} ",
+                        color = Black_60_Transfer,
                         fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 15.dp)
+                        modifier = Modifier.padding(start = 15.dp),
+                        fontFamily = notosans_regular,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        )
                     )
                 }
 
@@ -243,15 +266,26 @@ fun AnimalInfoDetailScreen(
                 ) {
                     Text(
                         text = "성격",
-                        color = Color.DarkGray,
+                        fontFamily = notosans_bold,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        color = Black_60_Transfer,
                         fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.width(80.dp)
                     )
 
                     Text(
-                        text = "소심하고 순해요. 아직 아가라 알 순 없지만 기를 살려 줄 임보분이면 좋겠습니다.",
-                        color = Color.DarkGray,
+                        text = viewModel.health_detail.value,
+                        fontFamily = notosans_regular,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        color = Black_60_Transfer,
                         fontSize = 13.sp,
                         modifier = Modifier.padding(start = 15.dp)
                     )
@@ -270,15 +304,26 @@ fun AnimalInfoDetailScreen(
                 ) {
                     Text(
                         text = "개인기",
-                        color = Color.DarkGray,
+                        fontFamily = notosans_bold,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        color = Black_60_Transfer,
                         fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.width(80.dp)
                     )
 
                     Text(
-                        text = "앉아 까지 가능 합니다.",
-                        color = Color.DarkGray,
+                        text = viewModel.skill_detail.value,
+                        fontFamily = notosans_regular,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        color = Black_60_Transfer,
                         fontSize = 13.sp,
                         modifier = Modifier.padding(start = 15.dp)
                     )
@@ -297,16 +342,27 @@ fun AnimalInfoDetailScreen(
                         .padding(start = 10.dp, bottom = 10.dp)
                 ) {
                     Text(
-                        text = "특징",
-                        color = Color.DarkGray,
+                        text = "성격 및 특징",
+                        fontFamily = notosans_bold,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        color = Black_60_Transfer,
                         fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.width(80.dp)
                     )
 
                     Text(
-                        text = "성견되면 15kg대까지 추정되어요. 왕크니까 왕귀엽죠 스케일링/건강 여기 자유로 쓰게할까 고민중.",
-                        color = Color.DarkGray,
+                        text = viewModel.character_detail.value,
+                        fontFamily = notosans_regular,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        color = Black_60_Transfer,
                         fontSize = 13.sp,
                         modifier = Modifier.padding(start = 15.dp)
                     )
@@ -315,8 +371,7 @@ fun AnimalInfoDetailScreen(
             }//Column
 
 
-            if (viewModel.isjudge.value == 1) {
-
+            if (!viewModel.isCompleted_detail.value) {
                 SpacerHeight(dp = 16.dp)
 
                 Row(
@@ -324,8 +379,7 @@ fun AnimalInfoDetailScreen(
                         .fillMaxWidth()
                         .height(90.dp)
                         .background(color = Color(0xFFECF2FF)),
-
-                    ) {
+                ) {
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
@@ -364,21 +418,36 @@ fun AnimalInfoDetailScreen(
 
                         Text(
                             text = "신청서 접수기간 : 23.01.01 ~ 23.01.07",
-                            fontWeight = FontWeight.Bold,
+                            fontFamily = notosans_bold,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            ),
                             color = Color(0xFF3050F6),
                             modifier = Modifier.padding(bottom = 5.dp)
                         )
                         Text(
                             text = "신청서 심사기간 : 23.08.01 ~ 23.01.10",
-                            fontWeight = FontWeight.Bold,
+                            fontFamily = notosans_bold,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            ),
                             color = Color.Black,
                             modifier = Modifier.padding(bottom = 5.dp)
 
                         )
                         Text(
                             text = "* 입양신청서 심사 후 확정 시 앱 알림 및 채팅을 통해 안내드립니다.",
-                            fontWeight = FontWeight.Bold,
-                            color = Color.LightGray,
+                            fontFamily = notosans_regular,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            ),
+                            color = Black_60_Transfer,
                             fontSize = 11.sp
                         )
 
@@ -387,7 +456,7 @@ fun AnimalInfoDetailScreen(
             }
 
 
-            if (viewModel.isjudge.value != 2) {
+            if (!viewModel.isCompleted_detail.value) {
                 Column(
                     modifier = Modifier.padding(20.dp)
                 ) {
@@ -396,7 +465,12 @@ fun AnimalInfoDetailScreen(
                             .fillMaxWidth()
                             .padding(top = 10.dp, start = 10.dp),
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontFamily = notosans_bold,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
                         color = Color.Black
                     )
 
@@ -404,8 +478,13 @@ fun AnimalInfoDetailScreen(
 
                     Divider(color = Color.Black)
 
-                    Column(modifier = Modifier.background(color = Pink_5_Transfer)) {
+                    Column(
+                        modifier = Modifier
+                            .background(color = Pink_5_Transfer)
+
+                    ) {
                         SpacerHeight(dp = 8.dp)
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -413,15 +492,26 @@ fun AnimalInfoDetailScreen(
                         ) {
                             Text(
                                 text = "픽업방법 ",
-                                color = Color.DarkGray,
                                 fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
+                                fontFamily = notosans_bold,
+                                style = TextStyle(
+                                    platformStyle = PlatformTextStyle(
+                                        includeFontPadding = false
+                                    )
+                                ),
+                                color = Black_60_Transfer,
                                 modifier = Modifier.width(80.dp)
                             )
 
                             Text(
-                                text = "직접픽업 ",
-                                color = Color.DarkGray,
+                                text = viewModel.pickUp_detail.value,
+                                fontFamily = notosans_regular,
+                                style = TextStyle(
+                                    platformStyle = PlatformTextStyle(
+                                        includeFontPadding = false
+                                    )
+                                ),
+                                color = Black_60_Transfer,
                                 fontSize = 13.sp,
                                 modifier = Modifier.padding(start = 15.dp)
                             )
@@ -431,62 +521,6 @@ fun AnimalInfoDetailScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 10.dp), color = Color.LightGray
-                        )
-
-
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 10.dp, bottom = 10.dp)
-                        ) {
-                            Text(
-                                text = "희망지역",
-                                color = Color.DarkGray,
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.width(80.dp)
-                            )
-
-                            Text(
-                                text = "서울/ 경기",
-                                color = Color.DarkGray,
-                                fontSize = 13.sp,
-                                modifier = Modifier.padding(start = 15.dp)
-                            )
-                        }
-
-                        Divider(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 10.dp), color = Color.LightGray
-                        )
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 10.dp, bottom = 10.dp)
-                        ) {
-                            Text(
-                                text = "임보기간",
-                                color = Color.DarkGray,
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.width(80.dp)
-                            )
-
-                            Text(
-                                text = "2달",
-                                color = Color.DarkGray,
-                                fontSize = 13.sp,
-                                modifier = Modifier.padding(start = 15.dp)
-                            )
-                        }
-
-                        Divider(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 5.dp), color = Color.LightGray
                         )
 
 
@@ -497,19 +531,30 @@ fun AnimalInfoDetailScreen(
                         ) {
                             Text(
                                 text = "임보조건",
-                                color = Color.DarkGray,
+                                fontFamily = notosans_bold,
+                                style = TextStyle(
+                                    platformStyle = PlatformTextStyle(
+                                        includeFontPadding = false
+                                    )
+                                ),
+                                color = Black_60_Transfer,
                                 fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
                                 modifier = Modifier.width(80.dp)
                             )
 
-                            Text(
-                                text = "✅ 서울 성북동 연계병원에서 픽업가능한 분(#2월2일 #2월3일)\n" +
-                                        "✅ 서울 성북동의 연계병 2주에 1번 통원 가능능한 분 체크무늬는추가추가해서하도록하고 작성할때 플러스버튼으로 적용용",
-                                color = Color.DarkGray,
-                                fontSize = 13.sp,
-                                modifier = Modifier.padding(start = 15.dp)
-                            )
+                            LazyColumn(
+                                modifier = Modifier
+                                    .padding(start = 15.dp)
+                                    .heightIn(0.dp, 100.dp)
+                            ) {
+//                                ProtectionConditionItems()
+                                items(viewModel.ProtectionCondition) { items ->
+                                    ProtectionConditionItems(items.content, true)
+                                }
+
+                            }
+
+
                         }
 
                         Divider(
@@ -525,19 +570,31 @@ fun AnimalInfoDetailScreen(
                                 .padding(start = 10.dp, bottom = 10.dp)
                         ) {
                             Text(
-                                text = "이런분을 희망해요",
-                                color = Color.DarkGray,
+                                text = "이런분을\n희망해요",
+                                fontFamily = notosans_bold,
+                                style = TextStyle(
+                                    platformStyle = PlatformTextStyle(
+                                        includeFontPadding = false
+                                    )
+                                ),
+                                color = Black_60_Transfer,
                                 fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
                                 modifier = Modifier.width(80.dp)
                             )
 
-                            Text(
-                                text = "✅  응급 시 연계병원으로 이동 가능한 분",
-                                color = Color.DarkGray,
-                                fontSize = 13.sp,
-                                modifier = Modifier.padding(start = 15.dp)
-                            )
+
+                            LazyColumn(
+                                modifier = Modifier
+                                    .padding(start = 15.dp)
+                                    .heightIn(0.dp, 100.dp)
+                            ) {
+//
+                                items(viewModel.ProtectionHope) { items ->
+                                    ProtectionConditionItems(items.content, true)
+                                }
+
+                            }
+
                         }
 
                         Divider(
@@ -554,18 +611,29 @@ fun AnimalInfoDetailScreen(
                         ) {
                             Text(
                                 text = "이런분은 안돼요",
-                                color = Color.DarkGray,
+                                fontFamily = notosans_bold,
+                                style = TextStyle(
+                                    platformStyle = PlatformTextStyle(
+                                        includeFontPadding = false
+                                    )
+                                ),
+                                color = Black_60_Transfer,
                                 fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
                                 modifier = Modifier.width(80.dp)
                             )
 
-                            Text(
-                                text = "❌ 집을 비우는 시간이 너무 기신 분",
-                                color = Color.DarkGray,
-                                fontSize = 13.sp,
-                                modifier = Modifier.padding(start = 15.dp)
-                            )
+                            LazyColumn(
+                                modifier = Modifier
+                                    .padding(start = 15.dp)
+                                    .heightIn(0.dp, 100.dp)
+                            ) {
+//
+                                items(viewModel.ProtectionNo) { items ->
+                                    ProtectionConditionItems(items.content, false)
+                                }
+
+                            }
+
                         }
 
                     }//Column
@@ -580,8 +648,14 @@ fun AnimalInfoDetailScreen(
                     .fillMaxWidth()
                     .padding(top = 30.dp, start = 21.dp),
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = Color.Black,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                fontFamily = notosans_bold
+
             )
 
             Divider(
@@ -665,7 +739,6 @@ fun AnimalInfoDetailScreen(
         }
 
 
-
         if (viewModel.isDialogShown) {
             AdoptionApplicationDialog(
                 onDismiss = { viewModel.onDismissDialog() },
@@ -690,6 +763,31 @@ fun AnimalInfoDetailScreen(
         }
 
     }//Box
+
+}
+
+@Composable
+fun ProtectionConditionItems(
+    text: String,
+    yesorno: Boolean,
+) {
+    Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
+        Text(text = if (yesorno) "✅ " else "❌ ")
+
+        Text(
+            text = text,
+            fontFamily = notosans_regular,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+            fontSize = 13.sp,
+            color = Black_60_Transfer,
+            maxLines = 1,
+        )
+    }
+
 
 }
 

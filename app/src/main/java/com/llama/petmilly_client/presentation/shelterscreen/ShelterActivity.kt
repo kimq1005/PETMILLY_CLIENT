@@ -74,12 +74,13 @@ class ShelterActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = SAFESHELTER_COMPOSABLE
                     ) {
-                        composable(route = SAFESHELTER_COMPOSABLE) {
+                        composable(SAFESHELTER_COMPOSABLE) {
                             SafeShelterListScreen(navController = navController, viewModel)
                         }
 
-                        composable(ANIMALINFO_DETAIL) {
-                            AnimalInfoDetailScreen(navController = navController)
+                        composable("$ANIMALINFO_DETAIL/{id}") {
+                            val id = it.arguments?.getString("id").toString()
+                            AnimalInfoDetailScreen(navController = navController,viewModel,id)
                         }
                     }
                 }
@@ -197,21 +198,6 @@ fun ShelterDetailTitleBar(
                 .clickable { clickcancle() },
             contentScale = ContentScale.Crop
         )
-
-//        AnimatedVisibility(visible = ismenu, modifier = Modifier.align(Alignment.CenterEnd)) {
-//            Icon(
-//                imageVector = Icons.Default.Menu,
-//                contentDescription = null,
-//                modifier = Modifier
-//                    .width(30.dp)
-//                    .height(30.dp)
-//
-//                    .clickable {
-//                        clickcancle()
-//                    },
-//
-//                )
-//        }
 
 
     }

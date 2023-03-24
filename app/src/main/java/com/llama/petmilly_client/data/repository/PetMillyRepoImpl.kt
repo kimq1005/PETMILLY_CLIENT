@@ -10,6 +10,7 @@ import com.llama.petmilly_client.data.model.locationauthenticationResponse.Locat
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
+import com.llama.petmilly_client.data.model.temporary.detail.TemporarydetailDTO
 import com.llama.petmilly_client.data.network.PetMillYApiService
 import com.llama.petmilly_client.domain.repository.PetMillyRepo
 import llama.test.jetpack_dagger_plz.utils.BaseDataSource
@@ -46,7 +47,7 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
     override suspend fun posttemporaryprotection(
         token: String,
         files: List<MultipartBody.Part>?,
-        charmAppeal :RequestBody,
+        charmAppeal: RequestBody,
         animalTypes: RequestBody,
         name: RequestBody,
         gender: RequestBody,
@@ -63,9 +64,9 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         endReceptionPeriod: RequestBody?,
         temporaryProtectionCondition: List<RequestBody>?,
         temporaryProtectionHope: List<RequestBody>?,
-        temporaryProtectionNo: List<RequestBody>?
+        temporaryProtectionNo: List<RequestBody>?,
 
-    ): RemoteResult<TemporaryprotectionDTO> = getResult {
+        ): RemoteResult<TemporaryprotectionDTO> = getResult {
         petMillYApiService.posttemporaryprotection(
             token,
             files,
@@ -110,11 +111,12 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         petMillYApiService.getpost(token, page, limit, cat, dog, isComplete, weight, type)
     }
 
-//    override suspend fun posttemporaryprotection(
-//        token: String,
-//        temporaryprotectionResponse: TemporaryprotectionResponse,
-//    ): RemoteResult<TemporaryprotectionDTO> = getResult {
-//        petMillYApiService.posttemporaryprotection(token, temporaryprotectionResponse)
-//    }
+    override suspend fun gettemporarydetail(
+        token: String,
+        id: Int,
+    ): RemoteResult<TemporarydetailDTO> = getResult {
+        petMillYApiService.gettemporarydetail(token, id)
+    }
+
 
 }

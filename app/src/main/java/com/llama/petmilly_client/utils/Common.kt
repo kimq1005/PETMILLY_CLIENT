@@ -8,6 +8,8 @@ import com.llama.petmilly_client.R
 object Common {
     const val TAG:String = "로그"
 
+    const val ID:String ="id"
+
 
     const val LOGINSCREEN:String = "loginScreen"
     const val HOMESCREEN:String = "homeScreen"

@@ -11,6 +11,7 @@ import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionResponse
+import com.llama.petmilly_client.data.model.temporary.detail.TemporarydetailDTO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -90,6 +91,12 @@ interface PetMillYApiService {
         @Query("weight") weight: String?,
         @Query("type") type:String
     ):Response<PostDTO>
+
+    @GET("/post/temporary-protection/{id}")
+    suspend fun gettemporarydetail(
+        @Header("x-access-token") token: String,
+        @Path ("id") id:Int
+    ):Response<TemporarydetailDTO>
 
 
 }

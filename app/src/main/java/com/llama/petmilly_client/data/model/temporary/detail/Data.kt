@@ -1,0 +1,30 @@
+package com.llama.petmilly_client.data.model.temporary.detail
+
+data class Data(
+    val ProtectionCondition: List<ProtectionCondition>,
+    val ProtectionHope: List<ProtectionHope>,
+    val ProtectionNo: List<ProtectionNo>,
+    val addressInfo: AddressInfo,
+    val age: Double,
+    val animalTypes: String,
+    val breed: String,
+    val character: String,
+    val charmAppeal: String,
+    val completeUser: CompleteUser,
+    val createdAt: String,
+    val gender: String,
+    val health: String,
+    val id: Int,
+    val inoculation: String,
+    val isComplete: Boolean,
+    val isReceipt: Boolean,
+    val name: String,
+    val neutered: String,
+    val photoUrls: List<PhotoUrl>,
+    val pickUp: String,
+    val receptionPeriod: String,
+    val skill: String,
+    val thumbnail: Thumbnail?,
+    val user: User,
+    val weight: Int
+)
