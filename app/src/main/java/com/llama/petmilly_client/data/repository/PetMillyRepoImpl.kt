@@ -118,5 +118,27 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         petMillYApiService.gettemporarydetail(token, id)
     }
 
+    override suspend fun patchtemporary(
+        token: String,
+        id: Int,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult {
+        petMillYApiService.patchtemporary(token, id)
+    }
+
+    override suspend fun deletetemporary(
+        token: String,
+        id: Int,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+        petMillYApiService.deletetemporary(token, id)
+    }
+
+    override suspend fun deletetemporaryphoto(
+        token: String,
+        id: Int,
+        photoId: Int,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+        petMillYApiService.deletetemporaryphoto(token, id, photoId)
+    }
+
 
 }

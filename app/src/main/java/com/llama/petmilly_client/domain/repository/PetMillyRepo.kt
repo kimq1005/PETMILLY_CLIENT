@@ -85,4 +85,21 @@ interface PetMillyRepo {
        id:Int
     ):RemoteResult<TemporarydetailDTO>
 
+    suspend fun patchtemporary(
+        token: String,
+        id:Int,
+    ) : RemoteResult<TemporaryprotectionDTO>
+
+
+    suspend fun deletetemporary(
+        token: String,
+        id:Int,
+    ): RemoteResult<TemporaryprotectionDTO>
+
+    suspend fun deletetemporaryphoto(
+        token: String,
+        id:Int,
+        photoId:Int
+    ) : RemoteResult<TemporaryprotectionDTO>
+
 }

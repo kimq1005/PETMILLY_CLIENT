@@ -98,5 +98,31 @@ interface PetMillYApiService {
         @Path ("id") id:Int
     ):Response<TemporarydetailDTO>
 
+    @POST("post/temporary-protection/{id}/photos")
+    suspend fun posttemporaryphoto(
+        @Header("x-access-token") token: String,
+        @Path ("id") id:Int,
+        @Part files: List<MultipartBody.Part>?,
+    ) : Response<TemporaryprotectionDTO>
+
+    @PATCH("post/temporary-protection/{id}")
+    suspend fun patchtemporary(
+        @Header("x-access-token") token: String,
+        @Path ("id") id:Int,
+    ) :Response<TemporaryprotectionDTO>
+
+    @DELETE("post/temporary-protection/{id}")
+    suspend fun deletetemporary(
+        @Header("x-access-token") token: String,
+        @Path ("id") id:Int,
+    ): Response<TemporaryprotectionDTO>
+
+    @DELETE("/post/temporary-protection/{id}/photos/{photoId}")
+    suspend fun deletetemporaryphoto(
+        @Header("x-access-token") token: String,
+        @Path ("id") id:Int,
+        @Part ("photoId") photoId:Int
+    ) : Response<TemporaryprotectionDTO>
+
 
 }
