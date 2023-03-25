@@ -215,7 +215,9 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
     }
 
-    setObserve(viewModel, context, lifecycleOwner)
+    LaunchedEffect(context){
+        setObserve(viewModel, context, lifecycleOwner)
+    }
 
 
 }

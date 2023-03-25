@@ -344,7 +344,9 @@ fun ShelterDetail_8_Application_Period_Screen(
         }
     }
 
-    setObserve(viewModel, lifecycleOwner, activity, context)
+    LaunchedEffect(context){
+        setObserve(viewModel, lifecycleOwner, activity, context)
+    }
 }
 
 private fun setObserve(

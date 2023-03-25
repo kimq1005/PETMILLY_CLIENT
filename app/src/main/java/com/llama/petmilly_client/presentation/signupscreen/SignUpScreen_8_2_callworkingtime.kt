@@ -39,7 +39,7 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: SignUpViewModel) {
 
     val lifecycleOwner = LocalLifecycleOwner.current
-
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -108,7 +108,9 @@ fun SignUpScreen_8_2_callworkingtime(navController: NavController, viewModel: Si
         }
     }
 
-    setObserve(viewModel,lifecycleOwner,navController)
+    LaunchedEffect(context){
+        setObserve(viewModel,lifecycleOwner,navController)
+    }
 }
 
 

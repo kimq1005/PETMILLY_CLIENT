@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -152,7 +153,9 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel) {
         }
     }
 
-    setObserve(viewModel,context,lifecycleOwner)
+    LaunchedEffect(context){
+        setObserve(viewModel,context,lifecycleOwner)
+    }
 
 }
 
