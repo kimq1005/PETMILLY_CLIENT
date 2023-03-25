@@ -1,5 +1,8 @@
 package com.llama.petmilly_client.presentation.shelterscreen.items
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,19 +29,23 @@ import coil.compose.rememberImagePainter
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.homescreen.CategoryTest
 import com.llama.petmilly_client.ui.theme.*
+import com.llama.petmilly_client.utils.CommonObject
+import com.llama.petmilly_client.utils.CommonObject.convertTimetoHour
 import com.llama.petmilly_client.utils.SpacerWidth
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ShelterCategoryItems(
     image: String?,
     title: String,
     description: String,
     vaccination: String,
-    isclicked: Boolean,
     isComplete: Boolean,
     isReceipt: Boolean,
+    time:String,
     onclcik: () -> Unit,
 ) {
     Row(
@@ -52,13 +59,14 @@ fun ShelterCategoryItems(
 
 //        val ispetmily = true
 
-        Box {
+        Box(contentAlignment = Alignment.Center) {
 
             Image(
                 modifier = Modifier
                     .width(80.dp)
-                    .fillMaxHeight()
-                    .padding(start = 15.dp, top = 5.dp, bottom = 5.dp),
+                    .height(80.dp)
+                    .align(Alignment.CenterStart)
+                    .padding(start = 15.dp, top = 10.dp),
                 painter = if (image != null) {
                     rememberImagePainter(data = image)
                 } else painterResource(id = R.drawable.img_testcat_2),
@@ -169,7 +177,7 @@ fun ShelterCategoryItems(
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = "5시간 전",
+                text = convertTimetoHour(time),
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 8.dp, top = 6.dp),
@@ -185,10 +193,10 @@ fun ShelterCategoryItems(
             )
 
             Spacer(modifier = Modifier.weight(1f))
-
         }
 
 
     }
 }
+
 

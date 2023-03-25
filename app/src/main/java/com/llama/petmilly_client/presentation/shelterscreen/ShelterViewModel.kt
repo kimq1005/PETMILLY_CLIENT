@@ -77,6 +77,7 @@ class ShelterViewModel @Inject constructor(
     val isCompleted_detail = mutableStateOf(false)
     val shortName_detail = mutableStateOf("")
     val thumbnail_detail = mutableStateOf("")
+    val photoUrl_detail = mutableStateListOf<PhotoUrl>()
 
     val ProtectionCondition = mutableStateListOf<ProtectionCondition>()
     val ProtectionHope = mutableStateListOf<ProtectionHope>()
@@ -219,6 +220,7 @@ class ShelterViewModel @Inject constructor(
                             isCompleted_detail.value = data.isComplete
                             shortName_detail.value = data.addressInfo.shortName
                             thumbnail_detail.value = data.thumbnail?.photoUrl ?: ""
+                            photoUrl_detail.addAll(data.photoUrls)
 
                             Log.d(TAG, "gettemporarydetail: $data")
                         }

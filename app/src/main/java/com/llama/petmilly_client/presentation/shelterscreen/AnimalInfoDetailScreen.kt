@@ -5,6 +5,9 @@ import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
@@ -65,24 +68,27 @@ fun AnimalInfoDetailScreen(
                 Box() {
 
                     Image(
-                        painter = if(viewModel.thumbnail_detail.value != "")  rememberImagePainter(data = viewModel.thumbnail_detail.value) else  painterResource(id = R.drawable.mainicon_png),
+                        painter = if (viewModel.thumbnail_detail.value != "") rememberImagePainter(
+                            data = viewModel.thumbnail_detail.value
+                        ) else painterResource(id = R.drawable.mainicon_png),
                         contentDescription = null,
                         modifier = Modifier
-                            .height(130.dp)
-                            .width(130.dp)
+                            .height(127.dp)
+                            .width(127.dp)
                             .background(color = Color.Blue)
                             .align(Alignment.CenterStart),
                         contentScale = ContentScale.Crop
                     )
 
                     Image(
-                        painter = painterResource(id = R.drawable.baseline_heart_broken_24),
+                        painter = painterResource(id = R.drawable.ic_none_heart),
                         contentDescription = null,
                         modifier = Modifier
                             .height(31.dp)
                             .width(31.dp)
                             .align(Alignment.TopStart)
-                            .padding(start = 8.dp, top = 8.dp)
+                            .padding(start = 8.dp, top = 8.dp),
+                        contentScale = ContentScale.Crop
                     )
                 }
 
@@ -109,7 +115,13 @@ fun AnimalInfoDetailScreen(
                                 )
                                 .padding(vertical = 5.dp, horizontal = 8.dp),
                             fontSize = 12.sp,
-                            color = Color.Black,
+                            fontFamily = notosans_bold,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            ),
+                            color = Color.Black
                         )
                     }
 
@@ -643,66 +655,75 @@ fun AnimalInfoDetailScreen(
 
             }
 
-            Text(
-                text = "사진첩", modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 30.dp, start = 21.dp),
-                fontSize = 16.sp,
-                color = Color.Black,
-                style = TextStyle(
-                    platformStyle = PlatformTextStyle(
-                        includeFontPadding = false
+            if (viewModel.photoUrl_detail.isNotEmpty()) {
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 30.dp, start = 21.dp, bottom = 20.dp),
+                ) {
+
+                    Image(
+                        painter = painterResource(id = R.drawable.img_record),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .height(23.dp)
+                            .width(23.dp),
+                        contentScale = ContentScale.Crop
                     )
-                ),
-                fontFamily = notosans_bold
-
-            )
-
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp, bottom = 7.dp, start = 20.dp, end = 20.dp),
-                color = Color.Black
-            )
-
-            val imageTestData = listOf(
-                ImageTestData(R.drawable.img_test_puppy),
-                ImageTestData(R.drawable.img_test_puppy),
-                ImageTestData(R.drawable.img_test_puppy),
-                ImageTestData(R.drawable.img_test_puppy),
-                ImageTestData(R.drawable.img_test_puppy),
-                ImageTestData(R.drawable.img_test_puppy)
-            )
+                    
+                    SpacerWidth(dp = 12.dp)
 
 
-
-
-            LazyColumn(
-                modifier = Modifier
-                    .height(160.dp)
-                    .padding(horizontal = 21.dp)
-            ) {
-                items(imageTestData.chunked(4)) { items ->
-                    Row(
-                        Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround,
-
-                        ) {
-                        items.forEach { item ->
-                            PicktureItems(
-                                image = item.image,
-                                modifier = Modifier
-                                    .height(70.dp)
-                                    .width(70.dp)
+                    Text(
+                        text = "사진첩",
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
                             )
-//                            SpacerWidth(dp = 11.dp)
-                        }
+                        ),
+                        fontFamily = notosans_bold
+
+                    )
+                }
+
+
+                Divider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 5.dp, bottom = 7.dp, start = 20.dp, end = 20.dp),
+                    color = Color.Black
+                )
+
+
+
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(4),
+                    modifier = Modifier
+                        .heightIn(min = 0.dp, max = 200.dp)
+                        .padding(horizontal = 21.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(viewModel.photoUrl_detail) { item ->
+                        Image(
+                            painter = rememberImagePainter(data = item.photoUrl),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .aspectRatio(1f)
+                                .height(70.dp)
+                                .width(70.dp),
+                            contentScale = ContentScale.Crop
+                        )
 
                     }
-
-                    SpacerHeight(dp = 7.dp)
-
                 }
+
+            }else{
+                SpacerHeight(dp = 20.dp)
             }
 
 
@@ -759,7 +780,6 @@ fun AnimalInfoDetailScreen(
             AdoptionCompletedDialog(
                 onDismiss = { viewModel.onAdoptionDialogDismissDialog() },
                 onConfirm = { Log.d(TAG, "AnimalInfoDetailScreen: wow") })
-
         }
 
     }//Box

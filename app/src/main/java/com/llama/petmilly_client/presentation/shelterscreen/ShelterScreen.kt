@@ -1,9 +1,11 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,6 +44,7 @@ import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.ANIMALINFO_DETAIL
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SafeShelterListScreen(
     navController: NavController,
@@ -118,9 +121,9 @@ fun SafeShelterListScreen(
                                 image = if (items.thumbnail != null) items.thumbnail.photoUrl else null,
                                 description = "${items.gender} / ${items.weight} / ${items.breed} / $convertage",
                                 vaccination = "${items.inoculation} /${items.neutered}",
-                                isclicked = true,
                                 isComplete = items.isComplete,
                                 isReceipt = items.isReceipt,
+                                time= items.createdAt,
                                 onclcik = {
                                     navController.navigate(ANIMALINFO_DETAIL+"/${items.id}")
                                 })

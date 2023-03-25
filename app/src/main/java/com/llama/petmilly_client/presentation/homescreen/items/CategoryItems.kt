@@ -28,6 +28,7 @@ import com.google.accompanist.flowlayout.MainAxisAlignment
 import com.google.accompanist.flowlayout.SizeMode
 import com.llama.petmilly_client.presentation.homescreen.CategoryTest
 import com.llama.petmilly_client.presentation.homescreen.HomeViewModel
+import com.llama.petmilly_client.ui.theme.Black_60_Transfer
 import com.llama.petmilly_client.ui.theme.Category_Cliked
 import com.llama.petmilly_client.ui.theme.Purple200
 import com.llama.petmilly_client.ui.theme.Purple700
@@ -96,7 +97,7 @@ fun CategoryShelterItems(
         modifier = Modifier
             .border(
                 0.5.dp,
-                color = if (!checkBoolean) Color.Black else Color.Transparent,
+                color = if (!checkBoolean) Black_60_Transfer else Color.Transparent,
                 shape = RoundedCornerShape(16.5.dp)
             ),
         mainAxisAlignment = MainAxisAlignment.Center,
