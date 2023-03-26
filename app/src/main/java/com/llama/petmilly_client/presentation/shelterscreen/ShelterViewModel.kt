@@ -3,6 +3,7 @@ package com.llama.petmilly_client.presentation.shelterscreen
 import android.util.Log
 import android.view.View
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ import com.llama.petmilly_client.presentation.homescreen.items.ShelterListCatego
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import llama.test.jetpack_dagger_plz.utils.Common
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
 import javax.inject.Inject
@@ -34,23 +36,15 @@ class ShelterViewModel @Inject constructor(
         private set
 
 
-    val animalage = mutableStateOf(0)
-    val animalspecies = mutableStateOf<String>("")
-    val animalweight = mutableStateOf<Int>(0)
-
-
-
-
     val categorytest: MutableList<CategoryTest> = arrayListOf()
     val shelterListCategory: MutableList<ShelterListCategory> = arrayListOf()
-    var testBoolean = mutableStateOf<Boolean>(true)
     var isjudge = mutableStateOf(1)
 
     val cat = mutableStateOf(true)
     val dog = mutableStateOf(true)
     val isComplete = mutableStateOf(false)
-    val weight = mutableStateOf("")
-    val type = mutableStateOf("temporaryProtection")
+    val weight = mutableListOf<String>()
+    val categorylist:MutableList<String> = arrayListOf()
 
     val postDto: MutableLiveData<PostDTO> = MutableLiveData<PostDTO>()
     val postDataList = mutableStateListOf<PostData>()
@@ -86,13 +80,6 @@ class ShelterViewModel @Inject constructor(
 
 
 
-
-    init {
-        setsheltercategory()
-    }
-
-
-
     fun onConfirmClick() {
         isDialogShown = true
     }
@@ -109,27 +96,15 @@ class ShelterViewModel @Inject constructor(
         isAdoptionApplicationDialogShown = false
     }
 
+    fun addcategorylist(title: String){
+        categorylist.add(title)
 
-    fun setcategory() {
+        Log.d(TAG, "addcategorylist: $categorylist")
+    }
 
-        val entity = CategoryTest("전체")
-        val puppy = CategoryTest("강아지")
-        val cat = CategoryTest("고양이")
-        val adoptcomplete = CategoryTest("입양/귀가완료")
-        val saveshelter = CategoryTest("임보처구해요")
-        val findmybaby = CategoryTest("우리아이 찾아요")
-        val movevolunteer = CategoryTest("이동봉사 찾아요")
-        val adoptionnotice = CategoryTest("입양 공고")
-
-
-        categorytest.add(entity)
-        categorytest.add(puppy)
-        categorytest.add(cat)
-        categorytest.add(adoptcomplete)
-        categorytest.add(saveshelter)
-        categorytest.add(findmybaby)
-        categorytest.add(movevolunteer)
-        categorytest.add(adoptionnotice)
+    fun deletecategorylist(title: String){
+        categorylist.remove(title)
+        Log.d(TAG, "deletecategorylist: $categorylist")
     }
 
     fun setsheltercategory() {
@@ -160,7 +135,7 @@ class ShelterViewModel @Inject constructor(
                 cat.value,
                 dog.value,
                 isComplete.value,
-                if (weight.value != "") weight.value else null,
+                weight,
                 "temporaryProtection"
             ).let {
                 when (it.status) {
@@ -168,10 +143,8 @@ class ShelterViewModel @Inject constructor(
                         it.data?.let { data ->
                             postDto.postValue(data)
                             Log.d(TAG, "getpost:$it ")
+                            setPostData()
                         }
-
-                        setPostData()
-//
                     }
 
                     else -> {
@@ -185,11 +158,14 @@ class ShelterViewModel @Inject constructor(
 
     }
 
+
     private fun setPostData() {
         viewModelScope.launch(Dispatchers.Main) {
             postDataList.clear()
             postDto.value?.let {
-                postDataList.addAll(it.data.list)
+                if(it.data!=null){
+                    postDataList.addAll(it.data.list)
+                }
                 Log.d(TAG, "setPostData: ${postDataList.size}")
             }
         }

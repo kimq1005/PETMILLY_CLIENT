@@ -37,6 +37,7 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.certificationscreen.CertificationActivity
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryItems
 import com.llama.petmilly_client.presentation.homescreen.items.CategoryShelterItems
+import com.llama.petmilly_client.presentation.homescreen.items.ShelterListCategory
 import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategoryItems
 import com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen.ShelterDetailActivity
 import com.llama.petmilly_client.ui.theme.Purple700
@@ -56,6 +57,7 @@ fun SafeShelterListScreen(
 
         LaunchedEffect(context) {
             viewModel.getpost()
+            viewModel.setsheltercategory()
         }
 
 
@@ -70,21 +72,20 @@ fun SafeShelterListScreen(
                         .fillMaxWidth()
                 ) {
 
-                    viewModel.setcategory()
 
                     items(viewModel.shelterListCategory) { categorylist ->
 
                         Row {
                             if (viewModel.shelterListCategory.indexOf(categorylist) == 0) {
                                 Spacer(modifier = Modifier.padding(start = 15.dp))
-                                CategoryShelterItems(categorylist) {
+
+                                CategoryShelterItems(categorylist) { title, check ->
+                                    setpost(viewModel, title, check)
 
                                 }
-
-
                             } else {
-                                CategoryShelterItems(ShelterListCategory = categorylist) {
-
+                                CategoryShelterItems(ShelterListCategory = categorylist) { title, check ->
+                                    setpost(viewModel, title, check)
                                 }
                             }
 
@@ -102,8 +103,6 @@ fun SafeShelterListScreen(
                 LazyColumn(
                     modifier = Modifier.padding(start = 7.dp, end = 7.dp)
                 ) {
-                    viewModel.setcategory()
-
 
                     items(viewModel.postDataList) { items ->
 
@@ -123,9 +122,9 @@ fun SafeShelterListScreen(
                                 vaccination = "${items.inoculation} /${items.neutered}",
                                 isComplete = items.isComplete,
                                 isReceipt = items.isReceipt,
-                                time= items.createdAt,
+                                time = items.createdAt,
                                 onclcik = {
-                                    navController.navigate(ANIMALINFO_DETAIL+"/${items.id}")
+                                    navController.navigate(ANIMALINFO_DETAIL + "/${items.id}")
                                 })
                             Spacer(modifier = Modifier.height(6.dp))
                         }
@@ -152,6 +151,37 @@ fun SafeShelterListScreen(
             )
 
         }//Box
-
     }
 }
+
+
+//아니면 리스트를 만들어서 리스트에 해당하는 것만 호출?
+private fun setpost(viewModel: ShelterViewModel, categorytitle: String, check: Boolean) {
+
+    if (check) {
+        viewModel.addcategorylist(categorytitle)
+    } else {
+        viewModel.deletecategorylist(categorytitle)
+    }
+
+    Log.d(TAG, "setpost: ${viewModel.categorylist}")
+    viewModel.dog.value = viewModel.categorylist.contains("강아지")
+    viewModel.cat.value = viewModel.categorylist.contains("고양이")
+    viewModel.isComplete.value = !viewModel.categorylist.contains("petmily ❤️")
+    viewModel.weight.clear()
+    if(viewModel.categorylist.contains("~7kg") && !viewModel.weight.contains("small")){
+        viewModel.weight.add("small")
+    }
+
+    if(viewModel.categorylist.contains("7~15kg")  && !viewModel.weight.contains("middle")){
+        viewModel.weight.add("middle")
+    }
+
+    if(viewModel.categorylist.contains("15kg~") && !viewModel.weight.contains("big")){
+        viewModel.weight.add("big")
+    }
+
+
+    viewModel.getpost()
+}
+

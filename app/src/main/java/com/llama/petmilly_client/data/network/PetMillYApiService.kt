@@ -88,7 +88,7 @@ interface PetMillYApiService {
         @Query("cat") cat: Boolean?,
         @Query("dog") dog: Boolean?,
         @Query("isComplete") isComplete: Boolean?,
-        @Query("weight") weight: String?,
+        @Query("weight") weight: List<String>?,
         @Query("type") type:String
     ):Response<PostDTO>
 

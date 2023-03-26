@@ -1,9 +1,11 @@
 package com.llama.petmilly_client.presentation.shelterscreen
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -44,6 +46,7 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 @AndroidEntryPoint
 @OptIn(ExperimentalFoundationApi::class)
 class ShelterActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

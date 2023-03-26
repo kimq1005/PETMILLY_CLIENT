@@ -75,7 +75,7 @@ interface PetMillyRepo {
         cat: Boolean?,
         dog: Boolean?,
         isComplete: Boolean?,
-        weight: String?,
+        weight: List<String>?,
         type: String,
     ): RemoteResult<PostDTO>
 

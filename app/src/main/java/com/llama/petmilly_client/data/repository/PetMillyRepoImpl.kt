@@ -105,7 +105,7 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         cat: Boolean?,
         dog: Boolean?,
         isComplete: Boolean?,
-        weight: String?,
+        weight: List<String>?,
         type: String,
     ): RemoteResult<PostDTO> = getResult {
         petMillYApiService.getpost(token, page, limit, cat, dog, isComplete, weight, type)
