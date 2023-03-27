@@ -7,6 +7,7 @@ import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
+import com.llama.petmilly_client.data.model.moveservice.postmoveservice.MoveServicePostDTO
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
@@ -128,7 +129,7 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
     override suspend fun deletetemporary(
         token: String,
         id: Int,
-    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+    ): RemoteResult<TemporaryprotectionDTO> = getResult {
         petMillYApiService.deletetemporary(token, id)
     }
 
@@ -136,8 +137,60 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         token: String,
         id: Int,
         photoId: Int,
-    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+    ): RemoteResult<TemporaryprotectionDTO> = getResult {
         petMillYApiService.deletetemporaryphoto(token, id, photoId)
+    }
+
+    override suspend fun postmoveservicepost(
+        token: String,
+        startAddress: RequestBody,
+        endAddress: RequestBody,
+        animalTypes: RequestBody,
+        name: RequestBody,
+        gender: RequestBody,
+        weight: RequestBody,
+        breed: RequestBody,
+        age: RequestBody,
+        etc: RequestBody,
+        hopeDate: RequestBody,
+        files: List<MultipartBody.Part>?,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult {
+        petMillYApiService.postmoveservicepost(
+            token,
+            startAddress,
+            endAddress,
+            animalTypes,
+            name,
+            gender,
+            weight,
+            breed,
+            age,
+            etc,
+            hopeDate,
+            files
+        )
+    }
+
+    override suspend fun getmoveservicepost(
+        token: String,
+        page: Int?,
+        limit: Int?,
+        cat: Boolean?,
+        dog: Boolean?,
+        isComplete: Boolean?,
+        weight: List<String>?,
+        type: String,
+    ): RemoteResult<MoveServicePostDTO> = getResult {
+        petMillYApiService.getmoveservicepost(
+            token,
+            page,
+            limit,
+            cat,
+            dog,
+            isComplete,
+            weight,
+            type
+        )
     }
 
 

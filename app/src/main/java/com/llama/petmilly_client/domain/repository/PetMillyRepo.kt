@@ -7,6 +7,7 @@ import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
+import com.llama.petmilly_client.data.model.moveservice.postmoveservice.MoveServicePostDTO
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
@@ -43,7 +44,7 @@ interface PetMillyRepo {
     suspend fun posttemporaryprotection(
         token: String,
         files: List<MultipartBody.Part>?,
-        charmAppeal :RequestBody,
+        charmAppeal: RequestBody,
         animalTypes: RequestBody,
         name: RequestBody,
         gender: RequestBody,
@@ -81,25 +82,52 @@ interface PetMillyRepo {
 
 
     suspend fun gettemporarydetail(
-       token: String,
-       id:Int
-    ):RemoteResult<TemporarydetailDTO>
+        token: String,
+        id: Int,
+    ): RemoteResult<TemporarydetailDTO>
 
     suspend fun patchtemporary(
         token: String,
-        id:Int,
-    ) : RemoteResult<TemporaryprotectionDTO>
+        id: Int,
+    ): RemoteResult<TemporaryprotectionDTO>
 
 
     suspend fun deletetemporary(
         token: String,
-        id:Int,
+        id: Int,
     ): RemoteResult<TemporaryprotectionDTO>
 
     suspend fun deletetemporaryphoto(
         token: String,
-        id:Int,
-        photoId:Int
-    ) : RemoteResult<TemporaryprotectionDTO>
+        id: Int,
+        photoId: Int,
+    ): RemoteResult<TemporaryprotectionDTO>
+
+    suspend fun postmoveservicepost(
+        token: String,
+        startAddress: RequestBody,
+        endAddress: RequestBody,
+        animalTypes: RequestBody,
+        name: RequestBody,
+        gender: RequestBody,
+        weight: RequestBody,
+        breed: RequestBody,
+        age: RequestBody,
+        etc: RequestBody,
+        hopeDate: RequestBody,
+        files: List<MultipartBody.Part>?,
+    ): RemoteResult<TemporaryprotectionDTO>
+
+    suspend fun getmoveservicepost(
+        token: String,
+        page: Int?,
+        limit: Int?,
+        cat: Boolean?,
+        dog: Boolean?,
+        isComplete: Boolean?,
+        weight: List<String>?,
+        type:String
+    ): RemoteResult<MoveServicePostDTO>
+
 
 }

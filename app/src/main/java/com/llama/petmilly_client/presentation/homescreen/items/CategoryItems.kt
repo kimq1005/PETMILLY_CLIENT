@@ -37,12 +37,10 @@ import llama.test.jetpack_dagger_plz.utils.Common.TAG
 @Composable
 fun CategoryItems(
     categoryTest: CategoryTest,
+    selected:Boolean,
     onClick: () -> Unit,
-) {
+    ) {
 
-    val itemSelection = remember {
-        mutableStateOf(-1)
-    }
     var checkBoolean by remember {
         mutableStateOf(false)
     }
@@ -51,7 +49,7 @@ fun CategoryItems(
         modifier = Modifier
             .shadow(elevation = 4.dp, shape = RoundedCornerShape(20.dp))
             .background(
-                color = if (checkBoolean) Category_Cliked else Color.White,
+                color = if (selected) Category_Cliked else Color.White,
                 shape = RoundedCornerShape(16.5.dp),
             )
 
@@ -60,16 +58,9 @@ fun CategoryItems(
             text = categoryTest.title,
             textAlign = TextAlign.Center,
             fontSize = 13.sp,
-            color = if (checkBoolean) Color.White else Color.Black,
+            color = if (selected) Color.White else Color.Black,
             modifier = Modifier
-
-//                .background(
-//                    color = if (checkBoolean) Category_Cliked else Color.White,
-//                    shape = RoundedCornerShape(16.5.dp),
-//
-//                )
-                .selectable(selected = checkBoolean, onClick = {
-                    checkBoolean = !checkBoolean
+                .selectable(selected = selected, onClick = {
                     onClick()
                 })
                 .padding(top = 7.dp, bottom = 7.dp, start = 12.dp, end = 12.dp),

@@ -17,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -33,11 +34,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.createBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.certificationscreen.CertificationActivity
 import com.llama.petmilly_client.presentation.dialog.AdoptionApplicationDialog
@@ -50,8 +53,10 @@ import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
+import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common
-
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
+@AndroidEntryPoint
 class MoveServiceActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +85,10 @@ class MoveServiceActivity : ComponentActivity() {
 fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavController,activity:Activity) {
     val context = LocalContext.current
     Box {
+
+        LaunchedEffect(context){
+            viewModel.getmoveservicepost()
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -95,19 +104,18 @@ fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavCon
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                viewModel.setcategory()
-
-                items(viewModel.categorytest) { categorylist ->
+//
+                items(MainApplication.categorylist) { categorylist ->
                     Row {
-                        if (viewModel.categorytest.indexOf(categorylist) == 0) {
+                        if (MainApplication.categorylist.indexOf(categorylist) == 0) {
                             Spacer(modifier = Modifier.padding(start = 15.dp))
-                            BorderCategoryItems(title = categorylist.title) {
+                            BorderCategoryItems(title = categorylist) {
 
                             }
 
 
                         } else {
-                            BorderCategoryItems(title = categorylist.title) {
+                            BorderCategoryItems(title = categorylist) {
 
                             }
                         }
@@ -155,12 +163,15 @@ fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavCon
                 )
 
 
-                items(moveservicemodel) { item ->
+                items(viewModel.postDataList) { item ->
+                    val startAddress= ""
+                    val endAddress =""
                     Moveserviceitems(
-                        movelocation = item.movelocation,
-                        animalinfo = item.animalinfo,
-                        moveday = item.moveday,
-                        time = item.time
+                        image = item.thumbnail.photoUrl,
+                        movelocation = "",
+                        animalinfo = "${item.name} / ${item.weight} / ${item.weight}kg",
+                        moveday = item.hopeDate.toString(),
+                        time = item.name
                     ) {
                         navController.navigate(Common.MOVESERVICE_Detail_SCREEN)
                     }

@@ -36,6 +36,7 @@ import com.llama.petmilly_client.utils.notosans_regular
 
 @Composable
 fun Moveserviceitems(
+    image: String?,
     movelocation: String,
     animalinfo: String,
     moveday: String,
@@ -63,14 +64,15 @@ fun Moveserviceitems(
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.img_test_puppy),
+                painter = if (image != null) rememberImagePainter(data = image) else painterResource(
+                    id = R.drawable.img_test_puppy
+                ),
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(start = 15.dp)
                     .height(80.dp)
-                    .width(80.dp)
-                   ,
+                    .width(80.dp),
                 contentScale = ContentScale.Crop
             )
 
@@ -142,10 +144,3 @@ fun Moveserviceitems(
     }
 }
 
-@Preview
-@Composable
-fun MoveItemPreview() {
-    Moveserviceitems("경기화성시 -> 강서구 화곡동", "코코/ 2살/ 여/ 10kg", "2/23(목)->17시", "5시간전", onclick = {
-
-    })
-}

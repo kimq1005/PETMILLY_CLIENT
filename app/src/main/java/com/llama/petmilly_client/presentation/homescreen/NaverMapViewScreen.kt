@@ -5,14 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.Gravity
-import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -22,7 +19,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,7 +33,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.data.model.LibraryDTO.Row
 import com.llama.petmilly_client.presentation.adoptionscreen.AdoptionActivity
@@ -76,6 +71,11 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val (search, setsearch) = rememberSaveable {
         mutableStateOf("")
     }
+
+    var checkBoolean by remember {
+        mutableStateOf(false)
+    }
+
 
     progressDialog = ProgressDialog(context, R.style.ProgressBarDialog)
     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
@@ -159,7 +159,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         .padding(start = 16.dp, top = 10.dp)
                 ) {
                     items(viewModel.categorytest.subList(0, 3)) { item ->
-                        CategoryItems(categoryTest = item) {
+                        CategoryItems(categoryTest = item, selected = checkBoolean) {
 //                           viewModel.checklibrary()
                             tedNaverClustering?.clearItems()
                         }
@@ -180,7 +180,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                             viewModel.categorytest.lastIndex
                         )
                     ) { item ->
-                        CategoryItems(categoryTest = item) {
+                        CategoryItems(categoryTest = item, selected = viewModel.selelctedcategory.value==item.title) {
                             viewModel.selelctedcategory.value = ""
                             viewModel.getlibrary()
                             viewModel.selelctedcategory.value = item.title
@@ -200,7 +200,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
                     items(viewModel.categorytest) { categorylist ->
 
-                        CategoryItems(categoryTest = categorylist, onClick = {
+                        CategoryItems(categoryTest = categorylist, selected = checkBoolean,onClick = {
                             //여기서 api요청을 하고 마커를 다시 그려줘야함 근데 NaverItesmSet은 Composable 객체여서 불가능함
                         })
 

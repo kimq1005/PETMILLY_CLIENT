@@ -7,6 +7,7 @@ import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
+import com.llama.petmilly_client.data.model.moveservice.postmoveservice.MoveServicePostDTO
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
@@ -90,7 +91,7 @@ interface PetMillYApiService {
         @Query("isComplete") isComplete: Boolean?,
         @Query("weight") weight: List<String>?,
         @Query("type") type:String
-    ):Response<PostDTO>
+    ): Response<PostDTO>
 
     @GET("/post/temporary-protection/{id}")
     suspend fun gettemporarydetail(
@@ -124,5 +125,35 @@ interface PetMillYApiService {
         @Part ("photoId") photoId:Int
     ) : Response<TemporaryprotectionDTO>
 
+    @POST("/post/move-volunteer")
+    @Multipart
+    @JvmSuppressWildcards
+    suspend fun postmoveservicepost(
+        @Header("x-access-token") token: String,
+        @Part("startAddress") startAddress :RequestBody,
+        @Part("endAddress") endAddress: RequestBody,
+        @Part("animalTypes") animalTypes: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("weight") weight: RequestBody,
+        @Part("breed") breed: RequestBody,
+        @Part("age") age: RequestBody,
+        @Part("etc") etc: RequestBody,
+        @Part("hopeDate") hopeDate: RequestBody,
+        @Part files: List<MultipartBody.Part>?,
+    ) : Response<TemporaryprotectionDTO>
+
+
+    @GET("/post")
+    suspend fun getmoveservicepost(
+        @Header("x-access-token") token: String,
+        @Query("page") page: Int?,
+        @Query("limit") limit: Int?,
+        @Query("cat") cat: Boolean?,
+        @Query("dog") dog: Boolean?,
+        @Query("isComplete") isComplete: Boolean?,
+        @Query("weight") weight: List<String>?,
+        @Query("type") type:String
+    ): Response<MoveServicePostDTO>
 
 }

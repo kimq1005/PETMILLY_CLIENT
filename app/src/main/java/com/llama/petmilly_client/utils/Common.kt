@@ -63,8 +63,14 @@ object Common {
     const val SHELTERDETAIL_7_CHARMAPPEAL_SCREEN ="SHELTERDETAIL_7_CHARMAPPEAL_SCREEN"
     const val SHELTERDETAIL_8_APPLICATION_SCREEN ="ShelterDetail_7_application_Screen"
 
-    const val MOVESERVICEDETAILSCREEN_1_INPUT="MoveServiceDetailScreen_1_Input"
-    const val MOVESERVICEDETAILSCREEN_2_INPUT="MoveServiceDetailScreen_2_Input"
+    //이동봉사 구해요
+    const val MOVESERVICEDETAILSCREEN_1_ANIMALTYPE = "MoveServiceDetail_1_AnimalTypes_Screen"
+    const val MOVESERVICEDETAILSCREEN_2_PROFILE_1 = "MoveServiceDetail_2_Profile_1_Screen"
+    const val MOVESERVICEDETAILSCREEN_2_PROFILE_2 = "MoveServiceDetail_2_Profile_2_Screen"
+    const val MOVESERVICEDETAILSCREEN_3_INPUT="MoveServiceDetailScreen_1_Input"
+    const val MOVESERVICEDETAILSCREEN_4_INPUT="MoveServiceDetailScreen_2_Input"
+
+
     const val FADETAILSCREEN_1_DETAILINFO = "FADetailScreen_1_DetailInfo"
     const val FADETAILSCREEN_2_DETAILINFO = "FADetailScreen_2_DetailInfo"
     const val FADETAILSCREEN_3_COMMENT_ISOPEN = "FADetailScreen_3_Comment_IsOpen"

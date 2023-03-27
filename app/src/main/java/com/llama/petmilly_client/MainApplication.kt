@@ -9,6 +9,7 @@ import com.kakao.auth.KakaoSDK
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
 import com.llama.petmilly_client.login.kakao.KaKaoSDKAdapter
+import com.llama.petmilly_client.presentation.homescreen.items.ShelterListCategory
 import dagger.hilt.android.HiltAndroidApp
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
@@ -26,7 +27,13 @@ class MainApplication : Application() {
         var refreshToken = ""
 
         var signupname = ""
+
+        var categorylist = listOf<String>(
+            "강아지","고양이","petmily ❤️","~7kg","7~15kg","15kg~"
+        )
+
     }
+
 
 
     override fun onCreate() {
@@ -35,20 +42,7 @@ class MainApplication : Application() {
         var keyHash = Utility.getKeyHash(this)
 
         KakaoSdk.init(this, getString(R.string.kakao_api_key))
-//        Log.d(TAG, "onCreate: $")
-//        if(KakaoSDK.getAdapter() == null){
-//            KakaoSDK.init(KaKaoSDKAdapter(getAppContext()))
-//        }
-    }
-//    override fun onTerminate() {
-//        super.onTerminate()
-//        instance = null
-//    }
 
-//    fun getAppContext() : MainApplication{
-//        checkNotNull(instance){
-//            "This Application does not inherit com.example.App"
-//        }
-//        return instance!!
-//    }
+    }
+
 }
