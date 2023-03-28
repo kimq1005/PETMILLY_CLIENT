@@ -47,6 +47,18 @@ class MoveServiceViewModel @Inject constructor(
     val weight_detail = mutableStateOf("")
     val etc_detail =mutableStateOf("")
 
+    val categorylist:MutableList<String> = arrayListOf()
+    fun addcategorylist(title: String){
+        categorylist.add(title)
+
+        Log.d(TAG, "addcategorylist: $categorylist")
+    }
+
+    fun deletecategorylist(title: String){
+        categorylist.remove(title)
+        Log.d(TAG, "deletecategorylist: $categorylist")
+    }
+
     fun getmoveservicepost() {
         viewModelScope.launch(Dispatchers.IO) {
             petMillyRepo.getmoveservicepost(

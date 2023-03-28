@@ -156,7 +156,7 @@ fun ChatTabScreen(
                     )
                     items(mylist) { item ->
 
-                        BorderCategoryItems(title = item) {
+                        BorderCategoryItems(title = item) { title, check->
 
                         }
                         Spacer(modifier = Modifier.width(9.dp))

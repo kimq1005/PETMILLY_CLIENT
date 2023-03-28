@@ -95,13 +95,13 @@ fun AdoptionListScreen(
                     Row {
                         if (viewModel.categorytest.indexOf(categorylist) == 0) {
                             Spacer(modifier = Modifier.padding(start = 15.dp))
-                            BorderCategoryItems(title = categorylist.title) {
+                            BorderCategoryItems(title = categorylist.title) { title, check->
 
                             }
 
 
                         } else {
-                            BorderCategoryItems(title = categorylist.title) {
+                            BorderCategoryItems(title = categorylist.title) { title, check->
 
                             }
                         }

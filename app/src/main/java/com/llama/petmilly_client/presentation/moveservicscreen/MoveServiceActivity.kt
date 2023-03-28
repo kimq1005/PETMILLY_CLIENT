@@ -41,6 +41,7 @@ import com.llama.petmilly_client.presentation.findanimalscreen.FindAnimalDetailI
 import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
 import com.llama.petmilly_client.presentation.moveservicscreen.moveservicedetail.MoveServiceDetailActivity
+import com.llama.petmilly_client.presentation.shelterscreen.ShelterViewModel
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.CommonObject.convertAddress
@@ -123,13 +124,23 @@ fun MoveServiceListScreen(
                     Row {
                         if (MainApplication.categorylist.indexOf(categorylist) == 0) {
                             Spacer(modifier = Modifier.padding(start = 15.dp))
-                            BorderCategoryItems(title = categorylist) {
+                            BorderCategoryItems(title = categorylist) { title, check->
+                                setmovservicepost(
+                                    viewModel = viewModel,
+                                    categorytitle = title,
+                                    check = check
 
+                                )
                             }
 
 
                         } else {
-                            BorderCategoryItems(title = categorylist) {
+                            BorderCategoryItems(title = categorylist) { title,check->
+                                setmovservicepost(
+                                    viewModel = viewModel,
+                                    categorytitle = title,
+                                    check = check
+                                )
 
                             }
                         }
@@ -587,3 +598,34 @@ fun MoveServiceDetailScreen(
 
     }
 }
+
+
+private fun setmovservicepost(viewModel: MoveServiceViewModel, categorytitle: String, check: Boolean) {
+
+    if (check) {
+        viewModel.addcategorylist(categorytitle)
+    } else {
+        viewModel.deletecategorylist(categorytitle)
+    }
+
+    Log.d(TAG, "setpost: ${viewModel.categorylist}")
+    viewModel.dog.value = viewModel.categorylist.contains("강아지")
+    viewModel.cat.value = viewModel.categorylist.contains("고양이")
+    viewModel.isComplete.value = !viewModel.categorylist.contains("petmily ❤️")
+    viewModel.weight.clear()
+    if(viewModel.categorylist.contains("~7kg") && !viewModel.weight.contains("small")){
+        viewModel.weight.add("small")
+    }
+
+    if(viewModel.categorylist.contains("7~15kg")  && !viewModel.weight.contains("middle")){
+        viewModel.weight.add("middle")
+    }
+
+    if(viewModel.categorylist.contains("15kg~") && !viewModel.weight.contains("big")){
+        viewModel.weight.add("big")
+    }
+
+
+    viewModel.getmoveservicepost()
+}
+

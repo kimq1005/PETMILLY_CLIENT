@@ -122,7 +122,7 @@ fun CategoryShelterItems(
 @Composable
 fun BorderCategoryItems(
     title: String,
-    onClick: () -> Unit,
+    onClick: (String, Boolean) -> Unit,
 ) {
 
     val itemSelection = remember {
@@ -155,7 +155,7 @@ fun BorderCategoryItems(
                 )
                 .selectable(selected = checkBoolean, onClick = {
                     checkBoolean = !checkBoolean
-                    onClick()
+                    onClick(title, checkBoolean)
                 })
                 .padding(top = 7.dp, bottom = 7.dp, start = 12.dp, end = 12.dp),
             overflow = TextOverflow.Ellipsis,
