@@ -1,11 +1,13 @@
 package com.llama.petmilly_client.presentation.moveservicscreen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -19,27 +21,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import coil.compose.rememberImagePainter
 import com.llama.petmilly_client.R
-import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
-import com.llama.petmilly_client.presentation.findanimalscreen.MissingAnimalImageItems
+import com.llama.petmilly_client.data.model.moveservice.postmoveservice.HopeDate
 import com.llama.petmilly_client.ui.theme.Background_FDFCE1
 import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Black_60_Transfer
-import com.llama.petmilly_client.ui.theme.Black_Half_Transfer
+import com.llama.petmilly_client.utils.CommonObject.convertmoveservicetime
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Moveserviceitems(
     image: String?,
-    movelocation: String,
+    startAddress: String,
+    endAddress: String,
     animalinfo: String,
-    moveday: String,
+    moveday: List<HopeDate>,
     time: String,
     onclick: () -> Unit,
 ) {
@@ -83,18 +84,44 @@ fun Moveserviceitems(
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Text(
-                    text = "\uD83D\uDE97 $movelocation",
-                    fontSize = 15.sp,
-                    fontFamily = notosans_bold,
-                    style = TextStyle(
-                        platformStyle = PlatformTextStyle(
-                            includeFontPadding = false
-                        )
-                    ),
-                    color = Color.Black,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.background(color = Background_FDFCE1)
-                )
+                ) {
+                    Text(
+                        text = "\uD83D\uDE97 $startAddress ",
+                        fontSize = 15.sp,
+                        fontFamily = notosans_bold,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        color = Color.Black,
+                    )
+
+                    Image(
+                        painter = painterResource(id = R.drawable.img_arrow_go),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(14.dp)
+                            .height(14.dp)
+                    )
+
+                    Text(
+                        text = " $endAddress",
+                        fontSize = 15.sp,
+                        fontFamily = notosans_bold,
+                        style = TextStyle(
+                            platformStyle = PlatformTextStyle(
+                                includeFontPadding = false
+                            )
+                        ),
+                        color = Color.Black,
+                    )
+
+                }
+
 
                 Text(
                     text = animalinfo,
@@ -108,18 +135,23 @@ fun Moveserviceitems(
                     textAlign = TextAlign.Center
                 )
 
+                LazyColumn() {
+                   items(moveday){ item->
+                       Hopedateitesm(moveday = item.hopeDate)
+                   }
+                }
 
-                Text(
-                    text = moveday,
-                    fontSize = 12.sp,
-                    fontFamily = notosans_bold,
-                    style = TextStyle(
-                        platformStyle = PlatformTextStyle(
-                            includeFontPadding = false
-                        )
-                    ),
-                    color = Black_60_Transfer,
-                )
+//                Text(
+//                    text = moveday,
+//                    fontSize = 12.sp,
+//                    fontFamily = notosans_bold,
+//                    style = TextStyle(
+//                        platformStyle = PlatformTextStyle(
+//                            includeFontPadding = false
+//                        )
+//                    ),
+//                    color = Black_60_Transfer,
+//                )
 
             }//Column
 
@@ -138,9 +170,61 @@ fun Moveserviceitems(
                 textAlign = TextAlign.Center
             )
 
-
         }
 
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun Hopedateitesm(
+    moveday: String,
+) {
+   Column {
+       Text(
+           text = convertmoveservicetime(moveday),
+           fontSize = 12.sp,
+           fontFamily = notosans_bold,
+           style = TextStyle(
+               platformStyle = PlatformTextStyle(
+                   includeFontPadding = false
+               )
+           ),
+           color = Black_60_Transfer,
+       )
+   }
+
+}
+//
+//@Composable
+//fun MainMainScreen() {
+//    LazyColumn() {
+//        val testdata = listOf(
+//            testdataman(
+//                "대한민국 어딘가",
+//                moveday = listOf(
+//                    "하루뒤",
+//                    "이틀뒤"
+//                ),
+//
+//                ),
+//            testdataman(
+//                "대한민국 여기다",
+//                moveday = listOf(
+//                    "하루뒤", "이틀뒤"
+//                ),
+//
+//                )
+//
+//            )
+//        items(testdata){items->
+//            Moveserviceitem123s(items.startaddress, moveday = items.moveday)
+//        }
+//    }
+//
+//}
+//
+//data class testdataman(
+//    val startaddress: String,
+//    val moveday: List<String>,
+//)

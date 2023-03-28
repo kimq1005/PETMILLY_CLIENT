@@ -7,6 +7,7 @@ import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
+import com.llama.petmilly_client.data.model.moveservice.moveservicedetail.MoveServiceDetailDTO
 import com.llama.petmilly_client.data.model.moveservice.postmoveservice.MoveServicePostDTO
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
@@ -128,6 +129,11 @@ interface PetMillyRepo {
         weight: List<String>?,
         type:String
     ): RemoteResult<MoveServicePostDTO>
+
+    suspend fun getmoveservicepostdetail(
+        token: String,
+        id:Int,
+    ) :RemoteResult<MoveServiceDetailDTO>
 
 
 }

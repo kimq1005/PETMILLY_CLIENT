@@ -7,11 +7,11 @@ import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
+import com.llama.petmilly_client.data.model.moveservice.moveservicedetail.MoveServiceDetailDTO
 import com.llama.petmilly_client.data.model.moveservice.postmoveservice.MoveServicePostDTO
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
 import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionDTO
-import com.llama.petmilly_client.data.model.temporary.TemporaryprotectionResponse
 import com.llama.petmilly_client.data.model.temporary.detail.TemporarydetailDTO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -155,5 +155,11 @@ interface PetMillYApiService {
         @Query("weight") weight: List<String>?,
         @Query("type") type:String
     ): Response<MoveServicePostDTO>
+
+    @GET("/post/move-volunteer/{id}")
+    suspend fun getmoveservicepostdetail(
+        @Header("x-access-token") token: String,
+        @Path("id") id:Int,
+    ) :Response<MoveServiceDetailDTO>
 
 }

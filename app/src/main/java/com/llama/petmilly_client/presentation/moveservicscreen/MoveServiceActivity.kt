@@ -2,39 +2,34 @@ package com.llama.petmilly_client.presentation.moveservicscreen
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.createBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -42,36 +37,50 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.R
-import com.llama.petmilly_client.presentation.certificationscreen.CertificationActivity
-import com.llama.petmilly_client.presentation.dialog.AdoptionApplicationDialog
-import com.llama.petmilly_client.presentation.dialog.AdoptionCompletedDialog
 import com.llama.petmilly_client.presentation.findanimalscreen.FindAnimalDetailImage
 import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
 import com.llama.petmilly_client.presentation.moveservicscreen.moveservicedetail.MoveServiceDetailActivity
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
+import com.llama.petmilly_client.utils.CommonObject.convertAddress
+import com.llama.petmilly_client.utils.CommonObject.convertmoveservicetime
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.ID
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
+
 @AndroidEntryPoint
 class MoveServiceActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
             val viewModel: MoveServiceViewModel = hiltViewModel()
 
-            NavHost(navController = navController, startDestination = Common.MOVESERVICE_LIST_SCREEN) {
+            NavHost(
+                navController = navController,
+                startDestination = Common.MOVESERVICE_LIST_SCREEN
+            ) {
                 composable(Common.MOVESERVICE_LIST_SCREEN) {
-                    MoveServiceListScreen(viewModel = viewModel, navController = navController,this@MoveServiceActivity)
+                    MoveServiceListScreen(
+                        viewModel = viewModel,
+                        navController = navController,
+                        this@MoveServiceActivity
+                    )
 
                 }
 
-                composable(Common.MOVESERVICE_Detail_SCREEN) {
-                    MoveServiceDetailScreen(viewModel = viewModel, navController = navController )
+                composable("${Common.MOVESERVICE_Detail_SCREEN}/{id}") {
+                    val id = it.arguments?.getString(ID).toString()
+                    MoveServiceDetailScreen(
+                        viewModel = viewModel,
+                        navController = navController,
+                        id
+                    )
                 }
 
 
@@ -81,12 +90,17 @@ class MoveServiceActivity : ComponentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavController,activity:Activity) {
+fun MoveServiceListScreen(
+    viewModel: MoveServiceViewModel,
+    navController: NavController,
+    activity: Activity,
+) {
     val context = LocalContext.current
     Box {
 
-        LaunchedEffect(context){
+        LaunchedEffect(context) {
             viewModel.getmoveservicepost()
         }
         Column(
@@ -134,46 +148,19 @@ fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavCon
                     .padding(horizontal = 7.dp)
             ) {
 
-                val moveservicemodel = listOf(
-                    Moveservicemodel(
-                        "경기 화성시 -> 강서구 화곡동",
-                        "라마/ 2살/ 10kg",
-                        "2/28(월) - 15시",
-                        "5시간 전"
-                    ),
-                    Moveservicemodel(
-                        "경기 화성시 -> 강서구 화곡동",
-                        "라마/ 2살/ 10kg",
-                        "2/28(월) - 15시",
-                        "6시간 전"
-                    ),
-                    Moveservicemodel(
-                        "경기 화성시 -> 강서구 화곡동",
-                        "라마/ 2살/ 10kg",
-                        "2/28(월) - 15시",
-                        "7시간 전"
-                    ),
-                    Moveservicemodel(
-                        "경기 화성시 -> 강서구 화곡동",
-                        "라마/ 2살/ 10kg",
-                        "2/28(월) - 15시",
-                        "8시간 전"
-                    )
-
-                )
-
 
                 items(viewModel.postDataList) { item ->
-                    val startAddress= ""
-                    val endAddress =""
+                    val startAddress = convertAddress(item.startAddress)
+                    val endAddress = convertAddress(item.endAddress)
                     Moveserviceitems(
                         image = item.thumbnail.photoUrl,
-                        movelocation = "",
-                        animalinfo = "${item.name} / ${item.weight} / ${item.weight}kg",
-                        moveday = item.hopeDate.toString(),
+                        startAddress = startAddress,
+                        endAddress = endAddress,
+                        animalinfo = "${item.name} / ${item.age}살 / ${item.weight}kg",
+                        moveday = item.hopeDate!!,
                         time = item.name
                     ) {
-                        navController.navigate(Common.MOVESERVICE_Detail_SCREEN)
+                        navController.navigate(Common.MOVESERVICE_Detail_SCREEN + "/${item.id}")
                     }
 
                     Spacer(modifier = Modifier.height(5.dp))
@@ -203,13 +190,27 @@ fun MoveServiceListScreen(viewModel: MoveServiceViewModel, navController: NavCon
     }//Box
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavController) {
-
+fun MoveServiceDetailScreen(
+    viewModel: MoveServiceViewModel,
+    navController: NavController,
+    id: String,
+) {
+    Log.d(TAG, "MoveServiceDetailScreen: $id")
     Box(modifier = Modifier.fillMaxSize()) {
+
+        val context = LocalContext.current
+
+        LaunchedEffect(context) {
+            viewModel.getmoveservicepostdetail(id.toInt())
+        }
         Column {
 
-            TitleBar(title = "이동봉사 찾아요", ismenu = false, clickBack = { navController.popBackStack() }) {
+            TitleBar(
+                title = "이동봉사 찾아요",
+                ismenu = false,
+                clickBack = { navController.popBackStack() }) {
 
             }
 
@@ -271,11 +272,11 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                                 includeFontPadding = false
                             )
                         ),
-                        modifier = Modifier.width(80.dp)
+                        modifier = Modifier.width(80.dp).padding(start = 10.dp)
                     )
 
                     Text(
-                        text = "경기 화성시 화성동",
+                        text = viewModel.startAddress_detail.value,
                         color = Black_60_Transfer,
                         fontSize = 13.sp,
                         fontFamily = notosans_bold,
@@ -291,8 +292,7 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                    ,
+                        .padding(horizontal = 20.dp),
                     color = Black_30_Transfer
                 )
 
@@ -313,11 +313,11 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                                 includeFontPadding = false
                             )
                         ),
-                        modifier = Modifier.width(80.dp)
+                        modifier = Modifier.width(80.dp).padding(start = 10.dp)
                     )
 
                     Text(
-                        text = "서울특별시 강서구 화곡동",
+                        text = viewModel.endAddress_detail.value,
                         color = Black_60_Transfer,
                         fontSize = 13.sp,
                         fontFamily = notosans_bold,
@@ -356,11 +356,11 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                                 includeFontPadding = false
                             )
                         ),
-                        modifier = Modifier.width(80.dp)
+                        modifier = Modifier.width(80.dp).padding(start = 10.dp)
                     )
 
                     Text(
-                        text = "1/18 수요일 -  17시",
+                        text = if (viewModel.moveday_detail.value != "") convertmoveservicetime( viewModel.moveday_detail.value) else "",
                         color = Black_60_Transfer,
                         fontSize = 13.sp,
                         fontFamily = notosans_bold,
@@ -424,7 +424,7 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                     )
 
                     Text(
-                        text = "망고/암컷",
+                        text = "${viewModel.name_detail.value} / ${viewModel.gender_detail.value}",
                         color = Black_60_Transfer,
                         fontSize = 13.sp,
                         fontFamily = notosans_regular,
@@ -468,7 +468,7 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                     )
 
                     Text(
-                        text = "5개월",
+                        text = viewModel.age_detail.value,
                         color = Black_60_Transfer,
                         fontSize = 13.sp,
                         fontFamily = notosans_regular,
@@ -510,7 +510,7 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                     )
 
                     Text(
-                        text = "3kg",
+                        text = viewModel.weight_detail.value,
                         color = Black_60_Transfer,
                         fontSize = 13.sp,
                         fontFamily = notosans_regular,
@@ -554,7 +554,7 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                     )
 
                     Text(
-                        text = "파보치료 끝나고 니키네 임보집으로 가야해요. 병원에서도 빨리 퇴원하라고 하는데 이동 좀 도와주세요.",
+                        text = viewModel.etc_detail.value,
                         color = Black_60_Transfer,
                         fontSize = 13.sp,
                         fontFamily = notosans_regular,
@@ -566,7 +566,6 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
                         modifier = Modifier.padding(start = 15.dp)
                     )
                 }
-
 
 
             }//Column
@@ -587,21 +586,4 @@ fun MoveServiceDetailScreen(viewModel: MoveServiceViewModel, navController: NavC
         )
 
     }
-
-
-}
-
-data class Moveservicemodel(
-    val movelocation: String,
-    val animalinfo: String,
-    val moveday: String,
-    val time: String,
-)
-
-@Preview
-@Composable
-fun SERVICETEST() {
-    val navController = rememberNavController()
-    val viewModel: MoveServiceViewModel = hiltViewModel()
-    MoveServiceDetailScreen(viewModel, navController)
 }

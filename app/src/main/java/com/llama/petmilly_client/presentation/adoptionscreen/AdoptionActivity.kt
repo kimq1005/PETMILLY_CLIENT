@@ -35,10 +35,6 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.findanimalscreen.FindAnimalDetailImage
 import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
-import com.llama.petmilly_client.presentation.moveservicscreen.MoveServiceListScreen
-import com.llama.petmilly_client.presentation.moveservicscreen.MoveServiceViewModel
-import com.llama.petmilly_client.presentation.moveservicscreen.Moveserviceitems
-import com.llama.petmilly_client.presentation.moveservicscreen.Moveservicemodel
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.notosans_bold
