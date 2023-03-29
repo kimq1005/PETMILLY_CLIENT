@@ -8,6 +8,7 @@ import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
 import com.llama.petmilly_client.data.model.moveservice.moveservicedetail.MoveServiceDetailDTO
+import com.llama.petmilly_client.data.model.moveservice.patchmoveservicepost.patchmoveservicepostResponse
 import com.llama.petmilly_client.data.model.moveservice.postmoveservice.MoveServicePostDTO
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
@@ -122,7 +123,7 @@ interface PetMillYApiService {
     suspend fun deletetemporaryphoto(
         @Header("x-access-token") token: String,
         @Path ("id") id:Int,
-        @Part ("photoId") photoId:Int
+        @Path ("photoId") photoId:Int
     ) : Response<TemporaryprotectionDTO>
 
     @POST("/post/move-volunteer")
@@ -161,5 +162,32 @@ interface PetMillYApiService {
         @Header("x-access-token") token: String,
         @Path("id") id:Int,
     ) :Response<MoveServiceDetailDTO>
+
+    @POST("post/move-volunteer/{id}/photos")
+    suspend fun postmoveservicephoto(
+        @Header("x-access-token") token: String,
+        @Path("id") id:Int,
+        @Part files: List<MultipartBody.Part>?,
+        ):Response<TemporaryprotectionDTO>
+
+    @PATCH("post/move-volunteer/{id}")
+    suspend fun patchmoveservicepost(
+        @Header("x-access-token") token: String,
+        @Path ("id") id:Int,
+        @Body patchmoveservicepostResponse : patchmoveservicepostResponse
+    ) :Response<TemporaryprotectionDTO>
+
+    @DELETE("post/move-volunteer/{id}")
+    suspend fun deletemoveservicepost(
+        @Header("x-access-token") token: String,
+        @Path ("id") id:Int,
+    ): Response<TemporaryprotectionDTO>
+
+    @DELETE("post/move-volunteer/{id}/photos/{photoId}")
+    suspend fun deletemoveservicephoto(
+        @Header("x-access-token") token: String,
+        @Path ("id") id:Int,
+        @Path ("photoId") photoId : Int
+    ): Response<TemporaryprotectionDTO>
 
 }

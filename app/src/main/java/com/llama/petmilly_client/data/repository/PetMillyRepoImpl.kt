@@ -8,6 +8,7 @@ import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
 import com.llama.petmilly_client.data.model.moveservice.moveservicedetail.MoveServiceDetailDTO
+import com.llama.petmilly_client.data.model.moveservice.patchmoveservicepost.patchmoveservicepostResponse
 import com.llama.petmilly_client.data.model.moveservice.postmoveservice.MoveServicePostDTO
 import com.llama.petmilly_client.data.model.post.postdto.PostDTO
 import com.llama.petmilly_client.data.model.refreshtoken.RefreshTokenDTO
@@ -113,11 +114,20 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         petMillYApiService.getpost(token, page, limit, cat, dog, isComplete, weight, type)
     }
 
+
     override suspend fun gettemporarydetail(
         token: String,
         id: Int,
     ): RemoteResult<TemporarydetailDTO> = getResult {
         petMillYApiService.gettemporarydetail(token, id)
+    }
+
+    override suspend fun posttemporaryphoto(
+        token: String,
+        id: Int,
+        files: List<MultipartBody.Part>?,
+    ): RemoteResult<TemporaryprotectionDTO> =getResult{
+        petMillYApiService.posttemporaryphoto(token, id, files)
     }
 
     override suspend fun patchtemporary(
@@ -130,16 +140,8 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
     override suspend fun deletetemporary(
         token: String,
         id: Int,
-    ): RemoteResult<TemporaryprotectionDTO> = getResult {
+    ): RemoteResult<TemporaryprotectionDTO> =getResult{
         petMillYApiService.deletetemporary(token, id)
-    }
-
-    override suspend fun deletetemporaryphoto(
-        token: String,
-        id: Int,
-        photoId: Int,
-    ): RemoteResult<TemporaryprotectionDTO> = getResult {
-        petMillYApiService.deletetemporaryphoto(token, id, photoId)
     }
 
     override suspend fun postmoveservicepost(
@@ -156,20 +158,7 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         hopeDate: RequestBody,
         files: List<MultipartBody.Part>?,
     ): RemoteResult<TemporaryprotectionDTO> = getResult {
-        petMillYApiService.postmoveservicepost(
-            token,
-            startAddress,
-            endAddress,
-            animalTypes,
-            name,
-            gender,
-            weight,
-            breed,
-            age,
-            etc,
-            hopeDate,
-            files
-        )
+        petMillYApiService.postmoveservicepost(token, startAddress, endAddress, animalTypes, name, gender, weight, breed, age, etc, hopeDate, files)
     }
 
     override suspend fun getmoveservicepost(
@@ -197,8 +186,39 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
     override suspend fun getmoveservicepostdetail(
         token: String,
         id: Int,
-    ): RemoteResult<MoveServiceDetailDTO> = getResult{
+    ): RemoteResult<MoveServiceDetailDTO> = getResult {
         petMillYApiService.getmoveservicepostdetail(token, id)
+    }
+
+    override suspend fun postmoveservicephoto(
+        token: String,
+        id: Int,
+        files: List<MultipartBody.Part>?,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult {
+        petMillYApiService.postmoveservicephoto(token, id,files)
+    }
+
+    override suspend fun patchmoveservicepost(
+        token: String,
+        id: Int,
+        patchmoveservicepostResponse: patchmoveservicepostResponse,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+        petMillYApiService.patchmoveservicepost(token, id, patchmoveservicepostResponse)
+    }
+
+    override suspend fun deletemoveservicepost(
+        token: String,
+        id: Int,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+        petMillYApiService.deletemoveservicepost(token, id)
+    }
+
+    override suspend fun deletemoveservicephoto(
+        token: String,
+        id: Int,
+        photoId: Int,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+        petMillYApiService.deletetemporaryphoto(token, id, photoId)
     }
 
 

@@ -158,7 +158,7 @@ fun Moveserviceitems(
             Spacer(modifier = Modifier.weight(1f))
 
             Text(
-                text = time,
+                text = "",
                 fontSize = 8.sp,
                 fontFamily = notosans_regular, style = TextStyle(
                     platformStyle = PlatformTextStyle(

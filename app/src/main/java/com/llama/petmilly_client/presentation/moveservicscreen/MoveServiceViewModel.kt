@@ -28,7 +28,7 @@ class MoveServiceViewModel @Inject constructor(
 
     val categorytest: MutableList<CategoryTest> = arrayListOf()
 
-    val cat = mutableStateOf(false)
+    val cat = mutableStateOf(true)
     val dog = mutableStateOf(true)
     val isComplete = mutableStateOf(false)
     val weight = mutableListOf<String>()
@@ -37,7 +37,7 @@ class MoveServiceViewModel @Inject constructor(
     val postDto: MutableLiveData<MoveServicePostDTO> = MutableLiveData<MoveServicePostDTO>()
     val postDataList = mutableStateListOf<MoveServicePostList>()
 
-    val moveservicedetaildata : MutableLiveData<Data> = MutableLiveData<Data>()
+    val moveservicedetaildata: MutableLiveData<Data> = MutableLiveData<Data>()
     val startAddress_detail = mutableStateOf("")
     val endAddress_detail = mutableStateOf("")
     val moveday_detail = mutableStateOf("")
@@ -45,16 +45,16 @@ class MoveServiceViewModel @Inject constructor(
     val gender_detail = mutableStateOf("")
     val age_detail = mutableStateOf("")
     val weight_detail = mutableStateOf("")
-    val etc_detail =mutableStateOf("")
+    val etc_detail = mutableStateOf("")
 
-    val categorylist:MutableList<String> = arrayListOf()
-    fun addcategorylist(title: String){
+    val categorylist: MutableList<String> = arrayListOf()
+    fun addcategorylist(title: String) {
         categorylist.add(title)
 
         Log.d(TAG, "addcategorylist: $categorylist")
     }
 
-    fun deletecategorylist(title: String){
+    fun deletecategorylist(title: String) {
         categorylist.remove(title)
         Log.d(TAG, "deletecategorylist: $categorylist")
     }
@@ -96,18 +96,23 @@ class MoveServiceViewModel @Inject constructor(
             petMillyRepo.getmoveservicepostdetail(MainApplication.accessToken, id).let {
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
-                        it.data?.let { item->
+                        it.data?.let { item ->
                             val data = item.data
-                            if(item.data.hopeDate.isNotEmpty()){
-                                Log.d(TAG, "getmoveservicepostdetail: ${item.data.hopeDate[0].hopeDate}")
+                            if (item.data.hopeDate.isNotEmpty()) {
+                                Log.d(
+                                    TAG,
+                                    "getmoveservicepostdetail: ${item.data.hopeDate[0].hopeDate}"
+                                )
 
                             }
                             startAddress_detail.value = data.startAddress
                             endAddress_detail.value = data.endAddress
-                            moveday_detail.value = if(data.hopeDate.isNotEmpty()) item.data.hopeDate[0].hopeDate else ""
+                            moveday_detail.value =
+                                if (data.hopeDate.isNotEmpty()) item.data.hopeDate[0].hopeDate else ""
                             name_detail.value = data.name
                             gender_detail.value = data.gender
-                            age_detail.value = if(data.age > 0) "${data.age}살" else "${data.age * 10}개월"
+                            age_detail.value =
+                                if (data.age > 0) "${data.age}살" else "${data.age * 10}개월"
                             weight_detail.value = "${data.weight}kg"
                             etc_detail.value = data.etc
                         }
