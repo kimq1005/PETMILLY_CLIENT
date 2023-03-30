@@ -53,14 +53,32 @@
  
  
  
-# 📷스크린샷 및 구동영상(스크린샷이 많은 화면은 동영상으로 대체했습니다.)
+# 📷스크린샷 및 구동영상
+스크린샷이 많은 화면은 동영상으로 대체했습니다.
+
 
 * 메인 화면 및 회원 가입
 <img width="23%" src="https://user-images.githubusercontent.com/68366753/228754112-72359d6b-30aa-4b11-a32c-5afabd791e47.gif"/>
 
 
+<br></br>
+
 
 * 홈 화면(네이버 맵)
+
+<img width="20%" src="https://user-images.githubusercontent.com/68366753/228773070-48148a99-f056-4d25-b513-b1071851d27c.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228773600-412e2c01-f03e-45aa-ae73-03d317960651.png"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228773805-f6984c1f-9020-4c0e-83be-afeea99bec99.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228774364-63fd75e8-5e68-4b50-b043-f51313c33b47.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228774534-e66fb1db-9055-4c78-93a7-5236f6142a6a.jpeg"/> 
+
+<br></br>
+* 채팅방(진행중)
+
+
+<img width="20%" src="https://user-images.githubusercontent.com/68366753/228779416-05b8c8a6-6196-484a-a08a-c8f78932e5c1.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228779427-95c02e04-440a-4c91-820f-c085a46aac6d.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228779438-038bff54-bdf6-423b-969a-0d5320c3aa4f.jpeg"/> 
+
+
+<!-- 
+![KakaoTalk_Photo_2023-03-30-17-38-20 001](https://user-images.githubusercontent.com/68366753/228779416-05b8c8a6-6196-484a-a08a-c8f78932e5c1.jpeg)
+![KakaoTalk_Photo_2023-03-30-17-38-21 002](https://user-images.githubusercontent.com/68366753/228779427-95c02e04-440a-4c91-820f-c085a46aac6d.jpeg)
+![KakaoTalk_Photo_2023-03-30-17-38-21 003](https://user-images.githubusercontent.com/68366753/228779438-038bff54-bdf6-423b-969a-0d5320c3aa4f.jpeg) -->
 
 * 임보처 구해요
 
