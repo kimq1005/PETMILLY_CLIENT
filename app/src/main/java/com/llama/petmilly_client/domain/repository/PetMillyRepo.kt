@@ -126,7 +126,7 @@ interface PetMillyRepo {
         cat: Boolean?,
         dog: Boolean?,
         isComplete: Boolean?,
-        weight: List<String>?,
+        weight: String?,
         type: String,
     ): RemoteResult<MoveServicePostDTO>
 

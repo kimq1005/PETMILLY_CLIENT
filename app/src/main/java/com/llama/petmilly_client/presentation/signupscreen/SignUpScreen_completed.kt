@@ -2,6 +2,7 @@ package com.llama.petmilly_client.presentation.signupscreen
 
 import android.content.Intent
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -25,6 +27,7 @@ import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.ui.theme.Button_Clicked
 import com.llama.petmilly_client.utils.ButtonScreen
+import com.llama.petmilly_client.utils.SpacerHeight
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
@@ -41,6 +44,16 @@ fun SignUpScreen_completed(navController: NavController, viewModel: SignUpViewMo
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+
+            Image(
+                painter = (painterResource(id = com.llama.petmilly_client.R.drawable.img_blue_circle)),
+                contentDescription = null,
+                modifier = Modifier
+                    .width(40.dp)
+                    .height(40.dp)
+            )
+
+            SpacerHeight(dp = 20.dp)
 
             Text(
                 text = "${MainApplication.signupname}님,\n펫밀리가 되신걸\n환영합니다!",

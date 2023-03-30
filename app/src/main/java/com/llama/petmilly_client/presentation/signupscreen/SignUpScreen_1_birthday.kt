@@ -300,7 +300,7 @@ fun CommonSignDescription() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(id = R.drawable.background_blue_circle),
+            painter = painterResource(id = R.drawable.img_blue_circle),
             contentDescription = null,
             modifier = Modifier
                 .width(24.dp)

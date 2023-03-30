@@ -15,8 +15,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,6 +36,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.R
+import com.llama.petmilly_client.presentation.dialog.MoveServiceDetailDialog
 import com.llama.petmilly_client.presentation.findanimalscreen.FindAnimalDetailImage
 import com.llama.petmilly_client.presentation.findanimalscreen.ImageTestData
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
@@ -46,6 +46,8 @@ import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.CommonObject.convertAddress
 import com.llama.petmilly_client.utils.CommonObject.convertmoveservicetime
+import com.llama.petmilly_client.utils.SpacerHeight
+import com.llama.petmilly_client.utils.SpacerWidth
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 import dagger.hilt.android.AndroidEntryPoint
@@ -124,7 +126,7 @@ fun MoveServiceListScreen(
                     Row {
                         if (MainApplication.categorylist.indexOf(categorylist) == 0) {
                             Spacer(modifier = Modifier.padding(start = 15.dp))
-                            BorderCategoryItems(title = categorylist) { title, check->
+                            BorderCategoryItems(title = categorylist) { title, check ->
                                 setmovservicepost(
                                     viewModel = viewModel,
                                     categorytitle = title,
@@ -135,7 +137,7 @@ fun MoveServiceListScreen(
 
 
                         } else {
-                            BorderCategoryItems(title = categorylist) { title,check->
+                            BorderCategoryItems(title = categorylist) { title, check ->
                                 setmovservicepost(
                                     viewModel = viewModel,
                                     categorytitle = title,
@@ -209,21 +211,46 @@ fun MoveServiceDetailScreen(
     id: String,
 ) {
     Log.d(TAG, "MoveServiceDetailScreen: $id")
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+    ) {
 
         val context = LocalContext.current
-
+        var ismenu by remember {
+            mutableStateOf(false)
+        }
         LaunchedEffect(context) {
             viewModel.getmoveservicepostdetail(id.toInt())
+
+
         }
+
+
+
         Column {
 
             TitleBar(
                 title = "이동봉사 찾아요",
-                ismenu = false,
-                clickBack = { navController.popBackStack() }) {
+                ismenu = true,
+                clickBack = { navController.popBackStack() },
+                clickMenu = {
+                    viewModel.onMenuDialog()
+                }
+            )
 
+            if (viewModel.ismenudialog) {
+                MoveServiceDetailDialog(
+                    onModifiy = {},
+                    onDelete = {},
+                    onUp = {},
+                    onComplete = {},
+                    onDismiss = {
+                        viewModel.onDissmissMenuDialog()
+                    })
             }
+
 
             LazyRow(modifier = Modifier.padding(horizontal = 10.dp)) {
                 val imageTestData = listOf(
@@ -283,7 +310,9 @@ fun MoveServiceDetailScreen(
                                 includeFontPadding = false
                             )
                         ),
-                        modifier = Modifier.width(80.dp).padding(start = 10.dp)
+                        modifier = Modifier
+                            .width(80.dp)
+                            .padding(start = 10.dp)
                     )
 
                     Text(
@@ -324,7 +353,9 @@ fun MoveServiceDetailScreen(
                                 includeFontPadding = false
                             )
                         ),
-                        modifier = Modifier.width(80.dp).padding(start = 10.dp)
+                        modifier = Modifier
+                            .width(80.dp)
+                            .padding(start = 10.dp)
                     )
 
                     Text(
@@ -367,11 +398,15 @@ fun MoveServiceDetailScreen(
                                 includeFontPadding = false
                             )
                         ),
-                        modifier = Modifier.width(80.dp).padding(start = 10.dp)
+                        modifier = Modifier
+                            .width(80.dp)
+                            .padding(start = 10.dp)
                     )
 
                     Text(
-                        text = if (viewModel.moveday_detail.value != "") convertmoveservicetime( viewModel.moveday_detail.value) else "",
+                        text = if (viewModel.moveday_detail.value != "") convertmoveservicetime(
+                            viewModel.moveday_detail.value
+                        ) else "",
                         color = Black_60_Transfer,
                         fontSize = 13.sp,
                         fontFamily = notosans_bold,
@@ -600,7 +635,12 @@ fun MoveServiceDetailScreen(
 }
 
 
-private fun setmovservicepost(viewModel: MoveServiceViewModel, categorytitle: String, check: Boolean) {
+private fun setmovservicepost(
+    viewModel: MoveServiceViewModel,
+    categorytitle: String,
+    check: Boolean,
+) {
+
 
     if (check) {
         viewModel.addcategorylist(categorytitle)
@@ -612,18 +652,27 @@ private fun setmovservicepost(viewModel: MoveServiceViewModel, categorytitle: St
     viewModel.dog.value = viewModel.categorylist.contains("강아지")
     viewModel.cat.value = viewModel.categorylist.contains("고양이")
     viewModel.isComplete.value = !viewModel.categorylist.contains("petmily ❤️")
-    viewModel.weight.clear()
-    if(viewModel.categorylist.contains("~7kg") && !viewModel.weight.contains("small")){
-        viewModel.weight.add("small")
+
+    if (viewModel.categorylist.isEmpty()) {
+        viewModel.cat.value = null
+        viewModel.dog.value = null
+        viewModel.isComplete.value = null
+        viewModel.weight.value = null
     }
 
-    if(viewModel.categorylist.contains("7~15kg")  && !viewModel.weight.contains("middle")){
-        viewModel.weight.add("middle")
-    }
-
-    if(viewModel.categorylist.contains("15kg~") && !viewModel.weight.contains("big")){
-        viewModel.weight.add("big")
-    }
+//    viewModel.weight.clear()
+//    //weight는 하나만 선택되게 해야함
+//    if(viewModel.categorylist.contains("~7kg") && !viewModel.weight.contains("small")){
+//        viewModel.weight.value = "small"
+//    }
+//
+//    if(viewModel.categorylist.contains("7~15kg")  && !viewModel.weight.contains("middle")){
+//        viewModel.weight.add("middle")
+//    }
+//
+//    if(viewModel.categorylist.contains("15kg~") && !viewModel.weight.contains("big")){
+//        viewModel.weight.add("big")
+//    }
 
 
     viewModel.getmoveservicepost()

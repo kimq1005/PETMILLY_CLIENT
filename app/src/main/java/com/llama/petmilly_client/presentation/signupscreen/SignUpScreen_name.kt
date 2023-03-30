@@ -7,13 +7,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
@@ -28,21 +29,19 @@ import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
-import com.llama.petmilly_client.ui.theme.Black_Half_Transfer
-import com.llama.petmilly_client.ui.theme.Button_Clicked
-import com.llama.petmilly_client.ui.theme.Button_NoneClicked
-import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
-import com.llama.petmilly_client.utils.ButtonScreen
-import com.llama.petmilly_client.utils.ButtonShapeScreen
-import com.llama.petmilly_client.utils.notosans_bold
-import com.llama.petmilly_client.utils.notosans_regular
+import com.llama.petmilly_client.ui.theme.*
+import com.llama.petmilly_client.utils.*
 import llama.test.jetpack_dagger_plz.utils.Common.SIGNUPSCREEN_1_BIRTHDAY
 
 @Composable
 fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel = hiltViewModel()) {
 
     val context = LocalContext.current
+    var checknickname by remember {
+        mutableStateOf(false)
+    }
 
+    val focusManager = LocalFocusManager.current
     TitleBar(title = "", ismenu = false, clickBack = { }) {
 
     }
@@ -97,13 +96,13 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
         Text(
             text = "성함 (입양/임보 시)",
             fontSize = 13.sp,
-            fontFamily =  notosans_bold,
+            fontFamily = notosans_bold,
             style = TextStyle(
                 platformStyle = PlatformTextStyle(
                     includeFontPadding = false
                 )
             ),
-                    color = Color.Black,
+            color = Color.Black,
             modifier = Modifier.padding(start = 5.dp)
         )
 
@@ -124,6 +123,13 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
                 cursorColor = Color.Black,
 
                 ),
+            textStyle = TextStyle(
+                fontFamily = notosans_regular,
+                color = Color.Black,
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             placeholder = { Text(text = "성함을 입력해주세요. ") }
         )
 
@@ -132,7 +138,12 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
         Text(
             text = "닉네임 (일반 활동 시)",
             fontSize = 13.sp,
-            fontWeight = FontWeight.Bold,
+            fontFamily = notosans_bold,
+            style = TextStyle(
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             color = Color.Black,
             modifier = Modifier.padding(start = 5.dp)
         )
@@ -167,14 +178,33 @@ fun SignUpScreen_name(navController: NavController, viewModel: SignUpViewModel =
                 modifier = Modifier
                     .weight(2f)
                     .height(55.dp),
-                backgroundcolor = Button_NoneClicked,
+                backgroundcolor = if (viewModel.nickname.value != "") Category_Cliked else Button_NoneClicked,
                 shape = RoundedCornerShape(10.dp),
                 textAlign = TextAlign.Center,
                 fontFamily = notosans_bold
             ) {
-
+                checknickname = true
+                focusManager.moveFocus(FocusDirection.Down)
             }
         }//Row
+
+        if(checknickname){
+            SpacerHeight(dp = 6.dp)
+
+            Text(
+                text = "최고예요!  사용할 수 있는 닉네임입니다  :)",
+                color = Category_Cliked,
+                fontFamily = notosans_regular,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                fontSize = 13.sp
+            )
+        }
+        
+
 
         Spacer(modifier = Modifier.weight(1f))
 
