@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.notificationscreen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
@@ -19,15 +20,17 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.ui.theme.Black_30_Transfer
 import com.llama.petmilly_client.ui.theme.Black_40_Transfer
 import com.llama.petmilly_client.ui.theme.Black_5_Transfer
+import com.llama.petmilly_client.ui.theme.Pink_5_Transfer
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 
 @Composable
 fun NotificationItems(
+    type:Int,
     title: String,
     description: String,
     time: String,
-//    isalarm:Boolean,
+    iswrite:Boolean,
 //    onclickalarm:()->Unit
 ) {
 
@@ -36,16 +39,33 @@ fun NotificationItems(
     Box(
         modifier = Modifier
             .height(80.dp)
-            .padding(horizontal = 25.dp)
+
+            .background(if(iswrite) Color.White else Pink_5_Transfer )
     ) {
         Row(
             Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 20.dp)
                 .align(Alignment.Center),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.img_petmilly_heart_menu),
+
+            val image = when(type){
+                0->{
+                    R.drawable.img_petmilly_heart_menu_2
+                }
+                1->{
+                    R.drawable.img_application_alarm
+                }
+                2->{
+                    R.drawable.img_petmilly_notification
+                }
+                else->{
+                    R.drawable.img_normal_alarm
+                }
+            }
+            Image(
+                painter = painterResource(id = image),
                 contentDescription = null,
                 modifier = Modifier
                     .height(21.dp)
@@ -87,7 +107,7 @@ fun NotificationItems(
 
             Text(
                 text = time,
-                modifier = Modifier.padding(end = 25.dp),
+
                 fontSize = 11.sp,
                 color = Black_30_Transfer,
                 fontFamily = notosans_regular,
@@ -106,10 +126,4 @@ fun NotificationItems(
                 .align(Alignment.BottomCenter)
         )
     }
-}
-
-@Preview
-@Composable
-fun NotificationItemsPreview() {
-    NotificationItems(title = "제목입니다.", description = "설명입니다 설명이라구요", "15시간전")
 }

@@ -103,9 +103,12 @@ fun MoveServiceListScreen(
     val context = LocalContext.current
     Box {
 
-        LaunchedEffect(context) {
-            viewModel.getmoveservicepost()
-        }
+//        LaunchedEffect(context) {
+//        }
+        viewModel.getmoveservicepost()
+
+
+        Log.d(TAG, "MoveServiceListScreen: 하윙")
         Column(
             modifier = Modifier
                 .fillMaxSize()

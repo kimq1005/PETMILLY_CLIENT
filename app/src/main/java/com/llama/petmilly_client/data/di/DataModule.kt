@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 object DataModule {
 
 //    val BASE_URL = "http://localhost:3000/"
-    val BASE_URL = "http://192.168.0.40:3000/"
+    val BASE_URL = "http://192.168.64.75:3000/"
 //    val BASE_URL = "http://172.30.1.98:3000/"
 
 

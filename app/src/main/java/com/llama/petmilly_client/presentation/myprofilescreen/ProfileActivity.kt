@@ -75,13 +75,13 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
             SpacerWidth(dp = 29.dp)
 
             Image(
-                painter = painterResource(id = R.drawable.icon_main_puppy),
+                painter = painterResource(id = R.drawable.img_test_puppy),
                 contentDescription = null,
                 modifier = Modifier
                     .height(70.dp)
                     .width(70.dp)
                     .align(Alignment.CenterVertically),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Fit
             )
             SpacerWidth(dp = 16.dp)
 
@@ -89,7 +89,7 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "승현짱123",
+                    text = "llama",
                     fontSize = 20.sp,
                     fontFamily = notosans_bold,
                     style = TextStyle(
@@ -169,7 +169,7 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                         )
 
                         Text(
-                            text = "1건",
+                            text = "0건",
                             fontFamily = notosans_regular,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(
@@ -199,7 +199,7 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                         )
 
                         Text(
-                            text = "1건",
+                            text = "0건",
                             fontFamily = notosans_regular,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(
@@ -229,7 +229,7 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileViewModel) {
                         )
 
                         Text(
-                            text = "1건",
+                            text = "0건",
                             fontFamily = notosans_regular,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(

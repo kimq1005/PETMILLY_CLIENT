@@ -7,21 +7,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,19 +22,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.*
+import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.chatscreen.items.ChatItem
 import com.llama.petmilly_client.presentation.chatscreen.items.ChatModel
 import com.llama.petmilly_client.presentation.homescreen.items.BorderCategoryItems
-import com.llama.petmilly_client.presentation.shelterscreen.items.ShelterCategoryItems
 import com.llama.petmilly_client.ui.theme.Background_Noting
 import com.llama.petmilly_client.ui.theme.Black_30_Transfer
-import com.llama.petmilly_client.ui.theme.Purple700
 import com.llama.petmilly_client.utils.CommonNotingScreen
 import com.llama.petmilly_client.utils.Tabs
-import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.CHATSCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.CHATTINGROOMSCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
@@ -129,7 +117,7 @@ fun FavoriteChatScreen() {
 //                )
 
                 CommonNotingScreen(
-                    text = "전송된\n체팅 메세지가\n아직 없어요",
+                    text = "관심 등록한\n친구들이\n아직 없어요",
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
@@ -146,9 +134,11 @@ fun ChatTabScreen(
 
     val firstcheck = true
     if (firstcheck) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
             Column() {
                 LazyRow() {
                     val mylist = listOf(
@@ -156,7 +146,7 @@ fun ChatTabScreen(
                     )
                     items(mylist) { item ->
 
-                        BorderCategoryItems(title = item) { title, check->
+                        BorderCategoryItems(title = item) { title, check ->
 
                         }
                         Spacer(modifier = Modifier.width(9.dp))
@@ -172,17 +162,16 @@ fun ChatTabScreen(
                 ) {
                     val item = listOf(
                         ChatModel(
-                            "[감자]김승현", "안녕하세요 이 친구 건강은\n" +
-                                    "어떤가요? 문의문의나문희...", "오루 10시30분", "1"
+
+                            "[초코]이재익", "안녕하세요!", "오후 10시30분", "1", R.drawable.img_test_puppy,
                         ),
                         ChatModel(
-                            "[금자]와우맨", "문의내용인데용우히히헹\n" +
-                                    "우히헤에헤에헤헹엫ㅇ헹...", "10시30분", "1"
+                            "[라떼]박세라", "임보 관련 문의드립니다!\n", "10시30분", "1", R.drawable.img_testcat_2,
                         ),
                     )
 
                     items(item) { chatmodel ->
-                        ChatItem(chatModel = chatmodel, onclick =
+                        ChatItem(chatModel = chatmodel, image = chatmodel.image, onclick =
                         {
                             navController.navigate(CHATTINGROOMSCREEN + "/${chatmodel.name}")
 //                    navController.navigate(CHATTINGROOMSCREEN)

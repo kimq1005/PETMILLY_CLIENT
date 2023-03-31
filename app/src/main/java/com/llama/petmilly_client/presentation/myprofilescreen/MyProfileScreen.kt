@@ -61,7 +61,7 @@ fun MyProfileScreen(navController: NavController) {
             SpacerWidth(dp = 29.dp)
 
             Image(
-                painter = painterResource(id = R.drawable.icon_main_puppy),
+                painter = painterResource(id = R.drawable.img_testcat_2),
                 contentDescription = null,
                 modifier = Modifier
                     .height(70.dp)
@@ -77,7 +77,7 @@ fun MyProfileScreen(navController: NavController) {
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "승현짱123",
+                        text = "llama",
                         fontSize = 20.sp,
                         fontFamily = notosans_bold,
                         style = TextStyle(
@@ -189,7 +189,7 @@ fun MyProfileScreen(navController: NavController) {
                         )
 
                         Text(
-                            text = "1건",
+                            text = "0건",
                             fontFamily = notosans_regular,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(
@@ -219,7 +219,7 @@ fun MyProfileScreen(navController: NavController) {
                         )
 
                         Text(
-                            text = "1건",
+                            text = "0건",
                             fontFamily = notosans_regular,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(
@@ -249,7 +249,7 @@ fun MyProfileScreen(navController: NavController) {
                         )
 
                         Text(
-                            text = "1건",
+                            text = "0건",
                             fontFamily = notosans_regular,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(

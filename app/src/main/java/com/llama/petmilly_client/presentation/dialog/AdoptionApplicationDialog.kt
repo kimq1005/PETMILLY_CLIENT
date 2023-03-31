@@ -87,7 +87,8 @@ fun AdoptionApplicationDialog(
                 )
 
                 Text(
-                    text = "임보/입양 신청서",
+                    text = "" +
+                            "임보/입양 신청서",
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally),
                     textAlign = TextAlign.Center,
@@ -109,15 +110,15 @@ fun AdoptionApplicationDialog(
                         .padding(top = 20.dp, start = 20.dp, end = 20.dp)
 
                 ) {
-                    AplicationTextRow("성함/성별", "김승현", modifier = Modifier)
+                    AplicationTextRow("성함/성별", "이재익", modifier = Modifier)
                     AplicationTextRow(
                         "생년월일",
-                        "961005",
+                        "930705",
                         modifier = Modifier.padding(top = 10.dp)
                     )
                     AplicationTextRow(
                         "직업",
-                        "안드로이드 개발자",
+                        "백엔드 개발자",
                         modifier = Modifier.padding(top = 10.dp)
                     )
                     AplicationTextRow(

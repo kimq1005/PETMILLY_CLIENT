@@ -1,48 +1,32 @@
 package com.llama.petmilly_client.presentation.chatscreen.items
 
-import android.graphics.drawable.shapes.OvalShape
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import com.llama.petmilly_client.R
+import coil.compose.rememberImagePainter
 import com.llama.petmilly_client.ui.theme.Black_60_Transfer
-import com.llama.petmilly_client.ui.theme.Black_Half_Transfer
-import com.llama.petmilly_client.ui.theme.Purple200
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
-import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
 fun ChatItem(
     chatModel: ChatModel,
     onclick: () -> Unit,
+    image:Int
 ) {
 
     Row(modifier = Modifier
@@ -51,7 +35,7 @@ fun ChatItem(
             onclick()
         }) {
         Image(
-            painter = painterResource(id = R.drawable.img_test_puppy),
+            painter = rememberImagePainter(data = image),
             contentDescription = null,
             modifier = Modifier
                 .height(50.dp)
@@ -153,30 +137,6 @@ data class ChatModel(
     val description: String,
     val time: String,
     val update: String,
+    val image: Int
 )
 
-@Preview
-@Composable
-fun Hello() {
-    LazyColumn() {
-        val item = listOf(
-            ChatModel("김승현", "설명이다", "10시30분", "1"),
-            ChatModel("와우맨", "히", "10시30분", "1"),
-            ChatModel("ㄹㄹㅋㄴㅇ", "ㅁㄴㅇ", "10시30분", "1"),
-            ChatModel("ㅁㅇㅁㄴㅇ", "ㅁㄴㅇ", "10시30분", "1")
-        )
-
-        items(item) { chatmodel ->
-
-//            ChatItem(chatModel = chatmodel) {
-//                Log.d(Common.TAG, "ChatTabScreen: ${chatmodel.description}")
-//            }
-
-            Spacer(modifier = Modifier.height(5.dp))
-
-
-        }
-
-    }
-
-}

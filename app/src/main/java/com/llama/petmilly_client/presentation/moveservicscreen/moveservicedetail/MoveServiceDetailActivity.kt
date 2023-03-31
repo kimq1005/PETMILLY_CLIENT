@@ -1,7 +1,9 @@
 package com.llama.petmilly_client.presentation.moveservicscreen.moveservicedetail
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -55,13 +57,22 @@ import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import llama.test.jetpack_dagger_plz.utils.Common
 
+
+private lateinit var progressDialog: ProgressDialog
 @AndroidEntryPoint
 class MoveServiceDetailActivity : ComponentActivity() {
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        progressDialog = ProgressDialog(this, R.style.ProgressBarDialog)
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.setCancelable(false)
 
         setContent {
             val navController = rememberNavController()
@@ -112,6 +123,10 @@ class MoveServiceDetailActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
 
@@ -587,7 +602,6 @@ fun MoveServiceDetailScreen_4_Input(
         ) {
             if (ischeck) {
                 viewModel.postmoveservicepost()
-
             }
         }
 
@@ -608,6 +622,15 @@ private fun setObserve(
     lifecycleOwner: LifecycleOwner,
 
     ) {
+
+    viewModel.showProgress.observe(lifecycleOwner, Observer {
+        progressDialog.show()
+    })
+
+    viewModel.closeProgress.observe(lifecycleOwner, Observer {
+        progressDialog.dismiss()
+    })
+
     viewModel.setfinsh.observe(lifecycleOwner, Observer {
         activity.finish()
     })

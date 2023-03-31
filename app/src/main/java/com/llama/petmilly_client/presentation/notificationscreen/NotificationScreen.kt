@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.notificationscreen
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
@@ -76,33 +78,44 @@ fun NotificationScreen(navController: NavController) {
 
 @Composable
 fun IsAlarmScreen() {
-    Column(modifier = Modifier.fillMaxHeight().background(color = Color.White)) {
+    Column(modifier = Modifier
+        .fillMaxHeight()
+        .background(color = Color.White)) {
         LazyColumn() {
             val notificationTestData = listOf(
                 NotificationTestData(
-                    "제목1입니다",
-                    "설명설명설명설명",
-                    "12시간 전"
+                    "관심 동물 입양상태 변경",
+                    "초코의 입양 상태가 변경 되었어요!",
+                    "12시간 전",
+                    type = 0,
+                    ischeck = false
+
                 ),
 
                 NotificationTestData(
-                    "제목2입니다",
+                    "입양/임보 신청서 마감",
                     "설명설명설명설명",
-                    "13시간 전"
-                ),
-
-
-                NotificationTestData(
-                    "제목3입니다",
-                    "설명설명설명설명",
-                    "14시간 전"
+                    "1일 전",
+                    type = 1,
+                    ischeck = false
                 ),
 
 
                 NotificationTestData(
-                    "제목4입니다",
-                    "설명설명설명설명",
-                    "15시간 전"
+                    "신고",
+                    "세라님으로 부터 신고를 당했습니다.",
+                    "3일 전",
+                    type = 2,
+                    ischeck = true
+                ),
+
+
+                NotificationTestData(
+                    "펫밀리가 되신지 1주일이나 지났어요!",
+                    "감사합니다!",
+                    "5일 전",
+                    type = 5,
+                    ischeck = true
                 ),
 
 
@@ -111,7 +124,9 @@ fun IsAlarmScreen() {
                 NotificationItems(
                     title = item.title,
                     description = item.description,
-                    time = item.time
+                    time = item.time,
+                    type = item.type,
+                    iswrite = item.ischeck
                 )
             }
         }
@@ -126,12 +141,12 @@ fun NotificationTitleBar(navController: NavController) {
             .background(color = Color.White)
             .padding(16.dp),
     ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
+        Image(
+            painter = painterResource(id = R.drawable.img_back),
             contentDescription = null,
             modifier = Modifier
-                .width(30.dp)
-                .height(30.dp)
+                .width(20.dp)
+                .height(20.dp)
                 .align(Alignment.CenterStart)
                 .clickable {
                     navController.popBackStack()
@@ -187,6 +202,9 @@ data class NotificationTestData(
     val title: String,
     val description: String,
     val time: String,
+    val type: Int,
+    val ischeck:Boolean
+
 )
 
 @Preview

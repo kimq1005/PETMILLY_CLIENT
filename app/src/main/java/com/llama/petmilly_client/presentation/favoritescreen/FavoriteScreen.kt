@@ -102,7 +102,7 @@ fun FavroiteTabs(pagerState: PagerState, list: List<String>) {
                                 .fillMaxWidth()
                                 .align(CenterHorizontally),
                             text = text.substring(0, 3),
-                            fontSize = 12.sp,
+                            fontSize = 11.sp,
                             fontFamily = fontFamily,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(
@@ -116,7 +116,7 @@ fun FavroiteTabs(pagerState: PagerState, list: List<String>) {
                                 .fillMaxWidth()
                                 .align(CenterHorizontally),
                             text = text.substring(3),
-                            fontSize = 17.sp,
+                            fontSize = 15.sp,
                             fontFamily = fontWeight,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(

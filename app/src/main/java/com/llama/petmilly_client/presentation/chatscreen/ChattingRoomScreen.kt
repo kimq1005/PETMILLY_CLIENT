@@ -97,7 +97,7 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
             Spacer(modifier = Modifier.width(30.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.img_test_puppy),
+                painter = painterResource(id = R.drawable.img_testcat),
                 contentDescription = null,
                 modifier = Modifier
                     .height(50.dp)
@@ -115,7 +115,7 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
             ) {
                 Row {
                     Text(
-                        text = "감자",
+                        text = "힝구",
                         fontSize = 12.sp,
                         color = Color.Black,
                         fontFamily = notosans_bold,
@@ -127,7 +127,7 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
                     )
 
                     Text(
-                        text = ":수컷 /1KG /믹스/ 2개월 추정\n1차접종완료 /중성화O",
+                        text = ":암컷 /1KG /믹스/ 2개월 추정\n1차접종완료 /중성화X",
                         fontSize = 12.sp,
                         color = Black_60_Transfer,
                         fontFamily = notosans_regular,
@@ -150,26 +150,33 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
             entityChatModel.add(
                 EntityChatModel(
                     0,
-                    plzChatModel = PlzChatModel(recive = "보낸다 ndkggkgk우하하하핳하하하하핳")
+                    plzChatModel = PlzChatModel(recive = "안녕하세요!")
                 )
             )
             entityChatModel.add(
                 EntityChatModel(
                     0,
-                    plzChatModel = PlzChatModel(recive = "보낸다 ndkggkgk우하하하핳하하하하핳")
+                    plzChatModel = PlzChatModel(recive = "혹시 힝구 임시보호처 구해졌나요?! ")
                 )
             )
             entityChatModel.add(
                 EntityChatModel(
                     1,
-                    plzChatModel = PlzChatModel(send = "보내는건 나다 근데 왜 없냐 이건")
+                    plzChatModel = PlzChatModel(send = "아니요 아직 안됐습니다. 입양 신청해주세요!")
+                )
+            )
+
+            entityChatModel.add(
+                EntityChatModel(
+                    0,
+                    plzChatModel = PlzChatModel(recive = "넵 알겠습니다!.")
                 )
             )
 
             entityChatModel.add(
                 EntityChatModel(
                     2,
-                    plzChatModel = PlzChatModel(send = "김승현")
+                    plzChatModel = PlzChatModel(send = "이재익")
                 )
             )
 
@@ -209,7 +216,7 @@ fun ChattingRoomScreen(navController: NavController, name: String, viewModel: Ch
             Modifier
                 .fillMaxWidth()
                 .background(color = Color.White)
-                .padding(start = 15.dp, end = 15.dp, bottom = 90.dp, top = 10.dp)
+                .padding(start = 15.dp, end = 15.dp, bottom = 65.dp, top = 10.dp)
         ) {
 
             Image(

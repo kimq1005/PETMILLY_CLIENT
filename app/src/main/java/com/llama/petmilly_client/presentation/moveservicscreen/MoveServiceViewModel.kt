@@ -76,7 +76,6 @@ class MoveServiceViewModel @Inject constructor(
 
     fun getmoveservicepost() {
 
-        Log.d(TAG, "getmoveservicepost: ${cat.value} ${dog.value} ${isComplete.value} ${weight}")
         viewModelScope.launch(Dispatchers.IO) {
             petMillyRepo.getmoveservicepost(
                 MainApplication.accessToken,
@@ -114,6 +113,7 @@ class MoveServiceViewModel @Inject constructor(
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
                         it.data?.let { item ->
+                            Log.d(TAG, "sibal: $it")
                             val data = item.data
                             if (item.data.hopeDate.isNotEmpty()) {
                                 Log.d(
@@ -122,6 +122,7 @@ class MoveServiceViewModel @Inject constructor(
                                 )
 
                             }
+
                             startAddress_detail.value = data.startAddress
                             endAddress_detail.value = data.endAddress
                             moveday_detail.value =

@@ -32,12 +32,13 @@ import com.llama.petmilly_client.presentation.chatscreen.ChatScreen
 import com.llama.petmilly_client.presentation.favoritescreen.FavoriteScreen
 import com.llama.petmilly_client.presentation.myprofilescreen.MyProfileScreen
 import com.llama.petmilly_client.presentation.notificationscreen.NotificationScreen
+import com.llama.petmilly_client.ui.theme.Category_Cliked
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 
 sealed class BottomNavItem(var title: String, var icon: Int, var screen_route: String) {
-    object Home : BottomNavItem("펫밀리", R.drawable.img_petmilly_home, "home")
+    object Home : BottomNavItem("펫밀리", R.drawable.img_petmilly_home_2, "home")
     object Chatting : BottomNavItem("채팅", R.drawable.img_petmilly_chatting, "my_network")
-    object Heart : BottomNavItem("관심", R.drawable.img_petmilly_heart_menu, "add_post")
+    object Heart : BottomNavItem("관심", R.drawable.img_petmilly_heart_menu_2, "add_post")
     object Notification : BottomNavItem("알림", R.drawable.img_petmilly_notification, "notification")
     object Person : BottomNavItem("MY", R.drawable.img_petmilly_person, "my")
 }
@@ -83,14 +84,14 @@ fun BottomNavigation(navController: NavController) {
     androidx.compose.material.BottomNavigation(
         contentColor = Color.Black,
         backgroundColor = Color.White,
-        modifier = Modifier.height(dimensionResource(id = R.dimen.view_margin_90dp))
+        modifier = Modifier
         ,
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
-                modifier = Modifier.padding(bottom = 25.dp),
+
                 icon = {
                     Icon(
                         painterResource(id = item.icon),
@@ -106,7 +107,7 @@ fun BottomNavigation(navController: NavController) {
                         fontSize = 9.sp
                     )
                 },
-                selectedContentColor = Color.Black,
+                selectedContentColor = Category_Cliked,
                 unselectedContentColor = Color.Black.copy(0.3f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.screen_route,

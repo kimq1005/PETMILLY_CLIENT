@@ -138,8 +138,8 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel) {
 //                    val intent = Intent(context, SignUpActivity::class.java)
 //                    context.startActivity(intent)
 
-                    val intent = Intent(context, MqttActivity::class.java)
-                    context.startActivity(intent)
+//                    val intent = Intent(context, MqttActivity::class.java)
+//                    context.startActivity(intent)
                 },
                 onConfirm = {
                     viewModel.onDismissDialog()
