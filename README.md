@@ -79,23 +79,27 @@
 
 <img width="20%" src="https://user-images.githubusercontent.com/68366753/228773070-48148a99-f056-4d25-b513-b1071851d27c.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228773600-412e2c01-f03e-45aa-ae73-03d317960651.png"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228773805-f6984c1f-9020-4c0e-83be-afeea99bec99.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228774364-63fd75e8-5e68-4b50-b043-f51313c33b47.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228774534-e66fb1db-9055-4c78-93a7-5236f6142a6a.jpeg"/> 
 
-
-<!-- 
-![KakaoTalk_Photo_2023-03-30-17-38-20 001](https://user-images.githubusercontent.com/68366753/228779416-05b8c8a6-6196-484a-a08a-c8f78932e5c1.jpeg)
-![KakaoTalk_Photo_2023-03-30-17-38-21 002](https://user-images.githubusercontent.com/68366753/228779427-95c02e04-440a-4c91-820f-c085a46aac6d.jpeg)
-![KakaoTalk_Photo_2023-03-30-17-38-21 003](https://user-images.githubusercontent.com/68366753/228779438-038bff54-bdf6-423b-969a-0d5320c3aa4f.jpeg) -->
-
-* 임보처 구해요
+<br></br>
 
 * 이동봉사 구해요
 
+<img width="20%" src="https://user-images.githubusercontent.com/68366753/229082684-6a53272f-c495-4848-8dd6-9e2c5f642bdd.gif"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085084-0e7869f4-b66a-4004-b733-6b1a57d94892.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085019-2676602f-34f9-4cc7-acc6-ea5f8ea6e650.jpeg"/> 
+
+<br></br>
+
+* 임보처 구해요
+ 
+<br></br>
+
 * 입양 공고
+
+<br></br>
 
 * 실종 신고
 
 <br></br>
-* 채팅방(진행중)
 
+* 채팅방(진행중)
 
 <img width="20%" src="https://user-images.githubusercontent.com/68366753/228779416-05b8c8a6-6196-484a-a08a-c8f78932e5c1.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228779427-95c02e04-440a-4c91-820f-c085a46aac6d.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/228779438-038bff54-bdf6-423b-969a-0d5320c3aa4f.jpeg"/> 
 
