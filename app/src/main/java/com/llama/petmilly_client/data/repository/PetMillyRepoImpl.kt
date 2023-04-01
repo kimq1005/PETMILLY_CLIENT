@@ -4,6 +4,7 @@ import com.llama.petmilly_client.data.model.TokenResponse
 import com.llama.petmilly_client.data.model.accesstoken.AccessTokenDTO
 import com.llama.petmilly_client.data.model.additonal.AdditionalSuccessDTO
 import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
+import com.llama.petmilly_client.data.model.findmypet.findmypetdetail.FindMyPetDetailDTO
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
@@ -219,6 +220,58 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
         photoId: Int,
     ): RemoteResult<TemporaryprotectionDTO> = getResult{
         petMillYApiService.deletetemporaryphoto(token, id, photoId)
+    }
+
+    override suspend fun postfindmypet(
+        token: String,
+        files: List<MultipartBody.Part>?,
+        animalTypes: RequestBody,
+        name: RequestBody,
+        gender: RequestBody,
+        weight: RequestBody,
+        breed: RequestBody,
+        age: RequestBody,
+        missingDate: RequestBody,
+        missingAddress: RequestBody,
+        clothes: RequestBody?,
+        lead: RequestBody?,
+        etc: RequestBody?,
+        isPublic: RequestBody,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult {
+        petMillYApiService.postfindmypet(token, files, animalTypes, name, gender, weight, breed, age, missingDate, missingAddress, clothes, lead, etc, isPublic)
+    }
+
+    override suspend fun postfindmypetcomment(
+        token: String,
+        id: String,
+        files: List<MultipartBody.Part>?,
+        sightingAddress: RequestBody,
+        comment: RequestBody,
+        sightingDate: RequestBody,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+        petMillYApiService.postfindmypetcomment(token, id, files, sightingAddress, comment, sightingDate)
+    }
+
+    override suspend fun getfindmypetdetail(
+        token: String,
+        id: String,
+    ): RemoteResult<FindMyPetDetailDTO> = getResult {
+        petMillYApiService.getfindmypetdetail(token, id)
+    }
+
+    override suspend fun deletefindmypetcomment(
+        token: String,
+        id: String,
+        commentId: String,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult {
+       petMillYApiService.deletefindmypetcomment(token, id, commentId)
+    }
+
+    override suspend fun deletefindpetpost(
+        token: String,
+        id: String,
+    ): RemoteResult<TemporaryprotectionDTO> = getResult{
+        petMillYApiService.deletefindpetpost(token, id)
     }
 
 

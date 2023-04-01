@@ -1,7 +1,6 @@
 package com.llama.petmilly_client.presentation.findanimalscreen.findanimaldetailscreen
 
 import android.app.Activity
-import android.icu.text.UnicodeSet.SpanCondition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,10 +20,11 @@ import com.llama.petmilly_client.ui.theme.Button_NoneClicked
 import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.notosans_bold
+import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common
 
 @Composable
-fun FADetailScreen_2_DetailInfo(
+fun FADetailScreen_4_DetailInfo(
     navController: NavController,
     viewModel: FADetailViewModel,
     activity: Activity,
@@ -63,24 +63,38 @@ fun FADetailScreen_2_DetailInfo(
         Spacer(modifier = Modifier.height(6.dp))
 
         TextField(
-            value = viewModel.missingclothes.value,
-            onValueChange = { viewModel.missingclothes.value = it },
+            value = viewModel.clothes.value,
+            onValueChange = { viewModel.clothes.value = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 26.dp)
                 .height(52.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.missingclothes.value == "") TextField_BackgroudColor else Color.White,
+                backgroundColor = TextField_BackgroudColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
                 cursorColor = Color.Black,
 
                 ),
+            textStyle = TextStyle(
+                fontFamily = notosans_regular,
+                fontSize = 15.sp,
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             placeholder = {
                 Text(
-                    text = "실종당시 옷차림을 입력해주세요."
+                    text = "실종당시 옷차림을 입력해주세요.",
+                    fontSize = 15.sp,
+                    fontFamily = notosans_regular,
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    )
                 )
             }
         )
@@ -103,24 +117,39 @@ fun FADetailScreen_2_DetailInfo(
         Spacer(modifier = Modifier.height(6.dp))
 
         TextField(
-            value = viewModel.issnood.value,
-            onValueChange = { viewModel.issnood.value = it },
+            value = viewModel.lead.value,
+            onValueChange = { viewModel.lead.value = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 26.dp)
                 .height(52.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.issnood.value == "") TextField_BackgroudColor else Color.White,
+                backgroundColor = TextField_BackgroudColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
                 cursorColor = Color.Black,
 
                 ),
+            textStyle = TextStyle(
+                fontFamily = notosans_regular,
+                fontSize = 15.sp,
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
+
             placeholder = {
                 Text(
-                    text = "아이에 대한 특징 및 유의사항에 대해 적어주세요.\n상세하게 기재할수록 도움이 됩니다."
+                    text = "실종당시 착용한 목줄에 대해 설명해주세요.",
+                    fontSize = 15.sp,
+                    fontFamily = notosans_regular,
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    )
                 )
             }
         )
@@ -143,33 +172,44 @@ fun FADetailScreen_2_DetailInfo(
         Spacer(modifier = Modifier.height(6.dp))
 
         TextField(
-            value = viewModel.missingspecies.value,
-            onValueChange = { viewModel.missingspecies.value = it },
+            value = viewModel.etc.value,
+            onValueChange = { viewModel.etc.value = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 26.dp)
                 .height(120.dp),
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = if (viewModel.missingspecies.value == "") TextField_BackgroudColor else Color.White,
+                backgroundColor =  TextField_BackgroudColor ,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedLabelColor = Color.White,
                 cursorColor = Color.Black,
 
                 ),
+            textStyle = TextStyle(
+                fontFamily = notosans_regular,
+                fontSize = 15.sp,
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            ),
             placeholder = {
                 Text(
-                    text = "실종당시 착용한 목줄에 대해 설명해주세요."
+                    text = "아이에 대한 특징 및 유의사항에 대해 적어주세요.\n" +
+                            "상세하게 기재할수록 도움이 됩니다.",
+                    fontSize = 15.sp,
+                    fontFamily = notosans_regular,
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    )
                 )
             }
         )
 
         Spacer(modifier = Modifier.weight(1f))
-
-        val ischeck =
-            viewModel.missingclothes.value != "" && viewModel.issnood.value != "" && viewModel.missingspecies.value != ""
-
 
         ButtonScreen(
             title = "다음",
@@ -179,14 +219,11 @@ fun FADetailScreen_2_DetailInfo(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
                 .height(55.dp),
-            backgroundcolor = if (ischeck) Color.Black else Button_NoneClicked
+            backgroundcolor = Color.Black
 
         ) {
-            if (ischeck) {
-                        navController.navigate(Common.FADETAILSCREEN_3_COMMENT_ISOPEN)
-            } else {
+            navController.navigate(Common.FADETAILSCREEN_5_COMMENT_ISOPEN)
 
-            }
         }
 
     }

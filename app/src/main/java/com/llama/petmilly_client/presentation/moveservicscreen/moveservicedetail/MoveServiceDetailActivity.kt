@@ -329,7 +329,6 @@ fun MoveServiceDetailScreen_4_Input(
     viewModel: MoveServiceDetailViewModel,
     activity: Activity,
 ) {
-
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val monthFocusRequest = remember { FocusRequester() }
@@ -354,7 +353,7 @@ fun MoveServiceDetailScreen_4_Input(
         Spacer(modifier = Modifier.height(36.dp))
 
         Text(
-            text = "신청서 접수기간(선택)",
+            text = "이동봉사 희망날짜",
             color = Color.Black,
             fontSize = 13.sp,
             modifier = Modifier.padding(start = 30.dp),

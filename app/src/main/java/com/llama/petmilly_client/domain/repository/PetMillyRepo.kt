@@ -4,6 +4,7 @@ import com.llama.petmilly_client.data.model.TokenResponse
 import com.llama.petmilly_client.data.model.accesstoken.AccessTokenDTO
 import com.llama.petmilly_client.data.model.additonal.AdditionalSuccessDTO
 import com.llama.petmilly_client.data.model.additonal.reponse.AdditionalResponse
+import com.llama.petmilly_client.data.model.findmypet.findmypetdetail.FindMyPetDetailDTO
 import com.llama.petmilly_client.data.model.kakaologin.KaKaoLoginDTO
 import com.llama.petmilly_client.data.model.kakaologin.respones.KaKaoResponse
 import com.llama.petmilly_client.data.model.locationauthenticationResponse.LocationauthenticationResponse
@@ -157,6 +158,55 @@ interface PetMillyRepo {
         token: String,
         id: Int,
         photoId: Int,
+    ): RemoteResult<TemporaryprotectionDTO>
+
+
+    suspend fun postfindmypet(
+        token: String,
+        files: List<MultipartBody.Part>?,
+        animalTypes: RequestBody,
+        name: RequestBody,
+        gender: RequestBody,
+        weight: RequestBody,
+        breed: RequestBody,
+        age: RequestBody,
+        missingDate: RequestBody,
+        missingAddress: RequestBody,
+        clothes: RequestBody?,
+        lead: RequestBody?,
+        etc: RequestBody?,
+        isPublic: RequestBody,
+    ): RemoteResult<TemporaryprotectionDTO>
+
+
+    //우리 아이 찾아요 게시글 댓글 작성
+    suspend fun postfindmypetcomment(
+        token: String,
+        id: String,
+        files: List<MultipartBody.Part>?,
+        sightingAddress: RequestBody,
+        comment: RequestBody,
+        sightingDate: RequestBody,
+    ): RemoteResult<TemporaryprotectionDTO>
+
+    //우리 아이 찾아요 게시글 상세 조회
+    suspend fun getfindmypetdetail(
+        token: String,
+        id: String,
+    ): RemoteResult<FindMyPetDetailDTO>
+
+
+    //우리 아이 찾아요 댓글 삭제
+    suspend fun deletefindmypetcomment(
+        token: String,
+        id: String,
+        commentId: String,
+    ): RemoteResult<TemporaryprotectionDTO>
+
+    //우리 아이 찾아요 게시글 삭제
+    suspend fun deletefindpetpost(
+        token: String,
+        id: String,
     ): RemoteResult<TemporaryprotectionDTO>
 
 

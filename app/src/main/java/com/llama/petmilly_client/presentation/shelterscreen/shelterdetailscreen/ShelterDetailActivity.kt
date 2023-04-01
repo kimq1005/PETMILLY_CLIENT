@@ -171,3 +171,5 @@ fun ShelterDetailSuvTitle(text: String) {
     }
 
 }
+
+

@@ -71,7 +71,11 @@ object Common {
     const val MOVESERVICEDETAILSCREEN_4_INPUT="MoveServiceDetailScreen_2_Input"
 
 
-    const val FADETAILSCREEN_1_DETAILINFO = "FADetailScreen_1_DetailInfo"
-    const val FADETAILSCREEN_2_DETAILINFO = "FADetailScreen_2_DetailInfo"
-    const val FADETAILSCREEN_3_COMMENT_ISOPEN = "FADetailScreen_3_Comment_IsOpen"
+
+    const val FADETAILSCREEN_1_ANIMALTYPE = "FADETAILSCREEN_1_ANIMALTYPE"
+    const val FADETAILSCREEN_2_PROFILE_1 = "FADETAILSCREEN__2_PROFILE_1"
+    const val FADETAILSCREEN_2_PROFILE_2 = "FADETAILSCREEN__2_PROFILE_2"
+    const val FADETAILSCREEN_3_DETAILINFO = "FADetailScreen_1_DetailInfo"
+    const val FADETAILSCREEN_4_DETAILINFO = "FADetailScreen_2_DetailInfo"
+    const val FADETAILSCREEN_5_COMMENT_ISOPEN = "FADetailScreen_3_Comment_IsOpen"
 }

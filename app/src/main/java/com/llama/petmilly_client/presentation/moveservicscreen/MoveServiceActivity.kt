@@ -257,9 +257,9 @@ fun MoveServiceDetailScreen(
 
             LazyRow(modifier = Modifier.padding(horizontal = 10.dp)) {
                 val imageTestData = listOf(
-                    ImageTestData(R.drawable.img_test_puppy),
-                    ImageTestData(R.drawable.img_test_puppy),
-                    ImageTestData(R.drawable.img_test_puppy)
+                    ImageTestData(R.drawable.img_test_dog_1),
+                    ImageTestData(R.drawable.img_test_dog_2),
+                    ImageTestData(R.drawable.img_test_dog_3)
                 )
                 items(imageTestData) { item ->
                     FindAnimalDetailImage(image = item.image)

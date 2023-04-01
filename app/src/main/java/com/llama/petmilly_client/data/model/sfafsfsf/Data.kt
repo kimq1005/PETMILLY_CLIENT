@@ -1,6 +1,4 @@
-package com.llama.petmilly_client.data.model.moveservice.moveservicedetail
-
-import com.llama.petmilly_client.data.model.temporary.detail.PhotoUrl
+package com.llama.petmilly_client.data.model.sfafsfsf
 
 data class Data(
     val age: Int,
@@ -12,8 +10,8 @@ data class Data(
     val id: Int,
     val isComplete: Boolean,
     val name: String,
+    val photoUrls: List<PhotoUrl>,
     val startAddress: String,
-    val photoUrls: List<com.llama.petmilly_client.data.model.sfafsfsf.PhotoUrl>,
     val user: User,
     val weight: Int
-):java.io.Serializable
+)
