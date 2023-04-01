@@ -39,6 +39,7 @@
 * Dagger Hilt를 사용해 의존성 주입을 할 수 있었음.
 * JetpackCompose의 Composable 함수 안에서 안전한 비동기 작업을 위해 LaunchedEffect을 사용해야 한다는 것을 알 수 있었음.
 * NaevrMap을 AndroidView를 통해 구현할 수 있었음.
+* form-data로 서버로 통신을 할 수 있었음.
 * 외부 라이브러리(클러스터링 라이브러리)를 사용해보면서 라이브러리의 사용법과 편의성에 대해 알 수 있었음.
 * Figma를 이용해서 UI를 만들 수 있었음.
 
@@ -51,7 +52,6 @@
   
   
 * Dagger Hilt
-  * Jeptack Compose는 UI 요소 
   * @AndroidEntryPoint, @HiltViewModel 어노테이션을 사용하여 액티비티와 뷰모델에 의존성을 손쉽게 주입할 수 있었음
   * XML 레이아웃을 사용하는 경우 ,DI 설정을 위해 XML 파일과 코드를 번갈아 가며 작성해야 하는 불편함이 있지만, Dagger Hilt를 사용하면 UI 구현 코드 내에서 간단하게 DI 설정을 할 수 있어 코드의 가독성 및 간결성을 유지할 수 있었음.
  
@@ -84,7 +84,8 @@
 
 * 이동봉사 구해요
 
-<img width="20%" src="https://user-images.githubusercontent.com/68366753/229082684-6a53272f-c495-4848-8dd6-9e2c5f642bdd.gif"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085084-0e7869f4-b66a-4004-b733-6b1a57d94892.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085019-2676602f-34f9-4cc7-acc6-ea5f8ea6e650.jpeg"/> 
+<img width="20%" src="https://user-images.githubusercontent.com/68366753/229289679-5835baad-f741-4cad-8a58-32a781c79a35.gif"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085084-0e7869f4-b66a-4004-b733-6b1a57d94892.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085019-2676602f-34f9-4cc7-acc6-ea5f8ea6e650.jpeg"/> 
+
 
 <br></br>
 
@@ -96,7 +97,13 @@
 
 <br></br>
 
-* 실종 신고
+* 우리아이 찾아요
+
+
+<img width="20%" src="https://user-images.githubusercontent.com/68366753/229290124-91246c57-3bbd-4b12-acd4-fe0b202b6876.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229290100-1e3858ed-4422-452f-b3c4-d4a07f066cec.jpeg"/> 
+
+
+
 
 <br></br>
 
