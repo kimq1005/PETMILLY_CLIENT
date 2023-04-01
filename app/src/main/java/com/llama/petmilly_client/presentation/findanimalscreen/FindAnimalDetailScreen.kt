@@ -1,23 +1,30 @@
 package com.llama.petmilly_client.presentation.findanimalscreen
 
+import android.net.Uri
+import android.view.SurfaceControlViewHost.SurfacePackage
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
@@ -33,12 +40,15 @@ import coil.compose.rememberImagePainter
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
 import com.llama.petmilly_client.ui.theme.*
+import com.llama.petmilly_client.utils.SpacerHeight
+import com.llama.petmilly_client.utils.SpacerWidth
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common
+import retrofit2.http.Url
 
 @Composable
-fun FindAnimalDetailScreen(navController: NavController) {
+fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalViewModel) {
 
 
     val (value, setvaluse) = rememberSaveable {
@@ -53,14 +63,20 @@ fun FindAnimalDetailScreen(navController: NavController) {
             clickBack = { navController.popBackStack() }) {
         }
 
+        val context = LocalContext.current
+
+        LaunchedEffect(context) {
+            viewModel.getfindmypetdetail(2)
+        }
+
         LazyRow(modifier = Modifier.padding(horizontal = 10.dp)) {
             val imageTestData = listOf(
                 ImageTestData(com.llama.petmilly_client.R.drawable.img_test_puppy),
                 ImageTestData(com.llama.petmilly_client.R.drawable.img_test_puppy),
                 ImageTestData(com.llama.petmilly_client.R.drawable.img_test_puppy)
             )
-            items(imageTestData) { item ->
-                FindAnimalDetailImage(image = item.image)
+            items(viewModel.photoUrl) { item ->
+                FindAnimalDetailImage2(image = item.photoUrl)
                 Spacer(modifier = Modifier.width(9.dp))
 
             }
@@ -89,21 +105,21 @@ fun FindAnimalDetailScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Text(
-                text = stringResource(id = com.llama.petmilly_client.R.string.locationconfirm),
-                modifier = Modifier
-                    .padding(top = 20.dp)
-                   ,
-                fontSize = 13.sp,
-                fontFamily = notosans_regular,
-                style = TextStyle(
-                    platformStyle = PlatformTextStyle(
-                        includeFontPadding = false
-                    )
-                ),
-                color = Black_40_Transfer,
-                textAlign = TextAlign.Center
-            )
+//            Text(
+//                text = stringResource(id = com.llama.petmilly_client.R.string.locationconfirm),
+//                modifier = Modifier
+//                    .padding(top = 20.dp)
+//                   ,
+//                fontSize = 13.sp,
+//                fontFamily = notosans_regular,
+//                style = TextStyle(
+//                    platformStyle = PlatformTextStyle(
+//                        includeFontPadding = false
+//                    )
+//                ),
+//                color = Black_40_Transfer,
+//                textAlign = TextAlign.Center
+//            )
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -136,7 +152,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                 )
 
                 Text(
-                    text = "곰자/수컷",
+                    text = "${viewModel.name.value} / ${viewModel.gender.value}",
                     color = Black_60_Transfer,
                     fontSize = 13.sp,
                     fontFamily = notosans_regular,
@@ -177,7 +193,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                 )
 
                 Text(
-                    text = "15kg",
+                    text = viewModel.weight.value.toString(),
                     color = Black_60_Transfer,
                     fontSize = 13.sp,
                     fontFamily = notosans_regular,
@@ -215,7 +231,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                 )
 
                 Text(
-                    text = "믹스견",
+                    text = viewModel.breed.value,
                     color = Black_60_Transfer,
                     fontSize = 13.sp,
                     fontFamily = notosans_regular,
@@ -254,7 +270,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                 )
 
                 Text(
-                    text = "목줄착용",
+                    text = viewModel.lead.value,
                     color = Black_60_Transfer,
                     fontSize = 13.sp,
                     fontFamily = notosans_regular,
@@ -293,7 +309,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                 )
 
                 Text(
-                    text = "미착용",
+                    text = viewModel.clothes.value,
                     color = Black_60_Transfer,
                     fontSize = 13.sp,
                     fontFamily = notosans_regular,
@@ -333,7 +349,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                 )
 
                 Text(
-                    text = "23.1.10(월)10시 \n월계동 뱅뱅사거리",
+                    text = viewModel.missingAddress.value,
                     color = Black_60_Transfer,
                     fontSize = 13.sp,
                     fontFamily = notosans_regular,
@@ -372,7 +388,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                 )
 
                 Text(
-                    text = "귀 한쪽 접혀있어요. 겁 많음. 꼬리 짧음. 사람 가까이하지 않으므로 신속한 제보가 최선입니다. 도와주세요.",
+                    text = viewModel.etc.value,
                     color = Black_60_Transfer,
                     fontSize = 13.sp,
                     fontFamily = notosans_regular,
@@ -399,7 +415,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(10.dp))
 
         Text(
-            text = "0개의 제보가 작성되었습니다.",
+            text = "${viewModel.commentnumber.value}개의 제보가 작성되었습니다.",
             fontFamily = notosans_bold,
             style = TextStyle(
                 platformStyle = PlatformTextStyle(
@@ -413,22 +429,40 @@ fun FindAnimalDetailScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        Text(
-            text = "소중한 가족을 찾아주세요.\n" +
-                    "허위제보 시 이용에 제한을 받을 수 있습니다.",
-           fontFamily = notosans_regular,
-            style = TextStyle(
-                platformStyle = PlatformTextStyle(
-                    includeFontPadding = false
-                )
-            ),
-            fontSize = 14.sp,
-            color = Black_40_Transfer,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center
-        )
+        if (viewModel.commentnumber.value == "0") {
+            Text(
+                text = "소중한 가족을 찾아주세요.\n" +
+                        "허위제보 시 이용에 제한을 받을 수 있습니다.",
+                fontFamily = notosans_regular,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                ),
+                fontSize = 14.sp,
+                color = Black_40_Transfer,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally),
+                textAlign = TextAlign.Center
+            )
+        }else{
+            LazyColumn(modifier = Modifier.height(200.dp)){
+                items(viewModel.commentlist){ item->
+                    CommentItem(
+                        onModifiy = { /*TODO*/ },
+                        onDelete = { /*TODO*/ },
+                        comment = item.comment,
+                        photo = if(item.photoUrls.isEmpty()) null else item.photoUrls[0].photoUrl ,
+                        name = item.comment,
+                        createtime = item.id.toString(),
+                        ismycomment = true
+                    )
+                }
+            }
+        }
+
+
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -447,7 +481,7 @@ fun FindAnimalDetailScreen(navController: NavController) {
                     .weight(8f)
                     .height(47.dp)
                     .clickable {
-                               navController.navigate(Common.FINDANIMAL_COMMENT_SCREEN)
+                        navController.navigate(Common.FINDANIMAL_COMMENT_SCREEN)
                     },
                 shape = RoundedCornerShape(20.5.dp),
                 colors = TextFieldDefaults.textFieldColors(
@@ -494,9 +528,132 @@ fun FindAnimalDetailImage(image: Int) {
     )
 }
 
-@Preview
 @Composable
-fun FindAnimalDetailScreenPreview() {
-    val navController = rememberNavController()
-    FindAnimalDetailScreen(navController)
+fun FindAnimalDetailImage2(image: String) {
+    Image(
+        painter = rememberImagePainter(data = image),
+        contentDescription = null,
+        modifier = Modifier
+            .height(165.dp)
+            .width(165.dp),
+        contentScale = ContentScale.Crop
+    )
 }
+
+@Composable
+fun CommentItem(
+    onModifiy: () -> Unit,
+    onDelete: () -> Unit,
+    comment: String,
+    photo: String?,
+    name: String,
+    createtime: String,
+    ismycomment: Boolean,
+) {
+    Column(Modifier.fillMaxWidth()) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = "라마짱",
+                fontFamily = notosans_bold,
+                color = Black_60_Transfer,
+                fontSize = 13.sp,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                )
+            )//Text
+
+
+            SpacerWidth(dp = 20.dp)
+            Text(
+                text = "1일 전",
+                fontFamily = notosans_regular,
+                color = Black_30_Transfer,
+                fontSize = 10.sp,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                )
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            if (ismycomment) {
+                Text(
+                    text = "수정",
+                    fontFamily = notosans_regular,
+                    color = Black_30_Transfer,
+                    fontSize = 13.sp,
+                    modifier = Modifier.clickable {
+                        onModifiy()
+                    },
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    )
+                )
+
+
+                SpacerWidth(dp = 15.dp)
+
+
+                Text(
+                    text = "삭제",
+                    fontFamily = notosans_regular,
+                    color = Black_30_Transfer,
+                    fontSize = 13.sp,
+                    modifier = Modifier.clickable {
+                        onDelete()
+                    },
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    )
+                )
+
+            }
+
+
+        }
+
+        SpacerHeight(dp = 10.dp)
+
+        Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp)) {
+            Text(
+                text = comment,
+                fontFamily = notosans_regular,
+                color = Black_60_Transfer,
+                fontSize = 13.sp,
+                style = TextStyle(
+                    platformStyle = PlatformTextStyle(
+                        includeFontPadding = false
+                    )
+                )
+            )//Text
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Image(
+                painter = rememberImagePainter(data = photo),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(50.dp)
+                    .width(50.dp)
+                    .clip(shape = CircleShape)
+                    .align(Alignment.CenterVertically),
+                contentScale = ContentScale.Crop
+
+            )
+        }
+        Divider(
+            modifier = Modifier.fillMaxWidth().height(0.2.dp),
+            color = Black_30_Transfer
+        )
+    }//Column
+
+}
+

@@ -214,9 +214,11 @@ interface PetMillYApiService {
 
     //우리 아이 찾아요 게시글 댓글 작성
     @POST("/post/find-my-pet/{id}/comment")
+    @Multipart
+    @JvmSuppressWildcards
     suspend fun postfindmypetcomment(
         @Header("x-access-token") token: String,
-        @Path("id") id: String,
+        @Path("id") id: Int,
         @Part files: List<MultipartBody.Part>?,
         @Part("sightingAddress") sightingAddress: RequestBody,
         @Part("comment") comment: RequestBody,
@@ -227,7 +229,7 @@ interface PetMillYApiService {
     @GET("post/find-my-pet/{id}")
     suspend fun getfindmypetdetail(
         @Header("x-access-token") token: String,
-        @Path("id") id: String,
+        @Path("id") id: Int,
     ):Response<FindMyPetDetailDTO>
 
 
@@ -235,15 +237,15 @@ interface PetMillYApiService {
     @DELETE("post/find-my-pet/{id}/comment/{commentId}")
     suspend fun deletefindmypetcomment(
         @Header("x-access-token") token: String,
-        @Path("id") id: String,
-        @Path("commentId") commentId: String,
+        @Path("id") id: Int,
+        @Path("commentId") commentId: Int,
     ) : Response<TemporaryprotectionDTO>
 
     //우리 아이 찾아요 게시글 삭제
     @DELETE("post/find-my-pet/{id}")
     suspend fun deletefindpetpost(
         @Header("x-access-token") token: String,
-        @Path("id") id: String,
+        @Path("id") id: Int,
     ) : Response<TemporaryprotectionDTO>
 
 }

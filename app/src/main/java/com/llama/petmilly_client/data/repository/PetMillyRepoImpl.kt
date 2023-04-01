@@ -243,7 +243,7 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
 
     override suspend fun postfindmypetcomment(
         token: String,
-        id: String,
+        id: Int,
         files: List<MultipartBody.Part>?,
         sightingAddress: RequestBody,
         comment: RequestBody,
@@ -254,22 +254,22 @@ class PetMillyRepoImpl @Inject constructor(private val petMillYApiService: PetMi
 
     override suspend fun getfindmypetdetail(
         token: String,
-        id: String,
+        id: Int,
     ): RemoteResult<FindMyPetDetailDTO> = getResult {
         petMillYApiService.getfindmypetdetail(token, id)
     }
 
     override suspend fun deletefindmypetcomment(
         token: String,
-        id: String,
-        commentId: String,
+        id: Int,
+        commentId: Int,
     ): RemoteResult<TemporaryprotectionDTO> = getResult {
        petMillYApiService.deletefindmypetcomment(token, id, commentId)
     }
 
     override suspend fun deletefindpetpost(
         token: String,
-        id: String,
+        id: Int,
     ): RemoteResult<TemporaryprotectionDTO> = getResult{
         petMillYApiService.deletefindpetpost(token, id)
     }

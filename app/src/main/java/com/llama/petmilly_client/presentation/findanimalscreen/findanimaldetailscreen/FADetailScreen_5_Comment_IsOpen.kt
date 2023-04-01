@@ -113,7 +113,7 @@ fun FADetailScreen_5_Comment_IsOpen(navController: NavController, viewModel: FAD
             }
 
             ButtonShapeScreen(
-                title = "안전을 위해 저만 볼수있게 비공개할게요.",
+                title = "안전을 위해 비공개할게요.",
                 textcolor = if (!viewModel.isPublic.value) Color.White else Color.Black,
                 fontSize = 15,
                 modifier = Modifier

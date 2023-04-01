@@ -182,7 +182,7 @@ interface PetMillyRepo {
     //우리 아이 찾아요 게시글 댓글 작성
     suspend fun postfindmypetcomment(
         token: String,
-        id: String,
+        id: Int,
         files: List<MultipartBody.Part>?,
         sightingAddress: RequestBody,
         comment: RequestBody,
@@ -192,21 +192,21 @@ interface PetMillyRepo {
     //우리 아이 찾아요 게시글 상세 조회
     suspend fun getfindmypetdetail(
         token: String,
-        id: String,
+        id: Int,
     ): RemoteResult<FindMyPetDetailDTO>
 
 
     //우리 아이 찾아요 댓글 삭제
     suspend fun deletefindmypetcomment(
         token: String,
-        id: String,
-        commentId: String,
+        id: Int,
+        commentId: Int,
     ): RemoteResult<TemporaryprotectionDTO>
 
     //우리 아이 찾아요 게시글 삭제
     suspend fun deletefindpetpost(
         token: String,
-        id: String,
+        id: Int,
     ): RemoteResult<TemporaryprotectionDTO>
 
 

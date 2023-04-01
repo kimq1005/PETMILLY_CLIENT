@@ -11,8 +11,9 @@ import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.presentation.shelterscreen.AnimalInfoDetailScreen
 import com.llama.petmilly_client.presentation.shelterscreen.SafeShelterListScreen
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
+import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common
-
+@AndroidEntryPoint
 class FindAnimalActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +31,7 @@ class FindAnimalActivity : ComponentActivity() {
                     }
 
                     composable(Common.FINDANIMAL_DETAIL_SCREEN) {
-                        FindAnimalDetailScreen(navController = navController)
+                        FindAnimalDetailScreen(navController = navController,viewModel)
                     }
 
                     composable(Common.FINDANIMAL_COMMENT_SCREEN) {

@@ -1,9 +1,11 @@
 package com.llama.petmilly_client.presentation.findanimalscreen
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,33 +20,42 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.presentation.shelterscreen.TitleBar
-import com.llama.petmilly_client.ui.theme.Black_60_Transfer
-import com.llama.petmilly_client.ui.theme.Button_Clicked
-import com.llama.petmilly_client.ui.theme.Button_NoneClicked
-import com.llama.petmilly_client.ui.theme.TextField_BackgroudColor
+import com.llama.petmilly_client.presentation.signupscreen.viewmodel.SignUpViewModel
+import com.llama.petmilly_client.ui.theme.*
 import com.llama.petmilly_client.utils.ButtonScreen
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
@@ -122,13 +133,10 @@ fun CommentTitlebar(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalViewModel) {
-
-
-    val (value, setvaluse) = rememberSaveable {
-        mutableStateOf("")
-    }
 
 
     Column(
@@ -140,6 +148,12 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
         CommentTitlebar {
             navController.popBackStack()
         }
+
+        val context = LocalContext.current
+        val lifecycleOwner = LocalLifecycleOwner.current
+        val monthFocusRequest = remember { FocusRequester() }
+        val dayFocusRequest = remember { FocusRequester() }
+        val keyboardController = LocalSoftwareKeyboardController.current
 
 
         Text(
@@ -158,8 +172,8 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
                 .align(Alignment.CenterHorizontally)
         ) {
             TextField(
-                value = value,
-                onValueChange = setvaluse,
+                value = viewModel.sightingAddress.value,
+                onValueChange = { viewModel.sightingAddress.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(53.dp)
@@ -180,7 +194,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
                     cursorColor = Color.Black,
 
                     ),
-                placeholder = { Text(text = "목격장소를 지도로 찍어주세요.") }
+                placeholder = { Text(text = "목격장소의 위치를 적어주세요.") }
             )
 
             Image(
@@ -198,8 +212,8 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
         Spacer(modifier = Modifier.height(7.dp))
 
         TextField(
-            value = value,
-            onValueChange = setvaluse,
+            value = viewModel.comment.value,
+            onValueChange = {viewModel.comment.value = it},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 25.dp)
@@ -238,38 +252,164 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
             color = Black_60_Transfer
         )
 
-        TextField(
-            value = viewModel.findyear.value,
-            onValueChange = { viewModel.findyear.value = it },
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedLabelColor = Color.White,
-                cursorColor = Color.Black,
-            ),
-            textStyle = TextStyle(
-                fontSize = 30.sp, fontFamily = notosans_bold,
-                platformStyle = PlatformTextStyle(
-                    includeFontPadding = false
-                )
-            ),
-            modifier = Modifier.padding(start = 20.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+        ) {
+            Row(modifier = Modifier.weight(2f)) {
 
-            placeholder = {
-                Text(
-                    text = "23년 02월 04일 10시",
-                    fontSize = 30.sp,
-                    fontFamily = notosans_bold,
-                    style = TextStyle(
+                TextField(
+                    value = viewModel.missing_year.value,
+                    onValueChange = {
+                        if (it.length <= 2) {
+                            viewModel.missing_year.value = it
+                            if (it.length == 2) {
+                                monthFocusRequest.requestFocus()
+                            }
+                        }
+
+                    },
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+//                        focusedLabelColor = Color.White,
+                        cursorColor = Color.Black,
+                    ),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+
+                    textStyle = TextStyle(
+                        fontSize = 30.sp, fontFamily = notosans_bold,
                         platformStyle = PlatformTextStyle(
                             includeFontPadding = false
                         )
                     ),
-                    color = Color.LightGray
+
+                    placeholder = {
+                        Text(
+                            text = "21년",
+                            fontSize = 30.sp,
+                            fontFamily = notosans_bold,
+                            color = Grey_100_CBC4C4,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            )
+                        )
+                    }
+                )
+
+
+            }
+
+
+            Row(modifier = Modifier.weight(2f)) {
+                TextField(
+                    value = viewModel.missing_month.value,
+                    onValueChange = {
+                        if (it.length <= 2) {
+                            viewModel.missing_month.value = it
+
+                            if (it.length == 2) {
+                                dayFocusRequest.requestFocus()
+                            }
+
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    maxLines = 1,
+                    modifier = Modifier.focusRequester(monthFocusRequest),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+//                        focusedLabelColor = Color.White,
+                        cursorColor = Color.Black,
+                    ),
+                    textStyle = TextStyle(
+                        fontSize = 30.sp, fontFamily = notosans_bold,
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    ),
+
+                    placeholder = {
+                        Text(
+                            text = "02월",
+                            fontSize = 30.sp,
+                            fontFamily = notosans_bold,
+                            color = Grey_100_CBC4C4,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            )
+                        )
+                    }
                 )
             }
-        )
+
+            Row(modifier = Modifier.weight(2f)) {
+                TextField(
+                    value = viewModel.missing_day.value,
+                    onValueChange = {
+                        if (it.length <= 2) {
+                            viewModel.missing_day.value = it
+                            if (it.length == 2) {
+                                keyboardController?.hide()
+                            }
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+
+                    maxLines = 1,
+                    modifier = Modifier.focusRequester(dayFocusRequest),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+//                        focusedLabelColor = Color.White,
+                        cursorColor = Color.Black,
+                    ),
+                    textStyle = TextStyle(
+                        fontSize = 30.sp, fontFamily = notosans_bold,
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    ),
+
+                    placeholder = {
+                        Text(
+                            text = "04일",
+                            fontSize = 30.sp,
+                            fontFamily = notosans_bold,
+                            color = Grey_100_CBC4C4,
+                            style = TextStyle(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            )
+                        )
+                    }
+                )
+            }
+
+
+
+            Image(
+                painter = painterResource(id = R.drawable.img_shelter_plus),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .height(35.dp)
+                    .width(35.dp),
+                contentScale = ContentScale.Crop
+            )
+
+
+        }
 
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -314,7 +454,8 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
         )
 
         Spacer(modifier = Modifier.height(22.dp))
-
+        viewModel.sightingDate.value = "${viewModel.missing_year.value}-${viewModel.missing_month.value}-${viewModel.missing_day.value}"
+        val ischeck = viewModel.sightingAddress.value!="" && viewModel.comment.value != "" && viewModel.sightingDate.value !=""
 
         ButtonScreen(
             title = "제보 완료",
@@ -326,24 +467,30 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
                 .padding(horizontal = 35.dp),
             backgroundcolor = Button_Clicked
         ) {
-
+            if(ischeck){
+                viewModel.postfindmypetcomment()
+                navController.popBackStack()
+            }
 
         }
 
         Spacer(modifier = Modifier.height(25.dp))
+
+        LaunchedEffect(context){
+            setObserve(viewModel, lifecycleOwner, navController)
+        }
+
     }//Box
 
-}
-
-@Composable
-fun CommentDate(viewModel: FindAnimalViewModel, modifier: Modifier, text: String, hint: String) {
 
 }
 
-@Preview
-@Composable
-fun CommentPreview() {
-    val viewmodel: FindAnimalViewModel = hiltViewModel()
-    val navController = rememberNavController()
-    FindAnimalCommentScreen(navController, viewmodel)
+private fun setObserve(
+    viewModel: FindAnimalViewModel,
+    lifecycleOwner: LifecycleOwner,
+    navController: NavController,
+) {
+    viewModel.setIntent.observe(lifecycleOwner, Observer {
+        navController.popBackStack()
+    })
 }
