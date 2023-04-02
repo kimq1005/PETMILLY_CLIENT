@@ -35,6 +35,7 @@ fun FindAnimalItems(
     animalinfo: String,
     missinginfo: String,
     time: String,
+    image:List<Int>,
     onclick: () -> Unit,
 ) {
 
@@ -120,13 +121,9 @@ fun FindAnimalItems(
 
         LazyRow(modifier = Modifier.fillMaxWidth()) {
 
-            val imagelist = listOf(
-                ImageTestData(image = com.llama.petmilly_client.R.drawable.img_test_puppy),
-                ImageTestData(image = com.llama.petmilly_client.R.drawable.img_test_puppy),
-                ImageTestData(image = com.llama.petmilly_client.R.drawable.img_test_puppy)
-            )
-            items(imagelist) { image ->
-                MissingAnimalImageItems(animalimage = image.image)
+
+            items(image) { image ->
+                MissingAnimalImageItems(animalimage = image)
                 Spacer(modifier = Modifier.width(10.dp))
             }
         }
@@ -150,14 +147,3 @@ fun MissingAnimalImageItems(
 data class ImageTestData(
     val image: Int,
 )
-
-@Preview
-@Composable
-fun FindAnimalIemsPreview() {
-    FindAnimalItems(
-        name = "승현", animalinfo = "수컷/15kg", missinginfo =
-        "23.1.10 10시 - 월계동 뱅뱅사거리 라떼병원 부근", time ="10시간 전"
-    ) {
-
-    }
-}

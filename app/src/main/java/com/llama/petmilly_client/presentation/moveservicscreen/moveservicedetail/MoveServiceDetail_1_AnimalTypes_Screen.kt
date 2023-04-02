@@ -38,8 +38,7 @@ fun MoveServiceDetail_1_AnimalTypes_Screen(
             viewModel.onShownAlmostCompetedDialog()
         }
 
-        ShelterDetailSuvTitle("주인공의 정보를\n입력해주세요.")
-
+        MoveServiceDetailSuvTitle("주인공의 정보를\n입력해주세요.")
         Spacer(modifier = Modifier.height(50.dp))
 
         MoveServiceBtn(species = "강아지", viewModel)

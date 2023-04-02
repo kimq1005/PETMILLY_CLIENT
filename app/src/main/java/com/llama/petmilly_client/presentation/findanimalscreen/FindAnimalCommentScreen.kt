@@ -1,5 +1,6 @@
 package com.llama.petmilly_client.presentation.findanimalscreen
 
+import android.app.ProgressDialog
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -61,21 +62,14 @@ import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common
 
-
-class FindAnimalCommentActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-
-        }
-
-    }
-}
+private lateinit var progressDialog: ProgressDialog
 
 @Composable
 fun CommentTitlebar(
     clickBack: () -> Unit,
 ) {
+
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -156,6 +150,11 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
         val keyboardController = LocalSoftwareKeyboardController.current
 
 
+        progressDialog = ProgressDialog(context, R.style.ProgressBarDialog)
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.setCancelable(false)
+
         Text(
             text = "목격 위치 제보 (필수)",
             fontSize = 14.sp,
@@ -213,7 +212,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
 
         TextField(
             value = viewModel.comment.value,
-            onValueChange = {viewModel.comment.value = it},
+            onValueChange = { viewModel.comment.value = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 25.dp)
@@ -414,7 +413,7 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
         Spacer(modifier = Modifier.height(50.dp))
 
         Text(
-            text = "사진인증 (선책)",
+            text = "사진인증 (선택)",
             fontSize = 14.sp,
             fontFamily = notosans_bold,
             modifier = Modifier.padding(start = 35.dp),
@@ -454,8 +453,10 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
         )
 
         Spacer(modifier = Modifier.height(22.dp))
-        viewModel.sightingDate.value = "${viewModel.missing_year.value}-${viewModel.missing_month.value}-${viewModel.missing_day.value}"
-        val ischeck = viewModel.sightingAddress.value!="" && viewModel.comment.value != "" && viewModel.sightingDate.value !=""
+        viewModel.sightingDate.value =
+            "${viewModel.missing_year.value}-${viewModel.missing_month.value}-${viewModel.missing_day.value}"
+        val ischeck =
+            viewModel.sightingAddress.value != "" && viewModel.comment.value != "" && viewModel.sightingDate.value != ""
 
         ButtonScreen(
             title = "제보 완료",
@@ -467,22 +468,20 @@ fun FindAnimalCommentScreen(navController: NavController, viewModel: FindAnimalV
                 .padding(horizontal = 35.dp),
             backgroundcolor = Button_Clicked
         ) {
-            if(ischeck){
+            if (ischeck) {
                 viewModel.postfindmypetcomment()
-                navController.popBackStack()
+
             }
 
         }
 
         Spacer(modifier = Modifier.height(25.dp))
 
-        LaunchedEffect(context){
+        LaunchedEffect(context) {
             setObserve(viewModel, lifecycleOwner, navController)
         }
 
     }//Box
-
-
 }
 
 private fun setObserve(
@@ -490,6 +489,15 @@ private fun setObserve(
     lifecycleOwner: LifecycleOwner,
     navController: NavController,
 ) {
+
+    viewModel.showProgress.observe(lifecycleOwner, Observer {
+        progressDialog.show()
+    })
+
+    viewModel.closeProgress.observe(lifecycleOwner, Observer {
+        progressDialog.dismiss()
+    })
+
     viewModel.setIntent.observe(lifecycleOwner, Observer {
         navController.popBackStack()
     })

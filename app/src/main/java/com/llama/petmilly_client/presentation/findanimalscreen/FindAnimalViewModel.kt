@@ -3,6 +3,7 @@ package com.llama.petmilly_client.presentation.findanimalscreen
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import android.widget.ExpandableListView
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llama.petmilly_client.MainApplication
 import com.llama.petmilly_client.data.model.findmypet.findmypetdetail.Comment
 import com.llama.petmilly_client.data.model.temporary.detail.PhotoUrl
@@ -19,6 +21,7 @@ import com.llama.petmilly_client.presentation.shelterscreen.shelterdetailscreen.
 import com.llama.petmilly_client.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
 import llama.test.jetpack_dagger_plz.utils.RemoteResult
@@ -36,13 +39,19 @@ class FindAnimalViewModel @Inject constructor(
     private val petMillyRepo: PetMillyRepo,
 ) : ViewModel() {
 
+    private val _showProgress = MutableLiveData<Event<Unit>>()
+    val showProgress: LiveData<Event<Unit>> = _showProgress
+
+    private val _closeProgress = MutableLiveData<Event<Unit>>()
+    val closeProgress: LiveData<Event<Unit>> = _closeProgress
+
     private val _setIntent = MutableLiveData<Event<Unit>>()
     val setIntent: LiveData<Event<Unit>> = _setIntent
 
 
     val categorytest: MutableList<CategoryTest> = arrayListOf()
     val numberofanimal = mutableStateOf(1)
-    val id = mutableStateOf(2)
+    val id = mutableStateOf(3)
     val animalTypes = mutableStateOf("")
     val name = mutableStateOf("")
     val gender = mutableStateOf("")
@@ -111,10 +120,14 @@ class FindAnimalViewModel @Inject constructor(
 
     fun getfindmypetdetail(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
+
             petMillyRepo.getfindmypetdetail(MainApplication.accessToken, id).let {
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
                         it.data?.let { it ->
+
+                            commentlist.clear()
+                            photoUrl.clear()
                             val item = it.data
                             animalTypes.value = item.animalTypes
                             name.value = item.name
@@ -126,6 +139,7 @@ class FindAnimalViewModel @Inject constructor(
                             etc.value = item.etc
                             clothes.value = item.clothes
                             lead.value = item.lead
+                            missingAddress.value = item.missingAddress
                             photoUrl.addAll(item.photoUrls)
 
                             if (item.comment.isNotEmpty()) {
@@ -155,8 +169,8 @@ class FindAnimalViewModel @Inject constructor(
         val date = LocalDateTime.parse(dateString, formatter)
         val hopeapplicationperiod =
             RequestBody.create("text/plain".toMediaTypeOrNull(), date.toString())
-
         viewModelScope.launch(Dispatchers.IO) {
+            _showProgress.postValue(Event(Unit))
             petMillyRepo.postfindmypetcomment(
                 token = MainApplication.accessToken,
                 id = id.value,
@@ -168,13 +182,24 @@ class FindAnimalViewModel @Inject constructor(
                 when (it.status) {
                     RemoteResult.Status.SUCCESS -> {
                         Log.d(TAG, "postfindmypetcomment SUCCESS: $it")
+                        delay(3000)
+                        _closeProgress.postValue(Event(Unit))
                         _setIntent.postValue(Event(Unit))
                     }
                     else -> {
                         Log.d(TAG, "postfindmypetcomment ERROR: $it")
                     }
                 }
+
             }
+        }
+    }
+
+    fun progresstest(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _showProgress.postValue(Event(Unit))
+            delay(3000)
+            _closeProgress.postValue(Event(Unit))
         }
     }
 

@@ -73,13 +73,13 @@ fun MoveServiceDetail_2_Profile_1_Screen(
             .background(color = Color.White)
     ) {
         ShelterDetailTitleBar(
-            title = "임보처구해요",
+            title = "이동봉사 찾아요",
             ismenu = false,
             clickBack = { navController.popBackStack() }) {
             viewModel.onShownAlmostCompetedDialog()
         }
 
-        ShelterDetailSuvTitle("주인공의 프로필을\n입력해주세요.")
+        MoveServiceDetailSuvTitle("주인공의 프로필을\n입력해주세요.")
 
         Spacer(modifier = Modifier.height(28.dp))
 

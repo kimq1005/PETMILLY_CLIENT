@@ -165,12 +165,13 @@ fun ShelterDetailTitleBar(
             .background(color = Color.White)
             .padding(16.dp),
     ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
+
+        Image(
+            painter = painterResource(id = R.drawable.img_back),
             contentDescription = null,
             modifier = Modifier
-                .width(30.dp)
-                .height(30.dp)
+                .width(20.dp)
+                .height(20.dp)
                 .align(Alignment.CenterStart)
                 .clickable {
                     clickBack()

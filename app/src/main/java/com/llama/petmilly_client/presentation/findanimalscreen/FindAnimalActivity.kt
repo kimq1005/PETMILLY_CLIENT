@@ -1,8 +1,10 @@
 package com.llama.petmilly_client.presentation.findanimalscreen
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -15,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common
 @AndroidEntryPoint
 class FindAnimalActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

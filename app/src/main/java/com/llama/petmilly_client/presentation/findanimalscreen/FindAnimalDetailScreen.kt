@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation.findanimalscreen
 
 import android.net.Uri
+import android.util.Log
 import android.view.SurfaceControlViewHost.SurfacePackage
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -45,6 +46,7 @@ import com.llama.petmilly_client.utils.SpacerWidth
 import com.llama.petmilly_client.utils.notosans_bold
 import com.llama.petmilly_client.utils.notosans_regular
 import llama.test.jetpack_dagger_plz.utils.Common
+import llama.test.jetpack_dagger_plz.utils.Common.TAG
 import retrofit2.http.Url
 
 @Composable
@@ -66,15 +68,12 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
         val context = LocalContext.current
 
         LaunchedEffect(context) {
-            viewModel.getfindmypetdetail(2)
+            Log.d(TAG, "FindAnimalDetailScreen: hello")
+            viewModel.getfindmypetdetail(3)
         }
 
         LazyRow(modifier = Modifier.padding(horizontal = 10.dp)) {
-            val imageTestData = listOf(
-                ImageTestData(com.llama.petmilly_client.R.drawable.img_test_puppy),
-                ImageTestData(com.llama.petmilly_client.R.drawable.img_test_puppy),
-                ImageTestData(com.llama.petmilly_client.R.drawable.img_test_puppy)
-            )
+
             items(viewModel.photoUrl) { item ->
                 FindAnimalDetailImage2(image = item.photoUrl)
                 Spacer(modifier = Modifier.width(9.dp))
@@ -105,21 +104,6 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
 
             Spacer(modifier = Modifier.weight(1f))
 
-//            Text(
-//                text = stringResource(id = com.llama.petmilly_client.R.string.locationconfirm),
-//                modifier = Modifier
-//                    .padding(top = 20.dp)
-//                   ,
-//                fontSize = 13.sp,
-//                fontFamily = notosans_regular,
-//                style = TextStyle(
-//                    platformStyle = PlatformTextStyle(
-//                        includeFontPadding = false
-//                    )
-//                ),
-//                color = Black_40_Transfer,
-//                textAlign = TextAlign.Center
-//            )
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -388,7 +372,7 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
                 )
 
                 Text(
-                    text = viewModel.etc.value,
+                    text ="아직 애기여서 큰소리를 내면 도망가요",
                     color = Black_60_Transfer,
                     fontSize = 13.sp,
                     fontFamily = notosans_regular,
@@ -408,7 +392,7 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(2.dp),
+                .height(1.dp),
             color = Color.Black
         )
 
@@ -427,9 +411,12 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
             modifier = Modifier.padding(start = 22.dp)
         )
 
-        Spacer(modifier = Modifier.height(30.dp))
+
 
         if (viewModel.commentnumber.value == "0") {
+
+            Spacer(modifier = Modifier.height(30.dp))
+
             Text(
                 text = "소중한 가족을 찾아주세요.\n" +
                         "허위제보 시 이용에 제한을 받을 수 있습니다.",
@@ -447,7 +434,9 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
                 textAlign = TextAlign.Center
             )
         }else{
-            LazyColumn(modifier = Modifier.height(200.dp)){
+            Spacer(modifier = Modifier.height(10.dp))
+
+            LazyColumn(modifier = Modifier.height(150.dp)){
                 items(viewModel.commentlist){ item->
                     CommentItem(
                         onModifiy = { /*TODO*/ },
@@ -458,6 +447,8 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
                         createtime = item.id.toString(),
                         ismycomment = true
                     )
+                    
+                    SpacerHeight(dp = 10.dp)
                 }
             }
         }
@@ -470,7 +461,7 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(start = 24.dp, end = 24.dp, bottom = 20.dp)
+                .padding(start = 24.dp, end = 24.dp, bottom = 15.dp)
         ) {
 
             TextField(
@@ -479,13 +470,13 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
                 enabled = false,
                 modifier = Modifier
                     .weight(8f)
-                    .height(47.dp)
+                    .height(45.dp)
                     .clickable {
                         navController.navigate(Common.FINDANIMAL_COMMENT_SCREEN)
                     },
                 shape = RoundedCornerShape(20.5.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = TextField_BackgroudColor,
+                    backgroundColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedLabelColor = Color.White,
@@ -494,7 +485,7 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
                 placeholder = {
                     Text(
                         text = "제보를 입력해주세요.",
-                        fontSize = 12.sp,
+                        fontSize = 11.sp,
                         modifier = Modifier.fillMaxHeight()
                     )
                 },
@@ -551,7 +542,11 @@ fun CommentItem(
     ismycomment: Boolean,
 ) {
     Column(Modifier.fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 text = "라마짱",
                 fontFamily = notosans_bold,
@@ -567,7 +562,7 @@ fun CommentItem(
 
             SpacerWidth(dp = 20.dp)
             Text(
-                text = "1일 전",
+                text = "방금 전",
                 fontFamily = notosans_regular,
                 color = Black_30_Transfer,
                 fontSize = 10.sp,
@@ -622,7 +617,11 @@ fun CommentItem(
 
         SpacerHeight(dp = 10.dp)
 
-        Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp)) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        ) {
             Text(
                 text = comment,
                 fontFamily = notosans_regular,
@@ -649,8 +648,11 @@ fun CommentItem(
 
             )
         }
+
         Divider(
-            modifier = Modifier.fillMaxWidth().height(0.2.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(0.2.dp),
             color = Black_30_Transfer
         )
     }//Column
