@@ -101,8 +101,7 @@
 * 우리아이 찾아요
 
 
-<img width="20%" src="https://user-images.githubusercontent.com/68366753/229290124-91246c57-3bbd-4b12-acd4-fe0b202b6876.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229290100-1e3858ed-4422-452f-b3c4-d4a07f066cec.jpeg"/> 
-
+ <img width="20%" src="https://user-images.githubusercontent.com/68366753/229334798-9f3eb491-c45b-40c8-a0f9-7da477e8e128.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229334279-d095ced0-7e69-46eb-8856-0fd212604ed3.gif"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229333925-80ef70d8-329f-4452-a49f-adf44f9afd0a.gif"/>
 
 
 
