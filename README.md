@@ -7,11 +7,12 @@
 <br>
 
 # ⭐️주요 기능
-* 지도를 통해 도움이 필요한 동물들의 정보를 확인할 수 있음.
-  * 카테고리(임시보호처 , 입양, 실종, 이동봉사) 클릭시 해당
+* 지도를 통해 도움이 필요한 동물들의 정보를 확인할 수 있음(NaverMap).
+  * 카테고리(임시보호처 , 입양, 실종, 이동봉사) 및 위치에 따른 클러스터링 생성 
 * 도움이 필요한 동물에 대한 정보에 대한 게시물을 올릴 수 있음.(입양 공고, 임보처 구하기, 이동봉사, 실종신고)
 * 게시물을 확인 한 이용자가 임보처 신청, 입양 신청 등을 할 수 있음
 * 게시물을 올린 이용자와 신청자는 체팅을 통해 서로 대화하고, 임보처 신청이나 입양 신청 등을 처리할 수 있음.
+* 프로필을 통해서 사용자가 올린 게시물 등 필요 정보 확인 가능.
 
 <br>
 
@@ -39,6 +40,7 @@
 * Dagger Hilt를 사용해 의존성 주입을 할 수 있었음.
 * JetpackCompose의 Composable 함수 안에서 안전한 비동기 작업을 위해 LaunchedEffect을 사용해야 한다는 것을 알 수 있었음.
 * NaevrMap을 AndroidView를 통해 구현할 수 있었음.
+* form-data로 서버로 통신을 할 수 있었음.
 * 외부 라이브러리(클러스터링 라이브러리)를 사용해보면서 라이브러리의 사용법과 편의성에 대해 알 수 있었음.
 * Figma를 이용해서 UI를 만들 수 있었음.
 
@@ -51,7 +53,6 @@
   
   
 * Dagger Hilt
-  * Jeptack Compose는 UI 요소 
   * @AndroidEntryPoint, @HiltViewModel 어노테이션을 사용하여 액티비티와 뷰모델에 의존성을 손쉽게 주입할 수 있었음
   * XML 레이아웃을 사용하는 경우 ,DI 설정을 위해 XML 파일과 코드를 번갈아 가며 작성해야 하는 불편함이 있지만, Dagger Hilt를 사용하면 UI 구현 코드 내에서 간단하게 DI 설정을 할 수 있어 코드의 가독성 및 간결성을 유지할 수 있었음.
  
@@ -84,7 +85,8 @@
 
 * 이동봉사 구해요
 
-<img width="20%" src="https://user-images.githubusercontent.com/68366753/229082684-6a53272f-c495-4848-8dd6-9e2c5f642bdd.gif"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085084-0e7869f4-b66a-4004-b733-6b1a57d94892.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085019-2676602f-34f9-4cc7-acc6-ea5f8ea6e650.jpeg"/> 
+<img width="20%" src="https://user-images.githubusercontent.com/68366753/229289679-5835baad-f741-4cad-8a58-32a781c79a35.gif"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085084-0e7869f4-b66a-4004-b733-6b1a57d94892.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229085019-2676602f-34f9-4cc7-acc6-ea5f8ea6e650.jpeg"/> 
+
 
 <br></br>
 
@@ -96,7 +98,12 @@
 
 <br></br>
 
-* 실종 신고
+* 우리아이 찾아요
+
+
+ <img width="20%" src="https://user-images.githubusercontent.com/68366753/229334798-9f3eb491-c45b-40c8-a0f9-7da477e8e128.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229334279-d095ced0-7e69-46eb-8856-0fd212604ed3.gif"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229333925-80ef70d8-329f-4452-a49f-adf44f9afd0a.gif"/>
+
+
 
 <br></br>
 
