@@ -200,7 +200,7 @@ class ShelterViewModel @Inject constructor(
 
                             Log.d(TAG, "gettemporarydetail: $data")
                         }
-                        setProtectionCondition()
+//                        setProtectionCondition()
                     }
                     else -> {
                         Log.d(TAG, "gettemporarydetail ERROR: $it ")

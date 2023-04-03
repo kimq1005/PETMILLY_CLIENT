@@ -77,7 +77,7 @@ fun ShelterCategoryItems(
                 )
 
 
-            if (isReceipt) {
+            if (!isReceipt) {
                 Text(
                     text = "심사중",
                     fontSize = 8.sp,

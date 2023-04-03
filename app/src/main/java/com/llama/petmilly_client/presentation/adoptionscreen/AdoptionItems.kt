@@ -19,6 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.llama.petmilly_client.R
 import com.llama.petmilly_client.ui.theme.Background_FDFCE1
 import com.llama.petmilly_client.ui.theme.Black_30_Transfer
@@ -28,6 +29,7 @@ import com.llama.petmilly_client.utils.notosans_regular
 
 @Composable
 fun AdoptionItems(
+    image:Int,
     name:String,
     animalinfo:String,
     isvaccination:String,
@@ -54,7 +56,7 @@ fun AdoptionItems(
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.img_test_puppy),
+                painter = rememberImagePainter(data = image),
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)

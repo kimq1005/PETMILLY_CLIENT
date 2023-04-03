@@ -440,7 +440,7 @@ fun FindAnimalDetailScreen(navController: NavController, viewModel: FindAnimalVi
                 items(viewModel.commentlist){ item->
                     CommentItem(
                         onModifiy = { /*TODO*/ },
-                        onDelete = { /*TODO*/ },
+                        onDelete = { viewModel.deletefindmypetcomment() },
                         comment = item.comment,
                         photo = if(item.photoUrls.isEmpty()) null else item.photoUrls[0].photoUrl ,
                         name = item.comment,

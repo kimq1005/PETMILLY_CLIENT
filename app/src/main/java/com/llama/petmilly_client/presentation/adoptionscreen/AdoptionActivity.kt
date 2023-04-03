@@ -79,6 +79,7 @@ fun AdoptionListScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color.White)
 
         ) {
             TitleBar(title = "입양공고", ismenu = false, clickBack = { activity.finish() }) {
@@ -95,13 +96,13 @@ fun AdoptionListScreen(
                     Row {
                         if (viewModel.categorytest.indexOf(categorylist) == 0) {
                             Spacer(modifier = Modifier.padding(start = 15.dp))
-                            BorderCategoryItems(title = categorylist.title) { title, check->
+                            BorderCategoryItems(title = categorylist.title) { title, check ->
 
                             }
 
 
                         } else {
-                            BorderCategoryItems(title = categorylist.title) { title, check->
+                            BorderCategoryItems(title = categorylist.title) { title, check ->
 
                             }
                         }
@@ -122,28 +123,25 @@ fun AdoptionListScreen(
 
                 val adoptionModel = listOf(
                     AdoptionModel(
+                        image = R.drawable.img_test_puppy,
                         "감자",
-                        "라마/ 2살/ 10kg",
+                        "믹스 / 2개월/ 1kg",
                         "1차완료/ 중성화0",
-                        "5시간 전"
+                        "1시간 전"
                     ),
                     AdoptionModel(
-                        "감자",
-                        "라마/ 2살/ 10kg",
-                        "1차완료/ 중성화0",
-                        "5시간 전"
+                        image = R.drawable.img_testcat_2,
+                        "망구",
+                        "고양이 / 2살/ 10kg",
+                        "1차완료/ 중성화X",
+                        "1일 전"
                     ),
                     AdoptionModel(
-                        "감자",
-                        "라마/ 2살/ 10kg",
+                        image = R.drawable.img_test_dog4,
+                        "샛별이",
+                        "시바견 / 5살/ 12kg",
                         "1차완료/ 중성화0",
-                        "5시간 전"
-                    ),
-                    AdoptionModel(
-                        "감자",
-                        "라마/ 2살/ 10kg",
-                        "1차완료/ 중성화0",
-                        "5시간 전"
+                        "5일 전"
                     ),
 
                     )
@@ -151,6 +149,7 @@ fun AdoptionListScreen(
 
                 items(adoptionModel) { item ->
                     AdoptionItems(
+                        image = item.image,
                         name = item.name,
                         animalinfo = item.animalinfo,
                         isvaccination = item.isvaccination,
@@ -179,6 +178,7 @@ fun AdoptionDetailScreen(navController: NavController, viewModel: AdoptionViewMo
             modifier = Modifier
                 .verticalScroll(scrollState)
                 .fillMaxSize()
+                .background(Color.White)
         ) {
 
             TitleBar(
@@ -207,7 +207,7 @@ fun AdoptionDetailScreen(navController: NavController, viewModel: AdoptionViewMo
                     )
 
                     Image(
-                        painter = painterResource(id = R.drawable.baseline_heart_broken_24),
+                        painter = painterResource(id = R.drawable.ic_none_heart),
                         contentDescription = null,
                         modifier = Modifier
                             .height(31.dp)
@@ -295,7 +295,7 @@ fun AdoptionDetailScreen(navController: NavController, viewModel: AdoptionViewMo
 
                     )
                     Text(
-                        text = "현재위치지역 어디어디동",
+                        text = "현재위치지역 매탄동",
                         fontFamily = notosans_bold,
                         style = TextStyle(
                             platformStyle = PlatformTextStyle(
@@ -424,7 +424,7 @@ fun AdoptionDetailScreen(navController: NavController, viewModel: AdoptionViewMo
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 27.dp)
             ) {
                 Text(
                     text = "개인기",
@@ -484,7 +484,7 @@ fun AdoptionDetailScreen(navController: NavController, viewModel: AdoptionViewMo
                 )
 
                 Text(
-                    text = "성견되면 15kg대까지 추정되어요. 왕크니까 왕귀엽죠 스케일링/건강 여기 자유로 쓰게할까 고민중.",
+                    text = "성견되면 15kg대까지 추정되어요. 왕크니까 왕귀여워요!",
                     color = Black_60_Transfer,
                     fontFamily = notosans_regular,
                     style = TextStyle(
@@ -760,6 +760,7 @@ fun AdoptionDetailScreen(navController: NavController, viewModel: AdoptionViewMo
 }
 
 data class AdoptionModel(
+    val image: Int,
     val name: String,
     val animalinfo: String,
     val isvaccination: String,

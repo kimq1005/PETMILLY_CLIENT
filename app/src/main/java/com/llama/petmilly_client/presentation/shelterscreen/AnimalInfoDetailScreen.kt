@@ -133,7 +133,7 @@ fun AnimalInfoDetailScreen(
                     ) {
 
                         Text(
-                            text = if (viewModel.isCompleted_detail.value) viewModel.name_detail.value else "${viewModel.name_detail.value}(완료) ",
+                            text = if (viewModel.isCompleted_detail.value) viewModel.name_detail.value else "${viewModel.name_detail.value} ",
                             fontSize = 16.sp,
                             fontFamily = notosans_bold,
                             style = TextStyle(
@@ -429,7 +429,7 @@ fun AnimalInfoDetailScreen(
 
 
                         Text(
-                            text = "신청서 접수기간 : 23.01.01 ~ 23.01.07",
+                            text = "신청서 접수기간 : 23.04.12 ~ 23.04.21",
                             fontFamily = notosans_bold,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(
@@ -440,7 +440,7 @@ fun AnimalInfoDetailScreen(
                             modifier = Modifier.padding(bottom = 5.dp)
                         )
                         Text(
-                            text = "신청서 심사기간 : 23.08.01 ~ 23.01.10",
+                            text = "신청서 심사기간 : 23.04.02 ~ 23.04.10",
                             fontFamily = notosans_bold,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(
@@ -452,7 +452,7 @@ fun AnimalInfoDetailScreen(
 
                         )
                         Text(
-                            text = "* 입양신청서 심사 후 확정 시 앱 알림 및 채팅을 통해 안내드립니다.",
+                            text = "* 임보신청서 심사 후 확정 시 앱 알림 및 채팅을 통해 안내드립니다.",
                             fontFamily = notosans_regular,
                             style = TextStyle(
                                 platformStyle = PlatformTextStyle(
@@ -554,17 +554,30 @@ fun AnimalInfoDetailScreen(
                                 modifier = Modifier.width(80.dp)
                             )
 
-                            LazyColumn(
-                                modifier = Modifier
-                                    .padding(start = 15.dp)
-                                    .heightIn(0.dp, 100.dp)
-                            ) {
-//                                ProtectionConditionItems()
-                                items(viewModel.ProtectionCondition) { items ->
-                                    ProtectionConditionItems(items.content, true)
-                                }
+                            Text(
+                                text = "✅ 출퇴근 용이하신 분",
+                                fontFamily = notosans_regular,
+                                style = TextStyle(
+                                    platformStyle = PlatformTextStyle(
+                                        includeFontPadding = false
+                                    )
+                                ),
+                                color = Black_60_Transfer,
+                                fontSize = 13.sp,
+                                modifier = Modifier.width(200.dp)
+                            )
 
-                            }
+//                            LazyColumn(
+//                                modifier = Modifier
+//                                    .padding(start = 15.dp)
+//                                    .heightIn(0.dp, 100.dp)
+//                            ) {
+////                                ProtectionConditionItems()
+//                                items(viewModel.ProtectionCondition) { items ->
+//                                    ProtectionConditionItems(items.content, true)
+//                                }
+//
+//                            }
 
 
                         }
@@ -595,17 +608,30 @@ fun AnimalInfoDetailScreen(
                             )
 
 
-                            LazyColumn(
-                                modifier = Modifier
-                                    .padding(start = 15.dp)
-                                    .heightIn(0.dp, 100.dp)
-                            ) {
-//
-                                items(viewModel.ProtectionHope) { items ->
-                                    ProtectionConditionItems(items.content, true)
-                                }
+                            Text(
+                                text = "✅ 2주에 1회 병원통원 가능하신분",
+                                fontFamily = notosans_regular,
+                                style = TextStyle(
+                                    platformStyle = PlatformTextStyle(
+                                        includeFontPadding = false
+                                    )
+                                ),
+                                color = Black_60_Transfer,
+                                fontSize = 13.sp,
+                                modifier = Modifier.width(200.dp)
+                            )
 
-                            }
+//                            LazyColumn(
+//                                modifier = Modifier
+//                                    .padding(start = 15.dp)
+//                                    .heightIn(0.dp, 100.dp)
+//                            ) {
+////
+//                                items(viewModel.ProtectionHope) { items ->
+//                                    ProtectionConditionItems(items.content, true)
+//                                }
+//
+//                            }
 
                         }
 
@@ -634,17 +660,29 @@ fun AnimalInfoDetailScreen(
                                 modifier = Modifier.width(80.dp)
                             )
 
-                            LazyColumn(
-                                modifier = Modifier
-                                    .padding(start = 15.dp)
-                                    .heightIn(0.dp, 100.dp)
-                            ) {
+                            Text(
+                                text = "❌ 집을 비우는 시간이 너무 기신 분",
+                                fontFamily = notosans_regular,
+                                style = TextStyle(
+                                    platformStyle = PlatformTextStyle(
+                                        includeFontPadding = false
+                                    )
+                                ),
+                                color = Black_60_Transfer,
+                                fontSize = 13.sp,
+                                modifier = Modifier.width(200.dp)
+                            )
+//                            LazyColumn(
+//                                modifier = Modifier
+//                                    .padding(start = 15.dp)
+//                                    .heightIn(0.dp, 100.dp)
+//                            ) {
+////
+//                                items(viewModel.ProtectionNo) { items ->
+//                                    ProtectionConditionItems(items.content, false)
+//                                }
 //
-                                items(viewModel.ProtectionNo) { items ->
-                                    ProtectionConditionItems(items.content, false)
-                                }
-
-                            }
+//                            }
 
                         }
 

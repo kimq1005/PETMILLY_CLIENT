@@ -52,6 +52,7 @@ class FindAnimalViewModel @Inject constructor(
     val categorytest: MutableList<CategoryTest> = arrayListOf()
     val numberofanimal = mutableStateOf(1)
     val id = mutableStateOf(3)
+    val commentid = mutableStateOf(3)
     val animalTypes = mutableStateOf("")
     val name = mutableStateOf("")
     val gender = mutableStateOf("")
@@ -195,13 +196,28 @@ class FindAnimalViewModel @Inject constructor(
         }
     }
 
-    fun progresstest(){
-        viewModelScope.launch(Dispatchers.IO) {
+    fun deletefindmypetcomment(){
+        viewModelScope.launch(){
             _showProgress.postValue(Event(Unit))
-            delay(3000)
-            _closeProgress.postValue(Event(Unit))
+            petMillyRepo.deletefindmypetcomment(
+                MainApplication.accessToken,
+                id.value,
+                commentid.value
+            ).let {
+                when(it.status){
+                    RemoteResult.Status.SUCCESS->{
+                        Log.d(TAG, "deletefindmypetcomment SUCCESS : $it")
+                        delay(3000)
+                        getfindmypetdetail(id.value)
+                        _closeProgress.postValue(Event(Unit))
+                    }
+
+                    else->{
+                        Log.d(TAG, "deletefindmypetcomment ERROR: $it")
+                    }
+                }
+            }
         }
     }
-
 
 }
