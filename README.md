@@ -33,6 +33,8 @@
 * llama - Android Devloper
 * Jake - BackEnd Devloper
 * Sera - UI/UX Designer & Product Manager
+
+매주 수요일10시마다 회의를 진행하였으며 Jira를 통해 회고록을 작성했습니다.
 <br>
 
 # 📖배운점
