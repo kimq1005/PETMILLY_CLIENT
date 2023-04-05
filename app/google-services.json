@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "967190737647",
+    "firebase_url": "https://fcmpractice-7c819-default-rtdb.firebaseio.com",
+    "project_id": "fcmpractice-7c819",
+    "storage_bucket": "fcmpractice-7c819.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967190737647:android:cb79bf11d5854ce922611a",
+        "android_client_info": {
+          "package_name": "com.example.fcmpractice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "967190737647-05bmi2snnekq87pe2so563f5iuo2b2ht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4S4hm8S54-PcT5pIHbY1QV8SwMJBOhnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "967190737647-05bmi2snnekq87pe2so563f5iuo2b2ht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967190737647:android:b9fc19ad60682f4222611a",
+        "android_client_info": {
+          "package_name": "com.llama.chatting_practice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "967190737647-lumrhcs7ttslibu4hvf7to48172k7ti7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.llama.chatting_practice",
+            "certificate_hash": "384bb59c5fb6ca81e7c41c9c06b9e73746630971"
+          }
+        },
+        {
+          "client_id": "967190737647-05bmi2snnekq87pe2so563f5iuo2b2ht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4S4hm8S54-PcT5pIHbY1QV8SwMJBOhnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "967190737647-05bmi2snnekq87pe2so563f5iuo2b2ht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967190737647:android:5691c41a0fb1bc9222611a",
+        "android_client_info": {
+          "package_name": "com.llama.petmilly_client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "967190737647-tedvlc2sbh4n637d7ah0rlv2vottnaib.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.llama.petmilly_client",
+            "certificate_hash": "384bb59c5fb6ca81e7c41c9c06b9e73746630971"
+          }
+        },
+        {
+          "client_id": "967190737647-05bmi2snnekq87pe2so563f5iuo2b2ht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4S4hm8S54-PcT5pIHbY1QV8SwMJBOhnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "967190737647-05bmi2snnekq87pe2so563f5iuo2b2ht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
