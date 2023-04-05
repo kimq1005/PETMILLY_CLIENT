@@ -6,6 +6,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <permission android:name="패키지명.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.llama.petmilly_client.permission.C2D_MESSAGE" />
+
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
@@ -16,6 +22,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PET_MILLY_CLIENT"
         tools:targetApi="31">
+
+        <service
+            android:name=".fcm.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".fcm.NotificationActivity"
+            android:exported="true"
+            android:theme="@style/Theme.PET_MILLY_CLIENT" />
 
         <activity
             android:name=".mqtt.MqttActivity"

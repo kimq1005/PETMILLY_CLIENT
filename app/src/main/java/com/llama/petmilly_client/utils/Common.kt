@@ -11,6 +11,9 @@ object Common {
     const val ID:String ="id"
     const val petmilycomplete = "petmily ❤"
 
+    const val NOTIFICATION_CHANNEL_ID = "NOTIFICATION_CHANNEL_ID"
+    const val NOTIFICATION_CHANNEL_NAME = "NOTIFICATION_CHANNEL_NAME"
+    const val NOTIFICATION_ID = 11
 
     const val LOGINSCREEN:String = "loginScreen"
     const val HOMESCREEN:String = "homeScreen"
