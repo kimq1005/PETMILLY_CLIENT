@@ -48,15 +48,19 @@
 
 # 🧐새로 시도해 본것들
 
-* Jetpack Compose
-  * Composable 함수의 재사용성이 높아 편리하게 UI를 작성할 수 있었음
-  * XML과 달리, RecyclerView를 작성할 때 Adapter를 작성할 필요가 없어서 쉽게 RecyclerView를 만들 수 있었음.
-  
-  
-  
-* Dagger Hilt
-  * @AndroidEntryPoint, @HiltViewModel 어노테이션을 사용하여 액티비티와 뷰모델에 의존성을 손쉽게 주입할 수 있었음
-  * XML 레이아웃을 사용하는 경우 ,DI 설정을 위해 XML 파일과 코드를 번갈아 가며 작성해야 하는 불편함이 있지만, Dagger Hilt를 사용하면 UI 구현 코드 내에서 간단하게 DI 설정을 할 수 있어 코드의 가독성 및 간결성을 유지할 수 있었음.
+* JetpackCompose의 도입 
+
+
+
+  JetpackCompose를 우아한 형제들이 주최하는 우아콘을 보고 처음 알게 되었습니다. JetPackCompose를 사용하면 기존 XML 개발 방식에 비해서 코드 감소, 빠른 개발 등을 할 수 있다는 이점을 알게 되어 이번 프로젝트에는 JeptpackCompose를 배워 적용 해보기로 했습니다. 프로젝트를 진행하면서, 가장 편했던 점은 RecyclerView를 생성할 때 Adapter와 ViewHolder 등을 만들 필요 없이 LazyColumn, LazyRow를 사용하여 쉽게 만들 수 있다는 점이었습니다. 그러나 XML과 달리 개발한 UI를 실시간으로 확인할 수 없어서 에뮬레이터나 실제 기기에서 직접 확인해야 한다는 단점이 있었습니다.
+ 
+  <br>
+ 
+* Dagger Hilt를 활용한 의존성 주입
+
+
+  JetpackCompose을 공부하던중 Dagger Hilt와의 호환성이 뛰어나다는 것을 알게 되었습니다. 실제로 프로젝트에 적용해보니 @AndroidEntryPoint, @HiltViewModel 어노테이션을 사용하여 액티비티와 뷰모델에 의존성을 손쉽게 주입할 수 있었으며,  UI 구현 코드 내에서 간단하게 DI 설정을 할 수 있어 코드의 가독성 및 간결성을 유지할 수 있었습니다.
+
  
 
 <br>
