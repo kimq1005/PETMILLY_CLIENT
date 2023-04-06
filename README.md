@@ -27,6 +27,8 @@
 * Coroutine
 * NaverMap
 * Coil
+
+
 <br>
 
 # 🧑🏻‍💻Team
@@ -34,7 +36,6 @@
 * Jake - BackEnd Devloper
 * Sera - UI/UX Designer & Product Manager
 
-매주 수요일10시마다 회의를 진행하였으며 Jira를 통해 회고록을 작성했습니다.
 <br>
 
 # 📖배운점
@@ -45,6 +46,8 @@
 * form-data로 서버로 통신을 할 수 있었음.
 * 외부 라이브러리(클러스터링 라이브러리)를 사용해보면서 라이브러리의 사용법과 편의성에 대해 알 수 있었음.
 * Figma를 이용해서 UI를 만들 수 있었음.
+
+
   <br>
   
   
