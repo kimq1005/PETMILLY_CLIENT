@@ -86,8 +86,8 @@ fun MqttClientScreen() {
             client.disconnect()
         } else {
             try {
-//                val options = MqttConnectOptions()
-//                options.isAutomaticReconnect = true
+                val options = MqttConnectOptions()
+                options.isAutomaticReconnect = true
                 client.connect()
 //        client.subscribe("my/topic") { _, message ->
 //            messages.add(message.toString())
@@ -116,8 +116,9 @@ fun MqttClientScreen() {
 
 fun createMqttClient(): MqttClient {
     val broker = "tcp://192.168.64.94:1883"
-//    val clientId = MqttClient.generateClientId()
-    val clientId = "android-" + UUID.randomUUID().toString()
+    //넘어렵당 ㅠ_ㅠ
+    val clientId = MqttClient.generateClientId()
+//    val clientId = "android-" + UUID.randomUUID().toString()
     val persistence = MemoryPersistence()
     val client = MqttClient(broker, clientId, persistence)
 
