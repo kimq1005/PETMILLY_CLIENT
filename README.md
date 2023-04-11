@@ -40,7 +40,7 @@
 
 # 📖배운점
 * JetPackCompose을 사용해 보면서 편의성과 xml과의 차이점을 알 수 있었음.
-* Dagger Hilt를 사용해 의존성 주입을 할 수 있었음.
+* Dagger Hilt를 사용해 의존성 주입을 할 수 있었고 Dagger와의 차이점을 알 수 있었음.
 * JetpackCompose의 Composable 함수 안에서 안전한 비동기 작업을 위해 LaunchedEffect을 사용해야 한다는 것을 알 수 있었음.
 * NaevrMap을 AndroidView를 통해 구현할 수 있었음.
 * form-data로 서버로 통신을 할 수 있었음.
