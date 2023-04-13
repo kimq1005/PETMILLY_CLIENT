@@ -248,4 +248,10 @@ interface PetMillYApiService {
         @Path("id") id: Int,
     ) : Response<TemporaryprotectionDTO>
 
+    @DELETE("post/find-my-pet/{id}")
+    suspend fun deletefindpetpost2(
+        @Header("x-access-token") token: String,
+        @Path("id") id: Int,
+    ) : Response<TemporaryprotectionDTO>
+
 }
