@@ -7,7 +7,9 @@ import com.llama.petmilly_client.R
 
 object Common {
     const val TAG:String = "로그"
-
+    const val ACCESSTOKEN = "accessToken"
+    const val REFRESHTOKEN = "refreshToken"
+    const val ISLOGIN = "ISLOGIN"
     const val ID:String ="id"
     const val petmilycomplete = "petmily ❤"
 

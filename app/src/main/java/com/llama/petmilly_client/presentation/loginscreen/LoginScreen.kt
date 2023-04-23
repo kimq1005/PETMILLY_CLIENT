@@ -47,6 +47,7 @@ import com.llama.petmilly_client.R
 import com.llama.petmilly_client.fcm.NotificationActivity
 import com.llama.petmilly_client.mqtt.MqttActivity
 import com.llama.petmilly_client.presentation.MainViewModel
+import com.llama.petmilly_client.presentation.homescreen.BottomNavItem
 import com.llama.petmilly_client.presentation.homescreen.HomeActivity
 import com.llama.petmilly_client.presentation.homescreen.HomeViewModel
 import com.llama.petmilly_client.presentation.signupscreen.SignUpActivity
@@ -147,7 +148,13 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel) {
                     viewModel.onDismissDialog()
 //                    val intent = Intent(context, HomeActivity::class.java)
 //                    context.startActivity(intent)
-                    kakaoLogin(context,viewModel)
+                    if(MainApplication.getisLogin()){
+                        val intent = Intent(context, HomeActivity::class.java)
+                        context.startActivity(intent)
+                    }else{
+                        kakaoLogin(context,viewModel)
+
+                    }
 
 
                 }
