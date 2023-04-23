@@ -40,7 +40,7 @@
 
 # 📖배운점
 * JetPackCompose을 사용해 보면서 편의성과 xml과의 차이점을 알 수 있었음.
-* Dagger Hilt를 사용해 의존성 주입을 할 수 있었음.
+* Dagger Hilt를 사용해 의존성 주입을 할 수 있었고 Dagger와의 차이점을 알 수 있었음.
 * JetpackCompose의 Composable 함수 안에서 안전한 비동기 작업을 위해 LaunchedEffect을 사용해야 한다는 것을 알 수 있었음.
 * NaevrMap을 AndroidView를 통해 구현할 수 있었음.
 * form-data로 서버로 통신을 할 수 있었음.
@@ -70,7 +70,7 @@
   
  * 클러스터링을 위한 외부 라이브러리의 사용
  
-    저희 서비스는 유기동물에 대한 정보를 지도에서 클러스터링 된 유기동물의 정보를 확인하는 것 입니다. 초기에는 클러스터링 기능을 직접 개발하려 했지만, 백엔드 개발자분의 조언을 받     아서 외부 라이브러리를 사용하게 되었습니다. 외부 라이브러리를 적용하면서 빠르고 효율적인 개발을 할 수 있었습니다.
+    저희 서비스는 유기동물에 대한 정보를 지도에서 클러스터링 된 유기동물의 정보를 확인하는 것 입니다. 초기에는 클러스터링 기능을 직접 개발하려 했지만, 백엔드 개발자분의 조언을 받아서 외부 라이브러리를 사용하게 되었습니다. 외부 라이브러리를 적용하면서 빠르고 효율적인 개발을 할 수 있었습니다.
 <br>
 <br>
  
@@ -101,7 +101,7 @@
 
 * 임보처 구해요
 
-<img width="20%" src="https://user-images.githubusercontent.com/68366753/229336206-66813b32-d746-470e-921e-4d6706d583a4.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229336418-2e96cb04-dc7a-4d39-bd0f-0ee21f301ec4.gif"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229337131-ee80fea5-2dce-4553-a921-8a3b7e1973d0.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229337195-c27fb95b-3350-4047-b48e-69036f66d3e9.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229337166-c95347f7-57aa-44ce-a6b4-7de238f89a4a.jpeg"/>
+<img width="20%" src="https://user-images.githubusercontent.com/68366753/229336206-66813b32-d746-470e-921e-4d6706d583a4.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/231102217-12752bb9-bdaa-46ea-a66e-de98328bd886.gif"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229337131-ee80fea5-2dce-4553-a921-8a3b7e1973d0.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229337195-c27fb95b-3350-4047-b48e-69036f66d3e9.jpeg"/> <img width="20%" src="https://user-images.githubusercontent.com/68366753/229337166-c95347f7-57aa-44ce-a6b4-7de238f89a4a.jpeg"/>
 
 
 <br></br>
