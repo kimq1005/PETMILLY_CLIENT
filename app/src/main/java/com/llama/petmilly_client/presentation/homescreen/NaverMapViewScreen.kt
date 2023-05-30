@@ -93,7 +93,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     val seoul = LatLng(37.47153836, 127.096582)
                     val camPos = CameraPosition(
                         seoul,
-                        12.0
+                        20.0
                     )
 
                     navermapyeah?.cameraPosition = camPos
@@ -278,7 +278,7 @@ private fun setObserve(viewModel: HomeViewModel, context: Context, lifecycleOwne
         val seoul = LatLng(37.47153836, 127.096582)
         val camPos = CameraPosition(
             seoul,
-            12.0
+            9.0
         )
         navermapyeah?.moveCamera(CameraUpdate.toCameraPosition(camPos))
 

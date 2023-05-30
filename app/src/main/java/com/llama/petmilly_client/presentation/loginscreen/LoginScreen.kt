@@ -146,15 +146,15 @@ fun LoginScreen(navController: NavController, viewModel: MainViewModel) {
                 },
                 onConfirm = {
                     viewModel.onDismissDialog()
-//                    val intent = Intent(context, HomeActivity::class.java)
-//                    context.startActivity(intent)
-                    if(MainApplication.getisLogin()){
-                        val intent = Intent(context, HomeActivity::class.java)
-                        context.startActivity(intent)
-                    }else{
-                        kakaoLogin(context,viewModel)
-
-                    }
+                    val intent = Intent(context, HomeActivity::class.java)
+                    context.startActivity(intent)
+//                    if(MainApplication.getisLogin()){
+//                        val intent = Intent(context, HomeActivity::class.java)
+//                        context.startActivity(intent)
+//                    }else{
+//                        kakaoLogin(context,viewModel)
+//
+//                    }
 
 
                 }
@@ -255,7 +255,7 @@ fun kakaoLogin(context: Context,viewModel: MainViewModel) {
             Toast.makeText(context, "카카오톡 로그인 실패", Toast.LENGTH_SHORT).show()
         } else if (token != null) {
             Log.d(TAG, "로그인 성공: ${token.accessToken}")
-//            viewModel.postkakaotoken()
+            viewModel.postkakaotoken()
 
 //            val intent = Intent(context, HomeActivity::class.java)
 //            context.startActivity(intent)
@@ -299,6 +299,7 @@ fun kakaoLogin(context: Context,viewModel: MainViewModel) {
 
 private fun setObserve(viewModel: MainViewModel, context: Context, lifecycleOwner: LifecycleOwner) {
     viewModel.setHomeIntent.observe(lifecycleOwner, Observer {
+//        MainApplication.saveisLogin(true)
         val intent = Intent(context, HomeActivity::class.java)
         context.startActivity(intent)
     })

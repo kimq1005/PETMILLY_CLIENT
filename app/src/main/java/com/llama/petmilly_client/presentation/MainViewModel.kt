@@ -55,7 +55,7 @@ class MainViewModel @Inject constructor(private val petMillyRepo: PetMillyRepo) 
                                     _setsignupIntent.postValue(Event(Unit))
                                 } else {
                                     if (MainApplication.accessToken != "" && MainApplication.refreshToken != "") {
-                                        _setHomeIntent.postValue(Event(Unit))
+//                                        _setHomeIntent.postValue(Event(Unit))
                                     }
                                 }
 

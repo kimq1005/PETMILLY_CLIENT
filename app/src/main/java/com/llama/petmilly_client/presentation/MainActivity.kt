@@ -1,6 +1,7 @@
 package com.llama.petmilly_client.presentation
 
 import android.app.Activity
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +34,8 @@ import com.llama.petmilly_client.presentation.loginscreen.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
 import llama.test.jetpack_dagger_plz.utils.Common.LOGINSCREEN
 import llama.test.jetpack_dagger_plz.utils.Common.TAG
+import java.net.Authenticator
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

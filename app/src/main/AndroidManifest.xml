@@ -5,11 +5,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <permission android:name="패키지명.permission.C2D_MESSAGE"
+
+    <permission
+        android:name="패키지명.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.llama.petmilly_client.permission.C2D_MESSAGE" />
 
     <application
@@ -22,6 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PET_MILLY_CLIENT"
         tools:targetApi="31">
+        <activity
+            android:name=".MainActivity2ASDSAD"
+            android:exported="false"
+            android:label="@string/title_activity_main_activity2_asdsad"
+            android:theme="@style/Theme.PET_MILLY_CLIENT" />
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
@@ -35,44 +42,34 @@
             android:name=".fcm.NotificationActivity"
             android:exported="true"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
-
         <activity
             android:name=".mqtt.MqttActivity"
             android:exported="true"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
-
         <activity
             android:name=".presentation.findanimalscreen.findanimaldetailscreen.FADetailActivity"
             android:exported="false"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
-
         <activity
             android:name=".presentation.moveservicscreen.moveservicedetail.MoveServiceDetailActivity"
             android:exported="false"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
-
         <activity
             android:name=".presentation.shelterscreen.shelterdetailscreen.ShelterDetailActivity"
             android:exported="false"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
-
-
         <activity
             android:name=".presentation.adoptionscreen.AdoptionActivity"
             android:exported="false"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
-
-
         <activity
             android:name=".presentation.findanimalscreen.FindAnimalActivity"
             android:exported="false"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
-
         <activity
             android:name=".presentation.moveservicscreen.MoveServiceActivity"
             android:exported="false"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
-
         <activity
             android:name=".presentation.signupscreen.SignUpActivity"
             android:exported="false"
@@ -92,7 +89,6 @@
             android:exported="false"
             android:label="ShelterActivity"
             android:theme="@style/Theme.PET_MILLY_CLIENT" />
-
         <activity
             android:name=".presentation.myprofilescreen.ProfileActivity"
             android:exported="false"

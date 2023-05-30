@@ -3,6 +3,8 @@ package com.llama.petmilly_client.presentation.homescreen.items
 import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,10 +43,6 @@ fun CategoryItems(
     onClick: () -> Unit,
     ) {
 
-    var checkBoolean by remember {
-        mutableStateOf(false)
-    }
-
     Column(
         modifier = Modifier
             .shadow(elevation = 4.dp, shape = RoundedCornerShape(20.dp))
@@ -61,6 +59,7 @@ fun CategoryItems(
             color = if (selected) Color.White else Color.Black,
             modifier = Modifier
                 .selectable(selected = selected, onClick = {
+                    Log.d(TAG, "CategoryItems: $selected")
                     onClick()
                 })
                 .padding(top = 7.dp, bottom = 7.dp, start = 12.dp, end = 12.dp),
@@ -106,7 +105,7 @@ fun CategoryShelterItems(
                 )
                 .selectable(selected = checkBoolean, onClick = {
                     checkBoolean = !checkBoolean
-                    onClick(ShelterListCategory.title,checkBoolean)
+                    onClick(ShelterListCategory.title, checkBoolean)
 
                 })
                 .padding(top = 7.dp, bottom = 7.dp, start = 12.dp, end = 12.dp),
@@ -166,6 +165,28 @@ fun BorderCategoryItems(
 
 }
 
+@Preview
+@Composable
+fun SHEET(){
+    var checkBoolean by remember {
+        mutableStateOf(false)
+    }
+    val categoryItems = listOf(
+        CategoryTest("제발시발"),
+        CategoryTest("되주세요 시발")
+    )
+
+    LazyRow(){
+        items(categoryItems){items->
+            CategoryItems(categoryTest = items , selected = checkBoolean) {
+
+            }
+    }
+
+
+
+    }
+}
 data class ShelterListCategory(
     var title: String,
 )

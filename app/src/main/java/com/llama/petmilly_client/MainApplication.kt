@@ -39,43 +39,43 @@ class MainApplication : Application() {
             "강아지", "고양이", "petmily ❤️", "~7kg", "7~15kg", "15kg~"
         )
 
-        fun saveAccessToken(accessToken: String) {
-            val editor = sharedPreferences.edit()
-            editor.putString(Common.ACCESSTOKEN, accessToken)
-            editor.apply()
-        }
+//        fun saveAcceasdasdssToken(accessToken1: String) {
+//            val editor = sharedPreferences.edit()
+//            editor.putString(Common.ACCESSTOKEN, accessToken1)
+//            editor.apply()
+//        }
 
-        fun saveRefreshToken(refreshToken: String) {
-            val editor = sharedPreferences.edit()
-            editor.putString(REFRESHTOKEN, refreshToken)
-            editor.apply()
-        }
+//        fun saveRefreshToken(refreshToken: String) {
+//            val editor = sharedPreferences.edit()
+//            editor.putString(REFRESHTOKEN, refreshToken)
+//            editor.apply()
+//        }
+//
+//
+//        fun saveisLogin(refreshToken: Boolean) {
+//            val editor = sharedPreferences.edit()
+//            editor.putBoolean(ISLOGIN, refreshToken)
+//            editor.apply()
+//        }
 
 
-        fun saveisLogin(refreshToken: Boolean) {
-            val editor = sharedPreferences.edit()
-            editor.putBoolean(ISLOGIN, refreshToken)
-            editor.apply()
-        }
+//        fun getAccessToken(): String? {
+//            return sharedPreferences.getString(ACCESSTOKEN, "")
+//        }
+//
+//        fun getRefreshToken():String? {
+//            return sharedPreferences.getString(REFRESHTOKEN, "")
+//        }
+//
+//        fun getisLogin() : Boolean{
+//            return sharedPreferences.getBoolean(ISLOGIN, false)
+//        }
 
-
-        fun getAccessToken(): String? {
-            return sharedPreferences.getString(ACCESSTOKEN, "")
-        }
-
-        fun getRefreshToken():String? {
-            return sharedPreferences.getString(REFRESHTOKEN, "")
-        }
-
-        fun getisLogin() : Boolean{
-            return sharedPreferences.getBoolean(ISLOGIN, false)
-        }
-
-        fun Logout() {
-            saveAccessToken("")
-            saveRefreshToken("")
-            saveisLogin(false)
-        }
+//        fun Logout() {
+//            saveAccessToken("")
+//            saveRefreshToken("")
+//            saveisLogin(false)
+//        }
 
     }
 
@@ -85,7 +85,7 @@ class MainApplication : Application() {
 
         sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE)
 
-        Log.d(TAG, "로그인 확인 : ${getisLogin()}")
+//        Log.d(TAG, "로그인 확인 : ${getisLogin()}")
         var keyHash = Utility.getKeyHash(this)
         KakaoSdk.init(this, getString(R.string.kakao_api_key))
 
