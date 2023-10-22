@@ -23,4 +23,5 @@
     <string name="secession"><u>탈퇴하기</u></string>
     <string name="logout"><u>로그아웃</u></string>
     <string name="title_activity_main_activity2_asdsad">MainActivity2ASDSAD</string>
+    <string name="test_string">테스트 텍스트</string>
 </resources>
