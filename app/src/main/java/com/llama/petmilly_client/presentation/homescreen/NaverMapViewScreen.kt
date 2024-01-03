@@ -186,15 +186,15 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                             viewModel.selelctedcategory.value = item.title
                         }
                         Spacer(modifier = Modifier.width(8.dp))
-
+                                //커밋테스트
                     }
+                    //
                 }
             } else {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp),
-
                     ) {
                     viewModel.setcategory()
 
@@ -207,10 +207,6 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     }
                 }
             }
-
-
-//
-
         }
 
     }
@@ -221,7 +217,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
 
 }
-
+//
 @Composable
 fun naverMapComposable(): MapView {
     val context = LocalContext.current

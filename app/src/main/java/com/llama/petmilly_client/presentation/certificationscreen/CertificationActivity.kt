@@ -193,6 +193,7 @@ fun CertificationNaverMap(viewModel: CertificationViewModel) {
                                     )
 
 
+
                                 getAddress(
                                     context,
                                     location.latitude,
@@ -204,9 +205,8 @@ fun CertificationNaverMap(viewModel: CertificationViewModel) {
                                     icon = OverlayImage.fromResource(R.drawable.ic_navermarker)
                                     width = 150
                                     height = 180
-
-
                                 }
+
                                 marker.map = navermap
                                 val cameraUpdate = CameraUpdate.scrollTo(mypostion)
                                 navermap.moveCamera(cameraUpdate)
