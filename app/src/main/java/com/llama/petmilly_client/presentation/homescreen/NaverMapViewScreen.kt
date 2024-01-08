@@ -186,7 +186,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                             viewModel.selelctedcategory.value = item.title
                         }
                         Spacer(modifier = Modifier.width(8.dp))
-
+                                //커밋테스트
                     }
                 }
             } else {
