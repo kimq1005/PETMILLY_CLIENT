@@ -188,6 +188,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         Spacer(modifier = Modifier.width(8.dp))
                                 //커밋테스트
                     }
+                    //
                 }
             } else {
                 LazyRow(
