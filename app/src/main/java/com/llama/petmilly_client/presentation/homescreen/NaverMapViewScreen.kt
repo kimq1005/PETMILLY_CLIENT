@@ -194,7 +194,6 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp),
-
                     ) {
                     viewModel.setcategory()
 
@@ -207,10 +206,6 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     }
                 }
             }
-
-
-//
-
         }
 
     }
