@@ -189,6 +189,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                                 //커밋테스트
                     }
                     //
+                    //
                 }
             } else {
                 LazyRow(
