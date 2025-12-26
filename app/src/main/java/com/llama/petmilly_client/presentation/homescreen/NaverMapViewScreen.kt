@@ -105,6 +105,8 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
             }
         )
 
+        //여기에 내가 풀리퀘스트 한다
+
 
         Column(modifier = Modifier.padding(top = 30.dp)) {
             Row(
@@ -188,6 +190,7 @@ fun NaverMapViewScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         Spacer(modifier = Modifier.width(8.dp))
                                 //커밋테스트
                     }
+                    //
                     //
                 }
             } else {
